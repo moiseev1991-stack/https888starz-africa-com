@@ -1,0 +1,516 @@
+/*------------------------------------*\
+    			SETTINGS
+\*------------------------------------*/
+/* @group CSS2 Variables */
+:root {
+  /* Font Styles */
+  --epcl-font-family: "DM Sans", sans-serif;
+  --epcl-title-font-family: "Urbanist", sans-serif;
+  --epcl-font-size: 16px;
+  /* General content font size */
+  --epcl-line-height: 1.9;
+  /* General content line height */
+  --epcl-font-size-editor: 17px;
+  /* Single Content font size */
+  --epcl-line-height-editor: 1.9;
+  /* Single Content line height */
+  /* Colors */
+  --epcl-main-color: #6A4EE9;
+  --epcl-secondary-color: #FF2AAC;
+  --epcl-titles-color: #282424;
+  --epcl-text-color: #282424;
+  --epcl-black: #282424;
+  --epcl-meta-color: #4D6385;
+  --epcl-background-color: #FAF8FF;
+  --epcl-boxes-background-color: #fff;
+  --epcl-boxes-border-color: #E9E8FF;
+  --epcl-border-color: #E9E8FF;
+  /* General border color */
+  --epcl-overlay-color: #211d3f;
+  --epcl-boxes-shadow: 0px 2px 5px 0px rgba(0,0,0, 0.03);
+  --epcl-small-shadow: 0px 3px 5px 0px rgba(0,0,0, 0.2);
+  /* Used on small images (like widgets or related articles) */
+  --epcl-medium-shadow: 0px 8px 16px -4px rgba(0,0,0, 0.10);
+  --epcl-large-shadow: 0px 4px 25px -4px rgba(0,0,0, 0.20);
+  --epcl-transition-bezier: cubic-bezier(.5,2.5,.7,.7);
+  /* Coding */
+  --epcl-code-background: #211d3f;
+  /* Used on "code" blocks not syntax highlighter */
+  --epcl-code-color: #b0b9c5;
+  /* Used on code blocks not syntax highlighter */
+  /* Others */
+  --epcl-small-border-radius: 4px;
+  /* Used on small elements (like buttons) */
+  --epcl-medium-border-radius: 10px;
+  /* Used on medium elements (like boxes) */
+  --epcl-large-border-radius: 100px;
+  /* Used to generate circles */
+}
+
+/* @end */
+/* @group Font Families */
+/* @end */
+/* @end */
+/* @group Effects speed */
+/* @end */
+/* @group Content Width and Margins */
+/* @end */
+/* @group Shortcodes */
+/* Icons */
+i.ep-icon {
+  font-style: normal !important;
+}
+
+i.ep-shortcode.ep-icon {
+  margin: 0 3px;
+}
+
+/* Toggle / Accordion */
+.epcl-shortcode.epcl-button {
+  display: inline-block;
+  font-size: 14px;
+  color: #fff;
+  background-color: #FF3152;
+  padding: 7px 25px;
+  text-align: center;
+  margin: 0 2px 5px;
+  border-radius: var(--epcl-small-border-radius);
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+  position: relative;
+  border: 0;
+  font-weight: 400;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+.epcl-shortcode.epcl-button:hover:after {
+  -webkit-animation-play-state: running;
+          animation-play-state: running;
+  top: 60%;
+}
+
+.epcl-shortcode.epcl-button:hover {
+  color: #fff;
+  -webkit-transform: translateY(-2px);
+      -ms-transform: translateY(-2px);
+          transform: translateY(-2px);
+}
+
+.epcl-shortcode.epcl-button.extra-small {
+  font-size: 10px;
+  padding: 2px 10px;
+}
+
+.epcl-shortcode.epcl-button.small {
+  font-size: 12px;
+  padding: 4px 12px;
+}
+
+.epcl-shortcode.epcl-button.large {
+  font-size: 16px;
+  padding: 9px 30px;
+}
+
+.epcl-shortcode.epcl-button.extra-large {
+  font-size: 22px;
+  padding: 8px 25px;
+}
+
+.epcl-shortcode.epcl-button.extra-large .epcl-icon {
+  margin-right: 10px;
+}
+
+.epcl-shortcode.epcl-button.fluid {
+  display: block;
+  width: auto;
+  clear: both;
+  margin: 20px 0 0;
+  padding: 10px 5%;
+}
+
+.epcl-shortcode.epcl-button.primary-style {
+  background: var(--epcl-main-color);
+  overflow: hidden;
+  vertical-align: middle;
+  border-radius: var(--epcl-small-border-radius);
+  font-weight: 600;
+}
+
+.epcl-shortcode.epcl-button.primary-style:hover:after {
+  -webkit-animation-play-state: running;
+          animation-play-state: running;
+  top: 60%;
+}
+
+.epcl-shortcode.epcl-button.glow {
+  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.epcl-shortcode.epcl-button.outline {
+  background: none;
+  color: inherit;
+  border: 2px solid;
+  font-weight: bold;
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none;
+  padding: 7px 20px;
+}
+
+.epcl-shortcode.epcl-button.red {
+  background-color: #FF3152;
+}
+
+.epcl-shortcode.epcl-button.red.outline {
+  background: none;
+  border-color: #FF3152;
+  color: #FF3152;
+}
+
+.epcl-shortcode.epcl-button.red.outline:hover {
+  background: #FF3152;
+  color: #fff;
+}
+
+.epcl-shortcode.epcl-button.red.gradient {
+  background: -webkit-gradient(linear, left top, left bottom, from(#FF3152), to(#ff1d41));
+  background: linear-gradient(to bottom, #FF3152 0%, #ff1d41 100%);
+}
+
+.epcl-shortcode.epcl-button.yellow {
+  background-color: #FFD012;
+}
+
+.epcl-shortcode.epcl-button.yellow.outline {
+  background: none;
+  border-color: #FFD012;
+  color: #FFD012;
+}
+
+.epcl-shortcode.epcl-button.yellow.outline:hover {
+  background: #FFD012;
+  color: #fff;
+}
+
+.epcl-shortcode.epcl-button.yellow.gradient {
+  background: -webkit-gradient(linear, left top, left bottom, from(#FFD012), to(#fdcb00));
+  background: linear-gradient(to bottom, #FFD012 0%, #fdcb00 100%);
+}
+
+.epcl-shortcode.epcl-button.orange {
+  background-color: #F39C12;
+}
+
+.epcl-shortcode.epcl-button.orange.outline {
+  background: none;
+  border-color: #F39C12;
+  color: #F39C12;
+}
+
+.epcl-shortcode.epcl-button.orange.outline:hover {
+  background: #F39C12;
+  color: #fff;
+}
+
+.epcl-shortcode.epcl-button.orange.gradient {
+  background: -webkit-gradient(linear, left top, left bottom, from(#F39C12), to(#e5910c));
+  background: linear-gradient(to bottom, #F39C12 0%, #e5910c 100%);
+}
+
+.epcl-shortcode.epcl-button.green {
+  background-color: #27AE60;
+}
+
+.epcl-shortcode.epcl-button.green.outline {
+  background: none;
+  border-color: #27AE60;
+  color: #27AE60;
+}
+
+.epcl-shortcode.epcl-button.green.outline:hover {
+  background: #27AE60;
+  color: #fff;
+}
+
+.epcl-shortcode.epcl-button.green.gradient {
+  background: -webkit-gradient(linear, left top, left bottom, from(#27AE60), to(#239d57));
+  background: linear-gradient(to bottom, #27AE60 0%, #239d57 100%);
+}
+
+.epcl-shortcode.epcl-button.light-blue {
+  background-color: #3498DB;
+}
+
+.epcl-shortcode.epcl-button.light-blue.outline {
+  background: none;
+  border-color: #3498DB;
+  color: #3498DB;
+}
+
+.epcl-shortcode.epcl-button.light-blue.outline:hover {
+  background: #3498DB;
+  color: #fff;
+}
+
+.epcl-shortcode.epcl-button.light-blue.gradient {
+  background: -webkit-gradient(linear, left top, left bottom, from(#3498DB), to(#268fd5));
+  background: linear-gradient(to bottom, #3498DB 0%, #268fd5 100%);
+}
+
+.epcl-shortcode.epcl-button.blue {
+  background-color: #2980B9;
+}
+
+.epcl-shortcode.epcl-button.blue.outline {
+  background: none;
+  border-color: #2980B9;
+  color: #2980B9;
+}
+
+.epcl-shortcode.epcl-button.blue.outline:hover {
+  background: #2980B9;
+  color: #fff;
+}
+
+.epcl-shortcode.epcl-button.blue.gradient {
+  background: -webkit-gradient(linear, left top, left bottom, from(#2980B9), to(#2574a8));
+  background: linear-gradient(to bottom, #2980B9 0%, #2574a8 100%);
+}
+
+.epcl-shortcode.epcl-button.purple {
+  background-color: #9B59B6;
+}
+
+.epcl-shortcode.epcl-button.purple.outline {
+  background: none;
+  border-color: #9B59B6;
+  color: #9B59B6;
+}
+
+.epcl-shortcode.epcl-button.purple.outline:hover {
+  background: #9B59B6;
+  color: #fff;
+}
+
+.epcl-shortcode.epcl-button.purple.gradient {
+  background: -webkit-gradient(linear, left top, left bottom, from(#9B59B6), to(#924dae));
+  background: linear-gradient(to bottom, #9B59B6 0%, #924dae 100%);
+}
+
+.epcl-shortcode.epcl-button.dark {
+  background-color: #333;
+}
+
+.epcl-shortcode.epcl-button.dark.outline {
+  background: none;
+  border-color: #333;
+  color: #333;
+}
+
+.epcl-shortcode.epcl-button.dark.outline:hover {
+  background: #000;
+  color: #fff;
+}
+
+.epcl-shortcode.epcl-button.dark.gradient {
+  background: -webkit-gradient(linear, left top, left bottom, from(#555), to(black));
+  background: linear-gradient(to bottom, #555 0%, black 100%);
+}
+
+.epcl-shortcode.epcl-button.gray {
+  background-color: #95A5A6;
+}
+
+.epcl-shortcode.epcl-button.gray.outline {
+  background: none;
+  border-color: #95A5A6;
+  color: #95A5A6;
+}
+
+.epcl-shortcode.epcl-button.gray.outline:hover {
+  background: #95A5A6;
+  color: #fff;
+}
+
+.epcl-shortcode.epcl-button.gray.gradient {
+  background: -webkit-gradient(linear, left top, left bottom, from(#95A5A6), to(#8a9c9d));
+  background: linear-gradient(to bottom, #95A5A6 0%, #8a9c9d 100%);
+}
+
+.epcl-shortcode.epcl-button.white {
+  background-color: #ECF0F1;
+  color: #555;
+}
+
+.epcl-shortcode.epcl-button.white.outline {
+  background: none;
+  border-color: #ECF0F1;
+  color: #555;
+  color: #fff;
+}
+
+.epcl-shortcode.epcl-button.white.outline:hover {
+  background: #ECF0F1;
+  color: #555;
+}
+
+.epcl-shortcode.epcl-button.white.gradient {
+  background: -webkit-gradient(linear, left top, left bottom, from(#ECF0F1), to(#e0e7e8));
+  background: linear-gradient(to bottom, #ECF0F1 0%, #e0e7e8 100%);
+}
+
+.epcl-shortcode.epcl-button i.epcl-icon {
+  margin-right: 7px;
+}
+
+.epcl-shortcode.epcl-columns {
+  margin: 0 -10px;
+}
+
+.epcl-shortcode.epcl-columns .epcl-col {
+  margin-bottom: 20px;
+}
+
+.epcl-shortcode.epcl-box {
+  padding: 20px 30px;
+  line-height: 1.8;
+  font-size: 1.05em;
+  margin-bottom: 20px;
+  position: relative;
+  border-radius: var(--epcl-small-border-radius);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.epcl-shortcode.epcl-box .epcl-icon {
+  color: #fff;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  width: 40px;
+  font-size: 20px;
+}
+
+.epcl-shortcode.epcl-box.error {
+  background: #ffe4e4;
+}
+
+.epcl-shortcode.epcl-box.success {
+  background: #e6f6e8;
+}
+
+.epcl-shortcode.epcl-box.notice {
+  background: #fdf3e0;
+}
+
+.epcl-shortcode.epcl-box.information {
+  background: #d0f1ff;
+}
+
+.epcl-shortcode.epcl-toggle .toggle-title {
+  font-size: var(--epcl-font-size-editor);
+  padding: 15px 20px;
+  border: 2px solid var(--epcl-border-color);
+  border-radius: var(--epcl-small-border-radius);
+  position: relative;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+  font-family: var(--epcl-font-family);
+}
+
+.epcl-shortcode.epcl-toggle .toggle-title .epcl-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  color: var(--epcl-black);
+  font-size: 12px;
+  position: absolute;
+  right: 10px;
+  top: 18px;
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+
+.epcl-shortcode.epcl-toggle.active .toggle-title .epcl-icon, .epcl-shortcode.epcl-toggle.opened .toggle-title .epcl-icon {
+  -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.epcl-shortcode.epcl-toggle .toggle-content {
+  display: none;
+  margin-bottom: 20px;
+  padding: 0 15px;
+}
+
+.epcl-shortcode.epcl-toggle.opened .toggle-content {
+  display: block;
+}
+
+.epcl-shortcode.epcl-tabs ul.tab-links {
+  margin-left: 0;
+}
+
+.epcl-shortcode.epcl-tabs ul.tab-links li {
+  display: block;
+  float: left;
+  padding-bottom: 0px;
+  margin-bottom: -3px;
+}
+
+.epcl-shortcode.epcl-tabs ul.tab-links li a {
+  display: block;
+  padding: 10px 15px;
+  list-style: none;
+  margin-right: 3px;
+  word-break: break-word;
+  color: var(--epcl-text-color);
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+  background-image: none;
+  border: 2px solid transparent !important;
+  border-bottom: 0 !important;
+  border-top-left-radius: var(--epcl-small-border-radius);
+  border-top-right-radius: var(--epcl-small-border-radius);
+}
+
+.epcl-shortcode.epcl-tabs ul.tab-links li.active a, .epcl-shortcode.epcl-tabs ul.tab-links li a:hover {
+  background-color: #fff;
+  border-color: var(--epcl-border-color) !important;
+}
+
+.epcl-shortcode.epcl-tabs .tab-container {
+  clear: both;
+  margin-bottom: 25px;
+  padding: 20px;
+  background: #fff;
+  border: 2px solid var(--epcl-border-color);
+  border-radius: var(--epcl-small-border-radius);
+  border-top-left-radius: 0;
+  padding-top: 25px;
+}
+
+.epcl-shortcode.epcl-tabs .tab-container p {
+  padding-top: 0;
+  margin-bottom: 20px;
+}
+
+.epcl-shortcode.epcl-tabs .tab-container p:last-of-type {
+  margin-bottom: 0;
+}
+
+.epcl-shortcode.epcl-tabs .tab-container .tab-item {
+  display: none;
+  padding: 0;
+}
+
+/* @end */

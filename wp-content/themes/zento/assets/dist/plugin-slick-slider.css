@@ -1,0 +1,159 @@
+/*------------------------------------*\
+    			SETTINGS
+\*------------------------------------*/
+/* @group CSS2 Variables */
+:root {
+  /* Font Styles */
+  --epcl-font-family: "DM Sans", sans-serif;
+  --epcl-title-font-family: "Urbanist", sans-serif;
+  --epcl-font-size: 16px;
+  /* General content font size */
+  --epcl-line-height: 1.9;
+  /* General content line height */
+  --epcl-font-size-editor: 17px;
+  /* Single Content font size */
+  --epcl-line-height-editor: 1.9;
+  /* Single Content line height */
+  /* Colors */
+  --epcl-main-color: #6A4EE9;
+  --epcl-secondary-color: #FF2AAC;
+  --epcl-titles-color: #282424;
+  --epcl-black: #282424;
+  --epcl-meta-color: #4D6385;
+  --epcl-background-color: #FAF8FF;
+  --epcl-boxes-background-color: #fff;
+  --epcl-boxes-border-color: #E9E8FF;
+  --epcl-border-color: #E9E8FF;
+  /* General border color */
+  --epcl-boxes-shadow: 0px 2px 5px 0px rgba(0,0,0, 0.03);
+  --epcl-small-shadow: 0px 3px 5px 0px rgba(0,0,0, 0.2);
+  /* Used on small images (like widgets or related articles) */
+  --epcl-medium-shadow: 0px 8px 16px -4px rgba(0,0,0, 0.10);
+  --epcl-large-shadow: 0px 4px 25px -4px rgba(0,0,0, 0.20);
+  --epcl-transition-bezier: cubic-bezier(.5,2.5,.7,.7);
+  /* Coding */
+  --epcl-code-background: #211d3f;
+  /* Used on "code" blocks not syntax highlighter */
+  --epcl-code-color: #b0b9c5;
+  /* Used on code blocks not syntax highlighter */
+  /* Others */
+  --epcl-small-border-radius: 4px;
+  /* Used on small elements (like buttons) */
+  --epcl-medium-border-radius: 10px;
+  /* Used on medium elements (like boxes) */
+  --epcl-large-border-radius: 100px;
+  /* Used to generate circles */
+}
+
+/* @end */
+/* @group Font Families */
+/* @end */
+/* @end */
+/* @group Effects speed */
+/* @end */
+/* @group Content Width and Margins */
+/* @end */
+/* Slider */
+.slick-slider {
+  position: relative;
+  display: block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.slick-list:focus {
+  outline: none;
+}
+
+.slick-list.dragging {
+  cursor: pointer;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.slick-track {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.slick-track:before,
+.slick-track:after {
+  display: table;
+  content: '';
+}
+
+.slick-track:after {
+  clear: both;
+}
+
+.slick-loading .slick-track {
+  visibility: hidden;
+}
+
+.slick-slide {
+  display: none;
+  float: left;
+  height: 100%;
+  min-height: 1px;
+}
+
+[dir='rtl'] .slick-slide {
+  float: right;
+}
+
+.slick-slide img {
+  display: block;
+}
+
+.slick-slide.slick-loading img {
+  display: none;
+}
+
+.slick-slide.dragging img {
+  pointer-events: none;
+}
+
+.slick-initialized .slick-slide {
+  display: block;
+}
+
+.slick-loading .slick-slide {
+  visibility: hidden;
+}
+
+.slick-vertical .slick-slide {
+  display: block;
+  height: auto;
+  border: 1px solid transparent;
+}
+
+.slick-arrow.slick-hidden {
+  display: none;
+}
+/*# sourceMappingURL=plugin-slick-slider.css.map */

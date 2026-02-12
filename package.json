@@ -1,0 +1,32 @@
+{
+  "name": "888starz-africa-static",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static export and build for 888starz-africa.com",
+  "scripts": {
+    "export:static": "node scripts/export-crawler.js",
+    "export:live": "node scripts/export-crawler.js",
+    "export:wget": "bash scripts/export-static.sh",
+    "postexport:copy-assets": "node scripts/copy-wp-assets.js",
+    "build": "npm run export:static && npm run postexport:copy-assets",
+    "build:live": "npm run export:live && node scripts/download-all-assets.js && node scripts/copy-wp-assets.js && node scripts/fix-html-paths.js",
+    "download-assets": "node scripts/download-all-assets.js",
+    "serve": "node scripts/serve.js",
+    "test": "playwright test",
+    "verify:system-pages": "node scripts/verify_system_pages.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "p-limit": "^3.1.0",
+    "p-queue": "^6.6.2",
+    "playwright": "^1.40.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "serve": "^14.2.0"
+  },
+  "staticExport": {
+    "baseUrl": "http://localhost:8080",
+    "outDir": "dist"
+  }
+}

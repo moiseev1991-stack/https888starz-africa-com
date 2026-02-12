@@ -1,0 +1,16 @@
+# Static export
+/dist/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Local env (optional)
+.env
+.env.local

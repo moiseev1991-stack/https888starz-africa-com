@@ -1,0 +1,187 @@
+// Single Product
+
+.woocommerce{
+    div.product{
+        
+        // Meta Info
+        .woocommerce-breadcrumb{ display: none; }
+        .title.large{
+            margin-bottom: 5px;
+        }
+        .woocommerce-short-description{
+            margin-bottom: 15px;
+        }
+        .woocommerce-product-rating{
+            margin-bottom: 5px;
+        }
+        p.price, span.price{
+            color: $text-color;
+            font-weight: 700;
+            font-size: 1.4em;
+            del{
+                font-weight: 500;
+            }
+        }
+        .stock{
+            color: $main-color;
+            margin-bottom: 10px;
+        }
+        .amount{
+            font-weight: 700;
+        }
+        .product_meta{
+            border-top: 1px solid $border-color;
+            padding: 25px 0;
+            font-weight: 700;
+            & > span{
+                display: block;
+                span, a{
+                    font-weight: 400;
+                    text-transform: none;
+                }
+                a{
+                    // color: $main-color;
+                    &:hover{
+                        // color: $text-color;
+                    }
+                }
+            }
+        }
+        div.images{
+            img{
+                // border: 1px solid $border-color;
+                border-radius: $medium-border-radius;
+                box-shadow: $boxes-shadow;
+            }
+        }
+
+        // Cart Variations
+        form.cart .variations{
+            th{
+                vertical-align: top;
+                padding-top: 10px;
+                padding-bottom: 15px;
+            }
+            td{
+                padding-bottom: 15px;
+            }
+            select{
+                margin-bottom: 0;
+            }
+            .reset_variations{
+                font-size: 1em;
+                // font-weight: 700;
+                // color: $main-color;
+            }
+        }
+
+        // Tabs
+        .woocommerce-tabs{
+            .woocommerce-Tabs-panel--additional_information h2{ display: none; }
+            .woocommerce-Tabs-panel > h2{
+                display: none;
+            }	
+            ul.tabs{
+                &:before{
+                    border-color: $border-color;
+                }
+                li{
+                    padding: 10px 15px;
+                    border: 1px solid $border-color;
+                    // border-bottom: white;
+                    border-radius: 0;
+                    list-style: none;
+                    margin-right: 3px;
+                    word-break: break-word;
+                    color: $text-color;
+                    font-weight: 400;
+                    position: relative;
+                    z-index: 1;
+                    margin-right: 5px;
+                    background: transparent;
+                    border-radius: $small-border-radius $small-border-radius 0 0;
+                    @include transition;
+                    &.active{
+                        background: $white;
+                        border-bottom-color: $border-color;
+                    }
+                    a{
+                        padding: 0;
+                        font-weight: 600;
+                    }
+                    &::before{
+                        border-color: $border-color;
+                        box-shadow: none;
+                        border-radius: 0;
+                        display: none;
+                    }
+                    &::after{
+                        display: none;
+                    }
+                }
+            }
+            table.shop_attributes{
+                td, th{
+                    border: 1px solid $border-color;
+                }
+            }
+        }
+        
+    }
+
+    // Review list
+    #reviews{
+        padding-top: 10px;
+        
+        #comment{
+            height: 125px;
+        }
+        #comments{
+            ol.commentlist li{
+                margin-bottom: 30px;
+                img.avatar{
+                    border-radius: 50%;
+                    border: 1px solid $border-color;
+                    padding: 0;
+                    background: none;
+                }
+                .comment-text{
+                    padding-top: 0;
+                    padding-left: 55px;
+                    margin: 0;
+                    border: 0;
+                    border-bottom: 1px solid $border-color;
+                    p.meta{
+                        color: $text-color;
+                        // font-size: $font-size;
+                        margin-bottom: 10px;
+                    }
+                    .description{
+                        padding-bottom: 15px;
+                        font-size: 15px;
+                        p{
+                            margin-bottom: 15px;
+                        }
+                    }
+                }
+            }
+        }
+        #comments ol.commentlist li{
+            
+        }
+    }
+
+    // Review form
+    #review_form #respond p{
+        font-size: $font-size;
+        margin-bottom: 15px;
+        padding-bottom: 0px;
+    }
+
+    #single section.related.products{
+        padding: 0;
+    }
+}
+
+.epcl-shadow-style.woocommerce div.product .woocommerce-tabs ul.tabs:before{ border-color: rgba(#000, 0.25); }
+.epcl-shadow-style.woocommerce div.product .woocommerce-tabs ul.tabs li.active{ border-color: rgba(#000, 0.25); }

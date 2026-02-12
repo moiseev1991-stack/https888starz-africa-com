@@ -1,0 +1,6 @@
+/
+/apk/
+/cookies/
+/game/
+/promo-code/
+/registration/

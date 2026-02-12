@@ -1,0 +1,94 @@
+// Dashboard
+.woocommerce{
+
+    // My Account: Left Navigation
+    .woocommerce-MyAccount-navigation{
+        ul{
+            margin: 0;
+            list-style: none;
+            // background: lighten($border-color, 9%);
+            // border: 1px solid $border-color;
+            // padding: 20px;
+            border-radius: 25px;
+            padding-right: 25px;
+            li{ 
+                list-style: none;
+                border-top: 1px solid $border-color;
+                padding: 10px 0 !important;
+                &:before{ display: none; }	
+                &:first-child{ border: 0; }
+                a{
+                    color: $text-color;
+                    font-weight: 500;
+                    &:hover{ color: $main-color; }
+                }
+                &.is-active a{
+                    color: $main-color;
+                }
+            }
+        }
+    }
+
+    // Order Received
+    .woocommerce-customer-details address, .woocommerce-MyAccount-content address{
+        border: 1px solid $border-color;
+        padding: 20px;
+        box-sizing: border-box;
+        font-size: 15px;
+        line-height: $line-height;
+        background: $white;
+        border-radius: $small-border-radius;
+        p{
+            padding-top: 0;
+            &:before{ padding-top: 3px; }
+        }
+    }
+    
+
+    // Login
+    .woocommerce-privacy-policy-text{
+        p{ margin-bottom: 0; }
+    }
+    .lost_password{
+        margin-bottom: 0;
+    }
+    form.checkout_coupon, form.login, form.register{
+        font-size: 14px;
+        border: 0;
+        border-radius: 0;
+        padding: 20px 0;
+    }
+    form.register{
+        p{
+            padding-top: 0;
+            padding-bottom: 15px;
+            margin-bottom: 0;
+            a{
+                text-decoration: underline;
+            }
+        }
+    }
+    .woocommerce-message .button{
+        font-size: 12px;
+        padding: 5px 15px;
+    }
+
+//     .woocommerce-MyAccount-content{
+//         header.title{ 
+//             margin-bottom: 0px;
+//             h3{ 
+//                 padding-top: 0;                
+//             }
+//         }
+//     }
+
+}
+
+.woocommerce-account .addresses .title .edit{
+    font-size: 0.7em !important;
+    font-weight: 600;
+}
+
+.woocommerce-account{
+    // h1.title.bordered{ display: none; }
+}

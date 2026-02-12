@@ -1,0 +1,13 @@
+/* @group Page */
+
+#page{
+    #single{
+        .main-title{ margin-bottom: 0; }
+        &.no-sidebar.no-thumb{
+            .post-content{ margin-top: 0; }
+            .main-article.no-bg{ padding-top: 0; }
+        }
+    }
+}
+
+/* @end */

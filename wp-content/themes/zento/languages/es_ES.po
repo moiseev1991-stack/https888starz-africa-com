@@ -1,0 +1,1206 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Zento Spanish\n"
+"POT-Creation-Date: 2024-11-12 16:03-0300\n"
+"PO-Revision-Date: 2024-11-12 16:05-0300\n"
+"Last-Translator: \n"
+"Language-Team: Estudio Patagon\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.1\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-KeywordsList: _n:1,2;_x:1,2c;__;_e;esc_html__;esc_html_e;esc_attr__;"
+"esc_attr_e\n"
+"X-Poedit-SearchPath-0: themes/zento\n"
+"X-Poedit-SearchPath-1: plugins/zento-functions/widgets\n"
+"X-Poedit-SearchPath-2: plugins/zento-functions/twitter_api\n"
+"X-Poedit-SearchPathExcluded-0: themes/zento/functions/import\n"
+"X-Poedit-SearchPathExcluded-1: themes/zento/functions/merlin\n"
+"X-Poedit-SearchPathExcluded-2: themes/zento/functions/plugins\n"
+"X-Poedit-SearchPathExcluded-3: themes/zento/assets\n"
+
+#: plugins/zento-functions/theme-functions/render-ads.php:16
+#: plugins/zento-functions/theme-functions/render-ads.php:33
+#: plugins/zento-functions/theme-functions/render-ads.php:71
+msgid "Banner"
+msgstr "Banner"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:13
+#: plugins/zento-functions/theme-functions/theme-functions.php:47
+msgid "Views"
+msgstr "Visualizaciones"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:17
+#: plugins/zento-functions/theme-functions/theme-functions.php:33
+#, php-format
+msgid "%d Min Read"
+msgstr "%d Min de Lectura"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:28
+msgid "Min Read"
+msgstr "Min de Lectura"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:65
+#: plugins/zento-functions/theme-functions/social-buttons.php:69
+#, php-format
+msgid "Share on %s"
+msgstr "Compartir en %s"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:82
+msgid "Share Article:"
+msgstr "Compartir Artículo:"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:89
+msgid "Copied!"
+msgstr "Copiado!"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:89
+msgid "Copy Link"
+msgstr "Copiar Enlace"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:157
+#: plugins/zento-functions/theme-functions/social-buttons.php:171
+#: plugins/zento-functions/widgets/about.php:99
+#: plugins/zento-functions/widgets/about.php:101
+#: plugins/zento-functions/widgets/social.php:115
+#: themes/zento/amp/author.php:62 themes/zento/amp/author.php:64
+#: themes/zento/author.php:57 themes/zento/author.php:59
+#, php-format
+msgid "Follow me on %s"
+msgstr "Sígueme en %s"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:57
+msgid "Less than 1 minute ago"
+msgstr "Hace menos de 1 minuto"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:59
+#, php-format
+msgid "%s minute ago"
+msgstr "hace %s minuto"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:61
+#, php-format
+msgid "%s minutes ago"
+msgstr "hace %s minutos"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:65
+#, php-format
+msgid "%s hour ago"
+msgstr "hace %s hora"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:67
+#, php-format
+msgid "%s hours ago"
+msgstr "hace %s horas"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:71
+#, php-format
+msgid "%s day ago"
+msgstr "hace %s día"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:73
+#, php-format
+msgid "%s days ago"
+msgstr "hace %s días"
+
+#: plugins/zento-functions/widgets/about.php:6
+msgctxt "admin"
+msgid "(EP) About me"
+msgstr ""
+
+#: plugins/zento-functions/widgets/about.php:8
+msgctxt "admin"
+msgid "Display about author section."
+msgstr ""
+
+#: plugins/zento-functions/widgets/about.php:13
+#: plugins/zento-functions/widgets/ads-125.php:13
+#: plugins/zento-functions/widgets/ads-fluid.php:13
+#: plugins/zento-functions/widgets/article-info.php:13
+#: plugins/zento-functions/widgets/category-slider.php:13
+#: plugins/zento-functions/widgets/featured-category.php:13
+#: plugins/zento-functions/widgets/flickr.php:13
+#: plugins/zento-functions/widgets/posts-thumbs.php:13
+#: plugins/zento-functions/widgets/related-articles.php:13
+#: plugins/zento-functions/widgets/social.php:13
+#: plugins/zento-functions/widgets/tag-cloud.php:13
+#: plugins/zento-functions/widgets/toc.php:13
+#: plugins/zento-functions/widgets/topics-index.php:56
+#: plugins/zento-functions/widgets/tweets.php:13
+#: plugins/zento-functions/widgets/video.php:13
+msgctxt "admin"
+msgid "Title:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/about.php:19
+msgctxt "admin"
+msgid "Position:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/about.php:20
+msgctxt "admin"
+msgid "e.g. Founder & Editor"
+msgstr ""
+
+#: plugins/zento-functions/widgets/about.php:26
+msgctxt "admin"
+msgid "Author:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/about.php:27
+msgctxt "admin"
+msgid ""
+"Select an author to display all his information. Remember to fill your "
+"profile (website, Twitter and Facebook.)"
+msgstr ""
+
+#: plugins/zento-functions/widgets/about.php:57
+#: themes/zento/partials/meta-info/author.php:13
+#, php-format
+msgid "Avatar Image of %s"
+msgstr "Imagen de perfil de %s"
+
+#: plugins/zento-functions/widgets/about.php:73
+#: plugins/zento-functions/widgets/about.php:76 themes/zento/amp/author.php:42
+#: themes/zento/author.php:37
+msgid "Follow me on Twitter"
+msgstr "Sígueme en Twitter"
+
+#: plugins/zento-functions/widgets/about.php:75 themes/zento/amp/author.php:43
+#: themes/zento/author.php:38
+msgid "Twitter"
+msgstr ""
+
+#: plugins/zento-functions/widgets/about.php:80
+#: plugins/zento-functions/widgets/about.php:83 themes/zento/amp/author.php:47
+#: themes/zento/author.php:42
+msgid "Follow me on Facebook"
+msgstr "Sígueme en Facebook"
+
+#: plugins/zento-functions/widgets/about.php:82 themes/zento/amp/author.php:48
+#: themes/zento/author.php:43
+msgid "Facebook"
+msgstr ""
+
+#: plugins/zento-functions/widgets/about.php:87
+#: plugins/zento-functions/widgets/about.php:89
+#: plugins/zento-functions/widgets/about.php:90 themes/zento/amp/author.php:52
+#: themes/zento/amp/author.php:53 themes/zento/author.php:47
+#: themes/zento/author.php:48 themes/zento/comments.php:79
+msgid "Website"
+msgstr "Sitio Web"
+
+#: plugins/zento-functions/widgets/ads-125.php:6
+msgctxt "admin"
+msgid "(EP) 125x125 Ads"
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-125.php:8
+msgctxt "admin"
+msgid "Display 125x125 grid ads."
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-125.php:14
+msgctxt "admin"
+msgid "Copy and paste your ads code:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-125.php:20
+msgctxt "admin"
+msgid "Ads Block n&ordm; 1:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-125.php:32
+msgctxt "admin"
+msgid "Ads Block n&ordm; 2:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-125.php:44
+msgctxt "admin"
+msgid "Ads Block n&ordm; 3:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-125.php:56
+msgctxt "admin"
+msgid "Ads Block n&ordm; 4:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-fluid.php:6
+msgctxt "admin"
+msgid "(EP) Fluid Ads"
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-fluid.php:8
+msgctxt "admin"
+msgid ""
+"Display a fluid ads. Note: the max ads width is 300px and height is "
+"unlimited."
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-fluid.php:19
+msgctxt "admin"
+msgid "Width of advertise to show:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-fluid.php:27
+msgctxt "admin"
+msgid "Align:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-fluid.php:29
+msgctxt "admin"
+msgid "Left"
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-fluid.php:30
+msgctxt "admin"
+msgid "Center"
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-fluid.php:31
+msgctxt "admin"
+msgid "Right"
+msgstr ""
+
+#: plugins/zento-functions/widgets/ads-fluid.php:38
+msgctxt "admin"
+msgid "Ads Code:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/article-info.php:6
+msgctxt "admin"
+msgid "(EP) Article Information"
+msgstr ""
+
+#: plugins/zento-functions/widgets/article-info.php:8
+msgctxt "admin"
+msgid "Display Detailed Article Info on Single Post."
+msgstr ""
+
+#: plugins/zento-functions/widgets/article-info.php:19
+msgctxt "admin"
+msgid "Display Category:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/article-info.php:25
+msgctxt "admin"
+msgid "Display Modified Date:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/article-info.php:31
+msgctxt "admin"
+msgid "Display Author:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/article-info.php:37
+msgctxt "admin"
+msgid "Display Reading Time:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/article-info.php:43
+msgctxt "admin"
+msgid "Display Rating:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/article-info.php:73
+msgid "Category:"
+msgstr "Categorizado en:"
+
+#: plugins/zento-functions/widgets/article-info.php:89
+msgid "Author:"
+msgstr "Autor:"
+
+#: plugins/zento-functions/widgets/article-info.php:97
+msgid "Reading time:"
+msgstr "Tiempo de lectura:"
+
+#: plugins/zento-functions/widgets/article-info.php:100
+#, php-format
+msgid "%d Min"
+msgstr "%d Min"
+
+#: plugins/zento-functions/widgets/category-slider.php:6
+msgctxt "admin"
+msgid "(EP) Category Slider"
+msgstr ""
+
+#: plugins/zento-functions/widgets/category-slider.php:8
+msgctxt "admin"
+msgid "Display a Category Slider."
+msgstr ""
+
+#: plugins/zento-functions/widgets/category-slider.php:19
+#: plugins/zento-functions/widgets/featured-category.php:19
+#: plugins/zento-functions/widgets/flickr.php:27
+#: plugins/zento-functions/widgets/posts-thumbs.php:19
+#: plugins/zento-functions/widgets/related-articles.php:19
+#: plugins/zento-functions/widgets/tag-cloud.php:19
+msgctxt "admin"
+msgid "Max number of elements to display:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/category-slider.php:30
+#: plugins/zento-functions/widgets/posts-thumbs.php:30
+#: plugins/zento-functions/widgets/tag-cloud.php:41
+msgctxt "admin"
+msgid "Order by:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/category-slider.php:32
+#: plugins/zento-functions/widgets/tag-cloud.php:43
+#: plugins/zento-functions/widgets/topics-index.php:86
+msgctxt "admin"
+msgid "Name"
+msgstr ""
+
+#: plugins/zento-functions/widgets/category-slider.php:33
+#: plugins/zento-functions/widgets/tag-cloud.php:44
+#: plugins/zento-functions/widgets/topics-index.php:88
+msgctxt "admin"
+msgid "Count"
+msgstr ""
+
+#: plugins/zento-functions/widgets/category-slider.php:41
+#: plugins/zento-functions/widgets/tag-cloud.php:52
+msgctxt "admin"
+msgid "Order:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/category-slider.php:43
+#: plugins/zento-functions/widgets/tag-cloud.php:54
+#: plugins/zento-functions/widgets/topics-index.php:98
+#: plugins/zento-functions/widgets/topics-index.php:134
+msgctxt "admin"
+msgid "Ascendant"
+msgstr ""
+
+#: plugins/zento-functions/widgets/category-slider.php:44
+#: plugins/zento-functions/widgets/tag-cloud.php:55
+#: plugins/zento-functions/widgets/topics-index.php:99
+#: plugins/zento-functions/widgets/topics-index.php:135
+msgctxt "admin"
+msgid "Descendant"
+msgstr ""
+
+#: plugins/zento-functions/widgets/category-slider.php:51
+msgctxt "admin"
+msgid "Show category count:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/category-slider.php:108
+#, php-format
+msgid "%s <span class=\"dot small\"></span> Article"
+msgid_plural "%s <span class=\"dot small\"></span> Articles"
+msgstr[0] "%s <span class=\"dot small\"></span> Artículo"
+msgstr[1] "%s <span class=\"dot small\"></span> Artículos"
+
+#: plugins/zento-functions/widgets/featured-category.php:6
+msgctxt "admin"
+msgid "(EP) Posts by Category"
+msgstr ""
+
+#: plugins/zento-functions/widgets/featured-category.php:8
+msgctxt "admin"
+msgid "Display posts from a certain category."
+msgstr ""
+
+#: plugins/zento-functions/widgets/featured-category.php:30
+msgctxt "admin"
+msgid "Category:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/flickr.php:6
+msgctxt "admin"
+msgid "(EP) Flickr Gallery"
+msgstr ""
+
+#: plugins/zento-functions/widgets/flickr.php:8
+msgctxt "admin"
+msgid "Display recent photos from Flickr."
+msgstr ""
+
+#: plugins/zento-functions/widgets/flickr.php:20
+msgctxt "admin"
+msgid "Flickr id:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/flickr.php:21
+#, php-format
+msgctxt "admin"
+msgid "You can find your Flickr id on: %s"
+msgstr ""
+
+#: plugins/zento-functions/widgets/flickr.php:48
+msgctxt "admin"
+msgid "You must enter a valid Flickr id"
+msgstr ""
+
+#: plugins/zento-functions/widgets/flickr.php:52
+msgctxt "admin"
+msgid "Loading..."
+msgstr ""
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:6
+msgctxt "admin"
+msgid "(EP) Recent Posts with image"
+msgstr ""
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:8
+msgctxt "admin"
+msgid "Display Random or Recent posts with a small image."
+msgstr ""
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:32
+#: plugins/zento-functions/widgets/topics-index.php:120
+msgctxt "admin"
+msgid "Recent Posts"
+msgstr ""
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:33
+#: plugins/zento-functions/widgets/topics-index.php:123
+msgctxt "admin"
+msgid "Random Posts"
+msgstr ""
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:42
+msgctxt "admin"
+msgid "Date:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:44
+msgctxt "admin"
+msgid "All Time"
+msgstr ""
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:45
+msgctxt "admin"
+msgid "Past Year"
+msgstr ""
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:46
+msgctxt "admin"
+msgid "Past Month"
+msgstr ""
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:47
+msgctxt "admin"
+msgid "Past Week"
+msgstr ""
+
+#: plugins/zento-functions/widgets/related-articles.php:6
+msgctxt "admin"
+msgid "(EP) Related Articles"
+msgstr ""
+
+#: plugins/zento-functions/widgets/related-articles.php:8
+msgctxt "admin"
+msgid "Display related articles from the current post."
+msgstr ""
+
+#: plugins/zento-functions/widgets/social.php:6
+msgctxt "admin"
+msgid "(EP) Social"
+msgstr ""
+
+#: plugins/zento-functions/widgets/social.php:8
+msgctxt "admin"
+msgid "Display your social profiles."
+msgstr ""
+
+#: plugins/zento-functions/widgets/social.php:14
+msgctxt "admin"
+msgid "Don't forget to fill your social profiles"
+msgstr ""
+
+#: plugins/zento-functions/widgets/social.php:14
+#: plugins/zento-functions/widgets/subscribe-form.php:30
+msgctxt "admin"
+msgid "here."
+msgstr ""
+
+#: plugins/zento-functions/widgets/subscribe-form.php:6
+msgctxt "admin"
+msgid "(EP) Subscribe Form"
+msgstr ""
+
+#: plugins/zento-functions/widgets/subscribe-form.php:8
+msgctxt "admin"
+msgid "Display a subscribe form, your website logo + a small text description."
+msgstr ""
+
+#: plugins/zento-functions/widgets/subscribe-form.php:13
+msgctxt "admin"
+msgid "Title (optional):"
+msgstr ""
+
+#: plugins/zento-functions/widgets/subscribe-form.php:20
+msgctxt "admin"
+msgid "Small description (optional)"
+msgstr ""
+
+#: plugins/zento-functions/widgets/subscribe-form.php:21
+msgctxt "admin"
+msgid "HTML and Shortcodes are allowed"
+msgstr ""
+
+#: plugins/zento-functions/widgets/subscribe-form.php:30
+msgctxt "admin"
+msgid ""
+"Don't forget to properly configure your <b>Subscribe URL</b> on the Theme "
+"Option Panel: "
+msgstr ""
+
+#: plugins/zento-functions/widgets/subscribe-form.php:59
+#: themes/zento/partials/subscribe-form.php:11
+msgid "Enter your email address"
+msgstr "Ingresa tu correo electrónico"
+
+#: plugins/zento-functions/widgets/subscribe-form.php:60
+#: themes/zento/partials/subscribe-form.php:12
+msgid "Get Started"
+msgstr "Empezar"
+
+#: plugins/zento-functions/widgets/tag-cloud.php:6
+msgctxt "admin"
+msgid "(EP) Tag Cloud"
+msgstr ""
+
+#: plugins/zento-functions/widgets/tag-cloud.php:8
+msgctxt "admin"
+msgid "Display tags or categories with limit and special filters."
+msgstr ""
+
+#: plugins/zento-functions/widgets/tag-cloud.php:30
+msgctxt "admin"
+msgid "Taxonomy (mode):"
+msgstr ""
+
+#: plugins/zento-functions/widgets/tag-cloud.php:32
+msgctxt "admin"
+msgid "Post Category"
+msgstr ""
+
+#: plugins/zento-functions/widgets/tag-cloud.php:33
+msgctxt "admin"
+msgid "Post Tags"
+msgstr ""
+
+#: plugins/zento-functions/widgets/tag-cloud.php:62
+msgctxt "admin"
+msgid "Show tag counts:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/toc.php:6
+msgctxt "admin"
+msgid "(EP) Table of Contents"
+msgstr ""
+
+#: plugins/zento-functions/widgets/toc.php:8
+msgctxt "admin"
+msgid "Display TOC on Single Post."
+msgstr ""
+
+#: plugins/zento-functions/widgets/toc.php:26
+msgid "Max Height in pixels (Optional)"
+msgstr ""
+
+#: plugins/zento-functions/widgets/toc.php:27
+msgid "Default: none"
+msgstr ""
+
+#: plugins/zento-functions/widgets/toc.php:28
+msgid ""
+"This will automatically add a Scroll Bar if max height is reached. e.g. 250"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:49
+msgctxt "admin"
+msgid "(EP) Topics Index"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:51
+msgctxt "admin"
+msgid ""
+"A widget that displays multiple articles, organized by categories for easy "
+"and quick navigation."
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:61
+msgctxt "admin"
+msgid "Category Limit:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:63
+msgctxt "admin"
+msgid "Max number of Categories to display."
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:72
+msgctxt "admin"
+msgid "Excluded Categories"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:74
+msgctxt "admin"
+msgid ""
+"(Optional) Usefull if you dont want specific categories. Ctrl (CMD on Mac) + "
+"Click to select multiple categories."
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:84
+msgctxt "admin"
+msgid "Category Order by:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:87
+#: plugins/zento-functions/widgets/topics-index.php:121
+msgctxt "admin"
+msgid "Slug"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:96
+msgctxt "admin"
+msgid "Category Order:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:106
+msgctxt "admin"
+msgid "Posts Limit:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:107
+msgctxt "admin"
+msgid "Max number of articles per category to display:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:118
+msgctxt "admin"
+msgid "Posts Order by:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:122
+msgctxt "admin"
+msgid "Menu Order"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:132
+msgctxt "admin"
+msgid "Post Order:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/tweets.php:6
+msgctxt "admin"
+msgid "(EP) Recent Tweets"
+msgstr ""
+
+#: plugins/zento-functions/widgets/tweets.php:8
+msgctxt "admin"
+msgid "Display recent tweets."
+msgstr ""
+
+#: plugins/zento-functions/widgets/tweets.php:18
+msgctxt "admin"
+msgid "Number of tweets to show:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/tweets.php:28
+msgctxt "admin"
+msgid "Twitter ID: (without @)"
+msgstr ""
+
+#: plugins/zento-functions/widgets/tweets.php:33
+msgctxt "admin"
+msgid "Exclude Replies"
+msgstr ""
+
+#: plugins/zento-functions/widgets/video.php:6
+msgctxt "admin"
+msgid "(EP) Video"
+msgstr ""
+
+#: plugins/zento-functions/widgets/video.php:8
+msgctxt "admin"
+msgid "Display a Youtube or Vimeo video."
+msgstr ""
+
+#: plugins/zento-functions/widgets/video.php:20
+msgctxt "admin"
+msgid "Type:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/video.php:22
+msgctxt "admin"
+msgid "Youtube"
+msgstr ""
+
+#: plugins/zento-functions/widgets/video.php:23
+msgctxt "admin"
+msgid "Vimeo"
+msgstr ""
+
+#: plugins/zento-functions/widgets/video.php:30
+msgctxt "admin"
+msgid "URL:"
+msgstr ""
+
+#: plugins/zento-functions/widgets/video.php:36
+msgctxt "admin"
+msgid "Height:"
+msgstr ""
+
+#: themes/zento/404.php:22 themes/zento/amp/404.php:22
+msgid "Page not found"
+msgstr "Página no encontrada"
+
+#: themes/zento/404.php:23 themes/zento/amp/404.php:23
+msgid "Unfortunately the page you are looking for is not available."
+msgstr "Lamentablemente la página que estás buscando no está disponible."
+
+#: themes/zento/404.php:25 themes/zento/amp/404.php:25
+#: themes/zento/partials/no-results.php:10
+msgid "Go back to home"
+msgstr "Volver al inicio"
+
+#: themes/zento/amp/category.php:27 themes/zento/amp/tag.php:13
+#: themes/zento/category.php:27 themes/zento/tag.php:13
+#, php-format
+msgid "A collection of <b>1 post</b>"
+msgid_plural "A collection of <b>%1$s posts</b>"
+msgstr[0] "Una colección de <b>1 artículo</b>"
+msgstr[1] "Una colección de <b>%1$s artículos</b>"
+
+#: themes/zento/amp/page-templates/page-explore-tags.php:50
+#: themes/zento/page-templates/page-explore-tags.php:52
+#, php-format
+msgid "1 Article"
+msgid_plural "%1$s Articles"
+msgstr[0] "%1$s Artículo"
+msgstr[1] "%1$s Artículos"
+
+#: themes/zento/amp/page.php:87 themes/zento/amp/single.php:152
+#: themes/zento/page.php:89 themes/zento/single.php:164
+msgid "Pages"
+msgstr "Páginas"
+
+#: themes/zento/amp/page.php:93 themes/zento/amp/single.php:158
+#: themes/zento/functions/theme-functions.php:197
+#: themes/zento/functions/theme-functions.php:208 themes/zento/page.php:95
+#: themes/zento/single.php:170
+msgid "Next"
+msgstr "Siguiente"
+
+#: themes/zento/amp/page.php:94 themes/zento/amp/single.php:159
+#: themes/zento/functions/theme-functions.php:193
+#: themes/zento/functions/theme-functions.php:212 themes/zento/page.php:96
+#: themes/zento/single.php:171
+msgid "Previous"
+msgstr "Anterior"
+
+#: themes/zento/amp/partials/header.php:64 themes/zento/partials/header.php:64
+msgid "Quick Search..."
+msgstr "Búsqueda Rápida..."
+
+#: themes/zento/amp/search.php:12 themes/zento/search.php:8
+msgid "Search results for:"
+msgstr "Resultados de búsqueda para:"
+
+#: themes/zento/amp/single.php:118 themes/zento/single.php:135
+msgid "Published in:"
+msgstr "Publicado en:"
+
+#: themes/zento/amp/single.php:129
+msgid "Leave a Comment"
+msgstr "Dejar un Comentario"
+
+#: themes/zento/amp/single.php:137 themes/zento/single.php:148
+msgid "Categorized in:"
+msgstr "Categorizado en:"
+
+#: themes/zento/amp/single.php:143 themes/zento/single.php:154
+msgid "Tagged in:"
+msgstr "Etiquetado en:"
+
+#: themes/zento/comments.php:26
+msgid "on"
+msgstr "en"
+
+#: themes/zento/comments.php:30
+msgid "Your comment is awaiting moderation."
+msgstr "Tu comentario está siendo revisado."
+
+#: themes/zento/comments.php:45
+#: themes/zento/partials/single/comments-area.php:14
+#: themes/zento/partials/single/comments-area.php:24
+msgid "Comments"
+msgstr "Comentarios"
+
+#: themes/zento/comments.php:59
+msgid "Older Comments"
+msgstr "Comentarios Antiguos"
+
+#: themes/zento/comments.php:60
+msgid "Newer Comments"
+msgstr "Comentarios Recientes"
+
+#: themes/zento/comments.php:67
+msgid "Comments are closed."
+msgstr "Los comentarios están cerrados."
+
+#: themes/zento/comments.php:77
+msgid "Name"
+msgstr "Nombre"
+
+#: themes/zento/comments.php:78
+msgid "Email"
+msgstr "Email"
+
+#: themes/zento/comments.php:84
+msgid "Comment"
+msgstr "Comentario"
+
+#: themes/zento/comments.php:85
+msgid "Log In"
+msgstr "Iniciar Sesión"
+
+#: themes/zento/functions.php:104
+msgid "Header"
+msgstr "Cabecera"
+
+#: themes/zento/functions/enqueue-scripts.php:101
+msgctxt "Urbanist font: on or off"
+msgid "on"
+msgstr "on"
+
+#: themes/zento/functions/enqueue-scripts.php:105
+msgctxt "DM Sans font: on or off"
+msgid "on"
+msgstr "on"
+
+#: themes/zento/functions/sidebars.php:12
+msgctxt "admin"
+msgid "Article Sidebar"
+msgstr "Artículo"
+
+#: themes/zento/functions/sidebars.php:14
+msgctxt "admin"
+msgid "Right sidebar inside single posts."
+msgstr "Panel Lateral derecho para artículos."
+
+#: themes/zento/functions/sidebars.php:24
+msgctxt "admin"
+msgid "Home Sidebar"
+msgstr "Inicio"
+
+#: themes/zento/functions/sidebars.php:26
+msgctxt "admin"
+msgid "Sidebar for home, archives and results"
+msgstr "Panel lateral para inicio, archivos y resultados"
+
+#: themes/zento/functions/sidebars.php:36
+msgctxt "admin"
+msgid "Footer"
+msgstr "Pie de Página"
+
+#: themes/zento/functions/sidebars.php:38
+msgctxt "admin"
+msgid "Footer Sidebar"
+msgstr "Panel Lateral para pie de página"
+
+#: themes/zento/functions/sidebars.php:48
+msgctxt "admin"
+msgid "Footer Mobile"
+msgstr "Pie de página móvil"
+
+#: themes/zento/functions/sidebars.php:50
+msgctxt "admin"
+msgid "Footer Mobile Sidebar"
+msgstr "Panel para Pie de página móvil"
+
+#: themes/zento/functions/theme-functions.php:195
+#, php-format
+msgid "Page %d of %d"
+msgstr "Página %d de %d"
+
+#: themes/zento/functions/theme-functions.php:219
+msgctxt "admin"
+msgid "(EP) Medium (768x768px)"
+msgstr ""
+
+#: themes/zento/functions/theme-functions.php:245 themes/zento/searchform.php:5
+msgid "Search"
+msgstr "Buscar"
+
+#: themes/zento/functions/theme-functions.php:252
+msgid "Subscribe"
+msgstr "Suscribir"
+
+#: themes/zento/functions/theme-functions.php:515
+msgid "Avatar"
+msgstr "Avatar"
+
+#: themes/zento/page-templates/home.php:17
+msgid "You must add some module before publish this page"
+msgstr "Debes añadir al menos un modulo antes de publicar esta página"
+
+#: themes/zento/partials/header/search-lightbox.php:5
+#, php-format
+msgid "Press %s to close"
+msgstr "Presiona %s para cerrar"
+
+#: themes/zento/partials/home-blocks/posts-carousel.php:98
+msgid "Read More"
+msgstr "Leer más"
+
+#: themes/zento/partials/loops/classic-article-image.php:80
+#: themes/zento/partials/loops/classic-article.php:82
+#: themes/zento/partials/loops/grid-article-image.php:48
+msgid "Featured Article"
+msgstr "Artículos Destacados"
+
+#: themes/zento/partials/meta-info/comments.php:3
+msgid "Go to comments"
+msgstr "Ir a los comentarios"
+
+#: themes/zento/partials/meta-info/comments.php:6
+#, php-format
+msgid "%1$s Comment"
+msgid_plural "%1$s Comments"
+msgstr[0] "%1$s Comentario"
+msgstr[1] "%1$s Comentarios"
+
+#: themes/zento/partials/meta-info/modified-date.php:3
+msgid "Updated:"
+msgstr "Actualizado:"
+
+#: themes/zento/partials/no-results.php:6
+msgid "Something's wrong here..."
+msgstr "Algo esta mal aquí..."
+
+#: themes/zento/partials/no-results.php:7
+msgid "We can't find any result for your search term."
+msgstr "No hemos podido encontrar ningún resultado para tu búsqueda."
+
+#: themes/zento/partials/single/comments-area.php:17
+msgid "Please enable JavaScript to view the"
+msgstr "Habilita JavaScript para visualizar los"
+
+#: themes/zento/partials/single/comments-area.php:17
+msgid "comments powered by Disqus."
+msgstr "comentarios proporcionados por Disqus."
+
+#: themes/zento/partials/single/related-articles.php:35
+msgid "More in this <b>Category</b>"
+msgstr "Más en esta <b>Categoría</b>"
+
+#: themes/zento/partials/single/related-articles.php:38
+#: themes/zento/partials/single/related-articles.php:61
+msgid "View All Articles"
+msgstr "Ver los Artículos"
+
+#: themes/zento/partials/single/siblings-articles.php:19
+#: themes/zento/partials/single/siblings-articles.php:23
+msgid "Previous Article"
+msgstr "Artículo Anterior"
+
+#: themes/zento/partials/single/siblings-articles.php:42
+#: themes/zento/partials/single/siblings-articles.php:46
+msgid "Next Article"
+msgstr "Artículo Siguiente"
+
+#: themes/zento/partials/single/single-post-info.php:14
+msgid "Published:"
+msgstr "Publicado en:"
+
+#: themes/zento/searchform.php:3
+msgid "Type to start your search"
+msgstr "Ingresa tu búsqueda para comenzar"
+
+#: themes/zento/searchform.php:4
+msgid "Submit"
+msgstr "Enviar"
+
+#: themes/zento/single.php:128
+msgid "Table of Contents"
+msgstr "Índice de Contenidos"
+
+#, fuzzy
+#~| msgid "Views"
+#~ msgid "Reviews"
+#~ msgstr "Visualizaciones"
+
+#, fuzzy
+#~| msgid "You might also like"
+#~ msgid "You may also like&hellip;"
+#~ msgstr "También podría interesarte"
+
+#~ msgid "Or check our latest articles..."
+#~ msgstr "O visita nuestros últimos artículos..."
+
+#, php-format
+#~ msgid "%1$s <span class=\"dot\"></span> Article in this Category"
+#~ msgid_plural ""
+#~ "%1$s &nbsp;<span class=\"dot\"></span> Articles in this Category"
+#~ msgstr[0] "%1$s <span class=\"dot\"></span> Artículo en esta categoría"
+#~ msgstr[1] ""
+#~ "%1$s &nbsp;<span class=\"dot\"></span> Artículos en esta categoría"
+
+#~ msgid "Explore"
+#~ msgstr "Explorar"
+
+#, php-format
+#~ msgid "%1$s <span class=\"dot\"></span> Article with this Tag"
+#~ msgid_plural "%1$s &nbsp;<span class=\"dot\"></span> Articles with this Tag"
+#~ msgstr[0] "%1$s <span class=\"dot\"></span> Artículo con esta etiqueta"
+#~ msgstr[1] ""
+#~ "%1$s &nbsp;<span class=\"dot\"></span> Artículos con esta etiqueta"
+
+#~ msgctxt "Be Vietnam Pro font: on or off"
+#~ msgid "on"
+#~ msgstr "on"
+
+#~ msgid "About the Author"
+#~ msgstr "Acerca del Autor"
+
+#~ msgid "Or check our Popular Categories..."
+#~ msgstr "O revisa nuestras Categorías más Populares..."
+
+#, php-format
+#~ msgid "%1$s <span class=\"dot\"></span> Article"
+#~ msgid_plural "%1$s &nbsp;<span class=\"dot\"></span> Articles"
+#~ msgstr[0] "%1$s <span class=\"dot\"></span> Artículo"
+#~ msgstr[1] "%1$s &nbsp;<span class=\"dot\"></span> Artículos"
+
+#~ msgid "Featured"
+#~ msgstr "Destacado"
+
+#~ msgid "By"
+#~ msgstr "Por"
+
+#~ msgid "Subscribe to our Newsletter"
+#~ msgstr "Suscríbete a nuestro Boletín"
+
+#~ msgid ""
+#~ "Subscribe to our email newsletter to get the latest posts delivered right "
+#~ "to your email."
+#~ msgstr "Suscríbete a nuestro Boletín para obtener los últimos artículos."
+
+#~ msgid "Type to start your search..."
+#~ msgstr "Ingresa tu búsqueda para comenzar..."
+
+#~ msgid "We can't find the page you're looking."
+#~ msgstr "No hemos podido encontrar lo que buscas."
+
+#~ msgid "Tag:"
+#~ msgstr "Etiquetado:"
+
+#~ msgctxt "Jost font: on or off"
+#~ msgid "on"
+#~ msgstr "on"
+
+#~ msgctxt "Outfit font: on or off"
+#~ msgid "on"
+#~ msgstr "on"
+
+#~ msgid "Continue Reading"
+#~ msgstr "Continuar Leyendo"
+
+#~ msgid "Like what you read?"
+#~ msgstr "¿Te gustó lo que leíste?"
+
+#~ msgid "Edit this post"
+#~ msgstr "Editar este artículo"
+
+#~ msgid "Follow me!"
+#~ msgstr "¡Sígueme!"
+
+#~ msgid "Our photos!"
+#~ msgstr "¡Nuestras Fotos!"
+
+#~ msgid "Visit me!"
+#~ msgstr "¡Visítame!"
+
+#~ msgid "Pin it!"
+#~ msgstr "¡Nuestros Pins!"
+
+#~ msgid "Our work!"
+#~ msgstr "¡Nuestro trabajo!"
+
+#~ msgid "Check my videos!"
+#~ msgstr "¡Revisa mis videos!"
+
+#~ msgid "See more photos!"
+#~ msgstr "¡Ve más fotografías!"
+
+#~ msgid "Get our latest news!"
+#~ msgstr "Obtén nuestras últimas noticias!"
+
+#~ msgid "Contact me!"
+#~ msgstr "Contáctame!"
+
+#, php-format
+#~ msgid "One Comment"
+#~ msgid_plural "%1$s Comments"
+#~ msgstr[0] "Un Comentario"
+#~ msgstr[1] "%1$s Comentarios"
+
+#~ msgctxt "Josefin Sans font: on or off"
+#~ msgid "on"
+#~ msgstr "on"
+
+#~ msgctxt "Source Serif Pro font: on or off"
+#~ msgid "on"
+#~ msgstr "on"
+
+#~ msgid "Articles"
+#~ msgstr "Artículos"
+
+#~ msgid "Other Stories"
+#~ msgstr "Otras Historias"
+
+#~ msgid "Next Story"
+#~ msgstr "Siguiente Historia"
+
+#~ msgid "Hide Comments"
+#~ msgstr "Ocultar Comentarios"
+
+#~ msgctxt "Nunito font: on or off"
+#~ msgid "on"
+#~ msgstr "on"
+
+#~ msgid "Page"
+#~ msgstr "Página"
+
+#~ msgid "of"
+#~ msgstr "de"
+
+#~ msgctxt "Playfair Display font: on or off"
+#~ msgid "on"
+#~ msgstr "on"
+
+#~ msgctxt "Muli font: on or off"
+#~ msgid "on"
+#~ msgstr "on"
+
+#~ msgid "Back to top"
+#~ msgstr "Volver arriba"
+
+#~ msgctxt "Poppins font: on or off"
+#~ msgid "on"
+#~ msgstr "on"
+
+#~ msgid "Left Arrow"
+#~ msgstr "Flecha Izquierda"
+
+#~ msgctxt "Roboto font: on or off"
+#~ msgid "on"
+#~ msgstr "on"
+
+#~ msgctxt "Montserrat font: on or off"
+#~ msgid "on"
+#~ msgstr "on"
+
+#~ msgid "Disabled"
+#~ msgstr "Deshabilitado"
