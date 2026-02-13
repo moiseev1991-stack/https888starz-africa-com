@@ -29,15 +29,13 @@ function walk(dir, callback, fileExt = '.html') {
 function optimizeCss(css) {
   let out = css;
   
-  // Добавить font-display: swap для всех @font-face правил (особенно Font Awesome)
+  // Добавить font-display: swap для всех @font-face (Font Awesome webfont.woff2 — PageSpeed 30 мс)
   out = out.replace(
     /(@font-face\s*\{[^}]*)(\})/gi,
     (match, before, closing) => {
-      if (/font-display/.test(before)) {
-        return match; // Уже есть font-display
-      }
-      // Добавить font-display: swap перед закрывающей скобкой
-      return before + '\n  font-display: swap;' + closing;
+      if (/font-display/.test(before)) return match;
+      const sep = /\n/.test(before) ? '\n  font-display: swap;' : ' font-display:swap;';
+      return before + sep + closing;
     }
   );
   
@@ -84,8 +82,38 @@ function optimizeHtml(html) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
   
-  // 4. jQuery и scripts.min.js БЕЗ defer — иначе inline-скрипты вызывают "ReferenceError: $ is not defined"
-  // (defer только для owl, fancybox, prism, flexy-breadcrumb, email-decode — см. ниже)
+  // 4. Перенести jQuery и scripts.min.js в конец body — убирает блокировку отрисовки (150 ms), без " $ is not defined"
+  const jqueryTagMatch = out.match(/<script[^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*><\/script>/i);
+  const scriptsMinMatch = out.match(/<script[^>]*src=["'][^"']*scripts\.min\.js[^"']*["'][^>]*><\/script>/i);
+  if (jqueryTagMatch) {
+    out = out.replace(jqueryTagMatch[0], '');
+  }
+  if (scriptsMinMatch) {
+    out = out.replace(scriptsMinMatch[0], '');
+  }
+  const scriptsAtEnd = [jqueryTagMatch && jqueryTagMatch[0], scriptsMinMatch && scriptsMinMatch[0]].filter(Boolean).join('\n');
+  if (scriptsAtEnd) {
+    out = out.replace('</body>', scriptsAtEnd + '\n</body>');
+  }
+  // Оборачиваем jQuery(document).ready в head в DOMContentLoaded (jQuery теперь в конце body)
+  out = out.replace(
+    /(<script>(?:\s*\/\/[^\n]*\n)*)(\s*)(jQuery\s*\(\s*document\s*\)\s*\.\s*ready\s*\()/gi,
+    '$1$2document.addEventListener("DOMContentLoaded",function(){ $3'
+  );
+  let addedDOMContentLoadedClose = false;
+  out = out.replace(
+    /(}\s*\)\s*;)\s*(\s*<\/script>)/g,
+    (m, close, rest) => {
+      if (addedDOMContentLoadedClose) return m;
+      const pos = out.indexOf(m);
+      const chunk = pos >= 0 ? out.slice(Math.max(0, pos - 2500), pos) : '';
+      if (/document\.addEventListener\s*\(\s*["']DOMContentLoaded["']/.test(chunk)) {
+        addedDOMContentLoadedClose = true;
+        return close + ' }); ' + rest;
+      }
+      return m;
+    }
+  );
 
   // 5. email-decode.min.js (cloudflare-static) — defer, убирает 482 ms из критической цепочки
   out = out.replace(
