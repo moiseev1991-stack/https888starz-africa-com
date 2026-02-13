@@ -1,5 +1,7 @@
 # Static export
 /dist/
+/deploy/
+deploy.tar.gz
 
 # Node
 node_modules/
