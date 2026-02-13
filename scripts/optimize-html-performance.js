@@ -42,8 +42,22 @@ function optimizeCss(css) {
   return out;
 }
 
-function optimizeHtml(html) {
+const BASE_URL = process.env.STATIC_BASE_URL || 'https://888starzeg-egypt.com';
+
+function optimizeHtml(html, relativePath) {
   let out = html;
+  const bodyStart = out.indexOf('</head>');
+  
+  // 0. Собрать инлайн-скрипты с $/jQuery из body и перенести в конец (исправляет " $ is not defined")
+  const inlineScriptsWithJQuery = [];
+  out = out.replace(/<script(\s+[^>]*)?>([\s\S]*?)<\/script>/gi, (m, attrs, content) => {
+    if (attrs && /\bsrc\s*=/.test(attrs)) return m;
+    if (!/\$\(|jQuery\(/.test(content)) return m;
+    const pos = out.indexOf(m);
+    if (pos >= 0 && pos <= bodyStart) return m; // в head не трогаем (обернём в DOMContentLoaded)
+    inlineScriptsWithJQuery.push(m);
+    return '';
+  });
   
   // 1. Удалить дублирующиеся jQuery (оставить только один — тот, что идёт первым в документе)
   const jqueryRegex = /<script[^>]*src=["']([^"']*jquery[^"']*)["'][^>]*><\/script>/gi;
@@ -92,8 +106,9 @@ function optimizeHtml(html) {
     out = out.replace(scriptsMinMatch[0], '');
   }
   const scriptsAtEnd = [jqueryTagMatch && jqueryTagMatch[0], scriptsMinMatch && scriptsMinMatch[0]].filter(Boolean).join('\n');
-  if (scriptsAtEnd) {
-    out = out.replace('</body>', scriptsAtEnd + '\n</body>');
+  const deferredInline = inlineScriptsWithJQuery.length ? '\n' + inlineScriptsWithJQuery.join('\n') : '';
+  if (scriptsAtEnd || deferredInline) {
+    out = out.replace('</body>', (scriptsAtEnd || '') + deferredInline + '\n</body>');
   }
   // Оборачиваем jQuery(document).ready в head в DOMContentLoaded (jQuery теперь в конце body)
   out = out.replace(
@@ -121,9 +136,10 @@ function optimizeHtml(html) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
 
-  // 5a. Удалить скрипты, вызывающие ошибки (404 cdn-cgi/rum, PageSpeed)
+  // 5a. Удалить скрипты, вызывающие ошибки (404 cdn-cgi/rum — убирает 1099 мс из цепочки, PageSpeed)
   out = out.replace(/<script[^>]*wp-emoji-release[^>]*><\/script>/gi, '');
   out = out.replace(/<script[^>]*cdn-cgi\/rum[^>]*><\/script>/gi, '');
+  out = out.replace(/<script[^>]*src=["'][^"']*cdn-cgi[^"']*["'][^>]*><\/script>/gi, '');
 
   // 5b. Yandex Metrica — загружать асинхронно (не блокировать рендер, PageSpeed)
   out = out.replace(
@@ -209,7 +225,18 @@ function optimizeHtml(html) {
     return '<img' + attrs + ' loading="lazy">';
   });
 
-  // 10. Удалить пустые строки после удаления скриптов
+  // 10. Canonical — абсолютный URL (PageSpeed: «не действительный атрибут», «не абсолютный URL»)
+  if (relativePath) {
+    const pathSeg = relativePath.replace(/\\/g, '/').replace(/index\.html$/i, '').replace(/^\.\/?/, '');
+    const canonicalHref = BASE_URL + (pathSeg ? '/' + pathSeg + '/' : '/');
+    out = out.replace(/<link\s+[^>]*rel=["']canonical["'][^>]*href=["'][^"']*["'][^>]*>/gi,
+      '<link rel="canonical" href="' + canonicalHref + '">');
+    if (!/rel=["']canonical["']/.test(out)) {
+      out = out.replace('</head>', '<link rel="canonical" href="' + canonicalHref + '">\n</head>');
+    }
+  }
+
+  // 11. Удалить пустые строки после удаления скриптов
   out = out.replace(/\n\s*\n\s*\n/g, '\n\n');
   
   return out;
@@ -227,7 +254,8 @@ function main() {
   // Оптимизировать HTML файлы
   walk(DIST, (filePath) => {
     const html = fs.readFileSync(filePath, 'utf8');
-    const optimized = optimizeHtml(html);
+    const relativePath = path.relative(DIST, filePath);
+    const optimized = optimizeHtml(html, relativePath);
     if (optimized !== html) {
       fs.writeFileSync(filePath, optimized, 'utf8');
       processedHtml++;
