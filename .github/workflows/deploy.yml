@@ -1,5 +1,6 @@
 # Deploy static HTML site to Beget.
-# Target: /home/s/smirno34/888starzeg-egypt.com/public_html (only deploy/ contents, no repo junk).
+# Только содержимое dist/ (сайт + .htaccess). Никакого .git, .github, node_modules, scripts.
+# Error 521 (Web server is down) = Cloudflare не достучался до Beget → см. docs/DEPLOY_521_CHECKLIST.md
 name: Deploy to Beget
 on:
   push:
@@ -36,15 +37,19 @@ jobs:
         run: |
           set -e
           mkdir -p deploy
-          cp -r dist/. deploy/ || true
+          cp -r dist/. deploy/
           if [ -f "dist/index" ] && [ ! -f "deploy/index.html" ]; then
             cp dist/index deploy/index.html
           fi
           if [ ! -f "deploy/index.html" ]; then
-            echo "::error::deploy/index.html is missing after prepare. Cannot deploy."
+            echo "::error::deploy/index.html is missing. Cannot deploy."
             exit 1
           fi
-          echo "Deploy folder ready (index.html present)."
+          if [ ! -f "deploy/.htaccess" ]; then
+            echo "::warning::deploy/.htaccess missing (rewrite/cache may not work on Beget)"
+          fi
+          echo "Deploy folder ready. Top-level files:"
+          ls -la deploy/ | head -25
 
       - name: Create deploy archive
         run: tar czf deploy.tar.gz -C deploy .
@@ -99,3 +104,4 @@ jobs:
             rm -f deploy.tar.gz
             echo "Deployment complete. Files in $T:"
             ls -la "$T" | head -20
+      # Если после деплоя сайт не открывается (521): см. docs/DEPLOY_521_CHECKLIST.md
