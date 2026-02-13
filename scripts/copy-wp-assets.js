@@ -42,8 +42,8 @@ function main() {
     console.log('Assets copy done.');
   }
   
-  // Copy .htaccess for caching
-  const htaccessSrc = path.join(PROJECT_ROOT, 'dist', '.htaccess');
+  // Copy .htaccess for caching (1 year for static assets — PageSpeed)
+  const htaccessSrc = path.join(PROJECT_ROOT, 'config', '.htaccess');
   const htaccessDest = path.join(DIST, '.htaccess');
   if (fs.existsSync(htaccessSrc)) {
     fs.copyFileSync(htaccessSrc, htaccessDest);

@@ -69,23 +69,26 @@ function optimizeHtml(html) {
   // 2. Удалить jQuery Migrate если есть (обычно не нужен для современных сайтов)
   out = out.replace(/<script[^>]*jquery-migrate[^>]*><\/script>/gi, '');
   
-  // 3. Добавить defer для скриптов которые не критичны (owl.carousel, fancybox, и т.д.)
-  // Но НЕ для jQuery (он должен загружаться первым)
+  // 3. Добавить defer для скриптов которые не критичны (owl, fancybox, prism — не блокируют рендер)
   out = out.replace(
     /<script([^>]*src=["'][^"']*(?:owl|fancybox|carousel)[^"']*["'][^>]*)><\/script>/gi,
     '<script$1 defer></script>'
   );
+  out = out.replace(
+    /<script([^>]*src=["'][^"']*prism-plugins\.min\.js[^"']*["'][^>]*)><\/script>/gi,
+    (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
+  );
   
-  // 4. НЕ добавляем defer ко всем скриптам — только к owl/fancybox выше, чтобы не сломать порядок (jQuery должен загрузиться до scripts.min.js и inline-скриптов с $).
+  // 4. jQuery и scripts.min.js без defer — порядок загрузки важен для inline-скриптов с $.
 
   // 5. Удалить скрипты, вызывающие ошибки на статическом сайте
   out = out.replace(/<script[^>]*wp-emoji-release[^>]*><\/script>/gi, '');
   out = out.replace(/<script[^>]*cdn-cgi\/rum[^>]*><\/script>/gi, '');
 
-  // 5b. Yandex Metrica — загружать асинхронно (не блокировать рендер)
+  // 5b. Yandex Metrica — загружать асинхронно (не блокировать рендер, PageSpeed)
   out = out.replace(
-    /<script([^>]*src=["'][^"']*mc\.yandex\.ru[^"']*["'][^>]*)><\/script>/gi,
-    (m) => (/defer|async/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
+    /<script([^>]*src=["'][^"']*mc\.yandex\.(ru|com)[^"']*["'][^>]*)><\/script>/gi,
+    (m) => (/async/.test(m) ? m : m.replace(/><\/script>/, ' async></script>'))
   );
 
   // 6. Добавить font-display: swap для Font Awesome через inline style в head
