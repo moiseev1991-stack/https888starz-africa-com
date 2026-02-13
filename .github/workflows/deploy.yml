@@ -1,7 +1,5 @@
 # Deploy static HTML site to Beget.
-# Deploys ONLY contents of dist/ (after build) → no .git, .github, scripts, tests, wp-content, node_modules, etc.
-# Excluded from deploy (never uploaded): .git, .github, .gitignore, node_modules, scripts, tests,
-#   wp-content (source), package.json, *.md, dist/ (we upload deploy/ built from dist), env files.
+# Target: /home/s/smirno34/888starzeg-egypt.com/public_html (only deploy/ contents, no repo junk).
 name: Deploy to Beget
 on:
   push:
@@ -10,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
