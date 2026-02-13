@@ -79,7 +79,34 @@ function optimizeHtml(html) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
   
-  // 4. jQuery и scripts.min.js без defer — порядок загрузки важен для inline-скриптов с $.
+  // 4. jQuery и scripts.min.js — defer чтобы не блокировать рендер (PageSpeed); inline в head оборачиваем в DOMContentLoaded
+  out = out.replace(
+    /<script([^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*)><\/script>/gi,
+    (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
+  );
+  out = out.replace(
+    /<script([^>]*src=["'][^"']*scripts\.min\.js[^"']*["'][^>]*)><\/script>/gi,
+    (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
+  );
+  // Оборачиваем вызовы jQuery(document).ready в head в DOMContentLoaded (чтобы при defer jQuery они выполнились после загрузки jQuery)
+  out = out.replace(
+    /(<script>(?:\s*\/\/[^\n]*\n)*)(\s*)(jQuery\s*\(\s*document\s*\)\s*\.\s*ready\s*\()/gi,
+    '$1$2document.addEventListener("DOMContentLoaded",function(){ $3'
+  );
+  let addedDOMContentLoadedClose = false;
+  out = out.replace(
+    /(}\s*\)\s*;)\s*(\s*<\/script>)/g,
+    (m, close, rest) => {
+      if (addedDOMContentLoadedClose) return m;
+      const pos = out.indexOf(m);
+      const chunk = pos >= 0 ? out.slice(Math.max(0, pos - 2500), pos) : '';
+      if (/document\.addEventListener\s*\(\s*["']DOMContentLoaded["']/.test(chunk)) {
+        addedDOMContentLoadedClose = true;
+        return close + ' }); ' + rest;
+      }
+      return m;
+    }
+  );
 
   // 5. Удалить скрипты, вызывающие ошибки на статическом сайте
   out = out.replace(/<script[^>]*wp-emoji-release[^>]*><\/script>/gi, '');
@@ -113,37 +140,30 @@ function optimizeHtml(html) {
     out = out.replace('</head>', fontAwesomeFix + '\n</head>');
   }
   
-  // 6. Оптимизировать загрузку CSS: preload для не-критических CSS
-  // Font Awesome, plugins.min.css, fancybox - не критичны, можно загрузить асинхронно
+  // 6. Оптимизировать загрузку CSS: preload для не-критических (любой порядок атрибутов — PageSpeed)
   const nonCriticalCss = ['font-awesome', 'plugins\\.min', 'fancybox', 'flexy-breadcrumb'];
-  nonCriticalCss.forEach(pattern => {
-    const regex = new RegExp(`<link([^>]*rel=["']stylesheet["'][^>]*href=["'][^"']*${pattern}[^"']*["'][^>]*)>`, 'gi');
-    out = out.replace(regex, (match) => {
-      if (/preload|onload/.test(match)) return match; // Уже оптимизирован
-      const hrefMatch = match.match(/href=["']([^"']+)["']/);
-      if (hrefMatch) {
-        const href = hrefMatch[1];
-        return `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  out = out.replace(/<link\s+([^>]*)>/gi, (match, attrs) => {
+    if (!/rel=["']stylesheet["']/i.test(attrs)) return match;
+    const hrefMatch = attrs.match(/href=["']([^"']+)["']/);
+    if (!hrefMatch) return match;
+    const href = hrefMatch[1];
+    const isNonCritical = nonCriticalCss.some(p => new RegExp(p, 'i').test(href));
+    if (!isNonCritical) return match;
+    if (/preload|onload/.test(attrs)) return match;
+    return `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="${href}"></noscript>`;
-      }
-      return match;
-    });
   });
 
-  // 8. Google Fonts — сделать неблокирующими (preload + onload)
-  out = out.replace(
-    /<link([^>]*href=["']https?:\/\/fonts\.googleapis\.com\/[^"']*["'][^>]*)>/gi,
-    (match) => {
-      if (/rel=["']preload["']/.test(match)) return match;
-      const hrefMatch = match.match(/href=["']([^"']+)["']/);
-      if (hrefMatch) {
-        const href = hrefMatch[1];
-        return `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  // 8. Google Fonts — неблокирующая загрузка (css/css2, любой порядок атрибутов)
+  out = out.replace(/<link\s+([^>]*)>/gi, (match, attrs) => {
+    if (!/href=["']https?:\/\/fonts\.googleapis\.com\/[^"']*["']/.test(attrs)) return match;
+    if (/rel=["']preload["']/.test(attrs)) return match;
+    const hrefMatch = attrs.match(/href=["']([^"']+)["']/);
+    if (!hrefMatch) return match;
+    const href = hrefMatch[1];
+    return `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="${href}"></noscript>`;
-      }
-      return match;
-    }
-  );
+  });
   
   // 9. Удалить пустые строки после удаления скриптов
   out = out.replace(/\n\s*\n\s*\n/g, '\n\n');
