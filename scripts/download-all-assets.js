@@ -32,6 +32,15 @@ function pathnameFromUrl(urlStr) {
   } catch { return null; }
 }
 
+/** Кодирует сегменты пути с не-ASCII (как в fix-html-paths), чтобы файл на диске совпадал с URL в HTML. */
+function encodePathnameForFile(pathname) {
+  if (!pathname || !/[^\x00-\x7F]/.test(pathname)) return pathname;
+  return pathname
+    .split('/')
+    .map((seg) => (/[^\x00-\x7F]/.test(seg) ? encodeURIComponent(seg) : seg))
+    .join('/');
+}
+
 function delay(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
@@ -110,32 +119,35 @@ function escapeRe(s) {
 async function downloadOne(urlStr, savedPaths) {
   const pathname = pathnameFromUrl(urlStr);
   if (!pathname || pathname === '/') return null;
-  const localPath = path.join(DIST, pathname.replace(/^\//, ''));
-  if (savedPaths.has(pathname)) return null;
+  const pathnameForFile = encodePathnameForFile(pathname);
+  const localPath = path.join(DIST, pathnameForFile.replace(/^\//, ''));
+  if (savedPaths.has(pathnameForFile)) return null;
   if (fs.existsSync(localPath)) {
-    savedPaths.add(pathname);
+    savedPaths.add(pathnameForFile);
     return null;
   }
-  savedPaths.add(pathname);
+  savedPaths.add(pathnameForFile);
 
   try {
     const { buffer, contentType } = await fetchWithRetry(urlStr);
     const dir = path.dirname(localPath);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(localPath, buffer);
-    console.log('  asset:', pathname);
-    return { pathname, localPath, buffer, contentType, url: urlStr };
+    console.log('  asset:', pathnameForFile);
+    return { pathname: pathnameForFile, localPath, buffer, contentType, url: urlStr };
   } catch (err) {
-    savedPaths.delete(pathname);
+    savedPaths.delete(pathnameForFile);
     const localFallback = path.join(PROJECT_ROOT, pathname.replace(/^\//, ''));
-    if (fs.existsSync(localFallback)) {
+    const localFallbackEnc = path.join(PROJECT_ROOT, pathnameForFile.replace(/^\//, ''));
+    if (fs.existsSync(localFallback) || fs.existsSync(localFallbackEnc)) {
+      const src = fs.existsSync(localFallback) ? localFallback : localFallbackEnc;
       const dir = path.dirname(localPath);
       if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-      fs.copyFileSync(localFallback, localPath);
-      console.log('  asset (from local):', pathname);
+      fs.copyFileSync(src, localPath);
+      console.log('  asset (from local):', pathnameForFile);
       return { localPath, contentType: '', url: urlStr };
     }
-    console.warn('  skip (failed):', pathname, err.message);
+    console.warn('  skip (failed):', pathnameForFile, err.message);
     return null;
   }
 }

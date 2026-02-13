@@ -25,6 +25,29 @@ function isAssetPath(p) {
   return p.startsWith('wp-content/') || p.startsWith('wp-includes/');
 }
 
+/** Кодирует сегменты пути с не-ASCII (арабские и др.) для корректной загрузки на сервере. */
+function encodeAssetPath(pathStr) {
+  if (!pathStr || !/[^\x00-\x7F]/.test(pathStr)) return pathStr;
+  return pathStr
+    .split('/')
+    .map((seg) => (/[^\x00-\x7F]/.test(seg) ? encodeURIComponent(seg) : seg))
+    .join('/');
+}
+
+/** В HTML заменяет пути к ассетам с не-ASCII на percent-encoded (чтобы картинки с арабскими именами грузились). */
+function encodeAssetPathsInHtml(html) {
+  let out = html;
+  const attrRe = /(src|href)=(["'])([^"']+)\2/g;
+  out = out.replace(attrRe, (_, attr, q, p) => {
+    if ((p.includes('/wp-content/') || p.includes('/wp-includes/')) && /[^\x00-\x7F]/.test(p)) {
+      const encoded = encodeAssetPath(p);
+      return `${attr}=${q}${encoded}${q}`;
+    }
+    return _;
+  });
+  return out;
+}
+
 // Footer "حول الموقع": restore system page links (export from prod may have /game/)
 const FOOTER_LINK_FIXES = [
   ['من نحن', 'about'],
@@ -53,6 +76,8 @@ function fixFooterSystemLinks(html, prefix) {
 
 function fixHtml(html, prefix) {
   if (!prefix) return html;
+  // Сначала кодируем пути с арабскими/не-ASCII именами файлов (картинки иначе не грузятся)
+  html = encodeAssetPathsInHtml(html);
   // Восстановить ссылки на системные страницы в футере
   html = fixFooterSystemLinks(html, prefix);
   // Нормализуем относительные пути к ассетам в корневые /wp-content/, /wp-includes/
@@ -78,8 +103,8 @@ function fixHtml(html, prefix) {
       });
       return ` ${attr}=${q}${parts.join(', ')}${q}`;
     })
-    .replace(/url\s*\(\s*["']?\/(wp-content\/[^"')]+)["']?\s*\)/g, (_, p) => `url("/${p}")`)
-    .replace(/url\s*\(\s*\/(wp-content\/[^"')]+)\s*\)/g, (_, p) => `url("/${p}")`);
+    .replace(/url\s*\(\s*["']?\/(wp-content\/[^"')]+)["']?\s*\)/g, (_, p) => `url("/${encodeAssetPath(p)}")`)
+    .replace(/url\s*\(\s*\/(wp-content\/[^"')]+)\s*\)/g, (_, p) => `url("/${encodeAssetPath(p)}")`);
   out = out.replace(/((?:src|href)=["'][^"']*(?:\.(?:svg|webp|png|jpg|jpeg|gif|ico|css|js))?)""/g, '$1"');
   out = out.replace(/"\s*(src|href)=/g, '" $1=');
   out = out.replace(/<ahref=/g, '<a href=');
