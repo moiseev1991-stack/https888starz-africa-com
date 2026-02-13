@@ -84,36 +84,16 @@ function optimizeHtml(html) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
   
-  // 4. jQuery и scripts.min.js — defer чтобы не блокировать рендер (PageSpeed); inline в head оборачиваем в DOMContentLoaded
+  // 4. jQuery и scripts.min.js БЕЗ defer — иначе inline-скрипты вызывают "ReferenceError: $ is not defined"
+  // (defer только для owl, fancybox, prism, flexy-breadcrumb, email-decode — см. ниже)
+
+  // 5. email-decode.min.js (cloudflare-static) — defer, убирает 482 ms из критической цепочки
   out = out.replace(
-    /<script([^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*)><\/script>/gi,
+    /<script([^>]*src=["'][^"']*email-decode\.min\.js[^"']*["'][^>]*)><\/script>/gi,
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
-  );
-  out = out.replace(
-    /<script([^>]*src=["'][^"']*scripts\.min\.js[^"']*["'][^>]*)><\/script>/gi,
-    (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
-  );
-  // Оборачиваем вызовы jQuery(document).ready в head в DOMContentLoaded (чтобы при defer jQuery они выполнились после загрузки jQuery)
-  out = out.replace(
-    /(<script>(?:\s*\/\/[^\n]*\n)*)(\s*)(jQuery\s*\(\s*document\s*\)\s*\.\s*ready\s*\()/gi,
-    '$1$2document.addEventListener("DOMContentLoaded",function(){ $3'
-  );
-  let addedDOMContentLoadedClose = false;
-  out = out.replace(
-    /(}\s*\)\s*;)\s*(\s*<\/script>)/g,
-    (m, close, rest) => {
-      if (addedDOMContentLoadedClose) return m;
-      const pos = out.indexOf(m);
-      const chunk = pos >= 0 ? out.slice(Math.max(0, pos - 2500), pos) : '';
-      if (/document\.addEventListener\s*\(\s*["']DOMContentLoaded["']/.test(chunk)) {
-        addedDOMContentLoadedClose = true;
-        return close + ' }); ' + rest;
-      }
-      return m;
-    }
   );
 
-  // 5. Удалить скрипты, вызывающие ошибки на статическом сайте
+  // 5a. Удалить скрипты, вызывающие ошибки (404 cdn-cgi/rum, PageSpeed)
   out = out.replace(/<script[^>]*wp-emoji-release[^>]*><\/script>/gi, '');
   out = out.replace(/<script[^>]*cdn-cgi\/rum[^>]*><\/script>/gi, '');
 
@@ -122,6 +102,15 @@ function optimizeHtml(html) {
     /<script([^>]*src=["'][^"']*mc\.yandex\.(ru|com)[^"']*["'][^>]*)><\/script>/gi,
     (m) => (/async/.test(m) ? m : m.replace(/><\/script>/, ' async></script>'))
   );
+
+  // 5c. Preconnect — ускорить установку соединения (PageSpeed: не более 4 источников)
+  if (!/preconnect[^>]*href=["']https?:\/\/888starzeg-egypt\.com["']/.test(out)) {
+    const preconnectBlock = `
+<link rel="preconnect" href="https://888starzeg-egypt.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`;
+    out = out.replace(/<head[^>]*>/i, '$&' + preconnectBlock);
+  }
 
   // 6. Добавить font-display: swap для Font Awesome через inline style в head
   // Если есть font-awesome CSS, добавить правило font-display
@@ -183,7 +172,16 @@ function optimizeHtml(html) {
     return match;
   });
   
-  // 9. Удалить пустые строки после удаления скриптов
+  // 9. Lazy-load изображений (снижение нагрузки на сеть, PageSpeed) — первый img без lazy (LCP)
+  let imgIndex = 0;
+  out = out.replace(/<img(\s+[^>]*)>/gi, (match, attrs) => {
+    if (/loading\s*=/i.test(attrs)) return match;
+    imgIndex++;
+    if (imgIndex === 1) return match; // первый img в документе — не lazy для LCP
+    return '<img' + attrs + ' loading="lazy">';
+  });
+
+  // 10. Удалить пустые строки после удаления скриптов
   out = out.replace(/\n\s*\n\s*\n/g, '\n\n');
   
   return out;
