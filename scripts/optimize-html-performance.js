@@ -47,22 +47,18 @@ function optimizeCss(css) {
 function optimizeHtml(html) {
   let out = html;
   
-  // 1. Удалить дублирующиеся jQuery (оставить только один, предпочтительно локальный)
-  // Найти все jQuery скрипты (включая разные источники)
+  // 1. Удалить дублирующиеся jQuery (оставить только один — тот, что идёт первым в документе)
   const jqueryRegex = /<script[^>]*src=["']([^"']*jquery[^"']*)["'][^>]*><\/script>/gi;
   const jqueryMatches = [];
   let match;
   while ((match = jqueryRegex.exec(html)) !== null) {
-    jqueryMatches.push({ full: match[0], url: match[1] });
+    jqueryMatches.push({ full: match[0], url: match[1], index: match.index });
   }
   
-  // Если найдено больше одного jQuery, удалить дубликаты
   if (jqueryMatches.length > 1) {
-    // Оставить только один - предпочтительно из wp-content/wp-includes (локальный)
-    const localJquery = jqueryMatches.find(m => /wp-content|wp-includes/.test(m.url));
-    const toKeep = localJquery || jqueryMatches[0]; // Если нет локального, оставить первый
-    
-    // Удалить все остальные jQuery
+    // Оставить тот jQuery, который встречается первым (чтобы скрипты в head не ломались)
+    jqueryMatches.sort((a, b) => a.index - b.index);
+    const toKeep = jqueryMatches[0];
     jqueryMatches.forEach(m => {
       if (m.full !== toKeep.full) {
         out = out.replace(m.full, '');
@@ -80,22 +76,19 @@ function optimizeHtml(html) {
     '<script$1 defer></script>'
   );
   
-  // 4. Добавить defer для скриптов в footer (кроме jQuery)
-  // Скрипты без defer/async в конце body - добавить defer
+  // 4. НЕ добавляем defer ко всем скриптам — только к owl/fancybox выше, чтобы не сломать порядок (jQuery должен загрузиться до scripts.min.js и inline-скриптов с $).
+
+  // 5. Удалить скрипты, вызывающие ошибки на статическом сайте
+  out = out.replace(/<script[^>]*wp-emoji-release[^>]*><\/script>/gi, '');
+  out = out.replace(/<script[^>]*cdn-cgi\/rum[^>]*><\/script>/gi, '');
+
+  // 5b. Yandex Metrica — загружать асинхронно (не блокировать рендер)
   out = out.replace(
-    /(<script[^>]*src=["'][^"']*["'])([^>]*)(><\/script>)/gi,
-    (match, start, middle, end) => {
-      if (/defer|async/.test(middle) || /jquery[^/]*\.min\.js/.test(match)) {
-        return match; // Уже есть defer/async или это jQuery
-      }
-      if (/\.js/.test(match)) {
-        return start + middle + ' defer' + end;
-      }
-      return match;
-    }
+    /<script([^>]*src=["'][^"']*mc\.yandex\.ru[^"']*["'][^>]*)><\/script>/gi,
+    (m) => (/defer|async/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
-  
-  // 5. Добавить font-display: swap для Font Awesome через inline style в head
+
+  // 6. Добавить font-display: swap для Font Awesome через inline style в head
   // Если есть font-awesome CSS, добавить правило font-display
   if (/font-awesome/.test(out) && !/font-display.*swap/.test(out)) {
     const fontAwesomeFix = `
@@ -133,8 +126,23 @@ function optimizeHtml(html) {
       return match;
     });
   });
+
+  // 8. Google Fonts — сделать неблокирующими (preload + onload)
+  out = out.replace(
+    /<link([^>]*href=["']https?:\/\/fonts\.googleapis\.com\/[^"']*["'][^>]*)>/gi,
+    (match) => {
+      if (/rel=["']preload["']/.test(match)) return match;
+      const hrefMatch = match.match(/href=["']([^"']+)["']/);
+      if (hrefMatch) {
+        const href = hrefMatch[1];
+        return `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="${href}"></noscript>`;
+      }
+      return match;
+    }
+  );
   
-  // 7. Удалить пустые строки после удаления скриптов
+  // 9. Удалить пустые строки после удаления скриптов
   out = out.replace(/\n\s*\n\s*\n/g, '\n\n');
   
   return out;

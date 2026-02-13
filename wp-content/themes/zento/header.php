@@ -155,8 +155,7 @@ document.addEventListener("DOMContentLoaded", function() {
   initializeTimer(initialHours, initialMinutes, initialSeconds);
 });
 </script>
-
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <!-- jQuery подключается через wp_enqueue_script в wp_head(), не дублируем -->
   <script>
     jQuery(document).ready(function ($) {
       $('.faq-question').click(function () {

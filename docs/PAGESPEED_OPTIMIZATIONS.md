@@ -86,6 +86,15 @@
 5. Добавляет `font-display: swap` для шрифтов
 6. Обрабатывает CSS файлы для добавления `font-display: swap`
 
+## Дополнительные правки (коммит по скриншотам PageSpeed)
+
+- **Порядок jQuery:** оставляем в документе только первый по порядку jQuery, остальные удаляем (чтобы не было «$ is not a function»).
+- **Без defer для зависимых скриптов:** defer добавляется только для owl/fancybox и Yandex Metrica; scripts.min.js и остальные не трогаем, чтобы не ломать порядок загрузки.
+- **Удаление проблемных скриптов:** из статического HTML убираются `wp-emoji-release.min.js` и скрипт `cdn-cgi/rum` (ошибки в консоли на статике).
+- **Google Fonts:** подключаются через preload + onload, чтобы не блокировать рендер.
+- **Yandex Metrica:** к скрипту добавлен `defer`.
+- **header.php:** убран дублирующий `<script src="https://code.jquery.com/jquery-3.6.4.min.js">`, jQuery идёт только из `wp_head()`.
+
 ## Дополнительные рекомендации (не реализовано)
 
 ### Forced Layout (115ms)
