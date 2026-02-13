@@ -70,7 +70,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
           source: "deploy.tar.gz"
-          target: "/home/s/smirno34/888starzeg-egypt.com/public_html/deploy.tar.gz"
+          target: "/home/s/smirno34/888starzeg-egypt.com/public_html"
 
       - name: Extract and cleanup on Beget
         uses: appleboy/ssh-action@v1.0.3
@@ -83,6 +83,11 @@ jobs:
             set -e
             T="/home/s/smirno34/888starzeg-egypt.com/public_html"
             cd "$T"
+            if [ -d "deploy.tar.gz" ]; then
+              echo "::error::deploy.tar.gz is a directory (old SCP bug). Removing and failing."
+              rm -rf deploy.tar.gz
+              exit 1
+            fi
             if [ ! -f "deploy.tar.gz" ]; then
               echo "::error::deploy.tar.gz not found in $T"
               ls -la "$T" || true
