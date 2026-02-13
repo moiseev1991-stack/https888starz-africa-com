@@ -78,6 +78,11 @@ function optimizeHtml(html) {
     /<script([^>]*src=["'][^"']*prism-plugins\.min\.js[^"']*["'][^>]*)><\/script>/gi,
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
+  // flexy-breadcrumb и prism (core/autoloader) — defer, чтобы убрать из критической цепочки (646 ms)
+  out = out.replace(
+    /<script([^>]*src=["'][^"']*(?:flexy-breadcrumb-public\.js|prism-core\.min\.js|prism-autoloader\.min\.js)[^"']*["'][^>]*)><\/script>/gi,
+    (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
+  );
   
   // 4. jQuery и scripts.min.js — defer чтобы не блокировать рендер (PageSpeed); inline в head оборачиваем в DOMContentLoaded
   out = out.replace(
@@ -164,6 +169,19 @@ function optimizeHtml(html) {
     return `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="${href}"></noscript>`;
   });
+
+  // 8b. Дополнительный проход: принудительно preload для plugins.min.css и Google Fonts (если формат тега отличался)
+  const preloadStyle = (href) => `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="${href}"></noscript>`;
+  out = out.replace(/<link\s+([^>]*)>/gi, (match, attrs) => {
+    if (/rel=["']preload["']/.test(attrs)) return match;
+    const hrefMatch = attrs.match(/href=["']([^"']+)["']/);
+    if (!hrefMatch) return match;
+    const href = hrefMatch[1];
+    if (!/rel=["']stylesheet["']/i.test(attrs)) return match;
+    if (/plugins\.min\.css|fonts\.googleapis\.com/.test(href)) return preloadStyle(href);
+    return match;
+  });
   
   // 9. Удалить пустые строки после удаления скриптов
   out = out.replace(/\n\s*\n\s*\n/g, '\n\n');
@@ -191,11 +209,8 @@ function main() {
     }
   }, '.html');
   
-  // Оптимизировать CSS файлы (добавить font-display: swap)
+  // Оптимизировать CSS файлы: font-display: swap для всех @font-face (Font Awesome woff2 и др. — PageSpeed)
   walk(DIST, (filePath) => {
-    // Обрабатываем только font-awesome CSS
-    if (!/font-awesome/i.test(filePath)) return;
-    
     const css = fs.readFileSync(filePath, 'utf8');
     const optimized = optimizeCss(css);
     if (optimized !== css) {
