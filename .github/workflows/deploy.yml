@@ -1,0 +1,19 @@
+name: Deploy to Beget
+on:
+  push:
+    branches: ["main"]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload to Beget (SCP)
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: smirno34.beget.tech
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+          source: "*"
+          target: "/home/s/smirno34/888starzeg-egypt.com/public_html"
+          rm: true
