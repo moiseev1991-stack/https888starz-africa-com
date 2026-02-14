@@ -144,6 +144,9 @@ function optimizeHtml(html, relativePath) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
 
+  // 5a. Удалить Owl Carousel (на статике используем Embla; убирает конфликты и вес)
+  out = out.replace(/<script[^>]*src=["'][^"']*owl\.carousel[^"']*["'][^>]*><\/script>/gi, '');
+
   // 5a. Удалить скрипты, вызывающие ошибки (404 cdn-cgi/rum — убирает 1099 мс из цепочки, PageSpeed)
   out = out.replace(/<script[^>]*wp-emoji-release[^>]*><\/script>/gi, '');
   out = out.replace(/<script[^>]*cdn-cgi\/rum[^>]*><\/script>/gi, '');
@@ -334,7 +337,13 @@ function optimizeHtml(html, relativePath) {
     return '<' + tag + attrs + ' aria-label="Slide ' + dotIndex + '"' + role + '>';
   });
 
-  // 14. Удалить пустые строки после удаления скриптов
+  // 14. «Чёрный блок» облака тегов: раскрытие по клику (pure JS, без jQuery)
+  if (/id=["']seo-module["']/.test(out) && /caption-seo-module\s+faq-question/.test(out) && !/caption-seo-module.*addEventListener/.test(out)) {
+    const tagToggleScript = '<script>(function(){var q=document.querySelector(".caption-seo-module.faq-question");var a=document.getElementById("seo-module");if(q&&a){q.setAttribute("role","button");q.setAttribute("aria-expanded","false");q.setAttribute("aria-controls","seo-module");q.addEventListener("click",function(e){e.stopImmediatePropagation();var open=a.style.display==="block";a.style.display=open?"none":"block";q.setAttribute("aria-expanded",!open);q.classList.toggle("open",!open);var r=q.querySelector(".ico_rotater_footer");if(r)r.classList.toggle("rotate",!open);},true);}})();</script>';
+    out = out.replace('</body>', tagToggleScript + '\n</body>');
+  }
+
+  // 15. Удалить пустые строки после удаления скриптов
   out = out.replace(/\n\s*\n\s*\n/g, '\n\n');
   
   return out;

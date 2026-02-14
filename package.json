@@ -9,7 +9,7 @@
     "export:wget": "bash scripts/export-static.sh",
     "postexport:copy-assets": "node scripts/copy-wp-assets.js",
     "build": "npm run export:static && npm run postexport:copy-assets",
-    "build:live": "npm run export:live && node scripts/download-all-assets.js && node scripts/copy-wp-assets.js && node scripts/fix-html-paths.js && node scripts/inject-static-pages.js && node scripts/fetch-africa-pages.js && node scripts/inject-lite-slider-apk.js && node scripts/download-africa-page-assets.js && node scripts/optimize-html-performance.js",
+    "build:live": "npm run export:live && node scripts/download-all-assets.js && node scripts/copy-wp-assets.js && node scripts/fix-html-paths.js && node scripts/inject-static-pages.js && node scripts/fetch-africa-pages.js && node scripts/download-embla.js && node scripts/inject-lite-slider-apk.js && node scripts/download-africa-page-assets.js && node scripts/optimize-html-performance.js",
     "download-assets": "node scripts/download-all-assets.js",
     "serve": "node scripts/serve.js",
     "test": "playwright test",
