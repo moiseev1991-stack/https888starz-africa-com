@@ -303,6 +303,15 @@ function optimizeHtml(html, relativePath) {
     }
   }
 
+  // 13. A11y: owl-dot / carousel buttons — aria-label (Lighthouse)
+  let dotIndex = 0;
+  out = out.replace(/<(button|span)([^>]*class=["'][^"']*owl-dot[^"']*["'][^>]*)>/gi, (m, tag, attrs) => {
+    if (/aria-label\s*=/.test(attrs)) return m;
+    dotIndex++;
+    const role = (tag === 'span' && !/role\s*=/.test(attrs)) ? ' role="button"' : '';
+    return '<' + tag + attrs + ' aria-label="Slide ' + dotIndex + '"' + role + '>';
+  });
+
   // 14. Удалить пустые строки после удаления скриптов
   out = out.replace(/\n\s*\n\s*\n/g, '\n\n');
   
