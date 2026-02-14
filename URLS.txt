@@ -1,6 +1,15 @@
 /
+/about/
+/accounts-withdrawals-and-bonuses/
 /apk/
+/contacts/
 /cookies/
+/dispute-resolution/
+/fairness-rng-testing-methods/
 /game/
+/privacy-policy/
 /promo-code/
 /registration/
+/responsible/
+/self-exclusion/
+/terms/
