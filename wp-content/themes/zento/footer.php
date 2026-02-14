@@ -5,6 +5,8 @@
         <div class="clear"></div>
     </div>
 
+<?php // PageSpeed: font-display swap для Font Awesome (fonts/fontawesome-webfont.woff2) ?>
+<style>@font-face{font-family:'FontAwesome';font-display:swap}@font-face{font-family:'Font Awesome 5 Free';font-display:swap}@font-face{font-family:'Font Awesome 5 Brands';font-display:swap}</style>
 
 <!-- jQuery уже загружен через WordPress wp_enqueue_script, не дублируем -->
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>

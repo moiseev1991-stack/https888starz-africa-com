@@ -156,26 +156,18 @@ function optimizeHtml(html, relativePath) {
     out = out.replace(/<head[^>]*>/i, '$&' + preconnectBlock);
   }
 
-  // 6. Добавить font-display: swap для Font Awesome через inline style в head
-  // Если есть font-awesome CSS, добавить правило font-display
-  if (/font-awesome/.test(out) && !/font-display.*swap/.test(out)) {
-    const fontAwesomeFix = `
-<style>
-@font-face {
-  font-family: 'FontAwesome';
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Font Awesome 5 Free';
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Font Awesome 5 Brands';
-  font-display: swap;
-}
-</style>`;
-    // Вставить перед закрывающим </head>
-    out = out.replace('</head>', fontAwesomeFix + '\n</head>');
+  // 5b. font-display: swap во всех инлайн <style> (на случай @font-face в странице)
+  out = out.replace(/<style(\s[^>]*)?>([\s\S]*?)<\/style>/gi, (m, attrs, content) => {
+    const fixed = optimizeCss(content);
+    return fixed !== content ? '<style' + (attrs || '') + '>' + fixed + '</style>' : m;
+  });
+
+  // 6. font-display: swap для Font Awesome (PageSpeed: fonts/fontawesome-webfont.woff2)
+  // Вставляем перед </body>, чтобы правило шло после всех stylesheet (в т.ч. preload+onload) и перекрывало @font-face
+  const needsFontDisplayFix = !/font-display\s*:\s*swap/.test(out) && (/font-awesome|webfont\.woff2|["']\s*fa\s+fa-|class=["'][^"']*fa-/i.test(out));
+  if (needsFontDisplayFix) {
+    const fontDisplaySwap = `<style>@font-face{font-family:'FontAwesome';font-display:swap}@font-face{font-family:'Font Awesome 5 Free';font-display:swap}@font-face{font-family:'Font Awesome 5 Brands';font-display:swap}</style>`;
+    out = out.replace('</body>', fontDisplaySwap + '\n</body>');
   }
   
   // 6. Оптимизировать загрузку CSS: preload для не-критических (любой порядок атрибутов — PageSpeed)
