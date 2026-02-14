@@ -259,7 +259,19 @@ function optimizeHtml(html, relativePath) {
     );
   }
 
-  // 12. Удалить пустые строки после удаления скриптов
+  // 12. Меню: добавить ссылки на /promo-code/, /registration/, /apk/ (как на 888starz-africa.com, с нашим доменом)
+  if (!/href=["']\/promo-code\/["']/.test(out)) {
+    const menuLiPromo = /(<li[^>]*>[\s\S]*?<a[^>]*>[\s\S]*?قسيمة[\s\S]*?<\/a>\s*<\/li>)/i;
+    const menuLiCazino = /(<li[^>]*>[\s\S]*?<a[^>]*>[\s\S]*?كازينو[\s\S]*?<\/a>\s*<\/li>)/i;
+    const extra = '<li class="menu-item"><a href="/promo-code/">عرض الرمز الترويجي</a></li><li class="menu-item"><a href="/registration/">التسجيل</a></li><li class="menu-item"><a href="/apk/">تحميل التطبيق (APK)</a></li>';
+    if (menuLiPromo.test(out)) {
+      out = out.replace(menuLiPromo, '$1' + extra);
+    } else if (menuLiCazino.test(out)) {
+      out = out.replace(menuLiCazino, '$1' + extra);
+    }
+  }
+
+  // 14. Удалить пустые строки после удаления скриптов
   out = out.replace(/\n\s*\n\s*\n/g, '\n\n');
   
   return out;
