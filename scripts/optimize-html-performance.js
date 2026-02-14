@@ -295,6 +295,24 @@ function optimizeHtml(html, relativePath) {
     );
   }
 
+  // 11c. Футер "حول الموقع": оставить только уникальные ссылки (дедупликация по href)
+  out = out.replace(
+    /(<div\s+class=["']block-ul-footer["'][^>]*>\s*<strong>حول الموقع<\/strong>)([\s\S]*?)(<\/div>)/,
+    function (match, open, linksContent, close) {
+      const linkRegex = /<a\s+[^>]*href=["']([^"']*)["'][^>]*>[^<]*<\/a>/g;
+      const seen = new Set();
+      const unique = [];
+      let m;
+      while ((m = linkRegex.exec(linksContent)) !== null) {
+        const href = (m[1] || '').replace(/\s+/g, '');
+        if (seen.has(href)) continue;
+        seen.add(href);
+        unique.push(m[0]);
+      }
+      return open + (unique.length ? '\n\t\t\t\t\t\t\t' + unique.join('\n\t\t\t\t\t\t\t') : '') + '\n\t\t\t\t\t\t\t' + close;
+    }
+  );
+
   // 12. Меню: добавить ссылки на /promo-code/, /registration/, /apk/ (как на 888starz-africa.com, с нашим доменом)
   if (!/href=["']\/promo-code\/["']/.test(out)) {
     const menuLiPromo = /(<li[^>]*>[\s\S]*?<a[^>]*>[\s\S]*?قسيمة[\s\S]*?<\/a>\s*<\/li>)/i;
