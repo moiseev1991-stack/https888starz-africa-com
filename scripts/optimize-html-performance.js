@@ -343,7 +343,20 @@ function optimizeHtml(html, relativePath) {
     out = out.replace('</body>', tagToggleScript + '\n</body>');
   }
 
-  // 15. Удалить пустые строки после удаления скриптов
+  // 15. Убрать пустые пространства на главной: пустые параграфы и пустые/высокие .table-wrapper
+  out = out.replace(/<p(\s[^>]*)?>\s*(&nbsp;|&#160;|\s)*\s*<\/p>/gi, '');
+  out = out.replace(/<p>\s*<\/p>/gi, '');
+  // Пустые div.table-wrapper (без таблицы внутри) — удалить, в т.ч. вложенные
+  for (let i = 0; i < 8; i++) {
+    out = out.replace(/<div\s+[^>]*class=["'][^"']*table-wrapper[^"']*["'][^>]*>\s*<\/div>/gi, '');
+  }
+  // Ограничить высоту .table-wrapper, чтобы не создавать огромные пустые зоны
+  if (!/\.table-wrapper\s*\{\s*min-height:\s*0/.test(out)) {
+    const tableWrapperFix = '<style>.table-wrapper{min-height:0 !important;}.table-wrapper:empty{display:none !important;}</style>';
+    out = out.replace('</head>', tableWrapperFix + '\n</head>');
+  }
+
+  // 16. Удалить пустые строки после удаления скриптов
   out = out.replace(/\n\s*\n\s*\n/g, '\n\n');
   
   return out;

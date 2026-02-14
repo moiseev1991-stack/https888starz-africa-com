@@ -7,6 +7,7 @@
 
 <?php // PageSpeed: font-display swap для Font Awesome (fonts/fontawesome-webfont.woff2) ?>
 <style>@font-face{font-family:'FontAwesome';font-display:swap}@font-face{font-family:'Font Awesome 5 Free';font-display:swap}@font-face{font-family:'Font Awesome 5 Brands';font-display:swap}</style>
+<style>.table-wrapper{min-height:0 !important}.table-wrapper:empty{display:none !important}</style>
 
 <!-- SEO/tag block (mobile): expand on click. Vanilla so it works without jQuery (e.g. static export). -->
 <script>

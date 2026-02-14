@@ -35,17 +35,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Найти все таблицы без класса
   const tables = document.querySelectorAll("table:not([class])");
-  
   tables.forEach((table) => {
-    // Создать обертку
+    if (table.closest(".table-wrapper")) return;
     const wrapper = document.createElement("div");
     wrapper.className = "table-wrapper";
-    
-    // Вставить обертку перед таблицей
     table.parentNode.insertBefore(wrapper, table);
-    // Поместить таблицу внутрь обертки
     wrapper.appendChild(table);
   });
 });
