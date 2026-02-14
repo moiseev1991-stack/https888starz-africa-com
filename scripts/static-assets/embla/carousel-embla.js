@@ -95,6 +95,9 @@
       play();
     }
 
+    embla.on('resize', function () { embla.scrollTo(embla.selectedScrollSnap(), true); });
+    setTimeout(function () { if (embla.scrollTo) embla.scrollTo(embla.selectedScrollSnap(), true); }, 400);
+
     root.classList.add('embla');
     root.setAttribute('data-embla-inited', 'true');
   }

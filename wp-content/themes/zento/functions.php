@@ -1489,67 +1489,67 @@ function custom_slider_shortcode()
      <div class="owl-mobile owl-theme" dir="ltr">
           <div class="mobile-slide">
                <a href="/wp-content/uploads/2025/03/888starz.com_.webp" data-fancybox="gallerymob">
-                    <img src="/wp-content/uploads/2025/03/888starz.com_.webp" alt="888starz.com" title="888starz.com">
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/888starz.com_.webp" alt="888starz.com" title="888starz.com">
                </a>
           </div>
 
           <div class="mobile-slide">
                <a href="/wp-content/uploads/2025/03/888ألعاب-888GAMES.webp" data-fancybox="gallerymob">
-                    <img src="/wp-content/uploads/2025/03/888ألعاب-888GAMES.webp" alt="ألعاب-888GAMES"
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/888ألعاب-888GAMES.webp" alt="ألعاب-888GAMES"
                          title="ألعاب-888GAMES">
                </a>
           </div>
 
           <div class="mobile-slide">
                <a href="/wp-content/uploads/2025/03/الألعاب-التلفزيونية.webp" data-fancybox="gallerymob">
-                    <img src="/wp-content/uploads/2025/03/الألعاب-التلفزيونية.webp" alt="الألعاب-التلفزيونية"
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/الألعاب-التلفزيونية.webp" alt="الألعاب-التلفزيونية"
                          title="الألعاب-التلفزيونية">
                </a>
           </div>
 
           <div class="mobile-slide">
                <a href="/wp-content/uploads/2025/03/الرمز-الترويجي-1500-و150-دورة-مجانية.webp" data-fancybox="gallerymob">
-                    <img src="/wp-content/uploads/2025/03/الرمز-الترويجي-1500-و150-دورة-مجانية.webp"
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/الرمز-الترويجي-1500-و150-دورة-مجانية.webp"
                          alt="الرمز-الترويجي-1500-و150-دورة-مجانية" title="الرمز-الترويجي-1500-و150-دورة-مجانية">
                </a>
           </div>
 
           <div class="mobile-slide">
                <a href="/wp-content/uploads/2025/03/الرهان-على-الرياضات-الإلكترونية.webp" data-fancybox="gallerymob">
-                    <img src="/wp-content/uploads/2025/03/الرهان-على-الرياضات-الإلكترونية.webp"
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/الرهان-على-الرياضات-الإلكترونية.webp"
                          alt="الرهان-على-الرياضات-الإلكترونية" title="الرهان-على-الرياضات-الإلكترونية">
                </a>
           </div>
 
           <div class="mobile-slide">
                <a href="/wp-content/uploads/2025/03/ألعاب-الكازينو.webp" data-fancybox="gallerymob">
-                    <img src="/wp-content/uploads/2025/03/ألعاب-الكازينو.webp" alt="ألعاب-الكازينو" title="ألعاب-الكازينو">
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/ألعاب-الكازينو.webp" alt="ألعاب-الكازينو" title="ألعاب-الكازينو">
                </a>
           </div>
 
           <div class="mobile-slide">
                <a href="/wp-content/uploads/2025/03/حساب-تجريبي-888-ستارز.webp" data-fancybox="gallerymob">
-                    <img src="/wp-content/uploads/2025/03/حساب-تجريبي-888-ستارز.webp" alt="حساب-تجريبي-888-ستارز"
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/حساب-تجريبي-888-ستارز.webp" alt="حساب-تجريبي-888-ستارز"
                          title="حساب-تجريبي-888-ستارز">
                </a>
           </div>
 
           <div class="mobile-slide">
                <a href="/wp-content/uploads/2025/03/لعبة-الطيار.webp" data-fancybox="gallerymob">
-                    <img src="/wp-content/uploads/2025/03/لعبة-الطيار.webp" alt="لعبة-الطيار" title="لعبة-الطيار">
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/لعبة-الطيار.webp" alt="لعبة-الطيار" title="لعبة-الطيار">
                </a>
           </div>
 
           <div class="mobile-slide">
                <a href="/wp-content/uploads/2025/03/ماكينات-القمار-888ستارز.webp" data-fancybox="gallerymob">
-                    <img src="/wp-content/uploads/2025/03/ماكينات-القمار-888ستارز.webp" alt="ماكينات-القمار-888ستارز"
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/ماكينات-القمار-888ستارز.webp" alt="ماكينات-القمار-888ستارز"
                          title="ماكينات-القمار-888ستارز">
                </a>
           </div>
 
           <div class="mobile-slide">
                <a href="/wp-content/uploads/2025/03/نوع-الألعاب-في-الكازينو.webp" data-fancybox="gallerymob">
-                    <img src="/wp-content/uploads/2025/03/نوع-الألعاب-في-الكازينو.webp" alt="نوع-الألعاب-في-الكازينو"
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/نوع-الألعاب-في-الكازينو.webp" alt="نوع-الألعاب-في-الكازينو"
                          title="نوع-الألعاب-في-الكازينو">
                </a>
           </div>
@@ -1572,65 +1572,65 @@ function deck_slider_shortcode()
      <div class="owl-carousel owl-theme" dir="ltr">
           <div class="slide">
                <a href="/wp-content/uploads/2025/03/الإحصاءات.webp" data-fancybox="gallery">
-                    <img src="/wp-content/uploads/2025/03/الإحصاءات.webp" alt="الإحصاءات" title="الإحصاءات">
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/الإحصاءات.webp" alt="الإحصاءات" title="الإحصاءات">
                </a>
           </div>
 
           <div class="slide">
                <a href="/wp-content/uploads/2025/03/البنغو.webp" data-fancybox="gallery">
-                    <img src="/wp-content/uploads/2025/03/البنغو.webp" alt="البنغو" title="البنغو">
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/البنغو.webp" alt="البنغو" title="البنغو">
                </a>
           </div>
 
           <div class="slide">
                <a href="/wp-content/uploads/2025/03/الرياضة-الإلكترونية.webp" data-fancybox="gallery">
-                    <img src="/wp-content/uploads/2025/03/الرياضة-الإلكترونية.webp" alt="الرياضة-الإلكترونية"
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/الرياضة-الإلكترونية.webp" alt="الرياضة-الإلكترونية"
                          title="الرياضة-الإلكترونية">
                </a>
           </div>
 
           <div class="slide">
                <a href="/wp-content/uploads/2025/03/الصفحة-الرئيسية-888ستارز.webp" data-fancybox="gallery">
-                    <img src="/wp-content/uploads/2025/03/الصفحة-الرئيسية-888ستارز.webp" alt="الصفحة-الرئيسية-888ستارز"
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/الصفحة-الرئيسية-888ستارز.webp" alt="الصفحة-الرئيسية-888ستارز"
                          title="الصفحة-الرئيسية-888ستارز">
                </a>
           </div>
 
           <div class="slide">
                <a href="/wp-content/uploads/2025/03/ألعاب-الكازينو-1.webp" data-fancybox="gallery">
-                    <img src="/wp-content/uploads/2025/03/ألعاب-الكازينو-1.webp" alt="ألعاب-الكازينو-1"
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/ألعاب-الكازينو-1.webp" alt="ألعاب-الكازينو-1"
                          title="ألعاب-الكازينو-1">
                </a>
           </div>
 
           <div class="slide">
                <a href="/wp-content/uploads/2025/03/النتائج.webp" data-fancybox="gallery">
-                    <img src="/wp-content/uploads/2025/03/النتائج.webp" alt="النتائج" title="النتائج">
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/النتائج.webp" alt="النتائج" title="النتائج">
                </a>
           </div>
 
           <div class="slide">
                <a href="/wp-content/uploads/2025/03/بوكر.webp" data-fancybox="gallery">
-                    <img src="/wp-content/uploads/2025/03/بوكر.webp" alt="بوكر" title="بوكر">
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/بوكر.webp" alt="بوكر" title="بوكر">
                </a>
           </div>
 
           <div class="slide">
                <a href="/wp-content/uploads/2025/03/جميع-الألعاب-888.webp" data-fancybox="gallery">
-                    <img src="/wp-content/uploads/2025/03/جميع-الألعاب-888.webp" alt="جميع-الألعاب-888"
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/جميع-الألعاب-888.webp" alt="جميع-الألعاب-888"
                          title="جميع-الألعاب-888">
                </a>
           </div>
 
           <div class="slide">
                <a href="/wp-content/uploads/2025/03/جميع-المكافآت.webp" data-fancybox="gallery">
-                    <img src="/wp-content/uploads/2025/03/جميع-المكافآت.webp" alt="جميع-المكافآت" title="جميع-المكافآت">
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/جميع-المكافآت.webp" alt="جميع-المكافآت" title="جميع-المكافآت">
                </a>
           </div>
 
           <div class="slide">
                <a href="/wp-content/uploads/2025/03/ماكينات-سلوتس-888-ستارز.webp" data-fancybox="gallery">
-                    <img src="/wp-content/uploads/2025/03/ماكينات-سلوتس-888-ستارز.webp" alt="ماكينات-سلوتس-888-ستارز"
+                    <img loading="eager" decoding="async" src="/wp-content/uploads/2025/03/ماكينات-سلوتس-888-ستارز.webp" alt="ماكينات-سلوتس-888-ستارز"
                          title="ماكينات-سلوتس-888-ستارز">
                </a>
           </div>

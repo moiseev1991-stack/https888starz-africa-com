@@ -1,7 +1,14 @@
 /* Carousel Lite — replaces Owl on .owl-carousel, .owl-mobile, .slider-888-slider */
+.owl-carousel,
+.owl-mobile,
+.slider-888-slider {
+  width: 100%;
+  box-sizing: border-box;
+}
 .carousel-lite__viewport {
   overflow: hidden;
   border-radius: 0;
+  width: 100%;
 }
 .carousel-lite__track {
   display: flex;

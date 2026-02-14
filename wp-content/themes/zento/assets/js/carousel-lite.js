@@ -41,6 +41,7 @@
     var viewport = document.createElement('div');
     viewport.className = 'carousel-lite__viewport';
     viewport.style.overflow = 'hidden';
+    viewport.style.width = '100%';
 
     var track = document.createElement('div');
     track.className = 'carousel-lite__track';
@@ -112,7 +113,12 @@
     });
     autoplayTimer = setInterval(function () { goTo(index + 1); }, DEFAULT_INTERVAL);
 
+    window.addEventListener('resize', function () { goTo(index); });
+    setTimeout(function () { goTo(index); }, 300);
+    setTimeout(function () { goTo(index); }, 1000);
+
     root.setAttribute('data-carousel-lite', 'inited');
+    root.classList.add('carousel-lite__inited');
   }
 
   function run() {
