@@ -1,7 +1,7 @@
 /**
- * After fetch-africa-pages: on dist/apk/index.html only,
- * replace the owl-carousel block with lite-slider markup and inject lite-slider.css + .js.
- * Copies static-assets/lite-slider to dist/assets/lite-slider.
+ * After fetch-africa-pages: on dist/apk, registration, promo-code
+ * replace ALL owl-carousel and owl-mobile blocks with Carousel Lite (lite-slider) markup
+ * and inject lite-slider.css + .js. So sliders work everywhere without jQuery/Owl.
  */
 
 const fs = require('fs');
@@ -10,7 +10,7 @@ const path = require('path');
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const OUT_DIR = process.env.STATIC_OUT_DIR || 'dist';
 const DIST = path.join(PROJECT_ROOT, OUT_DIR);
-const APK_INDEX = path.join(DIST, 'apk', 'index.html');
+const SLIDER_PAGES = ['apk', 'registration', 'promo-code'];
 const STATIC_ASSETS = path.join(__dirname, 'static-assets', 'lite-slider');
 const DIST_ASSETS = path.join(DIST, 'assets', 'lite-slider');
 
@@ -95,13 +95,9 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;');
 }
 
-function main() {
-  copyAssets();
-  if (!fs.existsSync(APK_INDEX)) {
-    console.log('apk/index.html not found, skip lite-slider inject.');
-    return;
-  }
-  let html = fs.readFileSync(APK_INDEX, 'utf8');
+function processPage(indexPath) {
+  if (!fs.existsSync(indexPath)) return 0;
+  let html = fs.readFileSync(indexPath, 'utf8');
   let replaced = 0;
   let fromIndex = 0;
   for (;;) {
@@ -128,10 +124,24 @@ function main() {
     if (!html.includes('lite-slider.js')) {
       html = html.replace('</body>', '<script src="/assets/lite-slider/lite-slider.js" defer></script>\n</body>');
     }
-    fs.writeFileSync(APK_INDEX, html, 'utf8');
-    console.log('Replaced', replaced, 'owl block(s) (owl-carousel/owl-mobile) with lite-slider on apk/index.html.');
-  } else {
-    console.log('No owl-carousel/owl-mobile block with images found in apk/index.html, skip.');
+    fs.writeFileSync(indexPath, html, 'utf8');
+  }
+  return replaced;
+}
+
+function main() {
+  copyAssets();
+  let total = 0;
+  for (const slug of SLIDER_PAGES) {
+    const indexPath = path.join(DIST, slug, 'index.html');
+    const n = processPage(indexPath);
+    if (n > 0) {
+      console.log('Replaced', n, 'owl block(s) with Carousel Lite on', slug + '/index.html');
+      total += n;
+    }
+  }
+  if (total === 0) {
+    console.log('No owl-carousel/owl-mobile blocks with images found on apk/registration/promo-code, skip.');
   }
 }
 
