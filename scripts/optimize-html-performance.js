@@ -148,6 +148,22 @@ function optimizeHtml(html, relativePath) {
   // Убрать неиспользуемые селекторы Owl из JS (owl-item.cloned уже не существует)
   out = out.replace(/:not\(\.owl-item\.cloned\s+\[data-fancybox="gallery"\]\)/gi, '');
   out = out.replace(/:not\(\.owl-item\.cloned\s+\[data-fancybox="gallerymob"\]\)/gi, '');
+
+  // 5a2. Исходный HTML без owl-item/owl-stage/cloned/transform: восстановить разметку (только .slide/.mobile-slide/.slider-888-slide внутри контейнера)
+  // Pass 0: удалить целиком cloned owl-item (дубли для loop)
+  out = out.replace(/<div\s+class="[^"]*owl-item[^"]*cloned[^"]*"[^>]*>\s*<div\s+class="(slide|mobile-slide|slider-888-slide)"[^>]*>[\s\S]*?<\/div>\s*<\/div>/gi, '');
+  // Pass 1: убрать обёртку owl-item (не cloned), оставить только внутренний .slide/.mobile-slide/.slider-888-slide
+  out = out.replace(/<div\s+class="[^"]*owl-item(?![^"]*cloned)[^"]*"[^>]*>\s*(<div\s+class="(slide|mobile-slide|slider-888-slide)"[^>]*>[\s\S]*?<\/div>)\s*<\/div>/gi, '$1');
+  // Pass 2: убрать обёртки owl-stage-outer и owl-stage (открывающие теги)
+  out = out.replace(/<div\s+class="[^"]*owl-stage-outer[^"]*"[^>]*>\s*<div\s+class="[^"]*owl-stage[^"]*"[^>]*>/gi, '');
+  // Pass 3: убрать два лишних закрывающих </div> (stage, stage-outer); было 4 подряд, оставляем 2 (last slide + carousel)
+  out = out.replace(/<\/div>\s*<\/div>\s*<\/div>\s*<\/div>(?=\s*<div\s+class="[^"]*owl-dots)/gi, '</div></div>');
+  out = out.replace(/<\/div>\s*<\/div>\s*<\/div>\s*<\/div>(?=\s*<div\s+class="[^"]*owl-nav)/gi, '</div></div>');
+  out = out.replace(/<\/div>\s*<\/div>\s*<\/div>(?=\s*<div\s+class="[^"]*owl-carousel)/gi, '</div>');
+  out = out.replace(/<\/div>\s*<\/div>\s*<\/div>(?=\s*<div\s+class="[^"]*owl-mobile)/gi, '</div>');
+  out = out.replace(/<\/div>\s*<\/div>\s*<\/div>(?=\s*<div\s+class="[^"]*slider-888)/gi, '</div>');
+  // Удалить оставшиеся inline transform
+  out = out.replace(/\s+style=["'][^"']*transform:\s*translate3d[^"']*["']/gi, '');
   // Удалить пустые HTML-комментарии W3TC (не используются без плагина)
   out = out.replace(/<!--\s*W3TC-include-css\s*-->\s*/gi, '');
   out = out.replace(/<!--\s*W3TC-include-js-head\s*-->\s*/gi, '');
@@ -343,8 +359,8 @@ function optimizeHtml(html, relativePath) {
   });
 
   // 14. «Чёрный блок» облака тегов: раскрытие по клику (pure JS, без jQuery)
-  if (/id=["']seo-module["']/.test(out) && /caption-seo-module\s+faq-question/.test(out) && !/caption-seo-module.*addEventListener/.test(out)) {
-    const tagToggleScript = '<script>(function(){var q=document.querySelector(".caption-seo-module.faq-question");var a=document.getElementById("seo-module");if(q&&a){q.setAttribute("role","button");q.setAttribute("aria-expanded","false");q.setAttribute("aria-controls","seo-module");q.addEventListener("click",function(e){e.stopImmediatePropagation();var open=a.style.display==="block";a.style.display=open?"none":"block";q.setAttribute("aria-expanded",!open);q.classList.toggle("open",!open);var r=q.querySelector(".ico_rotater_footer");if(r)r.classList.toggle("rotate",!open);},true);}})();</script>';
+  if (/id=["']seo-module["']/.test(out) && /caption-seo-module\s+faq-question/.test(out) && !out.includes('seo-module-toggle-inited')) {
+    const tagToggleScript = '<script>/* seo-module-toggle-inited */ (function(){var q=document.querySelector(".caption-seo-module.faq-question");var a=document.getElementById("seo-module");if(q&&a){q.setAttribute("role","button");q.setAttribute("aria-expanded","false");q.setAttribute("aria-controls","seo-module");q.addEventListener("click",function(e){e.stopImmediatePropagation();var open=a.style.display==="block";a.style.display=open?"none":"block";q.setAttribute("aria-expanded",!open);q.classList.toggle("open",!open);var r=q.querySelector(".ico_rotater_footer");if(r)r.classList.toggle("rotate",!open);},true);}})();</script>';
     out = out.replace('</body>', tagToggleScript + '\n</body>');
   }
 
