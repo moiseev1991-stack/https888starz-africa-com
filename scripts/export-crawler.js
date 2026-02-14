@@ -38,10 +38,11 @@ function sameOrigin(href, base) {
   } catch { return false; }
 }
 
-// System pages: always seed so they are exported even if footer linked to /game/
+// System pages: always seed so they are exported even if not linked from menu
 const SYSTEM_PAGE_SLUGS = [
   'about', 'contacts', 'terms', 'responsible', 'privacy-policy',
-  'self-exclusion', 'dispute-resolution', 'fairness-rng-testing-methods', 'accounts-withdrawals-and-bonuses'
+  'self-exclusion', 'dispute-resolution', 'fairness-rng-testing-methods', 'accounts-withdrawals-and-bonuses',
+  'promo-code'
 ];
 
 async function main() {

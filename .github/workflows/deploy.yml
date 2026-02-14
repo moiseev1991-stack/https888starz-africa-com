@@ -26,10 +26,11 @@ jobs:
       - name: Install Playwright Chromium
         run: npx playwright install chromium
 
+      # КРАУЛИТЬ ТОТ ЖЕ САЙТ, НА КОТОРЫЙ ДЕПЛОИМ: иначе меню/страницы с другого домена (Africa) попадают на Egypt — ссылки и страницы ломаются.
       - name: Build static site
         run: npm run build:live
         env:
-          STATIC_BASE_URL: "https://888starz-africa.com"
+          STATIC_BASE_URL: "https://888starzeg-egypt.com"
           STATIC_OUT_DIR: "dist"
 
       - name: Prepare deploy folder
