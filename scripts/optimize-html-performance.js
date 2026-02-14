@@ -151,7 +151,8 @@ function optimizeHtml(html, relativePath) {
     (m) => (/async/.test(m) ? m : m.replace(/><\/script>/, ' async></script>'))
   );
 
-  // 5c. Preconnect — ускорить установку соединения (PageSpeed: не более 4 источников)
+  // 5c. Preconnect — убрать пустой href (PageSpeed: ошибка пустого preconnect)
+  out = out.replace(/<link\s+rel=["']preconnect["'][^>]*href=["']["'][^>]*\/?>/gi, '');
   if (!/preconnect[^>]*href=["']https?:\/\/888starzeg-egypt\.com["']/.test(out)) {
     const preconnectBlock = `
 <link rel="preconnect" href="https://888starzeg-egypt.com">
