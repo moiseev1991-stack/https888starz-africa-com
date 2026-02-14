@@ -47,18 +47,22 @@ const BASE_URL = process.env.STATIC_BASE_URL || 'https://888starzeg-egypt.com';
 function optimizeHtml(html, relativePath) {
   let out = html;
   const bodyStart = out.indexOf('</head>');
-  
+  // Страница /apk/: не переносить jQuery и инлайн в конец — нужен порядок jQuery → Owl → Fancybox → init для слайдеров
+  const isApkPage = relativePath && /apk[\/\\]index\.html$/i.test(relativePath.replace(/\\/g, '/'));
+
   // 0. Собрать инлайн-скрипты с $/jQuery из body и перенести в конец (исправляет " $ is not defined")
   const inlineScriptsWithJQuery = [];
-  out = out.replace(/<script(\s+[^>]*)?>([\s\S]*?)<\/script>/gi, (m, attrs, content) => {
-    if (attrs && /\bsrc\s*=/.test(attrs)) return m;
-    if (!/\$\(|jQuery\(/.test(content)) return m;
-    const pos = out.indexOf(m);
-    if (pos >= 0 && pos <= bodyStart) return m; // в head не трогаем (обернём в DOMContentLoaded)
-    inlineScriptsWithJQuery.push(m);
-    return '';
-  });
-  
+  if (!isApkPage) {
+    out = out.replace(/<script(\s+[^>]*)?>([\s\S]*?)<\/script>/gi, (m, attrs, content) => {
+      if (attrs && /\bsrc\s*=/.test(attrs)) return m;
+      if (!/\$\(|jQuery\(/.test(content)) return m;
+      const pos = out.indexOf(m);
+      if (pos >= 0 && pos <= bodyStart) return m; // в head не трогаем (обернём в DOMContentLoaded)
+      inlineScriptsWithJQuery.push(m);
+      return '';
+    });
+  }
+
   // 1. Удалить дублирующиеся jQuery (оставить только один — тот, что идёт первым в документе)
   const jqueryRegex = /<script[^>]*src=["']([^"']*jquery[^"']*)["'][^>]*><\/script>/gi;
   const jqueryMatches = [];
@@ -66,9 +70,7 @@ function optimizeHtml(html, relativePath) {
   while ((match = jqueryRegex.exec(html)) !== null) {
     jqueryMatches.push({ full: match[0], url: match[1], index: match.index });
   }
-  
   if (jqueryMatches.length > 1) {
-    // Оставить тот jQuery, который встречается первым (чтобы скрипты в head не ломались)
     jqueryMatches.sort((a, b) => a.index - b.index);
     const toKeep = jqueryMatches[0];
     jqueryMatches.forEach(m => {
@@ -77,7 +79,7 @@ function optimizeHtml(html, relativePath) {
       }
     });
   }
-  
+
   // 2. Удалить jQuery Migrate если есть (обычно не нужен для современных сайтов)
   out = out.replace(/<script[^>]*jquery-migrate[^>]*><\/script>/gi, '');
   
@@ -90,49 +92,51 @@ function optimizeHtml(html, relativePath) {
     /<script([^>]*src=["'][^"']*prism-plugins\.min\.js[^"']*["'][^>]*)><\/script>/gi,
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
-  // flexy-breadcrumb и prism (core/autoloader) — defer, чтобы убрать из критической цепочки (646 ms)
+  // flexy-breadcrumb и prism (core/autoloader) — defer
   out = out.replace(
     /<script([^>]*src=["'][^"']*(?:flexy-breadcrumb-public\.js|prism-core\.min\.js|prism-autoloader\.min\.js)[^"']*["'][^>]*)><\/script>/gi,
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
   
-  // 4. Перенести jQuery и scripts.min.js в конец body с defer — разрыв критической цепочки (LCP/FCP), порядок сохраняется
-  const jqueryTagMatch = out.match(/<script[^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*><\/script>/i);
-  const scriptsMinMatch = out.match(/<script[^>]*src=["'][^"']*scripts\.min\.js[^"']*["'][^>]*><\/script>/i);
-  const addDefer = (tag) => {
-    if (!tag) return tag;
-    return /defer|async/i.test(tag) ? tag : tag.replace(/><\/script>/, ' defer></script>');
-  };
-  if (jqueryTagMatch) {
-    out = out.replace(jqueryTagMatch[0], '');
-  }
-  if (scriptsMinMatch) {
-    out = out.replace(scriptsMinMatch[0], '');
-  }
-  const scriptsAtEnd = [addDefer(jqueryTagMatch && jqueryTagMatch[0]), addDefer(scriptsMinMatch && scriptsMinMatch[0])].filter(Boolean).join('\n');
-  const deferredInline = inlineScriptsWithJQuery.length ? '\n' + inlineScriptsWithJQuery.join('\n') : '';
-  if (scriptsAtEnd || deferredInline) {
-    out = out.replace('</body>', (scriptsAtEnd || '') + deferredInline + '\n</body>');
-  }
-  // Оборачиваем jQuery(document).ready в head в DOMContentLoaded (jQuery теперь в конце body)
-  out = out.replace(
-    /(<script>(?:\s*\/\/[^\n]*\n)*)(\s*)(jQuery\s*\(\s*document\s*\)\s*\.\s*ready\s*\()/gi,
-    '$1$2document.addEventListener("DOMContentLoaded",function(){ $3'
-  );
-  let addedDOMContentLoadedClose = false;
-  out = out.replace(
-    /(}\s*\)\s*;)\s*(\s*<\/script>)/g,
-    (m, close, rest) => {
-      if (addedDOMContentLoadedClose) return m;
-      const pos = out.indexOf(m);
-      const chunk = pos >= 0 ? out.slice(Math.max(0, pos - 2500), pos) : '';
-      if (/document\.addEventListener\s*\(\s*["']DOMContentLoaded["']/.test(chunk)) {
-        addedDOMContentLoadedClose = true;
-        return close + ' }); ' + rest;
-      }
-      return m;
+  // 4. Перенести jQuery и scripts.min.js в конец body с defer — НЕ для /apk/ (слайдеры требуют порядок: jQuery → Owl → init)
+  if (!isApkPage) {
+    const jqueryTagMatch = out.match(/<script[^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*><\/script>/i);
+    const scriptsMinMatch = out.match(/<script[^>]*src=["'][^"']*scripts\.min\.js[^"']*["'][^>]*><\/script>/i);
+    const addDefer = (tag) => {
+      if (!tag) return tag;
+      return /defer|async/i.test(tag) ? tag : tag.replace(/><\/script>/, ' defer></script>');
+    };
+    if (jqueryTagMatch) {
+      out = out.replace(jqueryTagMatch[0], '');
     }
-  );
+    if (scriptsMinMatch) {
+      out = out.replace(scriptsMinMatch[0], '');
+    }
+    const scriptsAtEnd = [addDefer(jqueryTagMatch && jqueryTagMatch[0]), addDefer(scriptsMinMatch && scriptsMinMatch[0])].filter(Boolean).join('\n');
+    const deferredInline = inlineScriptsWithJQuery.length ? '\n' + inlineScriptsWithJQuery.join('\n') : '';
+    if (scriptsAtEnd || deferredInline) {
+      out = out.replace('</body>', (scriptsAtEnd || '') + deferredInline + '\n</body>');
+    }
+    // Оборачиваем jQuery(document).ready в DOMContentLoaded (jQuery теперь в конце body)
+    out = out.replace(
+      /(<script>(?:\s*\/\/[^\n]*\n)*)(\s*)(jQuery\s*\(\s*document\s*\)\s*\.\s*ready\s*\()/gi,
+      '$1$2document.addEventListener("DOMContentLoaded",function(){ $3'
+    );
+    let addedDOMContentLoadedClose = false;
+    out = out.replace(
+      /(}\s*\)\s*;)\s*(\s*<\/script>)/g,
+      (m, close, rest) => {
+        if (addedDOMContentLoadedClose) return m;
+        const pos = out.indexOf(m);
+        const chunk = pos >= 0 ? out.slice(Math.max(0, pos - 2500), pos) : '';
+        if (/document\.addEventListener\s*\(\s*["']DOMContentLoaded["']/.test(chunk)) {
+          addedDOMContentLoadedClose = true;
+          return close + ' }); ' + rest;
+        }
+        return m;
+      }
+    );
+  }
 
   // 5. email-decode.min.js (cloudflare-static) — defer, убирает 482 ms из критической цепочки
   out = out.replace(
