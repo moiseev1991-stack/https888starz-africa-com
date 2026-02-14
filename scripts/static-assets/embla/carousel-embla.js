@@ -20,11 +20,10 @@
   }
 
   function wrapAndInit(root) {
+    if (root.getAttribute('data-embla-inited')) return;
     var slideClass = getSlideClass(root);
     if (!slideClass) return;
-    var slides = Array.prototype.filter.call(root.children, function (el) {
-      return el.classList && el.classList.contains(slideClass);
-    });
+    var slides = qsa(root, '.' + slideClass);
     if (slides.length === 0) return;
 
     var rtl = root.getAttribute('dir') === 'rtl' || document.documentElement.getAttribute('dir') === 'rtl';
@@ -103,14 +102,16 @@
   function run() {
     ROOT_SELECTORS.forEach(function (sel) {
       qsa(document, sel).forEach(function (el) {
-        if (!el.getAttribute('data-embla-inited')) wrapAndInit(el);
+        wrapAndInit(el);
       });
     });
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', run);
+    document.addEventListener('DOMContentLoaded', function () { run(); setTimeout(run, 150); });
   } else {
     run();
+    setTimeout(run, 150);
   }
+  window.addEventListener('load', run);
 })();

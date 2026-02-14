@@ -25,6 +25,7 @@
   }
 
   function initCarousel(root) {
+    if (root.getAttribute('data-carousel-lite')) return;
     var slideSel = getSlideSelector(root);
     if (!slideSel) return;
     var slides = qsa(root, slideSel);
@@ -117,14 +118,21 @@
   function run() {
     ROOT_SELECTORS.forEach(function (sel) {
       qsa(document, sel).forEach(function (el) {
-        if (!el.getAttribute('data-carousel-lite')) initCarousel(el);
+        initCarousel(el);
       });
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', run);
-  } else {
+  function runWhenReady() {
     run();
+    window.setTimeout(run, 100);
+    window.setTimeout(run, 500);
   }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runWhenReady);
+  } else {
+    runWhenReady();
+  }
+  window.addEventListener('load', run);
 })();
