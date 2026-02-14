@@ -251,7 +251,15 @@ function optimizeHtml(html, relativePath) {
     }
   }
 
-  // 11. Удалить пустые строки после удаления скриптов
+  // 11. Футер: добавить ссылки на /apk/, /registration/, /promo-code/ если их ещё нет (статический деплой не использует тему WP)
+  if (!/href=["']\/apk\/["']/.test(out) && /href=["']\/accounts-withdrawals-and-bonuses\/["']/.test(out)) {
+    out = out.replace(
+      /(<a\s+href=["']\/accounts-withdrawals-and-bonuses\/["'][^>]*>[^<]*<\/a>)\s*(<\/div>\s*<div\s+class=["']block-ul-footer["'][^>]*>)/,
+      '$1\n\t\t\t\t\t\t\t<a href="/promo-code/">عرض الرمز الترويجي</a>\n\t\t\t\t\t\t\t<a href="/registration/">التسجيل</a>\n\t\t\t\t\t\t\t<a href="/apk/">تحميل التطبيق (APK)</a>$2'
+    );
+  }
+
+  // 12. Удалить пустые строки после удаления скриптов
   out = out.replace(/\n\s*\n\s*\n/g, '\n\n');
   
   return out;
