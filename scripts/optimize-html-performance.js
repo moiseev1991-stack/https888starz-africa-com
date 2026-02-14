@@ -225,6 +225,18 @@ function optimizeHtml(html, relativePath) {
     return '<img' + attrs + ' loading="lazy">';
   });
 
+  // 9b. width/height из имени файла (CLS, соотношение сторон) — паттерны 320-250, 315x250 и т.п.
+  out = out.replace(/<img(\s+[^>]*)>/gi, (match, attrs) => {
+    if (/width\s*=/.test(attrs) && /height\s*=/.test(attrs)) return match;
+    const srcMatch = attrs.match(/src=["']([^"']+)["']/);
+    if (!srcMatch) return match;
+    const dimMatch = srcMatch[1].match(/(\d{2,4})[-x×](\d{2,4})/i);
+    if (!dimMatch) return match;
+    const w = dimMatch[1];
+    const h = dimMatch[2];
+    return '<img' + attrs + ' width="' + w + '" height="' + h + '">';
+  });
+
   // 10. Canonical — абсолютный URL (PageSpeed: «не действительный атрибут», «не абсолютный URL»)
   if (relativePath) {
     const pathSeg = relativePath.replace(/\\/g, '/').replace(/index\.html$/i, '').replace(/^\.\/?/, '');

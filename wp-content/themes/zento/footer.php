@@ -24,31 +24,36 @@
 
 	$(document).ready(function(){
 		$(".owl-carousel").owlCarousel({
-			items: 1, // Количество отображаемых слайдов
-			margin: 30, // Отступ между слайдами
-			loop: true, // Бесконечный цикл
-			nav: false, // Кнопки навигации
-			dots: true, // Точки навигации
-			autoplay: true, // Автовоспроизведение
-			autoplayTimeout: 5000, // Интервал автопрокрутки
-			touchDrag: true, // Это можно использовать для включения и отключения drag
-			mouseDrag: true,
+			items: 1,
+			margin: 30,
+			loop: true,
+			nav: false,
 			dots: true,
-			rtl:false,
-			ltr:true,
+			autoplay: true,
+			autoplayTimeout: 5000,
+			touchDrag: true,
+			mouseDrag: true,
+			rtl: false,
+			ltr: true,
+			onInitialized: function() {
+				$(this.$element).find('.owl-dot').each(function(i) { $(this).attr('aria-label', 'Slide ' + (i + 1)); });
+			}
 		});
 		$(".owl-mobile").owlCarousel({
-			items: 3, // Количество отображаемых слайдов по умолчанию
-			margin: 30, // Отступ между слайдами
-			loop: true, // Бесконечный цикл
-			nav: false, // Кнопки навигации
-			dots: true, // Точки навигации
-			rtl:false,
-			ltr:true,
-			autoplay: true, // Автовоспроизведение
-			autoplayTimeout: 5000, // Интервал автопрокрутки
-			touchDrag: true, // Включение возможности перетаскивания
-			mouseDrag: true, // Включение перетаскивания мышью
+			items: 3,
+			margin: 30,
+			loop: true,
+			nav: false,
+			dots: true,
+			rtl: false,
+			ltr: true,
+			autoplay: true,
+			autoplayTimeout: 5000,
+			touchDrag: true,
+			mouseDrag: true,
+			onInitialized: function() {
+				$(this.$element).find('.owl-dot').each(function(i) { $(this).attr('aria-label', 'Slide ' + (i + 1)); });
+			},
 			responsive: {
 				0: {
 					items: 1, // Для экранов шириной 0px и больше (например, для мобильных устройств)
@@ -102,18 +107,20 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 		<?php if (get_field('visibility_baner_main')) { ?>
 		
 		$(".slider-888-slider").owlCarousel({
-			items: 1, // Количество отображаемых слайдов
-			margin: 30, // Отступ между слайдами
-			loop: true, // Бесконечный цикл
-			nav: false, // Кнопки навигации
-			rtl:false,
-			ltr:true,
-			dots: true, // Точки навигации
-			autoplay: true, // Автовоспроизведение
-			autoplayTimeout: 5000, // Интервал автопрокрутки
-			touchDrag: true, // Это можно использовать для включения и отключения drag
-			mouseDrag: true,
+			items: 1,
+			margin: 30,
+			loop: true,
+			nav: false,
 			dots: true,
+			rtl: false,
+			ltr: true,
+			autoplay: true,
+			autoplayTimeout: 5000,
+			touchDrag: true,
+			mouseDrag: true,
+			onInitialized: function() {
+				$(this.$element).find('.owl-dot').each(function(i) { $(this).attr('aria-label', 'Slide ' + (i + 1)); });
+			}
 		});
 		<?php } ?>
 	});
