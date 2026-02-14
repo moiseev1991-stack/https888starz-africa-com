@@ -7,7 +7,7 @@
 
   var ROOT_SELECTORS = ['.owl-carousel', '.owl-mobile', '.slider-888-slider'];
   var SLIDE_CLASSES = { '.owl-carousel': 'slide', '.owl-mobile': 'mobile-slide', '.slider-888-slider': 'slider-888-slide' };
-  var AUTOPLAY_MS = 3500;
+  var AUTOPLAY_MS = 10000;
   var REDUCED_MOTION = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function qsa(el, sel) { return Array.prototype.slice.call(el.querySelectorAll(sel)); }

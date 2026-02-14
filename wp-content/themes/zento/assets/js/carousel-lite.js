@@ -11,7 +11,7 @@
     '.slider-888-slider .slider-888-slide'
   ];
   var ROOT_SELECTORS = ['.owl-carousel', '.owl-mobile', '.slider-888-slider'];
-  var DEFAULT_INTERVAL = 4000;
+  var DEFAULT_INTERVAL = 10000;
   var TRANSITION_MS = 280;
 
   function qs(el, sel) { return el.querySelector(sel); }

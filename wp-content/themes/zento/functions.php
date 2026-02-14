@@ -1571,67 +1571,53 @@ function deck_slider_shortcode()
 
      <div class="owl-carousel owl-theme hero-slider" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
           <div class="slide">
-               <a href="/wp-content/uploads/2025/03/الإحصاءات.webp" data-fancybox="gallery">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/الإحصاءات.webp" alt="الإحصاءات" title="الإحصاءات" width="1200" height="675" loading="eager">
+               <a href="/wp-content/uploads/slaid1/1.webp" data-fancybox="gallery">
+                    <img decoding="async" src="/wp-content/uploads/slaid1/1.webp" alt="Слайд 1" title="Слайд 1" width="1200" height="675" loading="eager">
                </a>
           </div>
-
           <div class="slide">
-               <a href="/wp-content/uploads/2025/03/البنغو.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/البنغو.webp" alt="البنغو" title="البنغو" width="1200" height="675">
+               <a href="/wp-content/uploads/slaid1/2.webp" data-fancybox="gallery">
+                    <img loading="lazy" decoding="async" src="/wp-content/uploads/slaid1/2.webp" alt="Слайд 2" title="Слайд 2" width="1200" height="675">
                </a>
           </div>
-
           <div class="slide">
-               <a href="/wp-content/uploads/2025/03/الرياضة-الإلكترونية.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الرياضة-الإلكترونية.webp" alt="الرياضة-الإلكترونية"
-                         title="الرياضة-الإلكترونية" width="1200" height="675">
+               <a href="/wp-content/uploads/slaid1/3.webp" data-fancybox="gallery">
+                    <img loading="lazy" decoding="async" src="/wp-content/uploads/slaid1/3.webp" alt="Слайд 3" title="Слайд 3" width="1200" height="675">
                </a>
           </div>
-
           <div class="slide">
-               <a href="/wp-content/uploads/2025/03/الصفحة-الرئيسية-888ستارز.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الصفحة-الرئيسية-888ستارز.webp" alt="الصفحة-الرئيسية-888ستارز"
-                         title="الصفحة-الرئيسية-888ستارز" width="1200" height="675">
+               <a href="/wp-content/uploads/slaid1/4.webp" data-fancybox="gallery">
+                    <img loading="lazy" decoding="async" src="/wp-content/uploads/slaid1/4.webp" alt="Слайд 4" title="Слайд 4" width="1200" height="675">
                </a>
           </div>
-
           <div class="slide">
-               <a href="/wp-content/uploads/2025/03/ألعاب-الكازينو-1.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/ألعاب-الكازينو-1.webp" alt="ألعاب-الكازينو-1"
-                         title="ألعاب-الكازينو-1" width="1200" height="675">
+               <a href="/wp-content/uploads/slaid1/5.webp" data-fancybox="gallery">
+                    <img loading="lazy" decoding="async" src="/wp-content/uploads/slaid1/5.webp" alt="Слайд 5" title="Слайд 5" width="1200" height="675">
                </a>
           </div>
-
           <div class="slide">
-               <a href="/wp-content/uploads/2025/03/النتائج.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/النتائج.webp" alt="النتائج" title="النتائج" width="1200" height="675">
+               <a href="/wp-content/uploads/slaid1/6.webp" data-fancybox="gallery">
+                    <img loading="lazy" decoding="async" src="/wp-content/uploads/slaid1/6.webp" alt="Слайд 6" title="Слайд 6" width="1200" height="675">
                </a>
           </div>
-
           <div class="slide">
-               <a href="/wp-content/uploads/2025/03/بوكر.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/بوكر.webp" alt="بوكر" title="بوكر" width="1200" height="675">
+               <a href="/wp-content/uploads/slaid1/7.webp" data-fancybox="gallery">
+                    <img loading="lazy" decoding="async" src="/wp-content/uploads/slaid1/7.webp" alt="Слайд 7" title="Слайд 7" width="1200" height="675">
                </a>
           </div>
-
           <div class="slide">
-               <a href="/wp-content/uploads/2025/03/جميع-الألعاب-888.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/جميع-الألعاب-888.webp" alt="جميع-الألعاب-888"
-                         title="جميع-الألعاب-888" width="1200" height="675">
+               <a href="/wp-content/uploads/slaid1/8.webp" data-fancybox="gallery">
+                    <img loading="lazy" decoding="async" src="/wp-content/uploads/slaid1/8.webp" alt="Слайд 8" title="Слайд 8" width="1200" height="675">
                </a>
           </div>
-
           <div class="slide">
-               <a href="/wp-content/uploads/2025/03/جميع-المكافآت.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/جميع-المكافآت.webp" alt="جميع-المكافآت" title="جميع-المكافآت" width="1200" height="675">
+               <a href="/wp-content/uploads/slaid1/9.webp" data-fancybox="gallery">
+                    <img loading="lazy" decoding="async" src="/wp-content/uploads/slaid1/9.webp" alt="Слайд 9" title="Слайд 9" width="1200" height="675">
                </a>
           </div>
-
           <div class="slide">
-               <a href="/wp-content/uploads/2025/03/ماكينات-سلوتس-888-ستارز.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/ماكينات-سلوتس-888-ستارز.webp" alt="ماكينات-سلوتس-888-ستارز"
-                         title="ماكينات-سلوتس-888-ستارز" width="1200" height="675">
+               <a href="/wp-content/uploads/slaid1/10.webp" data-fancybox="gallery">
+                    <img loading="lazy" decoding="async" src="/wp-content/uploads/slaid1/10.webp" alt="Слайд 10" title="Слайд 10" width="1200" height="675">
                </a>
           </div>
      </div>
