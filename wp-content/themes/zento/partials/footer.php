@@ -203,6 +203,9 @@ if( epcl_get_option('enable_mobile_footer_sidebar') == true && epcl_get_option('
 						<a href="/dispute-resolution/">حل النزاعات</a>
 						<a href="/fairness-rng-testing-methods/">طرق اختبار النزاهة والعشوائية</a>
 						<a href="/accounts-withdrawals-and-bonuses/">الحسابات والمدفوعات والمكافآت</a>
+						<a href="/promo-code/">عرض الرمز الترويجي</a>
+						<a href="/registration/">التسجيل</a>
+						<a href="/apk/">تحميل التطبيق (APK)</a>
 					</div>
 			<div class="block-ul-footer">
    <strong>الرهان</strong>
@@ -232,12 +235,14 @@ if( epcl_get_option('enable_mobile_footer_sidebar') == true && epcl_get_option('
    <strong>روابط مفيدة</strong>
    <a href="/game/">طرق الدفع</a>
    <a href="/game/">النسخة المحمولة</a>
-   <a href="/game/">التسجيل</a>
+   <a href="/registration/">التسجيل</a>
+   <a href="/promo-code/">الرمز الترويجي</a>
    <a href="/game/">اكسب مع 888starz</a>
 </div>
 			<div class="block-ul-footer">
 				<strong>التطبيقات</strong>
-				<a href="/888starz.apk" class="link-footer-aps"><svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
+				<a href="/apk/" class="link-footer-aps">صفحة التطبيق (APK)</a>
+				<a href="/888starz.apk" class="link-footer-aps" download aria-label="تحميل تطبيق أندرويد"><svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
 						<path d="M11.68 10.26a.63.63 0 0 1-.37-.12.7.7 0 0 1-.24-.32.77.77 0 0 1 .14-.79c.1-.1.21-.16.34-.2a.62.62 0 0 1 .39.05c.12.05.22.15.3.26a.76.76 0 0 1-.09.9.64.64 0 0 1-.47.22Zm-7.36 0a.63.63 0 0 1-.37-.12.7.7 0 0 1-.25-.32.77.77 0 0 1 .15-.79c.09-.1.2-.16.34-.2a.62.62 0 0 1 .38.05c.13.05.23.15.3.26a.76.76 0 0 1-.08.9.64.64 0 0 1-.47.22Zm7.6-4.32 1.33-2.48a.31.31 0 0 0 .04-.23.31.31 0 0 0-.04-.1.29.29 0 0 0-.09-.09.26.26 0 0 0-.32.03.3.3 0 0 0-.07.1l-1.35 2.5a7.88 7.88 0 0 0-6.84 0l-1.35-2.5a.3.3 0 0 0-.07-.1.26.26 0 0 0-.32-.03.29.29 0 0 0-.09.08.3.3 0 0 0-.05.23l.05.11 1.33 2.48A8.51 8.51 0 0 0 0 12.71h16a8.51 8.51 0 0 0-4.08-6.77Z">
 						</path>
 					</svg>أندرويد</a>
@@ -248,26 +253,26 @@ if( epcl_get_option('enable_mobile_footer_sidebar') == true && epcl_get_option('
 			Copyright © 2020 - 2025 «888starz».</div>
 			<div class="container-social">
 				<div class="container-social-media">
-					<a href="https://twitter.com/888Tron" class="link-social-footer" target="_blank">
+					<a href="https://twitter.com/888Tron" class="link-social-footer" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
 						<svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
 							<path d="M12.6 0h2.45L9.7 6.78 16 16h-4.94L7.2 10.4 2.77 16H.32l5.73-7.25L0 0h5.06l3.5 5.11L12.6 0Zm-.86 14.38h1.36L4.32 1.54H2.87l8.87 12.84Z">
 							</path>
 						</svg>
 					</a>
-					<a href="https://www.instagram.com/888starz_en/" class="link-social-footer" target="_blank">
+					<a href="https://www.instagram.com/888starz_en/" class="link-social-footer" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
 						<svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
 							<path d="M10.65 8a2.65 2.65 0 1 1-5.3 0 2.65 2.65 0 0 1 5.3 0Z"></path>
 							<path d="M12.47 0H3.53A3.53 3.53 0 0 0 0 3.53v8.94A3.53 3.53 0 0 0 3.53 16h8.94A3.53 3.53 0 0 0 16 12.47V3.53A3.53 3.53 0 0 0 12.47 0ZM8 12.41a4.42 4.42 0 1 1 0-8.83 4.42 4.42 0 0 1 0 8.83Zm5.06-8.59a.88.88 0 1 1 0-1.76.88.88 0 0 1 0 1.76Z">
 							</path>
 						</svg>
 					</a>
-					<a href="https://www.facebook.com/888starzEN/" class="link-social-footer" target="_blank">
+					<a href="https://www.facebook.com/888starzEN/" class="link-social-footer" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
 						<svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
 							<path clip-rule="evenodd" d="M11.14 8H8.9v8H5.58V8H4V5.19h1.58V3.35C5.58 2.05 6.2 0 8.93 0h2.47v2.75H9.6a.68.68 0 0 0-.7.77v1.66h2.53l-.29 2.83Z">
 							</path>
 						</svg>
 					</a>
-					<a href="https://t.me/starz_official" class="link-social-footer" target="_blank">
+					<a href="https://t.me/starz_official" class="link-social-footer" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
 						<svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
 							<path clip-rule="evenodd" d="m3.85 9.25 1.99 5.04 2.6-2.62 4.44 3.57L16 1 0 7.75l3.85 1.5Zm7.58-4.16-4.9 4.52-.61 2.33-1.13-2.85 6.64-4Z">
 							</path>
