@@ -151,14 +151,29 @@ function optimizeHtml(html, relativePath) {
     (m) => (/async/.test(m) ? m : m.replace(/><\/script>/, ' async></script>'))
   );
 
-  // 5c. Preconnect — убрать пустой href (PageSpeed: ошибка пустого preconnect)
+  // 5c. Preconnect — убрать пустой href, оставить макс. 4 (PageSpeed)
   out = out.replace(/<link\s+rel=["']preconnect["'][^>]*href=["']["'][^>]*\/?>/gi, '');
-  if (!/preconnect[^>]*href=["']https?:\/\/888starzeg-egypt\.com["']/.test(out)) {
-    const preconnectBlock = `
-<link rel="preconnect" href="https://888starzeg-egypt.com">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`;
-    out = out.replace(/<head[^>]*>/i, '$&' + preconnectBlock);
+  const preconnectRegex = /<link\s+rel=["']preconnect["'][^>]*href=["']([^"']+)["'][^>]*\/?>/gi;
+  const preconnects = [];
+  let m;
+  while ((m = preconnectRegex.exec(out)) !== null) preconnects.push({ full: m[0], href: m[1] });
+  const seen = new Set();
+  const kept = [];
+  for (const p of preconnects) {
+    const origin = (p.href || '').replace(/\/$/, '').replace(/^(https?:\/\/[^/]+).*/, '$1');
+    if (!origin || seen.has(origin)) continue;
+    seen.add(origin);
+    kept.push(p.full);
+    if (kept.length >= 4) break;
+  }
+  preconnects.forEach(p => { out = out.replace(p.full, ''); });
+  const toInsert = kept.length ? kept : [
+    '<link rel="preconnect" href="' + BASE_URL + '">',
+    '<link rel="preconnect" href="https://fonts.googleapis.com">',
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+  ].slice(0, 3);
+  if (toInsert.length) {
+    out = out.replace(/<head[^>]*>/i, '$&\n' + toInsert.join('\n') + '\n');
   }
 
   // 5b. font-display: swap во всех инлайн <style> (на случай @font-face в странице)
@@ -251,11 +266,28 @@ function optimizeHtml(html, relativePath) {
     }
   }
 
-  // 11. Футер: добавить ссылки на /apk/, /registration/, /promo-code/ если их ещё нет (статический деплой не использует тему WP)
+  // 11. Футер: добавить ссылки на /apk/, /registration/, /promo-code/ если их ещё нет
   if (!/href=["']\/apk\/["']/.test(out) && /href=["']\/accounts-withdrawals-and-bonuses\/["']/.test(out)) {
     out = out.replace(
       /(<a\s+href=["']\/accounts-withdrawals-and-bonuses\/["'][^>]*>[^<]*<\/a>)\s*(<\/div>\s*<div\s+class=["']block-ul-footer["'][^>]*>)/,
       '$1\n\t\t\t\t\t\t\t<a href="/promo-code/">عرض الرمز الترويجي</a>\n\t\t\t\t\t\t\t<a href="/registration/">التسجيل</a>\n\t\t\t\t\t\t\t<a href="/apk/">تحميل التطبيق (APK)</a>$2'
+    );
+  }
+  // 11b. Футер: семантика и доступность — aria-label для навигации, гарантированные ссылки на системные страницы
+  if (/<nav\s+class=["']navigation-footer["'][^>]*>/.test(out) && !/<nav[^>]*\saria-label=/.test(out)) {
+    out = out.replace(
+      /<nav\s+class=["']navigation-footer["']([^>]*)>/,
+      '<nav class="navigation-footer" aria-label="روابط الموقع"$1>'
+    );
+  }
+  const footerSlugs = ['contacts', 'about', 'terms', 'responsible', 'privacy-policy', 'self-exclusion', 'dispute-resolution', 'accounts-withdrawals-and-bonuses', 'fairness-rng-testing-methods'];
+  const labels = { contacts: 'معلومات الاتصال', about: 'من نحن', terms: 'شروط الاستخدام', responsible: 'اللعب المسؤول', 'privacy-policy': 'الخصوصية وإدارة البيانات', 'self-exclusion': 'الاستبعاد الذاتي', 'dispute-resolution': 'حل النزاعات', 'accounts-withdrawals-and-bonuses': 'الحسابات والمدفوعات والمكافآت', 'fairness-rng-testing-methods': 'طرق اختبار النزاهة والعشوائية' };
+  const missing = footerSlugs.filter(slug => !new RegExp('href=["\']/' + slug.replace(/-/g, '[-]') + '/["\']', 'i').test(out));
+  if (missing.length && /<div\s+class=["']block-ul-footer["'][^>]*>\s*<strong>حول الموقع<\/strong>/.test(out)) {
+    const insert = missing.map(slug => '<a href="/' + slug + '/">' + (labels[slug] || slug) + '</a>').join('\n\t\t\t\t\t\t\t');
+    out = out.replace(
+      /(<div\s+class=["']block-ul-footer["'][^>]*>\s*<strong>حول الموقع<\/strong>)/,
+      '$1\n\t\t\t\t\t\t\t' + insert
     );
   }
 

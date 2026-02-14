@@ -56,10 +56,10 @@ function main() {
   }
   let baseHtml = fs.readFileSync(srcPath, 'utf8');
   for (const [slug, { title, h1 }] of Object.entries(PAGES)) {
-    if (slug === 'apk') {
-      const apkDir = path.join(DIST, 'apk');
-      if (!fs.existsSync(apkDir)) fs.mkdirSync(apkDir, { recursive: true });
-      console.log('apk: will be filled by fetch-africa-apk.js (full page from Africa).');
+    if (['apk', 'registration', 'promo-code'].includes(slug)) {
+      const dir = path.join(DIST, slug);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      console.log(slug + ': filled by fetch-africa-pages.js (full page from Africa).');
       continue;
     }
     const content = getContent(slug);

@@ -7,8 +7,9 @@ deploy.tar.gz
 node_modules/
 npm-debug.log*
 
-# Playwright
+# Playwright + capture output (Stage 1)
 /test-results/
+/scripts/capture-output/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
