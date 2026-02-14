@@ -25,6 +25,14 @@
 	};
 
 	$(document).ready(function(){
+		function owlDotsA11y(carouselEl) {
+			var $el = $(carouselEl);
+			$el.find('.owl-dot').each(function(i) {
+				var $dot = $(this);
+				$dot.attr('aria-label', 'Slide ' + (i + 1));
+				$dot.attr('aria-current', $dot.hasClass('active') ? 'true' : null);
+			});
+		}
 		$(".owl-carousel").owlCarousel({
 			items: 1,
 			margin: 30,
@@ -37,9 +45,8 @@
 			mouseDrag: true,
 			rtl: false,
 			ltr: true,
-			onInitialized: function() {
-				$(this.$element).find('.owl-dot').each(function(i) { $(this).attr('aria-label', 'Slide ' + (i + 1)); });
-			}
+			onInitialized: function() { owlDotsA11y(this.$element); },
+			onChanged: function() { owlDotsA11y(this.$element); }
 		});
 		$(".owl-mobile").owlCarousel({
 			items: 3,
@@ -53,9 +60,8 @@
 			autoplayTimeout: 5000,
 			touchDrag: true,
 			mouseDrag: true,
-			onInitialized: function() {
-				$(this.$element).find('.owl-dot').each(function(i) { $(this).attr('aria-label', 'Slide ' + (i + 1)); });
-			},
+			onInitialized: function() { owlDotsA11y(this.$element); },
+			onChanged: function() { owlDotsA11y(this.$element); },
 			responsive: {
 				0: {
 					items: 1, // Для экранов шириной 0px и больше (например, для мобильных устройств)
@@ -120,9 +126,8 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 			autoplayTimeout: 5000,
 			touchDrag: true,
 			mouseDrag: true,
-			onInitialized: function() {
-				$(this.$element).find('.owl-dot').each(function(i) { $(this).attr('aria-label', 'Slide ' + (i + 1)); });
-			}
+			onInitialized: function() { owlDotsA11y(this.$element); },
+			onChanged: function() { owlDotsA11y(this.$element); }
 		});
 		<?php } ?>
 	});

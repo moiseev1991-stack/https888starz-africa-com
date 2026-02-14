@@ -96,16 +96,20 @@ function optimizeHtml(html, relativePath) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
   
-  // 4. Перенести jQuery и scripts.min.js в конец body — убирает блокировку отрисовки (150 ms), без " $ is not defined"
+  // 4. Перенести jQuery и scripts.min.js в конец body с defer — разрыв критической цепочки (LCP/FCP), порядок сохраняется
   const jqueryTagMatch = out.match(/<script[^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*><\/script>/i);
   const scriptsMinMatch = out.match(/<script[^>]*src=["'][^"']*scripts\.min\.js[^"']*["'][^>]*><\/script>/i);
+  const addDefer = (tag) => {
+    if (!tag) return tag;
+    return /defer|async/i.test(tag) ? tag : tag.replace(/><\/script>/, ' defer></script>');
+  };
   if (jqueryTagMatch) {
     out = out.replace(jqueryTagMatch[0], '');
   }
   if (scriptsMinMatch) {
     out = out.replace(scriptsMinMatch[0], '');
   }
-  const scriptsAtEnd = [jqueryTagMatch && jqueryTagMatch[0], scriptsMinMatch && scriptsMinMatch[0]].filter(Boolean).join('\n');
+  const scriptsAtEnd = [addDefer(jqueryTagMatch && jqueryTagMatch[0]), addDefer(scriptsMinMatch && scriptsMinMatch[0])].filter(Boolean).join('\n');
   const deferredInline = inlineScriptsWithJQuery.length ? '\n' + inlineScriptsWithJQuery.join('\n') : '';
   if (scriptsAtEnd || deferredInline) {
     out = out.replace('</body>', (scriptsAtEnd || '') + deferredInline + '\n</body>');
@@ -213,8 +217,14 @@ function optimizeHtml(html, relativePath) {
   out = out.replace(/<img(\s+[^>]*)>/gi, (match, attrs) => {
     if (/loading\s*=/i.test(attrs)) return match;
     imgIndex++;
-    if (imgIndex === 1) return match; // первый img в документе — не lazy для LCP
-    return '<img' + attrs + ' loading="lazy">';
+    let a = attrs;
+    if (imgIndex === 1) {
+      if (!/decoding\s*=/i.test(a)) a += ' decoding="async"';
+      if (!/fetchpriority\s*=/i.test(a)) a += ' fetchpriority="high"';
+      return '<img' + a + '>';
+    }
+    if (!/decoding\s*=/i.test(a)) a += ' decoding="async"';
+    return '<img' + a + ' loading="lazy">';
   });
 
   // 9b. width/height из имени файла (CLS, соотношение сторон) — паттерны 320-250, 315x250 и т.п.
