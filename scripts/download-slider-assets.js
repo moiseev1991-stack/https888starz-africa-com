@@ -1,7 +1,7 @@
 /**
  * Download hero slider images from Africa so they exist in dist (no 404).
- * Paths must match theme: /wp-content/uploads/2025/03/... (desktop + mobile sliders).
- * Run after copy-wp-assets so dist/wp-content exists.
+ * Serves webp assets from wp-content/uploads/2025/03/ (desktop + mobile sliders).
+ * Paths must match theme. Run after copy-wp-assets so dist/wp-content exists.
  */
 
 const fs = require('fs');
