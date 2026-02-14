@@ -29,10 +29,12 @@ function copyAssets() {
   });
 }
 
-function findOwlBlockStart(html) {
-  const re = /<div\s+[^>]*class=["'][^"']*owl-carousel[^"']*["'][^>]*>/i;
-  const m = html.match(re);
-  return m ? html.indexOf(m[0]) : -1;
+function findOwlBlockStart(html, fromIndex) {
+  const re = /<div\s+[^>]*class=["'][^"']*owl-(?:carousel|mobile)[^"']*["'][^>]*>/i;
+  const idx = fromIndex || 0;
+  const slice = html.slice(idx);
+  const m = slice.match(re);
+  return m ? idx + slice.indexOf(m[0]) : -1;
 }
 
 function findMatchingEnd(html, start) {
@@ -100,33 +102,37 @@ function main() {
     return;
   }
   let html = fs.readFileSync(APK_INDEX, 'utf8');
-  const start = findOwlBlockStart(html);
-  if (start === -1) {
-    console.log('No owl-carousel block found in apk/index.html, skip.');
-    return;
+  let replaced = 0;
+  let fromIndex = 0;
+  for (;;) {
+    const start = findOwlBlockStart(html, fromIndex);
+    if (start === -1) break;
+    const end = findMatchingEnd(html, start);
+    if (end === -1) break;
+    const block = html.slice(start, end);
+    const imgs = extractImagesFromBlock(block);
+    if (imgs.length === 0) {
+      fromIndex = end;
+      continue;
+    }
+    const newBlock = buildLiteSliderHtml(imgs);
+    html = html.slice(0, start) + newBlock + html.slice(end);
+    replaced++;
+    fromIndex = start + newBlock.length;
   }
-  const end = findMatchingEnd(html, start);
-  if (end === -1) {
-    console.log('Could not find end of owl-carousel block, skip.');
-    return;
-  }
-  const block = html.slice(start, end);
-  const imgs = extractImagesFromBlock(block);
-  if (imgs.length === 0) {
-    console.log('No images in owl-carousel block, skip.');
-    return;
-  }
-  const newBlock = buildLiteSliderHtml(imgs);
-  html = html.slice(0, start) + newBlock + html.slice(end);
 
-  if (!html.includes('lite-slider.css')) {
-    html = html.replace('</head>', '<link rel="stylesheet" href="/assets/lite-slider/lite-slider.css">\n</head>');
+  if (replaced > 0) {
+    if (!html.includes('lite-slider.css')) {
+      html = html.replace('</head>', '<link rel="stylesheet" href="/assets/lite-slider/lite-slider.css">\n</head>');
+    }
+    if (!html.includes('lite-slider.js')) {
+      html = html.replace('</body>', '<script src="/assets/lite-slider/lite-slider.js" defer></script>\n</body>');
+    }
+    fs.writeFileSync(APK_INDEX, html, 'utf8');
+    console.log('Replaced', replaced, 'owl block(s) (owl-carousel/owl-mobile) with lite-slider on apk/index.html.');
+  } else {
+    console.log('No owl-carousel/owl-mobile block with images found in apk/index.html, skip.');
   }
-  if (!html.includes('lite-slider.js')) {
-    html = html.replace('</body>', '<script src="/assets/lite-slider/lite-slider.js" defer></script>\n</body>');
-  }
-  fs.writeFileSync(APK_INDEX, html, 'utf8');
-  console.log('Replaced owl-carousel with lite-slider on apk/index.html,', imgs.length, 'slides.');
 }
 
 main();

@@ -155,7 +155,7 @@ function optimizeHtml(html, relativePath) {
     (m) => (/async/.test(m) ? m : m.replace(/><\/script>/, ' async></script>'))
   );
 
-  // 5c. Preconnect — убрать пустой href, оставить макс. 4 (PageSpeed)
+  // 5c. Preconnect — убрать пустой href, оставить макс. 2–3 (PageSpeed: не более 3–4)
   out = out.replace(/<link\s+rel=["']preconnect["'][^>]*href=["']["'][^>]*\/?>/gi, '');
   const preconnectRegex = /<link\s+rel=["']preconnect["'][^>]*href=["']([^"']+)["'][^>]*\/?>/gi;
   const preconnects = [];
@@ -168,7 +168,7 @@ function optimizeHtml(html, relativePath) {
     if (!origin || seen.has(origin)) continue;
     seen.add(origin);
     kept.push(p.full);
-    if (kept.length >= 4) break;
+    if (kept.length >= 3) break;
   }
   preconnects.forEach(p => { out = out.replace(p.full, ''); });
   const toInsert = kept.length ? kept : [
