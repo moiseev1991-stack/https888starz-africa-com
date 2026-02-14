@@ -61,6 +61,10 @@ function injectEmbla(html) {
   if (!out.includes('carousel-embla.js')) {
     out = out.replace('</body>', '<script src="' + base + 'carousel-embla.js" defer></script>\n</body>');
   }
+  if (out.includes('data-fancybox="gallery"') && !out.includes('fancyboxReinitAfterCarousel')) {
+    var fancyboxReinit = '<script>/* fancyboxReinitAfterCarousel */ window.addEventListener("load",function(){var $=window.jQuery;if($&&$.fn.fancybox){setTimeout(function(){ $(\'[data-fancybox="gallery"]\').fancybox({loop:true,buttons:["zoom","share","slideShow","fullScreen","download","thumbs","close"]}); $(\'[data-fancybox="gallerymob"]\').fancybox({loop:true,buttons:["zoom","share","slideShow","fullScreen","download","thumbs","close"]}); },500);}});</script>';
+    out = out.replace('</body>', fancyboxReinit + '\n</body>');
+  }
   return out;
 }
 

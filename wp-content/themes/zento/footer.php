@@ -34,31 +34,15 @@
 <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" /></noscript>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 <script>
+	function initFancyboxGalleries() {
+		var opts = { loop: true, protect: true, animationEffect: "zoom", transitionEffect: "fade",
+			buttons: ["zoom","share","slideShow","fullScreen","download","thumbs","close"] };
+		$('[data-fancybox="gallery"]').fancybox(opts);
+		$('[data-fancybox="gallerymob"]').fancybox(opts);
+	}
 	$(document).ready(function(){
-		$('[data-fancybox="gallery"]').fancybox({
-    buttons: [
-        "zoom",
-        "share",
-        "slideShow",
-        "fullScreen",
-        "download",
-        "thumbs",
-        "close"
-    ],
-    loop: true,
-    protect: true,
-    animationEffect: "zoom",
-    transitionEffect: "fade"
-});
-
-		// То же самое для мобильной версии
-		$('[data-fancybox="gallerymob"]').fancybox({
-			buttons: ["zoom","share","slideShow","fullScreen","download","thumbs","close"],
-			loop: true,
-			protect: true,
-			animationEffect: "zoom",
-			transitionEffect: "fade"
-		});
+		initFancyboxGalleries();
+		setTimeout(initFancyboxGalleries, 800);
 	});
 </script>
 

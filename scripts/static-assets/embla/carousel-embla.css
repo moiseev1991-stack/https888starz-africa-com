@@ -18,11 +18,16 @@
   min-width: 0;
   margin: 0;
 }
+.embla__slide a,
 .embla__slide img {
   display: block;
   max-width: 100%;
   height: auto;
   vertical-align: middle;
+  pointer-events: auto;
+}
+.embla__slide a {
+  cursor: pointer;
 }
 .embla__dots {
   display: flex;
