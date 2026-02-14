@@ -6,8 +6,14 @@
     <?php get_template_part('partials/header/site-logo'); ?>
     <?php echo do_shortcode("[dropdown_language_switcher]"); ?>
 	<div class="link-reg-mobile">
-			<a href="/game/" class="link-game-button ink-game-button-reg-mobiles" rel="nofollow">
+			<a href="/registration/" class="link-game-button ink-game-button-reg-mobiles">
 				<?php echo get_translation('Registration') ?>
+			</a>
+			<a href="/apk/" class="link-game-button">
+				<?php echo get_translation('Download 888Starz App (APK)'); ?>
+			</a>
+			<a href="/promo-code/" class="link-game-button">
+				<?php echo get_translation('Promo code'); ?>
 			</a>
 			<a href="/game/" class="link-game-button" rel="nofollow">
 				<?php echo get_translation('Log in') ?>

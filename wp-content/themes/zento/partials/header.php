@@ -268,7 +268,15 @@ if( !empty( $epcl_theme ) ){
 									<?php echo get_translation('More') ?>
 								</a>
 							</li>
-							
+							<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666696">
+								<a href="/apk/"><?php echo get_translation('Download 888Starz App (APK)'); ?></a>
+							</li>
+							<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666696">
+								<a href="/registration/"><?php echo get_translation('Registration'); ?></a>
+							</li>
+							<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666696">
+								<a href="/promo-code/"><?php echo get_translation('Promo code'); ?></a>
+							</li>
 						</ul>
 					</nav>
 					<!-- end: .main-nav -->
@@ -287,7 +295,7 @@ if( !empty( $epcl_theme ) ){
 			<svg data-v-72c25320="" width="19px" height="19px" fill="#707070" viewBox="0 0 16 17" class="ico__svg" focusable="false" role="img" data-v-ico="common|casino-chip"><path d="M15.2 11a7.6 7.6 0 0 1-8.5 5A7.6 7.6 0 0 1 1 11C.6 10.2.4 9.3.4 8.5c0-1 .2-1.9.6-2.7A7.6 7.6 0 0 1 9.3.9 7.6 7.6 0 0 1 15 5.7c.4.8.6 1.7.6 2.7 0 .8-.2 1.7-.4 2.5Zm-8.5 4h2.6v-1.6a5 5 0 0 1-1.3.2c-.4 0-.9 0-1.3-.2V15ZM3 12.8l1.3-.8a5 5 0 0 1-1.2-2.2l-1.4.7c.3.8.8 1.6 1.3 2.2v.1Zm.1-8.6c-.5.6-1 1.3-1.3 2.1l1.3.7a5 5 0 0 1 1.3-2.2l-1.3-.6ZM9.3 2H6.7v1.6A5 5 0 0 1 8 3.4c.4 0 .9 0 1.3.2V2ZM8 4.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM13 4l-1.3 1a5 5 0 0 1 1.3 2l1.3-.8c-.3-.8-.7-1.5-1.3-2.2Zm0 5.8a5 5 0 0 1-1.2 2.2l1.3.7c.6-.6 1-1.4 1.3-2.2l-1.4-1v.3Z"></path><path d="M11.1 8.5c0 1.7-1.4 3.2-3 3.2a3.1 3.1 0 0 1-3.2-3.2C5 6.7 6.3 5.3 8 5.3c1.7 0 3.1 1.4 3.1 3.2Z"></path></svg>
 			<?php echo get_translation('Casino') ?>
 		</a>
-		<a href="/game/" rel="nofollow" class="item-navigator-mobile">
+		<a href="/promo-code/" class="item-navigator-mobile">
 			<div data-v-50587210="" class="bottom-navigation-link-coupon-content__wrapper"><svg data-v-72c25320="" viewBox="0 0 19 20" class="ico__svg" focusable="false" role="img" data-v-ico="common|coupon"><path clip-rule="evenodd" d="M3.12 5.75 2.8 5.5.12 8.2l3.1 3.1L4.5 10l.66.66-1.28 1.29 7.55 7.56 2.68-2.68-.23-.33a1.52 1.52 0 0 1 2.1-2.09l.32.23 2.68-2.68-7.56-7.55-1.28 1.28-.67-.66 1.29-1.29L7.66.65 5 3.33l.23.32a1.52 1.52 0 0 1-2.1 2.1Zm5.64-.02.67.67L8 7.8l-.66-.66 1.41-1.42ZM6.62 7.88l.66.66-1.41 1.42-.67-.67 1.42-1.41Z" fill-rule="evenodd"></path></svg></div>
 			<?php echo get_translation('Coupon') ?>
 		</a>

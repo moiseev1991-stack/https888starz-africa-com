@@ -76,6 +76,10 @@ if( !function_exists('epcl_enqueue_scripts') ){
             wp_enqueue_style($prefix.'woocommerce', $assets_folder.'/dist/woocommerce.min.css', NULL, $ver);
         }
 
+        /* Carousel Lite — replaces Owl, no jQuery; for .owl-carousel, .owl-mobile, .slider-888-slider */
+        wp_enqueue_style('carousel-lite', $assets_folder.'/dist/carousel-lite.css', NULL, $ver);
+        wp_enqueue_script('carousel-lite', $assets_folder.'/js/carousel-lite.js', array(), $ver, true);
+
         if( !defined('W3TC') ){
             $custom_css = epcl_generate_custom_styles();
             if( epcl_get_option('enable_optimization') !== '1' && $custom_css){
