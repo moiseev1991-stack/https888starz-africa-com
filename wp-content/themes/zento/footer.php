@@ -35,8 +35,7 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 <script>
 	$(document).ready(function(){
-		// Исключаем клонированные элементы из выборки (если остались)
-		$('[data-fancybox="gallery"]:not(.owl-item.cloned [data-fancybox="gallery"])').fancybox({
+		$('[data-fancybox="gallery"]').fancybox({
     buttons: [
         "zoom",
         "share",
@@ -53,7 +52,7 @@
 });
 
 		// То же самое для мобильной версии
-		$('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"])').fancybox({
+		$('[data-fancybox="gallerymob"]').fancybox({
 			buttons: ["zoom","share","slideShow","fullScreen","download","thumbs","close"],
 			loop: true,
 			protect: true,
@@ -64,10 +63,7 @@
 </script>
 
 
-    <!-- end: #wrapper --> 
-
-    <!-- W3TC-include-css -->
-    <!-- W3TC-include-js-head -->
+    <!-- end: #wrapper -->
 
     <?php wp_footer(); ?>     
 

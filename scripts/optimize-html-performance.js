@@ -47,7 +47,6 @@ const BASE_URL = process.env.STATIC_BASE_URL || 'https://888starzeg-egypt.com';
 function optimizeHtml(html, relativePath) {
   let out = html;
   const bodyStart = out.indexOf('</head>');
-  // Страница /apk/: не переносить jQuery и инлайн в конец — нужен порядок jQuery → Owl → Fancybox → init для слайдеров
   const isApkPage = relativePath && /apk[\/\\]index\.html$/i.test(relativePath.replace(/\\/g, '/'));
 
   // 0. Собрать инлайн-скрипты с $/jQuery из body и перенести в конец (исправляет " $ is not defined")
@@ -98,7 +97,7 @@ function optimizeHtml(html, relativePath) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
   
-  // 4. Перенести jQuery и scripts.min.js в конец body с defer — НЕ для /apk/ (слайдеры требуют порядок: jQuery → Owl → init)
+  // 4. Перенести jQuery и scripts.min.js в конец body с defer (кроме /apk/ при необходимости)
   if (!isApkPage) {
     const jqueryTagMatch = out.match(/<script[^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*><\/script>/i);
     const scriptsMinMatch = out.match(/<script[^>]*src=["'][^"']*scripts\.min\.js[^"']*["'][^>]*><\/script>/i);
@@ -146,6 +145,12 @@ function optimizeHtml(html, relativePath) {
 
   // 5a. Удалить Owl Carousel (на статике используем Embla; убирает конфликты и вес)
   out = out.replace(/<script[^>]*src=["'][^"']*owl\.carousel[^"']*["'][^>]*><\/script>/gi, '');
+  // Убрать неиспользуемые селекторы Owl из JS (owl-item.cloned уже не существует)
+  out = out.replace(/:not\(\.owl-item\.cloned\s+\[data-fancybox="gallery"\]\)/gi, '');
+  out = out.replace(/:not\(\.owl-item\.cloned\s+\[data-fancybox="gallerymob"\]\)/gi, '');
+  // Удалить пустые HTML-комментарии W3TC (не используются без плагина)
+  out = out.replace(/<!--\s*W3TC-include-css\s*-->\s*/gi, '');
+  out = out.replace(/<!--\s*W3TC-include-js-head\s*-->\s*/gi, '');
 
   // 5a. Удалить скрипты, вызывающие ошибки (404 cdn-cgi/rum — убирает 1099 мс из цепочки, PageSpeed)
   out = out.replace(/<script[^>]*wp-emoji-release[^>]*><\/script>/gi, '');
