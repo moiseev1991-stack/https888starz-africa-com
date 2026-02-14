@@ -1475,8 +1475,12 @@ function insert_shortcode_before_second_h2($content)
 }
 add_filter('the_content', 'insert_shortcode_before_second_h2');
 
-
-
+function fix_table_width_zero($content) {
+    $content = preg_replace('/<table(\s+[^>]*)\s+width=["\']0["\']/i', '<table$1 width="100%"', $content);
+    $content = preg_replace('/<table\s+width=["\']0["\'](\s+[^>]*)/i', '<table width="100%"$1', $content);
+    return $content;
+}
+add_filter('the_content', 'fix_table_width_zero', 20);
 
 function custom_slider_shortcode()
 {

@@ -350,6 +350,12 @@ function optimizeHtml(html, relativePath) {
   for (let i = 0; i < 8; i++) {
     out = out.replace(/<div\s+[^>]*class=["'][^"']*table-wrapper[^"']*["'][^>]*>\s*<\/div>/gi, '');
   }
+  // Схлопнуть вложенные div.table-wrapper в один (убирает пустые блоки до/после таблицы)
+  out = out.replace(/(<div\s+[^>]*class=["'][^"']*table-wrapper[^"']*["'][^>]*>\s*)+/gi, '<div class="table-wrapper">');
+  out = out.replace(/(<\/table>\s*<\/div>)(\s*<\/div>)+/gi, '$1');
+  // Таблица width="0" ломает вёрстку — ставим 100%
+  out = out.replace(/<table(\s+[^>]*)\s+width=["']0["']/gi, '<table$1 width="100%"');
+  out = out.replace(/<table\s+width=["']0["'](\s+[^>]*)/gi, '<table width="100%"$1');
   // Ограничить высоту .table-wrapper, чтобы не создавать огромные пустые зоны
   if (!/\.table-wrapper\s*\{\s*min-height:\s*0/.test(out)) {
     const tableWrapperFix = '<style>.table-wrapper{min-height:0 !important;}.table-wrapper:empty{display:none !important;}</style>';
