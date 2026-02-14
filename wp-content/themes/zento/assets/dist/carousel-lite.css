@@ -1,4 +1,5 @@
 /* Carousel Lite — replaces Owl on .owl-carousel, .owl-mobile, .slider-888-slider */
+.hero-slider,
 .owl-carousel,
 .owl-mobile,
 .slider-888-slider {
@@ -58,12 +59,13 @@
   height: 10px;
 }
 
-/* Keep existing owl/slider-888 layout where used */
+.hero-slider.carousel-lite__inited,
 .owl-carousel.carousel-lite__inited,
 .owl-mobile.carousel-lite__inited,
 .slider-888-slider.carousel-lite__inited {
   position: relative;
 }
+.hero-slider .carousel-lite__slide .slide,
 .slider-888-slider .carousel-lite__slide .slider-888-slide,
 .owl-carousel .carousel-lite__slide .slide,
 .owl-mobile .carousel-lite__slide .mobile-slide {

@@ -1569,7 +1569,7 @@ function deck_slider_shortcode()
      ob_start();
      ?>
 
-     <div class="owl-carousel owl-theme hero-slider" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
+     <div id="hero-slider" class="owl-carousel owl-theme hero-slider" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
           <div class="slide">
                <a href="/wp-content/uploads/slaid1/1.webp" data-fancybox="gallery">
                     <img decoding="async" src="/wp-content/uploads/slaid1/1.webp" alt="Слайд 1" title="Слайд 1" width="1200" height="675" loading="eager">

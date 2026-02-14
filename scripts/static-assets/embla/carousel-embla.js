@@ -5,8 +5,8 @@
 (function () {
   'use strict';
 
-  var ROOT_SELECTORS = ['.owl-carousel', '.owl-mobile', '.slider-888-slider'];
-  var SLIDE_CLASSES = { '.owl-carousel': 'slide', '.owl-mobile': 'mobile-slide', '.slider-888-slider': 'slider-888-slide' };
+  var ROOT_SELECTORS = ['.hero-slider', '.owl-carousel', '.owl-mobile', '.slider-888-slider'];
+  var SLIDE_CLASSES = { '.hero-slider': 'slide', '.owl-carousel': 'slide', '.owl-mobile': 'mobile-slide', '.slider-888-slider': 'slider-888-slide' };
   var AUTOPLAY_MS = 10000;
   var REDUCED_MOTION = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -24,6 +24,9 @@
     var slideClass = getSlideClass(root);
     if (!slideClass) return;
     var slides = qsa(root, '.' + slideClass);
+    if (slides.length === 0 && root.classList.contains('hero-slider')) {
+      slides = Array.prototype.filter.call(root.children, function (el) { return el.tagName === 'DIV' && el.querySelector('img'); });
+    }
     if (slides.length === 0) return;
 
     var rtl = root.getAttribute('dir') === 'rtl' || document.documentElement.getAttribute('dir') === 'rtl';

@@ -5,30 +5,29 @@
 (function () {
   'use strict';
 
-  var SLIDE_SELECTORS = [
-    '.owl-carousel .slide',
-    '.owl-mobile .mobile-slide',
-    '.slider-888-slider .slider-888-slide'
-  ];
-  var ROOT_SELECTORS = ['.owl-carousel', '.owl-mobile', '.slider-888-slider'];
+  var ROOT_SELECTORS = ['.hero-slider', '.owl-carousel', '.owl-mobile', '.slider-888-slider'];
   var DEFAULT_INTERVAL = 10000;
   var TRANSITION_MS = 280;
 
   function qs(el, sel) { return el.querySelector(sel); }
   function qsa(el, sel) { return Array.prototype.slice.call(el.querySelectorAll(sel)); }
 
-  function getSlideSelector(root) {
-    if (root.classList.contains('owl-carousel')) return '.slide';
-    if (root.classList.contains('owl-mobile')) return '.mobile-slide';
-    if (root.classList.contains('slider-888-slider')) return '.slider-888-slide';
-    return null;
+  function getSlides(root) {
+    if (root.classList.contains('hero-slider')) {
+      var byClass = qsa(root, '.slide');
+      if (byClass.length > 0) return byClass;
+      var direct = Array.prototype.filter.call(root.children, function (el) { return el.tagName === 'DIV' && el.querySelector('img'); });
+      return direct.length > 0 ? direct : byClass;
+    }
+    if (root.classList.contains('owl-carousel')) return qsa(root, '.slide');
+    if (root.classList.contains('owl-mobile')) return qsa(root, '.mobile-slide');
+    if (root.classList.contains('slider-888-slider')) return qsa(root, '.slider-888-slide');
+    return [];
   }
 
   function initCarousel(root) {
     if (root.getAttribute('data-carousel-lite')) return;
-    var slideSel = getSlideSelector(root);
-    if (!slideSel) return;
-    var slides = qsa(root, slideSel);
+    var slides = getSlides(root);
     if (slides.length === 0) return;
 
     var rtl = root.getAttribute('dir') === 'rtl' || document.documentElement.getAttribute('dir') === 'rtl';
