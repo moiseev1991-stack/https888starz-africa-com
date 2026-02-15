@@ -71,15 +71,10 @@ function optimizeHtml(html, relativePath) {
   // 2. Удалить jQuery Migrate если есть (обычно не нужен для современных сайтов)
   out = out.replace(/<script[^>]*jquery-migrate[^>]*><\/script>/gi, '');
   
-  // 3. Добавить defer для скриптов которые не критичны (owl, fancybox, prism — не блокируют рендер). Embla не трогаем — без defer слайдер инициализируется сразу.
+  // 3. Добавить defer для скриптов которые не критичны (owl, fancybox, prism — не блокируют рендер)
   out = out.replace(
-    /<script([^>]*src=["']([^"']*)["'][^>]*)><\/script>/gi,
-    (m, attrs, src) => {
-      if (/embla/.test(src)) return m;
-      if (/(?:owl|fancybox|carousel)/.test(src) && !/embla/.test(src))
-        return /defer/.test(attrs) ? m : '<script' + attrs + ' defer></script>';
-      return m;
-    }
+    /<script([^>]*src=["'][^"']*(?:owl|fancybox|carousel)[^"']*["'][^>]*)><\/script>/gi,
+    '<script$1 defer></script>'
   );
   out = out.replace(
     /<script([^>]*src=["'][^"']*prism-plugins\.min\.js[^"']*["'][^>]*)><\/script>/gi,
@@ -137,11 +132,8 @@ function optimizeHtml(html, relativePath) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
 
-  // 5a. Удалить Owl Carousel (на статике используем Embla; убирает конфликты и вес)
+  // 5a. Удалить Owl Carousel (слайдер убран со страниц; убирает вес)
   out = out.replace(/<script[^>]*src=["'][^"']*owl\.carousel[^"']*["'][^>]*><\/script>/gi, '');
-  // Убрать неиспользуемые селекторы Owl из JS (owl-item.cloned уже не существует)
-  out = out.replace(/:not\(\.owl-item\.cloned\s+\[data-fancybox="gallery"\]\)/gi, '');
-  out = out.replace(/:not\(\.owl-item\.cloned\s+\[data-fancybox="gallerymob"\]\)/gi, '');
   // Удалить пустые HTML-комментарии W3TC (не используются без плагина)
   out = out.replace(/<!--\s*W3TC-include-css\s*-->\s*/gi, '');
   out = out.replace(/<!--\s*W3TC-include-js-head\s*-->\s*/gi, '');
@@ -326,15 +318,6 @@ function optimizeHtml(html, relativePath) {
       out = out.replace(menuLiCazino, '$1' + extra);
     }
   }
-
-  // 13. A11y: owl-dot / carousel buttons — aria-label (Lighthouse)
-  let dotIndex = 0;
-  out = out.replace(/<(button|span)([^>]*class=["'][^"']*owl-dot[^"']*["'][^>]*)>/gi, (m, tag, attrs) => {
-    if (/aria-label\s*=/.test(attrs)) return m;
-    dotIndex++;
-    const role = (tag === 'span' && !/role\s*=/.test(attrs)) ? ' role="button"' : '';
-    return '<' + tag + attrs + ' aria-label="Slide ' + dotIndex + '"' + role + '>';
-  });
 
   // 14. «Чёрный блок» облака тегов: раскрытие по клику (pure JS, без jQuery)
   if (/id=["']seo-module["']/.test(out) && /caption-seo-module\s+faq-question/.test(out) && !/caption-seo-module.*addEventListener/.test(out)) {
