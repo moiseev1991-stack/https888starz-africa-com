@@ -27,6 +27,13 @@ const INLINE_BLOCK = `<script>
 	function initOwlAndFancybox() {
 		var $ = window.jQuery;
 		if (!$ || !$.fn.owlCarousel) return;
+		// Переинициализация: снести старый Owl, чтобы слайдер отображался на всех страницах
+		$(".owl-carousel, .owl-mobile, .slider-888-slider").each(function() {
+			if ($(this).hasClass("owl-loaded")) {
+				$(this).trigger("destroy.owl.carousel");
+				$(this).removeClass("owl-loaded owl-drag owl-grab");
+			}
+		});
 		$(".owl-carousel").owlCarousel({
 			items: 1,
 			margin: 30,

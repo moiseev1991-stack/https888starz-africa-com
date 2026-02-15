@@ -529,9 +529,6 @@ html::-webkit-scrollbar-thumb,body::-webkit-scrollbar-thumb
 	.mobile-header-widget{
 		display:block;
 	}
-	.slider-888-container{
-		display:none !important;;
-	}
 	.top__left-header,.top__right-header
 	{
 		display:none
@@ -5706,6 +5703,12 @@ document.addEventListener("DOMContentLoaded", function() {
 	function initOwlAndFancybox() {
 		var $ = window.jQuery;
 		if (!$ || !$.fn.owlCarousel) return;
+		$(".owl-carousel, .owl-mobile, .slider-888-slider").each(function() {
+			if ($(this).hasClass("owl-loaded")) {
+				$(this).trigger("destroy.owl.carousel");
+				$(this).removeClass("owl-loaded owl-drag owl-grab");
+			}
+		});
 		$(".owl-carousel").owlCarousel({
 			items: 1,
 			margin: 30,
