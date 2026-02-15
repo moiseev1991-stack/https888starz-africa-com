@@ -68,8 +68,11 @@ function optimizeHtml(html, relativePath) {
   out = out.replace(/<link[^>]*rel=["']preload["'][^>]*href=["'][^"']*font-awesome\.min\.css[^"']*["'][^>]*>\s*/gi, '');
   out = out.replace(/<noscript><link[^>]*flexy-breadcrumb[^>]*><\/noscript>\s*/gi, '');
   out = out.replace(/<noscript><link[^>]*font-awesome\.min\.css[^>]*><\/noscript>\s*/gi, '');
-  // 0c. Синтаксис: только скрипт с toggle-btn уменьшаем до двух }); остальные (переключатель языка — 3 шт.) не трогаем
-  out = out.replace(/<script([^>]*)>([\s\S]*?toggle-btn[\s\S]*?)(\}\);\s*)\);\s*\}\);\s*(\}\); \s*)?(\}\); \s*)?<\/script>/g, '<script$1>$2}); }); </script>');
+  // 0c. Синтаксис: только скрипт с toggle-btn (и без переключателя языка) уменьшаем до двух }); скрипты с العربية/language не трогаем
+  out = out.replace(/<script([^>]*)>([\s\S]*?toggle-btn[\s\S]*?)(\}\);\s*)\);\s*\}\);\s*(\}\); \s*)?(\}\); \s*)?<\/script>/g, (m, attrs, content) => {
+    if (/العربية|language|dropdown|lang-/.test(content)) return m;
+    return '<script' + attrs + '>' + content + '}); }); </script>';
+  });
   // 0d. Удалить flexy-breadcrumb-public.js и wp-emoji (404)
   out = out.replace(/<script[^>]*src=["'][^"']*flexy-breadcrumb-public\.js[^"']*["'][^>]*><\/script>\s*/gi, '');
   out = out.replace(/<script id="wp-emoji-settings" type="application\/json">[\s\S]*?<\/script>\s*/i, '');
@@ -123,44 +126,15 @@ function optimizeHtml(html, relativePath) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
   
-  // 4. Чтобы не было "$ is not a function" и "jQuery is not defined": вставить jQuery перед первым инлайн-скриптом с $.
-  // Не вырезаем инлайны и не оборачиваем в DOMContentLoaded — это давало SyntaxError (unexpected '}' / '<').
+  // 4. jQuery и Fancybox в самое начало <body>, чтобы $ и jQuery были доступны всем скриптам (слайдер, кнопки, инлайны)
   {
     const jqueryTagMatch = out.match(/<script[^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*><\/script>/i);
-    const scriptsMinMatch = out.match(/<script[^>]*src=["'][^"']*scripts\.min\.js[^"']*["'][^>]*><\/script>/i);
     const jqueryTag = jqueryTagMatch ? jqueryTagMatch[0].replace(/\s*defer\s*/gi, ' ') : null;
-    const scriptsMinTag = scriptsMinMatch ? scriptsMinMatch[0] : null;
-    let insertPosition = -1;
-    let i = bodyStart;
-    while (i < out.length) {
-      const open = out.indexOf('<script', i);
-      if (open === -1) break;
-      const tagEnd = out.indexOf('>', open);
-      if (tagEnd === -1) break;
-      const close = out.indexOf('</script>', tagEnd);
-      if (close === -1) break;
-      const attrs = out.slice(open, tagEnd + 1);
-      if (/\bsrc\s*=/i.test(attrs)) { i = close + 9; continue; }
-      const content = out.slice(tagEnd + 1, close);
-      if (/\$\(|jQuery\s*\(/.test(content)) {
-        insertPosition = open;
-        break;
-      }
-      i = close + 9;
-    }
-    if (jqueryTag && insertPosition >= 0) {
-      let pos = insertPosition;
-      const idxJ = out.indexOf(jqueryTagMatch[0]);
+    if (jqueryTag) {
       out = out.replace(jqueryTagMatch[0], '');
-      if (idxJ >= 0 && idxJ < pos) pos -= jqueryTagMatch[0].length;
-      if (scriptsMinTag) {
-        const idxS = out.indexOf(scriptsMinTag);
-        out = out.replace(scriptsMinTag, '');
-        if (idxS >= 0 && idxS < pos) pos -= scriptsMinTag.length;
-      }
       const fancyboxTag = out.includes('.fancybox(') ? '<script src="' + FANCYBOX_CDN + '"></script>' : '';
-      const toInsert = [jqueryTag, fancyboxTag, scriptsMinTag].filter(Boolean).join('\n') + '\n';
-      out = out.slice(0, pos) + toInsert + out.slice(pos);
+      const block = jqueryTag + '\n' + fancyboxTag;
+      out = out.replace(/<body(\s[^>]*)?>/i, '<body$1>\n' + block + '\n');
     }
   }
 
@@ -179,11 +153,12 @@ function optimizeHtml(html, relativePath) {
   out = out.replace(/<!--\s*W3TC-include-css\s*-->\s*/gi, '');
   out = out.replace(/<!--\s*W3TC-include-js-head\s*-->\s*/gi, '');
 
-  // 5a. Удалить скрипты/ссылки, вызывающие 404 (cdn-cgi/rum — PageSpeed)
+  // 5a. Удалить скрипты/ссылки и инлайн-биконы, вызывающие 404 (cdn-cgi/rum — PageSpeed)
   out = out.replace(/<script[^>]*wp-emoji-release[^>]*><\/script>/gi, '');
   out = out.replace(/<script[^>]*cdn-cgi\/rum[^>]*><\/script>/gi, '');
   out = out.replace(/<script[^>]*src=["'][^"']*cdn-cgi[^"']*["'][^>]*><\/script>/gi, '');
   out = out.replace(/<link[^>]*href=["'][^"']*cdn-cgi[^"']*["'][^>]*>\s*/gi, '');
+  out = out.replace(/<script([^>]*)>([\s\S]*?cdn-cgi\/rum[\s\S]*?)<\/script>/gi, (m, attrs, content) => (content.length < 4000 ? '' : m));
 
   // 5b. Yandex Metrica — загружать асинхронно (не блокировать рендер, PageSpeed)
   out = out.replace(
