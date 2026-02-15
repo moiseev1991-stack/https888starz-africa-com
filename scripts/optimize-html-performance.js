@@ -68,12 +68,7 @@ function optimizeHtml(html, relativePath) {
   out = out.replace(/<link[^>]*rel=["']preload["'][^>]*href=["'][^"']*font-awesome\.min\.css[^"']*["'][^>]*>\s*/gi, '');
   out = out.replace(/<noscript><link[^>]*flexy-breadcrumb[^>]*><\/noscript>\s*/gi, '');
   out = out.replace(/<noscript><link[^>]*font-awesome\.min\.css[^>]*><\/noscript>\s*/gi, '');
-  // 0c. Синтаксис: только скрипт в HEAD с toggle-btn уменьшаем до двух }); скрипты в body (переключатель языка) не трогаем — иначе Unexpected end of input
-  out = out.replace(/<script([^>]*)>([\s\S]*?toggle-btn[\s\S]*?)(\}\);\s*)\);\s*\}\);\s*(\}\); \s*)?(\}\); \s*)?<\/script>/g, (m, attrs, content, _g3, _g4, _g5, offset) => {
-    if (offset >= bodyStart) return m;
-    if (/العربية|language|dropdown|lang-/.test(content)) return m;
-    return '<script' + attrs + '>' + content + '}); }); </script>';
-  });
+  // 0c. Не менять число }); в скриптах — любая замена ломает переключатель языка (Unexpected end of input). Отключено.
   // 0d. Удалить flexy-breadcrumb-public.js и wp-emoji (404)
   out = out.replace(/<script[^>]*src=["'][^"']*flexy-breadcrumb-public\.js[^"']*["'][^>]*><\/script>\s*/gi, '');
   out = out.replace(/<script id="wp-emoji-settings" type="application\/json">[\s\S]*?<\/script>\s*/i, '');
@@ -127,14 +122,14 @@ function optimizeHtml(html, relativePath) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
   
-  // 4. jQuery и Fancybox сразу после <head>, чтобы $ и jQuery были до любых скриптов (в т.ч. document ready в head → jQuery is not defined)
+  // 4. jQuery и Fancybox сразу после <head>, чтобы $ и jQuery были до любых скриптов (jQuery is not defined / $ is not defined)
   {
     const jqueryTagMatch = out.match(/<script[^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*><\/script>/i);
     const jqueryTag = jqueryTagMatch ? jqueryTagMatch[0].replace(/\s*defer\s*/gi, ' ') : null;
-    if (jqueryTag) {
-      out = out.replace(jqueryTagMatch[0], '');
+    if (jqueryTag && /<head[\s>]/i.test(out)) {
       const fancyboxTag = out.includes('.fancybox(') ? '<script src="' + FANCYBOX_CDN + '"></script>' : '';
       const block = jqueryTag + '\n' + fancyboxTag;
+      out = out.replace(jqueryTagMatch[0], '');
       out = out.replace(/<head(\s[^>]*)?>/i, '<head$1>\n' + block + '\n');
     }
   }
