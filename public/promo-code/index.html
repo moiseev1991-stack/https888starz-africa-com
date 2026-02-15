@@ -6792,10 +6792,18 @@ document.addEventListener("DOMContentLoaded", function() {
 	function initOwlAndFancybox() {
 		var $ = window.jQuery;
 		if (!$ || !$.fn.owlCarousel) return;
-		$(".owl-carousel, .owl-mobile, .slider-888-slider").each(function() {
+		$(".owl-carousel, .owl-mobile").each(function() {
 			if ($(this).hasClass("owl-loaded")) {
 				$(this).trigger("destroy.owl.carousel");
 				$(this).removeClass("owl-loaded owl-drag owl-grab");
+			}
+		});
+		$(".slider-888-slider").each(function() {
+			var $el = $(this);
+			if ($el.find(".owl-stage-outer").length) {
+				var $slides = $el.find(".slider-888-slide").detach();
+				$el.empty();
+				$el.append($slides);
 			}
 		});
 		$(".owl-carousel").owlCarousel({

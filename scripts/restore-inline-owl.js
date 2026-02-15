@@ -27,11 +27,20 @@ const INLINE_BLOCK = `<script>
 	function initOwlAndFancybox() {
 		var $ = window.jQuery;
 		if (!$ || !$.fn.owlCarousel) return;
-		// Переинициализация: снести старый Owl, чтобы слайдер отображался на всех страницах
-		$(".owl-carousel, .owl-mobile, .slider-888-slider").each(function() {
+		// Переинициализация только галерей (.owl-carousel, .owl-mobile); .slider-888-slider не трогаем — там уже готовая разметка
+		$(".owl-carousel, .owl-mobile").each(function() {
 			if ($(this).hasClass("owl-loaded")) {
 				$(this).trigger("destroy.owl.carousel");
 				$(this).removeClass("owl-loaded owl-drag owl-grab");
+			}
+		});
+		// Горизонтальный слайдер: привести DOM к «чистым» слайдам, чтобы Owl корректно построил карусель и показывал все картинки
+		$(".slider-888-slider").each(function() {
+			var $el = $(this);
+			if ($el.find(".owl-stage-outer").length) {
+				var $slides = $el.find(".slider-888-slide").detach();
+				$el.empty();
+				$el.append($slides);
 			}
 		});
 		$(".owl-carousel").owlCarousel({
