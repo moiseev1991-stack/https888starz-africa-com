@@ -95,6 +95,19 @@ function optimize(html) {
     ''
   );
 
+  // 9) Load app.js right after Fancybox (no defer) so Owl dots work on server — same order as localhost
+  if (out.includes('jquery.fancybox.min.js"></script>') && !out.includes('jquery.fancybox.min.js"></script>\n<script src="/assets/js/app.js"></script>')) {
+    out = out.replace(
+      /<script src="https:\/\/cdnjs\.cloudflare\.com\/ajax\/libs\/fancybox\/3\.5\.7\/jquery\.fancybox\.min\.js"><\/script>\s*\n/,
+      '<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>\n<script src="/assets/js/app.js"></script>\n'
+    );
+  }
+  // Remove duplicate app.js from end (with defer)
+  out = out.replace(
+    /<script src="\/assets\/js\/app\.js" defer><\/script>\s*\n\s*<\/body>/,
+    '</body>'
+  );
+
   return out;
 }
 
