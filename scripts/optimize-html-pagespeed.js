@@ -89,24 +89,8 @@ function optimize(html) {
     (m) => m.replace(/<img(\s)/i, '<img loading="lazy"$1')
   );
 
-  // 8) Remove duplicate inline Owl/Fancybox init (only app.js should init — fixes broken dots on server)
-  out = out.replace(
-    /<script>\s*\/\/ Отключение пассивных[\s\S]*?\.slider-888-slider[\s\S]*?\}\);\s*\}\);\s*<\/script>/,
-    ''
-  );
-
-  // 9) Load app.js right after Fancybox (no defer) so Owl dots work on server — same order as localhost
-  if (out.includes('jquery.fancybox.min.js"></script>') && !out.includes('jquery.fancybox.min.js"></script>\n<script src="/assets/js/app.js"></script>')) {
-    out = out.replace(
-      /<script src="https:\/\/cdnjs\.cloudflare\.com\/ajax\/libs\/fancybox\/3\.5\.7\/jquery\.fancybox\.min\.js"><\/script>\s*\n/,
-      '<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>\n<script src="/assets/js/app.js"></script>\n'
-    );
-  }
-  // Remove duplicate app.js from end (with defer)
-  out = out.replace(
-    /<script src="\/assets\/js\/app\.js" defer><\/script>\s*\n\s*<\/body>/,
-    '</body>'
-  );
+  // 8) Inline Owl/Fancybox init block is kept (user requested restore — do not remove)
+  // 9) app.js stays at end with defer (do not move)
 
   return out;
 }
