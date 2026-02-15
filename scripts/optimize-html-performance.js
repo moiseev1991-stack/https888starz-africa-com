@@ -71,10 +71,15 @@ function optimizeHtml(html, relativePath) {
   // 2. Удалить jQuery Migrate если есть (обычно не нужен для современных сайтов)
   out = out.replace(/<script[^>]*jquery-migrate[^>]*><\/script>/gi, '');
   
-  // 3. Добавить defer для скриптов которые не критичны (owl, fancybox, prism — не блокируют рендер)
+  // 3. Добавить defer для скриптов которые не критичны (owl, fancybox, prism — не блокируют рендер). Embla не трогаем — без defer слайдер инициализируется сразу.
   out = out.replace(
-    /<script([^>]*src=["'][^"']*(?:owl|fancybox|carousel)[^"']*["'][^>]*)><\/script>/gi,
-    '<script$1 defer></script>'
+    /<script([^>]*src=["']([^"']*)["'][^>]*)><\/script>/gi,
+    (m, attrs, src) => {
+      if (/embla/.test(src)) return m;
+      if (/(?:owl|fancybox|carousel)/.test(src) && !/embla/.test(src))
+        return /defer/.test(attrs) ? m : '<script' + attrs + ' defer></script>';
+      return m;
+    }
   );
   out = out.replace(
     /<script([^>]*src=["'][^"']*prism-plugins\.min\.js[^"']*["'][^>]*)><\/script>/gi,

@@ -86,25 +86,26 @@ function fixHtml(html, prefix) {
     .replace(/(["'])(?:\.\.\/)+wp-includes\//g, '$1/wp-includes/')
     .replace(/(["'])\.\/wp-content\//g, '$1/wp-content/')
     .replace(/(["'])\.\/wp-includes\//g, '$1/wp-includes/');
+  // Пути к ассетам делаем относительными (prefix), чтобы картинки грузились с любого базового URL и из подпапок
   let out = normalized
     .replace(/(\s|")(src|href)=(["'])\/(?!\/)([^"'#]*)\3/g, (_, before, attr, q, p) => {
       const lead = before === '"' ? '" ' : before;
-      if (isAssetPath(p)) return `${lead}${attr}=${q}/${p}${q}`;
-      return `${lead}${attr}=${q}${prefix}${p}${q}`;
+      const path = (isAssetPath(p) ? prefix + encodeAssetPath(p) : prefix + p);
+      return `${lead}${attr}=${q}${path}${q}`;
     })
     .replace(/\s(srcset)=(["'])([^"']+)\2/g, (_, attr, q, list) => {
       const parts = list.split(',').map((s) => {
         const u = s.trim().split(/\s+/)[0];
         if (u.startsWith('/') && !u.startsWith('//') && !u.startsWith('data:')) {
           const p = u.slice(1);
-          return isAssetPath(p) ? u : prefix + p;
+          return prefix + (isAssetPath(p) ? encodeAssetPath(p) : p);
         }
         return u;
       });
       return ` ${attr}=${q}${parts.join(', ')}${q}`;
     })
-    .replace(/url\s*\(\s*["']?\/(wp-content\/[^"')]+)["']?\s*\)/g, (_, p) => `url("/${encodeAssetPath(p)}")`)
-    .replace(/url\s*\(\s*\/(wp-content\/[^"')]+)\s*\)/g, (_, p) => `url("/${encodeAssetPath(p)}")`);
+    .replace(/url\s*\(\s*["']?\/(wp-content\/[^"')]+)["']?\s*\)/g, (_, p) => `url("${prefix}${encodeAssetPath(p)}")`)
+    .replace(/url\s*\(\s*\/(wp-content\/[^"')]+)\s*\)/g, (_, p) => `url("${prefix}${encodeAssetPath(p)}")`);
   out = out.replace(/((?:src|href)=["'][^"']*(?:\.(?:svg|webp|png|jpg|jpeg|gif|ico|css|js))?)""/g, '$1"');
   out = out.replace(/"\s*(src|href)=/g, '" $1=');
   out = out.replace(/<ahref=/g, '<a href=');

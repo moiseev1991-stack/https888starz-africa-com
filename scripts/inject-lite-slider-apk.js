@@ -49,8 +49,12 @@ function hasSlider(html) {
   return SLIDER_MARKER.test(html);
 }
 
-function injectEmbla(html) {
-  const base = '/assets/embla/';
+function getEmblaBase(pagePath) {
+  return pagePath === 'index.html' ? './assets/embla/' : '../assets/embla/';
+}
+
+function injectEmbla(html, pagePath) {
+  const base = getEmblaBase(pagePath);
   let out = html;
   if (!out.includes('carousel-embla.css')) {
     out = out.replace('</head>', '<link rel="stylesheet" href="' + base + 'carousel-embla.css">\n</head>');
@@ -58,8 +62,15 @@ function injectEmbla(html) {
   if (!out.includes('embla-carousel.umd.js')) {
     out = out.replace('</body>', '<script src="' + base + 'embla-carousel.umd.js"></script>\n</body>');
   }
+  // Без defer, чтобы выполнился сразу после embla-carousel.umd.js и слайдер заработал (точки, автопрокрутка)
   if (!out.includes('carousel-embla.js')) {
-    out = out.replace('</body>', '<script src="' + base + 'carousel-embla.js" defer></script>\n</body>');
+    out = out.replace('</body>', '<script src="' + base + 'carousel-embla.js"></script>\n</body>');
+  } else {
+    // Убрать defer с carousel-embla.js, если уже был инжектирован ранее
+    out = out.replace(
+      /<script([^>]*src=["'][^"']*carousel-embla\.js[^"']*["'][^>]*)\s+defer\s*><\/script>/gi,
+      '<script$1></script>'
+    );
   }
   if (out.includes('data-fancybox="gallery"') && !out.includes('fancyboxReinitAfterCarousel')) {
     var fancyboxReinit = '<script>/* fancyboxReinitAfterCarousel */ window.addEventListener("load",function(){var $=window.jQuery;if($&&$.fn.fancybox){setTimeout(function(){ $(\'[data-fancybox="gallery"]\').fancybox({loop:true,buttons:["zoom","share","slideShow","fullScreen","download","thumbs","close"]}); $(\'[data-fancybox="gallerymob"]\').fancybox({loop:true,buttons:["zoom","share","slideShow","fullScreen","download","thumbs","close"]}); },500);}});</script>';
@@ -80,7 +91,7 @@ function main() {
     if (!fs.existsSync(fullPath)) continue;
     let html = fs.readFileSync(fullPath, 'utf8');
     if (!hasSlider(html)) continue;
-    const updated = injectEmbla(html);
+    const updated = injectEmbla(html, page.path);
     if (updated !== html) {
       fs.writeFileSync(fullPath, updated, 'utf8');
       console.log('Injected Embla on', page.path);
