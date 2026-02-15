@@ -13,22 +13,21 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check FTP secrets
+        id: ftp-check
         run: |
-          if [ -z "${{ secrets.FTP_SERVER }}" ]; then
-            echo "::error::FTP_SERVER is not set. Add it in Settings → Secrets and variables → Actions"
-            exit 1
+          if [ -n "${{ secrets.FTP_SERVER }}" ] && [ -n "${{ secrets.FTP_USERNAME }}" ] && [ -n "${{ secrets.FTP_PASSWORD }}" ]; then
+            echo "ready=true" >> $GITHUB_OUTPUT
+          else
+            echo "ready=false" >> $GITHUB_OUTPUT
           fi
-          if [ -z "${{ secrets.FTP_USERNAME }}" ]; then
-            echo "::error::FTP_USERNAME is not set. Add it in Settings → Secrets and variables → Actions"
-            exit 1
-          fi
-          if [ -z "${{ secrets.FTP_PASSWORD }}" ]; then
-            echo "::error::FTP_PASSWORD is not set. Add it in Settings → Secrets and variables → Actions"
-            exit 1
-          fi
-          echo "FTP secrets are configured."
+
+      - name: Skip deploy (no FTP secrets)
+        if: steps.ftp-check.outputs.ready != 'true'
+        run: |
+          echo "Deploy skipped. Add FTP_SERVER, FTP_USERNAME, FTP_PASSWORD in Settings → Secrets and variables → Actions to enable deploy."
 
       - name: FTP Deploy
+        if: steps.ftp-check.outputs.ready == 'true'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
