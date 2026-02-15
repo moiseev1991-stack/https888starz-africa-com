@@ -51,6 +51,19 @@ function optimizeHtml(html, relativePath) {
   let out = html;
   const bodyStart = out.indexOf('</head>');
 
+  // 0. Сразу удалить скрипты, которые на статике дают 404 (HTML вместо JS → Unexpected token '<')
+  // Обычный и многострочный тег (атрибуты с переносами)
+  [
+    /<script[\s\S]*?src=["'][^"']*wp-includes[^"']*["'][\s\S]*?<\/script>/gi,
+    /<script[\s\S]*?src=["'][^"']*wp-admin[^"']*["'][\s\S]*?<\/script>/gi,
+    /<script[\s\S]*?src=["'][^"']*owl\.carousel[^"']*["'][\s\S]*?<\/script>/gi,
+    /<script[\s\S]*?src=["'][^"']*cdn-cgi[^"']*["'][\s\S]*?<\/script>/gi
+  ].forEach(re => { out = out.replace(re, ''); });
+  out = out.replace(/<script[^>]*src=["'][^"']*wp-includes[^"']*["'][^>]*><\/script>/gi, '');
+  out = out.replace(/<script[^>]*src=["'][^"']*wp-admin[^"']*["'][^>]*><\/script>/gi, '');
+  out = out.replace(/<script[^>]*src=["'][^"']*owl\.carousel[^"']*["'][^>]*><\/script>/gi, '');
+  out = out.replace(/<script[^>]*src=["'][^"']*cdn-cgi[^"']*["'][^>]*><\/script>/gi, '');
+
   // 0. Домен: если краулили Africa, подменить на Egypt в ссылках/канонике (слайдер и разметка с Africa)
   out = out.replace(/https?:\/\/888starz-africa\.com/gi, BASE_URL);
 
@@ -128,15 +141,14 @@ function optimizeHtml(html, relativePath) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
   
-  // 4. jQuery и Fancybox сразу после <head>; заглушка ajax_var (слайдеры/раскрытие блоков на статике без admin-ajax)
-  // owlCarousel no-op: на статике Owl удалён, слайдер инициализирует Embla; инлайн .owlCarousel() не должен падать
+  // 4. jQuery и Fancybox сразу после <head>; заглушка ajax_var; owlCarousel no-op (несколько уровней)
   {
     const jqueryTagMatch = out.match(/<script[^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*><\/script>/i);
     const jqueryTag = jqueryTagMatch ? jqueryTagMatch[0].replace(/\s*defer\s*/gi, ' ') : null;
     if (jqueryTag && /<head[\s>]/i.test(out)) {
       const fancyboxTag = out.includes('.fancybox(') ? '<script src="' + FANCYBOX_CDN + '"></script>' : '';
       const ajaxStub = '<script>window.ajax_var=window.ajax_var||{url:"",nonce:"",assets_folder:""};</script>';
-      const owlNoop = '<script>(function(){var $=window.jQuery;if($&&!$.fn.owlCarousel)$.fn.owlCarousel=function(){return this;};})();</script>';
+      const owlNoop = '<script>(function(){function set(){var $=window.jQuery;if($&&!$.fn.owlCarousel)$.fn.owlCarousel=function(){return this;};}set();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",set);window.addEventListener("load",set);})();</script>';
       const block = jqueryTag + '\n' + fancyboxTag + '\n' + ajaxStub + '\n' + owlNoop;
       out = out.replace(jqueryTagMatch[0], '');
       out = out.replace(/<head(\s[^>]*)?>/i, '<head$1>\n' + block + '\n');
@@ -149,10 +161,10 @@ function optimizeHtml(html, relativePath) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
 
-  // 5a. Удалить Owl Carousel (на статике используем Embla; убирает конфликты и вес)
+  // 5a. Повторно удалить Owl/wp-includes/wp-admin (на случай если в шаге 0 не сматчилось из-за порядка атрибутов)
   out = out.replace(/<script[^>]*src=["'][^"']*owl\.carousel[^"']*["'][^>]*><\/script>/gi, '');
-  // Скрипты с путями wp-includes/... на статике отдают 404 (HTML) → Unexpected token '<'
   out = out.replace(/<script[^>]*src=["'][^"']*wp-includes[^"']*["'][^>]*><\/script>/gi, '');
+  out = out.replace(/<script[^>]*src=["'][^"']*wp-admin[^"']*["'][^>]*><\/script>/gi, '');
   // Убрать неиспользуемые селекторы Owl из JS (owl-item.cloned уже не существует)
   out = out.replace(/:not\(\.owl-item\.cloned\s+\[data-fancybox="gallery"\]\)/gi, '');
   out = out.replace(/:not\(\.owl-item\.cloned\s+\[data-fancybox="gallerymob"\]\)/gi, '');
@@ -160,12 +172,17 @@ function optimizeHtml(html, relativePath) {
   out = out.replace(/<!--\s*W3TC-include-css\s*-->\s*/gi, '');
   out = out.replace(/<!--\s*W3TC-include-js-head\s*-->\s*/gi, '');
 
-  // 5a. Удалить скрипты/ссылки и инлайн-биконы, вызывающие 404 (cdn-cgi/rum — PageSpeed)
+  // 5a. Удалить скрипты/ссылки и инлайн-биконы, вызывающие 404 (cdn-cgi/rum — PageSpeed, POST 404)
   out = out.replace(/<script[^>]*wp-emoji-release[^>]*><\/script>/gi, '');
   out = out.replace(/<script[^>]*cdn-cgi\/rum[^>]*><\/script>/gi, '');
   out = out.replace(/<script[^>]*src=["'][^"']*cdn-cgi[^"']*["'][^>]*><\/script>/gi, '');
   out = out.replace(/<link[^>]*href=["'][^"']*cdn-cgi[^"']*["'][^>]*>\s*/gi, '');
   out = out.replace(/<script([^>]*)>([\s\S]*?cdn-cgi\/rum[\s\S]*?)<\/script>/gi, (m, attrs, content) => (content.length < 4000 ? '' : m));
+  // Заглушка sendBeacon/fetch/XHR к cdn-cgi/rum — убрать POST 404 в консоли (Cloudflare RUM на статике недоступен)
+  if (!out.includes('cdn-cgi-rum-stub')) {
+    const rumStub = '<script id="cdn-cgi-rum-stub">(function(){var u="cdn-cgi/rum";if(typeof navigator!=="undefined"&&navigator.sendBeacon){var b=navigator.sendBeacon.bind(navigator);navigator.sendBeacon=function(url){if(String(url).indexOf(u)!==-1)return true;return b.apply(this,arguments);};}if(typeof window.fetch==="function"){var f=window.fetch;window.fetch=function(url){if(typeof url==="string"&&url.indexOf(u)!==-1)return Promise.resolve(new Response(null,{status:204}));return f.apply(this,arguments);};}var X=window.XMLHttpRequest;if(X){var op=X.prototype.open;X.prototype.open=function(method,url){if(String(url).indexOf(u)!==-1){this._skipRum=true;return op.apply(this,["GET","about:blank"]);}return op.apply(this,arguments);};}})();</script>';
+    out = out.replace(/<head(\s[^>]*)?>/i, '$&\n' + rumStub + '\n');
+  }
 
   // 5b. Yandex Metrica — загружать асинхронно (не блокировать рендер, PageSpeed)
   out = out.replace(
@@ -204,6 +221,10 @@ function optimizeHtml(html, relativePath) {
     return fixed !== content ? '<style' + (attrs || '') + '>' + fixed + '</style>' : m;
   });
 
+  // 5d. Последний шанс owlCarousel no-op перед </body> (если инлайн в body выполнился до head — редко)
+  if (/\.owlCarousel\s*\(/.test(out) && !out.includes('owl-noop-body')) {
+    out = out.replace('</body>', '<script id="owl-noop-body">(function(){var $=window.jQuery;if($&&!$.fn.owlCarousel)$.fn.owlCarousel=function(){return this;};})();</script>\n</body>');
+  }
   // 6. font-display: swap для Font Awesome (PageSpeed: fonts/fontawesome-webfont.woff2)
   // Вставляем перед </body>, чтобы правило шло после всех stylesheet (в т.ч. preload+onload) и перекрывало @font-face
   const needsFontDisplayFix = !/font-display\s*:\s*swap/.test(out) && (/font-awesome|webfont\.woff2|["']\s*fa\s+fa-|class=["'][^"']*fa-/i.test(out));
