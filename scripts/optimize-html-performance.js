@@ -129,13 +129,15 @@ function optimizeHtml(html, relativePath) {
   );
   
   // 4. jQuery и Fancybox сразу после <head>; заглушка ajax_var (слайдеры/раскрытие блоков на статике без admin-ajax)
+  // owlCarousel no-op: на статике Owl удалён, слайдер инициализирует Embla; инлайн .owlCarousel() не должен падать
   {
     const jqueryTagMatch = out.match(/<script[^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*><\/script>/i);
     const jqueryTag = jqueryTagMatch ? jqueryTagMatch[0].replace(/\s*defer\s*/gi, ' ') : null;
     if (jqueryTag && /<head[\s>]/i.test(out)) {
       const fancyboxTag = out.includes('.fancybox(') ? '<script src="' + FANCYBOX_CDN + '"></script>' : '';
       const ajaxStub = '<script>window.ajax_var=window.ajax_var||{url:"",nonce:"",assets_folder:""};</script>';
-      const block = jqueryTag + '\n' + fancyboxTag + '\n' + ajaxStub;
+      const owlNoop = '<script>(function(){var $=window.jQuery;if($&&!$.fn.owlCarousel)$.fn.owlCarousel=function(){return this;};})();</script>';
+      const block = jqueryTag + '\n' + fancyboxTag + '\n' + ajaxStub + '\n' + owlNoop;
       out = out.replace(jqueryTagMatch[0], '');
       out = out.replace(/<head(\s[^>]*)?>/i, '<head$1>\n' + block + '\n');
     }
@@ -149,6 +151,8 @@ function optimizeHtml(html, relativePath) {
 
   // 5a. Удалить Owl Carousel (на статике используем Embla; убирает конфликты и вес)
   out = out.replace(/<script[^>]*src=["'][^"']*owl\.carousel[^"']*["'][^>]*><\/script>/gi, '');
+  // Скрипты с путями wp-includes/... на статике отдают 404 (HTML) → Unexpected token '<'
+  out = out.replace(/<script[^>]*src=["'][^"']*wp-includes[^"']*["'][^>]*><\/script>/gi, '');
   // Убрать неиспользуемые селекторы Owl из JS (owl-item.cloned уже не существует)
   out = out.replace(/:not\(\.owl-item\.cloned\s+\[data-fancybox="gallery"\]\)/gi, '');
   out = out.replace(/:not\(\.owl-item\.cloned\s+\[data-fancybox="gallerymob"\]\)/gi, '');
@@ -412,8 +416,10 @@ function optimizeHtml(html, relativePath) {
     const dotStyle = '<style id="owl-dots-size-fix" data-owl-dots-size-fix>.owl-dots .owl-dot { width: 16px; height: 16px; padding: 0; margin: 0 6px; border-radius: 50%; } .owl-dots .owl-dot span { display: block; width: 12px; height: 12px; margin: 0 auto; border-radius: 50%; } .owl-dots .owl-dot.active span { transform: scale(1.15); }</style>';
     out = out.replace('</head>', dotStyle + '\n</head>');
   }
-  // 13c. Клик по точкам слайдера (Owl to.owl.carousel)
-  if (out.includes('owl-dots') && !out.includes('owl-dots-click-fix')) {
+  // 13c. Клик по точкам слайдера (Owl to.owl.carousel) — только если Owl не удалён (на статике используем Embla, точки вешает carousel-embla.js)
+  const owlScriptRemoved = !/<script[^>]*src=["'][^"']*owl\.carousel[^"']*["']/.test(out);
+  const hasEmbla = /carousel-embla\.js|embla-carousel\.umd\.js/.test(out);
+  if (out.includes('owl-dots') && !out.includes('owl-dots-click-fix') && !(owlScriptRemoved && hasEmbla)) {
     const owlDotsClickFix = '<script id="owl-dots-click-fix">(function(){function run(){var $=window.jQuery;if(!$||!$.fn.owlCarousel)return;$(document).off("click.owlDotsFix").on("click.owlDotsFix",".owl-dots .owl-dot",function(e){var $dot=$(this),$dots=$dot.closest(".owl-dots"),$carousel=$dots.closest(".owl-carousel, .owl-mobile");if(!$carousel.length)return;var idx=$dots.find(".owl-dot").index($dot);if(idx>=0){e.preventDefault();e.stopPropagation();$carousel.trigger("to.owl.carousel",[idx,300]);}});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){setTimeout(run,400);});else setTimeout(run,400);window.addEventListener("load",function(){setTimeout(run,600);});})();</script>';
     out = out.replace('</body>', owlDotsClickFix + '\n</body>');
   }

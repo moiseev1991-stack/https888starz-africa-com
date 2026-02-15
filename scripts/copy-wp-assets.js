@@ -56,6 +56,14 @@ function main() {
     fs.copyFileSync(htaccessSrc, htaccessDest);
     console.log('Copied .htaccess for caching configuration.');
   }
+
+  // site.webmanifest (PWA) — в корне, иначе GET /site.webmanifest 500
+  const manifestSrc = path.join(PROJECT_ROOT, 'site.webmanifest');
+  const manifestDest = path.join(DIST, 'site.webmanifest');
+  if (fs.existsSync(manifestSrc)) {
+    fs.copyFileSync(manifestSrc, manifestDest);
+    console.log('Copied site.webmanifest to dist/.');
+  }
 }
 
 main();

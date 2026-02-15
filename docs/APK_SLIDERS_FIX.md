@@ -1,20 +1,19 @@
-# Fix: слайдеры на /apk/ (Egypt)
+# Fix: слайдеры на Egypt (в т.ч. /apk/, главная)
 
 ## Проблема
-На https://888starzeg-egypt.com/apk/ слайдеры (Owl Carousel, Fancybox) не работали, хотя на Africa работают. Типичные ошибки в консоли: `$ is not a function`, `owlCarousel is not a function`.
+На https://888starzeg-egypt.com слайдеры не работали. Ошибки в консоли: `$ is not a function`, `owlCarousel is not a function`, `Unexpected token '<'`, 500 на `site.webmanifest`.
 
 ## Причина
-Скрипт `optimize-html-performance.js` переносил jQuery и `scripts.min.js` в конец `<body>` и выносил инлайн-скрипты с `$()`/`jQuery()` туда же для ускорения LCP. На странице /apk/ инлайн-скрипт инициализации слайдеров (`$(document).ready(function(){ ... .owlCarousel(...) ... })`) выполнялся до загрузки jQuery (или порядок Owl → init нарушался), из‑за чего возникали ошибки.
+- На статике скрипт Owl Carousel удалён (используется Embla), но инлайн-код из темы по-прежнему вызывает `$(...).owlCarousel(...)` → ошибка.
+- Скрипты с путями `wp-includes/...` или отсутствующий `site.webmanifest` дают 404/500 (HTML вместо JS) → `Unexpected token '<'`.
 
-## Решение
-Для **только** страницы `/apk/` отключены шаги оптимизации, ломающие порядок скриптов:
-- **Не** переносить jQuery и `scripts.min.js` в конец body.
-- **Не** выносить инлайн-скрипты с `$`/jQuery в конец.
-- **Не** оборачивать `jQuery(document).ready` в `DOMContentLoaded`.
-
-В результате на /apk/ сохраняется порядок: **jQuery → Owl Carousel (defer) → Fancybox (defer) → инлайн init**. Остальные страницы по-прежнему оптимизируются (jQuery в конец, PageSpeed не ухудшается).
+## Решение (optimize-html-performance.js + copy-wp-assets.js)
+1. **Полифилл owlCarousel:** сразу после jQuery в `<head>` вставляется скрипт: если `$.fn.owlCarousel` нет, задаётся no-op `function(){ return this; }`. Инлайн-инициализация больше не падает; слайдер подхватывает **Embla** (carousel-embla.js).
+2. **owl-dots-click-fix** не инжектируется, если Owl удалён и на странице есть Embla (точки вешает carousel-embla.js).
+3. Удаляются скрипты с `src` на `wp-includes/...` (на статике отдают HTML → SyntaxError).
+4. **site.webmanifest** копируется в `dist/` при сборке (copy-wp-assets.js), чтобы GET /site.webmanifest не отдавал 500.
 
 ## Проверка
-- Открыть https://888starzeg-egypt.com/apk/ → слайдеры листаются, точки/стрелки работают.
-- Консоль без ошибок `$ is not a function` / `owlCarousel is not a function`.
-- PageSpeed: оптимизация отключена только для одной страницы (apk), остальные без изменений.
+- Открыть https://888starzeg-egypt.com и https://888starzeg-egypt.com/apk/ → слайдеры листаются, точки работают.
+- Консоль без ошибок `owlCarousel is not a function` и без `Unexpected token '<'`.
+- GET https://888starzeg-egypt.com/site.webmanifest → 200, JSON.
