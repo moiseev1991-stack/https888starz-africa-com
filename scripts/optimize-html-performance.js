@@ -69,6 +69,9 @@ function optimizeHtml(html, relativePath) {
   out = out.replace(/<noscript><link[^>]*flexy-breadcrumb[^>]*><\/noscript>\s*/gi, '');
   out = out.replace(/<noscript><link[^>]*font-awesome\.min\.css[^>]*><\/noscript>\s*/gi, '');
   // 0c. Не менять число }); в скриптах — любая замена ломает переключатель языка (Unexpected end of input). Отключено.
+  // 0c2. Статика: заглушка ajax_var.url (admin-ajax.php на домене даёт 404/HTML → JSON и раскрытие блоков не работают)
+  out = out.replace(/"url"\s*:\s*"[^"]*admin-ajax[^"]*"/gi, '"url":""');
+  out = out.replace(/"url"\s*:\s*"[^"]*wp-json[^"]*"/gi, '"url":""');
   // 0d. Удалить flexy-breadcrumb-public.js и wp-emoji (404)
   out = out.replace(/<script[^>]*src=["'][^"']*flexy-breadcrumb-public\.js[^"']*["'][^>]*><\/script>\s*/gi, '');
   out = out.replace(/<script id="wp-emoji-settings" type="application\/json">[\s\S]*?<\/script>\s*/i, '');
@@ -122,13 +125,14 @@ function optimizeHtml(html, relativePath) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
   
-  // 4. jQuery и Fancybox сразу после <head>, чтобы $ и jQuery были до любых скриптов (jQuery is not defined / $ is not defined)
+  // 4. jQuery и Fancybox сразу после <head>; заглушка ajax_var (слайдеры/раскрытие блоков на статике без admin-ajax)
   {
     const jqueryTagMatch = out.match(/<script[^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*><\/script>/i);
     const jqueryTag = jqueryTagMatch ? jqueryTagMatch[0].replace(/\s*defer\s*/gi, ' ') : null;
     if (jqueryTag && /<head[\s>]/i.test(out)) {
       const fancyboxTag = out.includes('.fancybox(') ? '<script src="' + FANCYBOX_CDN + '"></script>' : '';
-      const block = jqueryTag + '\n' + fancyboxTag;
+      const ajaxStub = '<script>window.ajax_var=window.ajax_var||{url:"",nonce:"",assets_folder:""};</script>';
+      const block = jqueryTag + '\n' + fancyboxTag + '\n' + ajaxStub;
       out = out.replace(jqueryTagMatch[0], '');
       out = out.replace(/<head(\s[^>]*)?>/i, '<head$1>\n' + block + '\n');
     }
