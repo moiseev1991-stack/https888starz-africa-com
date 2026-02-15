@@ -178,9 +178,9 @@ function optimizeHtml(html, relativePath) {
   out = out.replace(/<script[^>]*src=["'][^"']*cdn-cgi[^"']*["'][^>]*><\/script>/gi, '');
   out = out.replace(/<link[^>]*href=["'][^"']*cdn-cgi[^"']*["'][^>]*>\s*/gi, '');
   out = out.replace(/<script([^>]*)>([\s\S]*?cdn-cgi\/rum[\s\S]*?)<\/script>/gi, (m, attrs, content) => (content.length < 4000 ? '' : m));
-  // Заглушка sendBeacon/fetch/XHR к cdn-cgi/rum — убрать POST 404 в консоли (Cloudflare RUM на статике недоступен)
+  // Заглушка sendBeacon/fetch к cdn-cgi/rum (XHR не трогаем — подмена на about:blank даёт CORS и ломает сайт)
   if (!out.includes('cdn-cgi-rum-stub')) {
-    const rumStub = '<script id="cdn-cgi-rum-stub">(function(){var u="cdn-cgi/rum";if(typeof navigator!=="undefined"&&navigator.sendBeacon){var b=navigator.sendBeacon.bind(navigator);navigator.sendBeacon=function(url){if(String(url).indexOf(u)!==-1)return true;return b.apply(this,arguments);};}if(typeof window.fetch==="function"){var f=window.fetch;window.fetch=function(url){if(typeof url==="string"&&url.indexOf(u)!==-1)return Promise.resolve(new Response(null,{status:204}));return f.apply(this,arguments);};}var X=window.XMLHttpRequest;if(X){var op=X.prototype.open;X.prototype.open=function(method,url){if(String(url).indexOf(u)!==-1){this._skipRum=true;return op.apply(this,["GET","about:blank"]);}return op.apply(this,arguments);};}})();</script>';
+    const rumStub = '<script id="cdn-cgi-rum-stub">(function(){var u="cdn-cgi/rum";if(typeof navigator!=="undefined"&&navigator.sendBeacon){var b=navigator.sendBeacon.bind(navigator);navigator.sendBeacon=function(url){if(String(url).indexOf(u)!==-1)return true;return b.apply(this,arguments);};}if(typeof window.fetch==="function"){var f=window.fetch;window.fetch=function(url){if(typeof url==="string"&&url.indexOf(u)!==-1)return Promise.resolve(new Response(null,{status:204}));return f.apply(this,arguments);};}})();</script>';
     out = out.replace(/<head(\s[^>]*)?>/i, '$&\n' + rumStub + '\n');
   }
 
