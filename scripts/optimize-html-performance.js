@@ -49,18 +49,7 @@ function optimizeHtml(html, relativePath) {
   const bodyStart = out.indexOf('</head>');
   const isApkPage = relativePath && /apk[\/\\]index\.html$/i.test(relativePath.replace(/\\/g, '/'));
 
-  // 0. Собрать инлайн-скрипты с $/jQuery из body и перенести в конец (исправляет " $ is not defined")
-  const inlineScriptsWithJQuery = [];
-  if (!isApkPage) {
-    out = out.replace(/<script(\s+[^>]*)?>([\s\S]*?)<\/script>/gi, (m, attrs, content) => {
-      if (attrs && /\bsrc\s*=/.test(attrs)) return m;
-      if (!/\$\(|jQuery\(/.test(content)) return m;
-      const pos = out.indexOf(m);
-      if (pos >= 0 && pos <= bodyStart) return m; // в head не трогаем (обернём в DOMContentLoaded)
-      inlineScriptsWithJQuery.push(m);
-      return '';
-    });
-  }
+  // 0. Не вырезаем инлайн-скрипты (regex ломает код с "</script>" в строке → SyntaxError). jQuery просто вставим перед первым скриптом с $.
 
   // 1. Удалить дублирующиеся jQuery (оставить только один — тот, что идёт первым в документе)
   const jqueryRegex = /<script[^>]*src=["']([^"']*jquery[^"']*)["'][^>]*><\/script>/gi;
@@ -97,50 +86,44 @@ function optimizeHtml(html, relativePath) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
   
-  // 4. Перенести jQuery и scripts.min.js в конец body. jQuery без defer, если есть инлайны с $ — иначе в консоли "$ is not a function"
-  if (!isApkPage) {
+  // 4. Чтобы не было "$ is not a function" и "jQuery is not defined": вставить jQuery перед первым инлайн-скриптом с $.
+  // Не вырезаем инлайны и не оборачиваем в DOMContentLoaded — это давало SyntaxError (unexpected '}' / '<').
+  {
     const jqueryTagMatch = out.match(/<script[^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*><\/script>/i);
     const scriptsMinMatch = out.match(/<script[^>]*src=["'][^"']*scripts\.min\.js[^"']*["'][^>]*><\/script>/i);
-    const addDefer = (tag, skipDefer) => {
-      if (!tag) return tag;
-      if (skipDefer) return tag;
-      return /defer|async/i.test(tag) ? tag : tag.replace(/><\/script>/, ' defer></script>');
-    };
-    if (jqueryTagMatch) {
-      out = out.replace(jqueryTagMatch[0], '');
-    }
-    if (scriptsMinMatch) {
-      out = out.replace(scriptsMinMatch[0], '');
-    }
-    const jqueryTag = jqueryTagMatch && jqueryTagMatch[0];
-    const scriptsMinTag = scriptsMinMatch && scriptsMinMatch[0];
-    const scriptsAtEnd = [
-      addDefer(jqueryTag, inlineScriptsWithJQuery.length > 0),
-      addDefer(scriptsMinTag, false)
-    ].filter(Boolean).join('\n');
-    const deferredInline = inlineScriptsWithJQuery.length ? '\n' + inlineScriptsWithJQuery.join('\n') : '';
-    if (scriptsAtEnd || deferredInline) {
-      out = out.replace('</body>', (scriptsAtEnd || '') + deferredInline + '\n</body>');
-    }
-    // Оборачиваем jQuery(document).ready в DOMContentLoaded (jQuery теперь в конце body)
-    out = out.replace(
-      /(<script>(?:\s*\/\/[^\n]*\n)*)(\s*)(jQuery\s*\(\s*document\s*\)\s*\.\s*ready\s*\()/gi,
-      '$1$2document.addEventListener("DOMContentLoaded",function(){ $3'
-    );
-    let addedDOMContentLoadedClose = false;
-    out = out.replace(
-      /(}\s*\)\s*;)\s*(\s*<\/script>)/g,
-      (m, close, rest) => {
-        if (addedDOMContentLoadedClose) return m;
-        const pos = out.indexOf(m);
-        const chunk = pos >= 0 ? out.slice(Math.max(0, pos - 2500), pos) : '';
-        if (/document\.addEventListener\s*\(\s*["']DOMContentLoaded["']/.test(chunk)) {
-          addedDOMContentLoadedClose = true;
-          return close + ' }); ' + rest;
-        }
-        return m;
+    const jqueryTag = jqueryTagMatch ? jqueryTagMatch[0].replace(/\s*defer\s*/gi, ' ') : null;
+    const scriptsMinTag = scriptsMinMatch ? scriptsMinMatch[0] : null;
+    let insertPosition = -1;
+    let i = bodyStart;
+    while (i < out.length) {
+      const open = out.indexOf('<script', i);
+      if (open === -1) break;
+      const tagEnd = out.indexOf('>', open);
+      if (tagEnd === -1) break;
+      const close = out.indexOf('</script>', tagEnd);
+      if (close === -1) break;
+      const attrs = out.slice(open, tagEnd + 1);
+      if (/\bsrc\s*=/i.test(attrs)) { i = close + 9; continue; }
+      const content = out.slice(tagEnd + 1, close);
+      if (/\$\(|jQuery\s*\(/.test(content)) {
+        insertPosition = open;
+        break;
       }
-    );
+      i = close + 9;
+    }
+    if (jqueryTag && insertPosition >= 0) {
+      let pos = insertPosition;
+      const idxJ = out.indexOf(jqueryTagMatch[0]);
+      out = out.replace(jqueryTagMatch[0], '');
+      if (idxJ >= 0 && idxJ < pos) pos -= jqueryTagMatch[0].length;
+      if (scriptsMinTag) {
+        const idxS = out.indexOf(scriptsMinTag);
+        out = out.replace(scriptsMinTag, '');
+        if (idxS >= 0 && idxS < pos) pos -= scriptsMinTag.length;
+      }
+      const toInsert = [jqueryTag, scriptsMinTag].filter(Boolean).join('\n') + '\n';
+      out = out.slice(0, pos) + toInsert + out.slice(pos);
+    }
   }
 
   // 5. email-decode.min.js (cloudflare-static) — defer, убирает 482 ms из критической цепочки
