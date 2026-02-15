@@ -45,6 +45,7 @@ function optimizeCss(css) {
 const BASE_URL = process.env.STATIC_BASE_URL || 'https://888starzeg-egypt.com';
 
 const JQUERY_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js';
+const FANCYBOX_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js';
 
 function optimizeHtml(html, relativePath) {
   let out = html;
@@ -67,17 +68,14 @@ function optimizeHtml(html, relativePath) {
   out = out.replace(/<link[^>]*rel=["']preload["'][^>]*href=["'][^"']*font-awesome\.min\.css[^"']*["'][^>]*>\s*/gi, '');
   out = out.replace(/<noscript><link[^>]*flexy-breadcrumb[^>]*><\/noscript>\s*/gi, '');
   out = out.replace(/<noscript><link[^>]*font-awesome\.min\.css[^>]*><\/noscript>\s*/gi, '');
-  // 0c. Синтаксис: лишние }); только в скрипте с toggle-btn (head); скрипты переключателя языка (body) должны оставаться с тремя });
-  out = out.replace(/(\}\);\s*){4,5}\s*<\/script>/g, '}); }); }); </script>');
-  out = out.replace(/<script([^>]*)>([\s\S]*?toggle-btn[\s\S]*?)(\}\);\s*)\);\s*\}\);\s*<\/script>/g, '<script$1>$2}); }); </script>');
+  // 0c. Синтаксис: только скрипт с toggle-btn уменьшаем до двух }); остальные (переключатель языка — 3 шт.) не трогаем
+  out = out.replace(/<script([^>]*)>([\s\S]*?toggle-btn[\s\S]*?)(\}\);\s*)\);\s*\}\);\s*(\}\); \s*)?(\}\); \s*)?<\/script>/g, '<script$1>$2}); }); </script>');
   // 0d. Удалить flexy-breadcrumb-public.js и wp-emoji (404)
   out = out.replace(/<script[^>]*src=["'][^"']*flexy-breadcrumb-public\.js[^"']*["'][^>]*><\/script>\s*/gi, '');
   out = out.replace(/<script id="wp-emoji-settings" type="application\/json">[\s\S]*?<\/script>\s*/i, '');
   out = out.replace(/<script type="module">[\s\S]*?wp-emoji-loader[\s\S]*?<\/script>\s*/gi, '');
-  // 0e. Fancybox CDN + guard
-  if (out.includes('.fancybox(') && !out.includes('jquery.fancybox.min.js')) {
-    out = out.replace(/(<script[^>]*jquery[^>]*><\/script>)/i, '$1\n<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>');
-  }
+  // 0e. Удалить локальный Fancybox (404 на статике → Unexpected token '<'), вставить CDN после jQuery в шаге 4
+  out = out.replace(/<script[^>]*src=["'][^"']*fancybox[^"']*["'][^>]*><\/script>\s*/gi, '');
   out = out.replace(/\$\(\'\[data-fancybox="gallery"\][^\']*\'\)\.fancybox\s*\(/g, "if($.fn.fancybox)$('[data-fancybox=\"gallery\"]:not(.owl-item.cloned [data-fancybox=\"gallery\"])').fancybox(");
   out = out.replace(/\$\(\'\[data-fancybox="gallerymob"\][^\']*\'\)\.fancybox\s*\(/g, "if($.fn.fancybox)$('[data-fancybox=\"gallerymob\"]:not(.owl-item.cloned [data-fancybox=\"gallerymob\"])').fancybox(");
 
@@ -160,7 +158,8 @@ function optimizeHtml(html, relativePath) {
         out = out.replace(scriptsMinTag, '');
         if (idxS >= 0 && idxS < pos) pos -= scriptsMinTag.length;
       }
-      const toInsert = [jqueryTag, scriptsMinTag].filter(Boolean).join('\n') + '\n';
+      const fancyboxTag = out.includes('.fancybox(') ? '<script src="' + FANCYBOX_CDN + '"></script>' : '';
+      const toInsert = [jqueryTag, fancyboxTag, scriptsMinTag].filter(Boolean).join('\n') + '\n';
       out = out.slice(0, pos) + toInsert + out.slice(pos);
     }
   }
@@ -180,10 +179,11 @@ function optimizeHtml(html, relativePath) {
   out = out.replace(/<!--\s*W3TC-include-css\s*-->\s*/gi, '');
   out = out.replace(/<!--\s*W3TC-include-js-head\s*-->\s*/gi, '');
 
-  // 5a. Удалить скрипты, вызывающие ошибки (404 cdn-cgi/rum — убирает 1099 мс из цепочки, PageSpeed)
+  // 5a. Удалить скрипты/ссылки, вызывающие 404 (cdn-cgi/rum — PageSpeed)
   out = out.replace(/<script[^>]*wp-emoji-release[^>]*><\/script>/gi, '');
   out = out.replace(/<script[^>]*cdn-cgi\/rum[^>]*><\/script>/gi, '');
   out = out.replace(/<script[^>]*src=["'][^"']*cdn-cgi[^"']*["'][^>]*><\/script>/gi, '');
+  out = out.replace(/<link[^>]*href=["'][^"']*cdn-cgi[^"']*["'][^>]*>\s*/gi, '');
 
   // 5b. Yandex Metrica — загружать асинхронно (не блокировать рендер, PageSpeed)
   out = out.replace(
