@@ -97,12 +97,13 @@ function optimizeHtml(html, relativePath) {
     (m) => (/defer/.test(m) ? m : m.replace(/><\/script>/, ' defer></script>'))
   );
   
-  // 4. Перенести jQuery и scripts.min.js в конец body с defer (кроме /apk/ при необходимости)
+  // 4. Перенести jQuery и scripts.min.js в конец body. jQuery без defer, если есть инлайны с $ — иначе в консоли "$ is not a function"
   if (!isApkPage) {
     const jqueryTagMatch = out.match(/<script[^>]*src=["'][^"']*jquery[^"']*\.min\.js[^"']*["'][^>]*><\/script>/i);
     const scriptsMinMatch = out.match(/<script[^>]*src=["'][^"']*scripts\.min\.js[^"']*["'][^>]*><\/script>/i);
-    const addDefer = (tag) => {
+    const addDefer = (tag, skipDefer) => {
       if (!tag) return tag;
+      if (skipDefer) return tag;
       return /defer|async/i.test(tag) ? tag : tag.replace(/><\/script>/, ' defer></script>');
     };
     if (jqueryTagMatch) {
@@ -111,7 +112,12 @@ function optimizeHtml(html, relativePath) {
     if (scriptsMinMatch) {
       out = out.replace(scriptsMinMatch[0], '');
     }
-    const scriptsAtEnd = [addDefer(jqueryTagMatch && jqueryTagMatch[0]), addDefer(scriptsMinMatch && scriptsMinMatch[0])].filter(Boolean).join('\n');
+    const jqueryTag = jqueryTagMatch && jqueryTagMatch[0];
+    const scriptsMinTag = scriptsMinMatch && scriptsMinMatch[0];
+    const scriptsAtEnd = [
+      addDefer(jqueryTag, inlineScriptsWithJQuery.length > 0),
+      addDefer(scriptsMinTag, false)
+    ].filter(Boolean).join('\n');
     const deferredInline = inlineScriptsWithJQuery.length ? '\n' + inlineScriptsWithJQuery.join('\n') : '';
     if (scriptsAtEnd || deferredInline) {
       out = out.replace('</body>', (scriptsAtEnd || '') + deferredInline + '\n</body>');

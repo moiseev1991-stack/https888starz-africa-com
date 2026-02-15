@@ -1564,79 +1564,28 @@ add_shortcode('slidermob', 'custom_slider_shortcode');
 
 add_shortcode('sliderdesc', 'deck_slider_shortcode');
 
+/**
+ * Слайдер [sliderdesc]: картинки из /wp-content/uploads/slaid/ (1.webp–10.webp).
+ * Папку slaid класть в корень проекта или в wp-content/uploads/; при сборке копируется в dist.
+ */
 function deck_slider_shortcode()
 {
+     $base = '/wp-content/uploads/slaid/';
+     $slides = range(1, 10);
      ob_start();
      ?>
-
      <div class="owl-carousel owl-theme hero-slider" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
+     <?php foreach ($slides as $i) :
+          $src = $base . $i . '.webp';
+          $alt = 'Slide ' . $i;
+     ?>
           <div class="slide">
-               <a href="/wp-content/uploads/2025/03/الإحصاءات.webp" data-fancybox="gallery">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/الإحصاءات.webp" alt="الإحصاءات" title="الإحصاءات" width="1200" height="675" loading="eager">
+               <a href="<?php echo esc_url($src); ?>" data-fancybox="gallery">
+                    <img decoding="async" src="<?php echo esc_url($src); ?>" alt="<?php echo esc_attr($alt); ?>" title="<?php echo esc_attr($alt); ?>" width="1200" height="675" loading="<?php echo $i === 1 ? 'eager' : 'lazy'; ?>">
                </a>
           </div>
-
-          <div class="slide">
-               <a href="/wp-content/uploads/2025/03/البنغو.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/البنغو.webp" alt="البنغو" title="البنغو" width="1200" height="675">
-               </a>
-          </div>
-
-          <div class="slide">
-               <a href="/wp-content/uploads/2025/03/الرياضة-الإلكترونية.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الرياضة-الإلكترونية.webp" alt="الرياضة-الإلكترونية"
-                         title="الرياضة-الإلكترونية" width="1200" height="675">
-               </a>
-          </div>
-
-          <div class="slide">
-               <a href="/wp-content/uploads/2025/03/الصفحة-الرئيسية-888ستارز.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الصفحة-الرئيسية-888ستارز.webp" alt="الصفحة-الرئيسية-888ستارز"
-                         title="الصفحة-الرئيسية-888ستارز" width="1200" height="675">
-               </a>
-          </div>
-
-          <div class="slide">
-               <a href="/wp-content/uploads/2025/03/ألعاب-الكازينو-1.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/ألعاب-الكازينو-1.webp" alt="ألعاب-الكازينو-1"
-                         title="ألعاب-الكازينو-1" width="1200" height="675">
-               </a>
-          </div>
-
-          <div class="slide">
-               <a href="/wp-content/uploads/2025/03/النتائج.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/النتائج.webp" alt="النتائج" title="النتائج" width="1200" height="675">
-               </a>
-          </div>
-
-          <div class="slide">
-               <a href="/wp-content/uploads/2025/03/بوكر.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/بوكر.webp" alt="بوكر" title="بوكر" width="1200" height="675">
-               </a>
-          </div>
-
-          <div class="slide">
-               <a href="/wp-content/uploads/2025/03/جميع-الألعاب-888.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/جميع-الألعاب-888.webp" alt="جميع-الألعاب-888"
-                         title="جميع-الألعاب-888" width="1200" height="675">
-               </a>
-          </div>
-
-          <div class="slide">
-               <a href="/wp-content/uploads/2025/03/جميع-المكافآت.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/جميع-المكافآت.webp" alt="جميع-المكافآت" title="جميع-المكافآت" width="1200" height="675">
-               </a>
-          </div>
-
-          <div class="slide">
-               <a href="/wp-content/uploads/2025/03/ماكينات-سلوتس-888-ستارز.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/ماكينات-سلوتس-888-ستارز.webp" alt="ماكينات-سلوتس-888-ستارز"
-                         title="ماكينات-سلوتس-888-ستارز" width="1200" height="675">
-               </a>
-          </div>
+     <?php endforeach; ?>
      </div>
-
-
      <?php
      return ob_get_clean();
 }

@@ -31,17 +31,24 @@ function main() {
     process.exit(1);
   }
   const distContent = path.join(DIST, 'wp-content');
+  const distUploads = path.join(distContent, 'uploads');
   if (!fs.existsSync(WP_CONTENT)) {
     console.log('wp-content not found, skipping assets copy');
   } else {
     console.log('Copying wp-content/uploads and themes/zento/assets to dist...');
-    copyRecursive(path.join(WP_CONTENT, 'uploads'), path.join(distContent, 'uploads'));
+    copyRecursive(path.join(WP_CONTENT, 'uploads'), distUploads);
     const themeAssets = path.join(WP_CONTENT, 'themes', 'zento', 'assets');
     if (fs.existsSync(themeAssets))
       copyRecursive(themeAssets, path.join(distContent, 'themes', 'zento', 'assets'));
     console.log('Assets copy done.');
   }
-  
+  // Слайдер: картинки из корня проекта slaid/ → dist/wp-content/uploads/slaid/
+  const slaidSrc = path.join(PROJECT_ROOT, 'slaid');
+  if (fs.existsSync(slaidSrc)) {
+    copyRecursive(slaidSrc, path.join(distUploads, 'slaid'));
+    console.log('Copied slaid/ to dist/wp-content/uploads/slaid/');
+  }
+
   // Copy .htaccess for caching (1 year for static assets — PageSpeed)
   const htaccessSrc = path.join(PROJECT_ROOT, 'config', '.htaccess');
   const htaccessDest = path.join(DIST, '.htaccess');
