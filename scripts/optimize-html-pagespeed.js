@@ -89,6 +89,12 @@ function optimize(html) {
     (m) => m.replace(/<img(\s)/i, '<img loading="lazy"$1')
   );
 
+  // 8) Remove duplicate inline Owl/Fancybox init (only app.js should init — fixes broken dots on server)
+  out = out.replace(
+    /<script>\s*\/\/ Отключение пассивных[\s\S]*?\.slider-888-slider[\s\S]*?\}\);\s*\}\);\s*<\/script>/,
+    ''
+  );
+
   return out;
 }
 
