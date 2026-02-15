@@ -6597,7 +6597,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		originalAddEventListener.call(this, type, listener, options);
 	};
 
-	$(document).ready(function(){
+	function initOwlAndFancybox() {
+		var $ = window.jQuery;
+		if (!$ || !$.fn.owlCarousel) return;
 		$(".owl-carousel").owlCarousel({
 			items: 1,
 			margin: 30,
@@ -6660,7 +6662,18 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 			mouseDrag: true,
 			dots: true,
 		});
-			});
+	}
+
+	$(document).ready(function(){
+		if (window.jQuery && window.jQuery.fn.owlCarousel) {
+			initOwlAndFancybox();
+		} else {
+			var s = document.createElement("script");
+			s.src = "https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js";
+			s.onload = function() { window.jQuery && initOwlAndFancybox(); };
+			document.head.appendChild(s);
+		}
+	});
 </script>
 
 

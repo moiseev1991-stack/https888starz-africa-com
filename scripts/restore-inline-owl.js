@@ -24,7 +24,9 @@ const INLINE_BLOCK = `<script>
 		originalAddEventListener.call(this, type, listener, options);
 	};
 
-	$(document).ready(function(){
+	function initOwlAndFancybox() {
+		var $ = window.jQuery;
+		if (!$ || !$.fn.owlCarousel) return;
 		$(".owl-carousel").owlCarousel({
 			items: 1,
 			margin: 30,
@@ -87,7 +89,18 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 			mouseDrag: true,
 			dots: true,
 		});
-			});
+	}
+
+	$(document).ready(function(){
+		if (window.jQuery && window.jQuery.fn.owlCarousel) {
+			initOwlAndFancybox();
+		} else {
+			var s = document.createElement("script");
+			s.src = "https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js";
+			s.onload = function() { window.jQuery && initOwlAndFancybox(); };
+			document.head.appendChild(s);
+		}
+	});
 </script>
 
 
@@ -105,6 +118,12 @@ htmlFiles.forEach((file) => {
   const pattern = /<script src="https:\/\/cdnjs\.cloudflare\.com\/ajax\/libs\/fancybox\/3\.5\.7\/jquery\.fancybox\.min\.js"><\/script>\s*\n<script src="\/assets\/js\/app\.js"><\/script>\s*\n/;
   if (pattern.test(html)) {
     html = html.replace(pattern, '<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>\n' + INLINE_BLOCK);
+  } else {
+    // Replace old inline block (direct owl init) with new one (load Owl from CDN if missing)
+    const oldBlock = /<script>\s*\/\/ Отключение пассивных[\s\S]*?\t\t\}\);\s*\n\s*\t\t\t\}\);\s*\n\s*<\/script>/;
+    if (oldBlock.test(html)) {
+      html = html.replace(oldBlock, INLINE_BLOCK.trim());
+    }
   }
 
   // Add app.js with defer before </body> if not present (we removed it from after Fancybox)
