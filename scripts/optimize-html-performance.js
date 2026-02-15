@@ -44,9 +44,42 @@ function optimizeCss(css) {
 
 const BASE_URL = process.env.STATIC_BASE_URL || 'https://888starzeg-egypt.com';
 
+const JQUERY_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js';
+
 function optimizeHtml(html, relativePath) {
   let out = html;
   const bodyStart = out.indexOf('</head>');
+
+  // 0a. jQuery: CDN + убрать defer (чтобы $ был до скриптов с $)
+  out = out.replace(
+    /<script([^>]*src=["'])([^"']*jquery[^"']*\.min\.js[^"']*)(["'][^>]*)><\/script>/gi,
+    (m, before, src, after) => {
+      if (/^https?:\/\//i.test(src)) {
+        return m.replace(/\s+defer\s*/gi, ' ');
+      }
+      const attrs = after.replace(/\s+defer\s*/gi, ' ');
+      return '<script' + before + JQUERY_CDN + attrs + '></script>';
+    }
+  );
+  // 0b. Убрать битые preload (flexy-breadcrumb, font-awesome)
+  out = out.replace(/<link[^>]*rel=["']preload["'][^>]*href=["'][^"']*flexy-breadcrumb[^"']*["'][^>]*>\s*/gi, '');
+  out = out.replace(/<link[^>]*rel=["']preload["'][^>]*href=["'][^"']*font-awesome\.min\.css[^"']*["'][^>]*>\s*/gi, '');
+  out = out.replace(/<noscript><link[^>]*flexy-breadcrumb[^>]*><\/noscript>\s*/gi, '');
+  out = out.replace(/<noscript><link[^>]*font-awesome\.min\.css[^>]*><\/noscript>\s*/gi, '');
+  // 0c. Синтаксис: лишние }); в инлайн-скрипте
+  out = out.replace(/(\}\);\s*){4,5}\s*<\/script>/g, '}); }); }); </script>');
+  out = out.replace(/(\}\);\s*){3}\s*<\/script>/g, '}); }); </script>');
+  // 0d. Удалить flexy-breadcrumb-public.js и wp-emoji (404)
+  out = out.replace(/<script[^>]*src=["'][^"']*flexy-breadcrumb-public\.js[^"']*["'][^>]*><\/script>\s*/gi, '');
+  out = out.replace(/<script id="wp-emoji-settings" type="application\/json">[\s\S]*?<\/script>\s*/i, '');
+  out = out.replace(/<script type="module">[\s\S]*?wp-emoji-loader[\s\S]*?<\/script>\s*/gi, '');
+  // 0e. Fancybox CDN + guard
+  if (out.includes('.fancybox(') && !out.includes('jquery.fancybox.min.js')) {
+    out = out.replace(/(<script[^>]*jquery[^>]*><\/script>)/i, '$1\n<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>');
+  }
+  out = out.replace(/\$\(\'\[data-fancybox="gallery"\][^\']*\'\)\.fancybox\s*\(/g, "if($.fn.fancybox)$('[data-fancybox=\"gallery\"]:not(.owl-item.cloned [data-fancybox=\"gallery\"])').fancybox(");
+  out = out.replace(/\$\(\'\[data-fancybox="gallerymob"\][^\']*\'\)\.fancybox\s*\(/g, "if($.fn.fancybox)$('[data-fancybox=\"gallerymob\"]:not(.owl-item.cloned [data-fancybox=\"gallerymob\"])').fancybox(");
+
   const isApkPage = relativePath && /apk[\/\\]index\.html$/i.test(relativePath.replace(/\\/g, '/'));
 
   // 0. Не вырезаем инлайн-скрипты (regex ломает код с "</script>" в строке → SyntaxError). jQuery просто вставим перед первым скриптом с $.
@@ -327,6 +360,65 @@ function optimizeHtml(html, relativePath) {
     }
   }
 
+  // 12a. Слайдер: один ряд точек — удалить ВТОРОЙ блок .owl-dots с 10+ точками (дубль), чтобы точки привязаны к десктопному hero и клики работают
+  (function () {
+    const owlDotsStart = /<div\s+[^>]*class=["'][^"']*owl-dots[^"']*["'][^>]*>/gi;
+    let pos = 0;
+    let bigDotsBlockIndex = 0;
+    while (pos < out.length) {
+      const m = owlDotsStart.exec(out);
+      if (!m) break;
+      const start = m.index;
+      let depth = 0;
+      let p = start;
+      let end = -1;
+      while (p < out.length) {
+        const nextOpen = out.indexOf('<div', p);
+        const nextClose = out.indexOf('</div>', p);
+        if (nextClose === -1) break;
+        if (nextOpen !== -1 && nextOpen < nextClose) {
+          depth++;
+          p = nextOpen + 4;
+        } else {
+          depth--;
+          p = nextClose + 6;
+          if (depth === 0) {
+            end = p;
+            break;
+          }
+        }
+      }
+      if (end === -1) break;
+      const block = out.slice(start, end);
+      const dotCount = (block.match(/class=["'][^"']*owl-dot[^"']*["']/g) || []).length;
+      if (dotCount >= 10) {
+        bigDotsBlockIndex++;
+        if (bigDotsBlockIndex === 2) {
+          out = out.slice(0, start) + out.slice(end);
+          owlDotsStart.lastIndex = start;
+          pos = start;
+          continue;
+        }
+      }
+      if (dotCount > 10) {
+        const inner = block.replace(/^<div[^>]*>/, '').replace(/<\/div>$/, '');
+        const buttonRe = /<button[^>]*class=["'][^"']*owl-dot[^"']*["'][^>]*>[\s\S]*?<\/button>/gi;
+        const buttons = [];
+        let b;
+        while ((b = buttonRe.exec(inner)) !== null && buttons.length < 10) {
+          buttons.push(b[0]);
+        }
+        const openTag = block.slice(0, block.indexOf('>') + 1);
+        const newBlock = openTag + buttons.join('') + '</div>';
+        out = out.slice(0, start) + newBlock + out.slice(end);
+        owlDotsStart.lastIndex = start + newBlock.length;
+      } else {
+        owlDotsStart.lastIndex = end;
+      }
+      pos = end;
+    }
+  })();
+
   // 13. A11y: owl-dot / carousel buttons — aria-label (Lighthouse)
   let dotIndex = 0;
   out = out.replace(/<(button|span)([^>]*class=["'][^"']*owl-dot[^"']*["'][^>]*)>/gi, (m, tag, attrs) => {
@@ -336,32 +428,36 @@ function optimizeHtml(html, relativePath) {
     return '<' + tag + attrs + ' aria-label="Slide ' + dotIndex + '"' + role + '>';
   });
 
-  // 14. «Чёрный блок» облака тегов: раскрытие по клику (pure JS, без jQuery)
+  // 13b. Увеличить размер точек слайдера (круги побольше)
+  if (!out.includes('data-owl-dots-size-fix')) {
+    const dotStyle = '<style id="owl-dots-size-fix" data-owl-dots-size-fix>.owl-dots .owl-dot { width: 16px; height: 16px; padding: 0; margin: 0 6px; border-radius: 50%; } .owl-dots .owl-dot span { display: block; width: 12px; height: 12px; margin: 0 auto; border-radius: 50%; } .owl-dots .owl-dot.active span { transform: scale(1.15); }</style>';
+    out = out.replace('</head>', dotStyle + '\n</head>');
+  }
+  // 13c. Клик по точкам слайдера (Owl to.owl.carousel)
+  if (out.includes('owl-dots') && !out.includes('owl-dots-click-fix')) {
+    const owlDotsClickFix = '<script id="owl-dots-click-fix">(function(){function run(){var $=window.jQuery;if(!$||!$.fn.owlCarousel)return;$(document).off("click.owlDotsFix").on("click.owlDotsFix",".owl-dots .owl-dot",function(e){var $dot=$(this),$dots=$dot.closest(".owl-dots"),$carousel=$dots.closest(".owl-carousel, .owl-mobile");if(!$carousel.length)return;var idx=$dots.find(".owl-dot").index($dot);if(idx>=0){e.preventDefault();e.stopPropagation();$carousel.trigger("to.owl.carousel",[idx,300]);}});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){setTimeout(run,400);});else setTimeout(run,400);window.addEventListener("load",function(){setTimeout(run,600);});})();</script>';
+    out = out.replace('</body>', owlDotsClickFix + '\n</body>');
+  }
+  // 14. «Чёрный блок» облака тегов: раскрытие по клику (pure JS)
   if (/id=["']seo-module["']/.test(out) && /caption-seo-module\s+faq-question/.test(out) && !/caption-seo-module.*addEventListener/.test(out)) {
     const tagToggleScript = '<script>(function(){var q=document.querySelector(".caption-seo-module.faq-question");var a=document.getElementById("seo-module");if(q&&a){q.setAttribute("role","button");q.setAttribute("aria-expanded","false");q.setAttribute("aria-controls","seo-module");q.addEventListener("click",function(e){e.stopImmediatePropagation();var open=a.style.display==="block";a.style.display=open?"none":"block";q.setAttribute("aria-expanded",!open);q.classList.toggle("open",!open);var r=q.querySelector(".ico_rotater_footer");if(r)r.classList.toggle("rotate",!open);},true);}})();</script>';
     out = out.replace('</body>', tagToggleScript + '\n</body>');
   }
-
-  // 15. Убрать пустые пространства на главной: пустые параграфы и пустые/высокие .table-wrapper
+  // 15. Пустые параграфы и .table-wrapper
   out = out.replace(/<p(\s[^>]*)?>\s*(&nbsp;|&#160;|\s)*\s*<\/p>/gi, '');
   out = out.replace(/<p>\s*<\/p>/gi, '');
-  // Пустые div.table-wrapper (без таблицы внутри) — удалить, в т.ч. вложенные
   for (let i = 0; i < 8; i++) {
     out = out.replace(/<div\s+[^>]*class=["'][^"']*table-wrapper[^"']*["'][^>]*>\s*<\/div>/gi, '');
   }
-  // Схлопнуть вложенные div.table-wrapper в один (убирает пустые блоки до/после таблицы)
   out = out.replace(/(<div\s+[^>]*class=["'][^"']*table-wrapper[^"']*["'][^>]*>\s*)+/gi, '<div class="table-wrapper">');
   out = out.replace(/(<\/table>\s*<\/div>)(\s*<\/div>)+/gi, '$1');
-  // Таблица width="0" ломает вёрстку — ставим 100%
   out = out.replace(/<table(\s+[^>]*)\s+width=["']0["']/gi, '<table$1 width="100%"');
   out = out.replace(/<table\s+width=["']0["'](\s+[^>]*)/gi, '<table width="100%"$1');
-  // Ограничить высоту .table-wrapper, чтобы не создавать огромные пустые зоны
   if (!/\.table-wrapper\s*\{\s*min-height:\s*0/.test(out)) {
     const tableWrapperFix = '<style>.table-wrapper{min-height:0 !important;}.table-wrapper:empty{display:none !important;}</style>';
     out = out.replace('</head>', tableWrapperFix + '\n</head>');
   }
-
-  // 16. Удалить пустые строки после удаления скриптов
+  // 16. Удалить пустые строки
   out = out.replace(/\n\s*\n\s*\n/g, '\n\n');
   
   return out;
