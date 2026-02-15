@@ -10,7 +10,8 @@ const { URL } = require('url');
 const { chromium } = require('playwright');
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
-const BASE_URL = process.env.STATIC_BASE_URL || 'https://888starz-africa.com';
+// Краулить Africa (рабочая разметка слайдера); для Egypt задать STATIC_BASE_URL при сборке
+const BASE_URL = process.env.CRAWL_BASE_URL || process.env.STATIC_BASE_URL || 'https://888starz-africa.com';
 const OUT_DIR = process.env.STATIC_OUT_DIR || 'dist';
 const DIST = path.join(PROJECT_ROOT, OUT_DIR);
 const MAX_PAGES = 2000;

@@ -30,6 +30,7 @@ jobs:
       - name: Build static site
         run: npm run build:live
         env:
+          CRAWL_BASE_URL: "https://888starz-africa.com"
           STATIC_BASE_URL: "https://888starzeg-egypt.com"
           STATIC_OUT_DIR: "dist"
 

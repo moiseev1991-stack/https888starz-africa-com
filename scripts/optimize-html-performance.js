@@ -51,6 +51,9 @@ function optimizeHtml(html, relativePath) {
   let out = html;
   const bodyStart = out.indexOf('</head>');
 
+  // 0. Домен: если краулили Africa, подменить на Egypt в ссылках/канонике (слайдер и разметка с Africa)
+  out = out.replace(/https?:\/\/888starz-africa\.com/gi, BASE_URL);
+
   // 0a. jQuery: CDN + убрать defer (чтобы $ был до скриптов с $)
   out = out.replace(
     /<script([^>]*src=["'])([^"']*jquery[^"']*\.min\.js[^"']*)(["'][^>]*)><\/script>/gi,
