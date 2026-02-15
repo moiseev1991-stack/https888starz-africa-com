@@ -61,14 +61,15 @@ function optimizeHtml(html, relativePath) {
       return '<script' + before + JQUERY_CDN + attrs + '></script>';
     }
   );
+  out = out.replace(/(<script[^>]*src=["'][^"']*jquery[^"']*["'][^>]*)\s+defer(\s[^>]*)?>/gi, '$1$2>');
   // 0b. Убрать битые preload (flexy-breadcrumb, font-awesome)
   out = out.replace(/<link[^>]*rel=["']preload["'][^>]*href=["'][^"']*flexy-breadcrumb[^"']*["'][^>]*>\s*/gi, '');
   out = out.replace(/<link[^>]*rel=["']preload["'][^>]*href=["'][^"']*font-awesome\.min\.css[^"']*["'][^>]*>\s*/gi, '');
   out = out.replace(/<noscript><link[^>]*flexy-breadcrumb[^>]*><\/noscript>\s*/gi, '');
   out = out.replace(/<noscript><link[^>]*font-awesome\.min\.css[^>]*><\/noscript>\s*/gi, '');
-  // 0c. Синтаксис: лишние }); в инлайн-скрипте
+  // 0c. Синтаксис: лишние }); только в скрипте с toggle-btn (head); скрипты переключателя языка (body) должны оставаться с тремя });
   out = out.replace(/(\}\);\s*){4,5}\s*<\/script>/g, '}); }); }); </script>');
-  out = out.replace(/(\}\);\s*){3}\s*<\/script>/g, '}); }); </script>');
+  out = out.replace(/<script([^>]*)>([\s\S]*?toggle-btn[\s\S]*?)(\}\);\s*)\);\s*\}\);\s*<\/script>/g, '<script$1>$2}); }); </script>');
   // 0d. Удалить flexy-breadcrumb-public.js и wp-emoji (404)
   out = out.replace(/<script[^>]*src=["'][^"']*flexy-breadcrumb-public\.js[^"']*["'][^>]*><\/script>\s*/gi, '');
   out = out.replace(/<script id="wp-emoji-settings" type="application\/json">[\s\S]*?<\/script>\s*/i, '');
