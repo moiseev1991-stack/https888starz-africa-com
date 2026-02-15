@@ -1,7 +1,6 @@
 /
 /about/
 /accounts-withdrawals-and-bonuses/
-/apk/
 /contacts/
 /cookies/
 /dispute-resolution/
@@ -9,7 +8,6 @@
 /game/
 /privacy-policy/
 /promo-code/
-/registration/
 /responsible/
 /self-exclusion/
 /terms/
