@@ -1,0 +1,45 @@
+<?php get_template_part('amp/header'); ?>
+
+<?php
+$layout = epcl_get_option( 'amp_archives_layout', 'grid-posts' );
+$obj = get_queried_object();
+$category_meta = get_term_meta( $obj->term_id, 'epcl_post_categories', true );
+$image_url = '';
+if( !empty($category_meta) && !empty($category_meta['archives_image']) ){
+    $thumb = wp_get_attachment_image_src( $category_meta['archives_image']['id'], 'epcl_classic' );
+    $image_url = '';
+    if( !empty($thumb) ){
+        $image_url = $thumb[0];
+    }    
+}
+?>
+<!-- start: #archives-->
+<main id="archives" class="main">
+
+    <div class="grid-container grid-medium">
+        <div class="tag-description epcl-flex <?php if( !$image_url) echo 'no-image'; ?>">
+            <div class="left epcl-flex">
+                <?php if( $image_url ): ?>
+                    <div class="category-image ctag ctag-<?php echo esc_attr($obj->term_id); ?>"><img src="<?php echo esc_url($image_url); ?>" fetchpriority="high" decoding="async"></div>
+                <?php else: ?>
+                    <div class="category-image ctag ctag-<?php echo esc_attr($obj->term_id); ?>"><svg class="icon"><use xlink:href="<?php echo EPCL_THEMEPATH; ?>/assets/images/svg-icons.svg#fill-tag-icon"></use></svg></div>
+                <?php endif; ?>
+                <h1 class="title usmall fw-normal no-margin"><span class="title large no-margin"><?php single_cat_title(); ?></span><?php esc_html( printf( _n( 'A collection of <b>1 post</b>', 'A collection of <b>%1$s posts</b>', $obj->count, 'zento'), number_format_i18n( $obj->count ) ) ); ?></h1>
+            </div>
+            <?php if( term_description() ): ?>
+                <div class="tag-descripcion right">
+                    <?php echo term_description(); ?>
+                </div>
+            <?php endif; ?>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div id="post-list">
+        <?php get_template_part( 'partials/home-blocks/'.$layout ); ?>
+    </div>
+
+</main>
+<!-- end: #archives -->
+
+<?php get_template_part('amp/footer'); ?>

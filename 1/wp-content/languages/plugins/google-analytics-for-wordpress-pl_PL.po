@@ -1,0 +1,329 @@
+# Translation of Plugins - MonsterInsights &#8211; Google Analytics Dashboard for WordPress (Website Stats Made Easy) - Stable (latest release) in Polish
+# This file is distributed under the same license as the Plugins - MonsterInsights &#8211; Google Analytics Dashboard for WordPress (Website Stats Made Easy) - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-12-14 16:17:35+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2);\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: pl\n"
+"Project-Id-Version: Plugins - MonsterInsights &#8211; Google Analytics Dashboard for WordPress (Website Stats Made Easy) - Stable (latest release)\n"
+
+#: includes/admin/admin.php:58
+msgid "Setup Checklist"
+msgstr "Lista kontrolna konfiguracji"
+
+#: includes/admin/site-notes/Controller.php:523
+msgid "Important"
+msgstr "Ważne"
+
+#: includes/admin/site-notes/Controller.php:522
+#: includes/admin/site-notes/Controller.php:768
+#: assets/gutenberg/js/editor.js:3057
+msgid "Category"
+msgstr "Kategoria"
+
+#: includes/admin/site-notes/Controller.php:521
+msgid "Site Note"
+msgstr "Uwaga o witrynie"
+
+#: includes/admin/site-notes/Controller.php:520
+msgid "Date"
+msgstr "Data"
+
+#: includes/admin/routes.php:491
+msgid "Ask visitors questions about how they use your website or what features can make you more money."
+msgstr "Zadawaj gościom pytania na temat tego, jak korzystają z twojej witryny lub jakie funkcje mogą zwiększyć twoje przychody."
+
+#: includes/admin/admin.php:86
+msgid "Site Notes"
+msgstr "Uwagi o witrynie"
+
+#: includes/admin/admin.php:132
+msgid "UserFeedback"
+msgstr "UserFeedback"
+
+#: lite/includes/admin/onboarding-wizard.php:252
+msgid "Oops! You are not allowed to install plugins. Please contact your site administrator for assistance."
+msgstr "Ups! Nie posiadasz uprawnień do instalowania wtyczek. Skontaktuj się z administratorem witryny w celu uzyskania pomocy."
+
+#: includes/admin/routes.php:747
+msgid "Start accepting one-time and recurring payments on your WordPress site without setting up a shopping cart. No code required."
+msgstr "Zacznij przyjmować płatności jednorazowe i cykliczne w swojej witrynie w WordPressie, nie zakładając koszyka. Nie musisz pisać żadnego kodu."
+
+#: lite/includes/admin/connect.php:67
+msgid "You already have MonsterInsights Pro installed."
+msgstr "Wtyczka MonsterInsights Pro jest już zainstalowana."
+
+#: lite/includes/admin/connect.php:42
+msgid "Oops! You are not allowed to install plugins. Please contact your site administrator."
+msgstr "Ups! Nie posiadasz uprawnień do instalowania wtyczek. Skontaktuj się z administratorem witryny."
+
+#: includes/admin/wp-site-health.php:32
+msgid "Enable Google Analytics 4"
+msgstr "Włącz Google Analytics 4"
+
+#: includes/admin/notifications/notification-install-aioseo.php:30
+msgid "Install All-In-One SEO"
+msgstr "Zainstaluj All-In-One SEO"
+
+#: lite/includes/admin/user-journey/providers/class-abstract-lite-metabox.php:84
+msgid "Upgrade and Unlock"
+msgstr "Przejdź na wyższą wersję i uzyskaj dostęp"
+
+#: includes/gutenberg/site-insights/templates/scorecard/class-scorecard-topinterests.php:58
+msgid "Categories"
+msgstr "Kategorie"
+
+#: includes/admin/site-notes/Controller.php:524
+msgid "Media"
+msgstr "Multimedia"
+
+#: includes/admin/admin.php:118 includes/admin/admin.php:294
+msgid "SEO"
+msgstr "SEO"
+
+#: includes/admin/routes.php:1338
+msgid "Homepage"
+msgstr "Strona główna"
+
+#: includes/admin/notifications/notification-to-setup-affiliate-links.php:52
+msgid "Read More"
+msgstr "Dowiedz się więcej"
+
+#: includes/admin/notifications/notification-audience.php:51
+#: includes/admin/notifications/notification-bounce-rate.php:45
+#: includes/admin/notifications/notification-mobile-device-low-traffic.php:37
+#: includes/admin/notifications/notification-traffic-dropping.php:48
+#: includes/admin/notifications/notification-visitors.php:42
+msgid "View Report"
+msgstr "Zobacz raport"
+
+#. Translators: Readable time to display
+#: includes/admin/notifications.php:315
+msgid "%1$s ago"
+msgstr "%1$s temu"
+
+#: includes/admin/admin.php:104
+msgid "Popular Posts:"
+msgstr "Popularne wpisy:"
+
+#: includes/helpers.php:2114
+msgid "United States of America"
+msgstr "Stany Zjednoczone Ameryki"
+
+#: includes/helpers.php:2109
+msgid "The Bahamas"
+msgstr "Bahamy"
+
+#: lite/includes/popular-posts/class-popular-posts-widget-sidebar.php:260
+msgid "Theme Preview"
+msgstr "Podgląd motywu"
+
+#: includes/admin/admin.php:104 assets/gutenberg/js/editor.js:1763
+msgid "Popular Posts"
+msgstr "Popularne wpisy"
+
+#: includes/gutenberg/headline-tool/headline-tool.php:925
+msgid "of"
+msgstr "z"
+
+#: lite/includes/admin/metaboxes.php:46 assets/gutenberg/js/editor.js:2713
+msgid "Last 30 days"
+msgstr "Ostatnie 30 dni"
+
+#: lite/includes/admin/metaboxes.php:50 assets/gutenberg/js/editor.js:2714
+msgid "Yesterday"
+msgstr "Wczoraj"
+
+#: includes/gutenberg/site-insights/templates/scorecard/class-scorecard-gender.php:59
+msgid "Gender"
+msgstr "Płeć"
+
+#: lite/includes/emails/templates/body-summaries.php:136
+msgid "Total Sessions"
+msgstr "Sesje łącznie"
+
+#: lite/includes/emails/templates/body-summaries-plain.php:55
+#: lite/includes/emails/templates/body-summaries-test-plain.php:64
+#: lite/includes/emails/templates/body-summaries-test.php:170
+msgid "Total Visitors"
+msgstr "Goście łącznie"
+
+#: lite/includes/admin/reports/report-year-in-review.php:22
+msgid "Year in Review"
+msgstr "Przegląd roku"
+
+#: includes/admin/admin.php:528
+msgid "Please Setup Website Analytics to See Audience Insights"
+msgstr "Skonfiguruj analizy witryny, aby poznać ważne informacje na temat jej odbiorców"
+
+#: lite/includes/admin/welcome.php:56 lite/includes/admin/welcome.php:57
+msgid "Welcome to MonsterInsights"
+msgstr "Witamy w MonsterInsights"
+
+#: lite/includes/admin/wp-site-health.php:357
+#: lite/includes/admin/wp-site-health.php:383
+msgid "View Addons"
+msgstr "Zobacz dodatki"
+
+#: lite/includes/admin/wp-site-health.php:238
+msgid "View Reports"
+msgstr "Zobacz raporty"
+
+#: includes/admin/admin.php:138 includes/admin/admin.php:302
+msgid "About Us"
+msgstr "O nas"
+
+#: lite/includes/admin/metaboxes.php:88 lite/includes/admin/metaboxes.php:128
+#: assets/gutenberg/js/editor.js:2720
+msgid "Exits"
+msgstr "Wyjścia"
+
+#: lite/includes/emails/templates/body-summaries-plain.php:64
+#: lite/includes/emails/templates/body-summaries-test-plain.php:72
+#: lite/includes/emails/templates/body-summaries-test.php:236
+#: lite/includes/emails/templates/body-summaries.php:310
+msgid "Top Pages"
+msgstr "Główne strony"
+
+#: includes/admin/admin.php:149
+#: includes/admin/notifications/notification-upgrade-to-pro-high-traffic.php:41
+#: includes/admin/notifications/notification-upgrade-to-pro.php:33
+#: lite/includes/emails/templates/body-summaries.php:384
+#: lite/includes/emails/templates/body-summaries.php:388
+msgid "Upgrade to Pro"
+msgstr "Kup Pro"
+
+#: includes/admin/admin.php:531 includes/admin/common.php:646
+#: includes/admin/common.php:672 includes/admin/common.php:704
+#: includes/admin/notifications/notification-audience.php:55
+#: includes/admin/notifications/notification-bounce-rate.php:52
+#: includes/admin/notifications/notification-headline-analyzer.php:39
+#: includes/admin/notifications/notification-mobile-device-low-traffic.php:41
+#: includes/admin/notifications/notification-returning-visitors.php:43
+#: includes/admin/notifications/notification-traffic-dropping.php:43
+msgid "Learn More"
+msgstr "Dowiedz się więcej"
+
+#: includes/admin/notifications/notification-upgrade-for-custom-dimensions.php:25
+#: includes/admin/notifications/notification-upgrade-for-events-reporting.php:25
+#: includes/admin/notifications/notification-upgrade-for-post-templates.php:25
+#: lite/includes/admin/helpers.php:85
+msgid "Upgrade to MonsterInsights Pro"
+msgstr "Kup MonsterInsights Pro"
+
+#: includes/gutenberg/site-insights/templates/graph/class-graph-sessions.php:36
+#: includes/gutenberg/site-insights/templates/scorecard/class-scorecard-age.php:60
+#: includes/gutenberg/site-insights/templates/scorecard/class-scorecard-gender.php:60
+#: includes/gutenberg/site-insights/templates/scorecard/class-scorecard-sessions.php:27
+#: includes/gutenberg/site-insights/templates/scorecard/class-scorecard-top10countries.php:56
+#: lite/includes/emails/templates/body-summaries-test.php:316
+#: lite/includes/emails/templates/body-summaries.php:129
+msgid "Sessions"
+msgstr "Sesje"
+
+#: lite/includes/admin/reports/report-queries.php:22
+msgid "Search Console"
+msgstr "Search Console"
+
+#: lite/includes/admin/reports/report-publisher.php:22
+msgid "Publishers"
+msgstr "Wydawcy"
+
+#: lite/includes/admin/reports/report-dimensions.php:22
+msgid "Dimensions"
+msgstr "Wymiary"
+
+#: includes/gutenberg/site-insights/templates/scorecard/class-scorecard-top10countries.php:55
+msgid "Top 10 Countries"
+msgstr "10 czołowych krajów"
+
+#: includes/gutenberg/site-insights/templates/graph/class-graph-device.php:41
+#: includes/gutenberg/site-insights/templates/scorecard/class-scorecard-device.php:33
+msgid "Device Breakdown"
+msgstr "Rozbicie według urządzeń"
+
+#: includes/gutenberg/site-insights/templates/scorecard/class-scorecard-pageviews.php:27
+msgid "Avg. Session Duration"
+msgstr "Średni czas trwania sesji"
+
+#: includes/gutenberg/site-insights/templates/scorecard/class-scorecard-sessions.php:36
+#: lite/includes/emails/templates/body-summaries-test.php:163
+#: lite/includes/emails/templates/body-summaries-test.php:249
+msgid "Pageviews"
+msgstr "Odsłony"
+
+#: includes/admin/admin.php:560 includes/admin/api-auth.php:305
+msgid "Your license key for MonsterInsights is invalid. The key no longer exists or the user associated with the key has been deleted. Please use a different key."
+msgstr "Ten klucz licencyjny wtyczki MonsterInsights  jest nieprawidłowy. Klucz już nie istnieje lub powiązany z nim użytkownik został usunięty. Użyj innego klucza."
+
+#: includes/admin/admin.php:558
+msgid "Your license key for MonsterInsights has been disabled. Please use a different key."
+msgstr "Klucz licencyjny wtyczki MonsterInsights został wyłączony. Użyj innego klucza."
+
+#. Translators: Adds a link to the license renewal.
+#: includes/admin/admin.php:556
+msgid "Your license key for MonsterInsights has expired. %1$sPlease click here to renew your license key.%2$s"
+msgstr "Klucz licencyjny wtyczki MonsterInsights wygasł. %1$sKliknij tutaj, aby odnowić klucz licencyjny.%2$s"
+
+#: includes/admin/exclude-page-metabox.php:144
+#: lite/includes/admin/user-journey/providers/class-abstract-lite-metabox.php:78
+#: lite/includes/admin/user-journey/providers/class-abstract-lite-metabox.php:116
+#: assets/gutenberg/js/editor.js:2978
+msgid "Upgrade"
+msgstr "Ulepsz"
+
+#: lite/includes/admin/reports/report-forms.php:22
+msgid "Forms"
+msgstr "Formularze"
+
+#: includes/admin/notifications/notification-upgrade-for-form-conversion.php:31
+#: includes/admin/notifications/notification-upgrade-for-search-console.php:32
+#: includes/admin/reports/abstract-report.php:516
+#: lite/includes/admin/woocommerce-marketing.php:79
+msgid "Upgrade Now"
+msgstr "Ulepsz"
+
+#: includes/admin/admin.php:379 includes/admin/admin.php:382
+msgid "Support"
+msgstr "Pomoc techniczna"
+
+#: includes/admin/admin.php:396
+#: includes/admin/notifications/notification-upgrade-eu-traffic.php:86
+#: includes/admin/notifications/notification-upgrade-for-custom-dimensions.php:31
+#: includes/admin/notifications/notification-upgrade-for-email-summaries.php:36
+#: includes/admin/notifications/notification-upgrade-for-events-reporting.php:31
+#: includes/admin/notifications/notification-upgrade-for-post-templates.php:31
+#: includes/admin/reports/abstract-report.php:519
+msgid "Get MonsterInsights Pro"
+msgstr "Kup MonsterInsights Pro"
+
+#: includes/admin/admin.php:55 includes/admin/admin.php:69
+#: includes/admin/admin.php:238 includes/admin/admin.php:241
+#: includes/admin/admin.php:282
+msgid "Insights"
+msgstr "Spostrzeżenia"
+
+#: includes/gutenberg/headline-tool/headline-tool.php:323
+msgid "General"
+msgstr "Ogólne"
+
+#: includes/admin/reports/overview.php:34
+msgid "Overview"
+msgstr "Przegląd"
+
+#: includes/gutenberg/site-insights/templates/scorecard/class-scorecard-pageviews.php:36
+#: assets/gutenberg/js/editor.js:2715
+msgid "Bounce Rate"
+msgstr "Wskaźnik odrzuceń"
+
+#: includes/admin/admin.php:62 includes/admin/admin.php:286
+msgid "Reports"
+msgstr "Raporty"
+
+#: includes/admin/admin.php:66 includes/admin/admin.php:389
+msgid "Settings"
+msgstr "Ustawienia"

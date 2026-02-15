@@ -1,103 +1,62 @@
-# Аудит проекта: 888starz-africa.com (WordPress → статический HTML)
-
-**Дата:** 2026-02-11  
-**Цель:** Подготовка к статическому экспорту с максимальной идентичностью и скоростью.
-
----
+# Audit — WordPress → Static Site (888starz-africa)
 
 ## 1.1 Структура проекта
 
-| Компонент | Путь | Примечание |
-|-----------|------|------------|
-| Конфиг | `wp-config.php` | Есть |
-| Ядро WP | `wp-admin/`, `wp-includes/` | Стандартное |
-| Тема | `wp-content/themes/zento` | Zento 1.4.5 (EstudioPatagon), magazine/blog |
-| Плагины | `wp-content/plugins/` | См. ниже |
-| Загрузки | `wp-content/uploads/` | 2025/, slider/cache/, merlin-wp/ |
-| База | `wp_gugum.sql` | Дамп phpMyAdmin, MariaDB 10.3 |
+| Элемент | Путь | Примечание |
+|---------|------|------------|
+| WordPress core | `1/` | wp-config.php, wp-includes, wp-admin |
+| wp-config.php | `1/wp-config.php` | DB: wp_gugum, prefix: TVXFZYUMh_ |
+| Тема | `1/wp-content/themes/zento` | Zento (blog/magazine style) |
+| Плагины | `1/wp-content/plugins/` | ACF, Polylang, zento-functions, All in One SEO, Header/Footer Code Manager, Classic Editor, MonsterInsights, Broken Link Checker (AIOSEO), и др. |
+| Uploads | `1/wp-content/uploads/` | Медиа (из дампа/файлов) |
+| База данных | `wp_gugum.sql` | Дамп MariaDB, префикс TVXFZYUMh_ |
 
-**Префикс таблиц БД:** `TVXFZYUMh_`  
-**Текущий домен (из wp_options):** `https://888starz-africa.com`  
-**siteurl / home:** оба `https://888starz-africa.com`
+## Типы страниц и контент
 
----
+- **Типы записей**: page, post, wp_navigation, nav_menu_item, revision, attachment; возможны custom post types от плагинов.
+- **Мультиязычность**: Polylang (default_lang: ar), домены/языки в options.
+- **Главная**: show_on_front = page (в wp_options).
+- **Системные страницы**: 9 policy/legal страниц (about, contacts, terms, responsible, privacy-policy, self-exclusion, dispute-resolution, fairness-rng-testing-methods, accounts-withdrawals-and-bonuses) — все найдены в БД, контент заполнен (см. SYSTEM_PAGES_AUDIT.md).
 
-## 1.2 Тема и билдеры
+## Плагины, критичные для фронта
 
-- **Тема:** Zento (super lightweight blog, customizer, theme options).
-- **Кастомные шаблоны:**  
-  `page-templates/home.php`, `page-fullwidth.php`, `page-explore-tags.php`; есть AMP-версия (`amp/`).
-- **Билдеры:** Elementor/WPBakery в проекте не обнаружены.
-- **ACF:** плагин Advanced Custom Fields установлен — возможны кастомные поля в шаблонах.
-- **В теме:** Zento использует свои опции (CSF), виджеты, шорткоды (zento-functions), masonry, slick, tocbot, magnific-popup, Prism.
+- **ACF** — кастомные поля (например в футере: footer_column_1_seo, footer_column_2_seo, visibility_baner_main).
+- **Polylang** — переключение языка, меню по языкам.
+- **Zento-functions** — тема-зависимая логика, shortcodes.
+- **All in One SEO** — meta, sitemap (при экспорте можно зафиксировать meta в HTML).
+- Остальные (кеш, аналитика, Classic Editor) для статики не обязательны.
 
----
+## Билдеры
 
-## 1.3 Плагины (критичные для фронта и экспорта)
+- Кастомные шаблоны в теме (page.php, partials/footer.php и т.д.). ACF используется для контента и опций. Elementor/WPBakery в списке плагинов не обнаружены.
 
-| Плагин | Назначение | Критичность для статики |
-|--------|------------|--------------------------|
-| **advanced-custom-fields** | Кастомные поля | Данные уже в HTML при рендере |
-| **all-in-one-seo-pack** | SEO, sitemap, мета | Нужны: title/description/og в HTML, sitemap.xml в экспорт |
-| **broken-link-checker-seo** | Проверка ссылок | Не нужен для статики |
-| **classic-editor** | Редактор записей | Не влияет на фронт |
-| **flexy-breadcrumb** | Хлебные крошки | Уже в HTML |
-| **google-analytics-for-wordpress** | Аналитика | В статике — тот же код/тег в head |
-| **header-footer-code-manager** | Код в head/footer | Нужно сохранить вывод в статике |
-| **optinmonster** | Попапы/подписки | Можно заменить на статический скрипт или убрать |
-| **polylang** | Мультиязычность | Критично: разные URL по языкам (например /en/, /fr/) |
-| **wps-hide-login** | Скрытие wp-login | Не нужен для статики |
+## Кеш / SEO / Sitemap
 
-**Итог:** Для фронта важны вывод ACF, Polylang (языковые URL), AIOSEO (мета, sitemap), HFCM (код в head/footer). Остальное либо уже «запекается» в HTML, либо отключается.
+- AIOSEO — sitemap, отчёты (ActionScheduler в БД). При статике: сгенерировать свой sitemap.xml по списку URL.
+- Кеш-плагины в дампе не выделены; для статики не требуются.
 
----
+## Динамические функции (что заменить в статике)
 
-## 1.4 База данных (краткий анализ)
+| Функция | Сейчас | Рекомендация для статики |
+|---------|--------|---------------------------|
+| Формы | Не выявлены явно в футере/контенте | При появлении: Formspree/Netlify Forms или mailto |
+| Поиск | WP search | Статический индекс + lunr.js/fuse.js или отключить |
+| Комментарии | Возможно отключены | Не включать или внешний виджет (с предупреждением о весе) |
+| Личный кабинет / логин | Нет в статике | Не входит в статику; зафиксировать в документации |
+| Корзина / оплата | Нет WooCommerce в аудите | Не применимо |
+| admin-ajax.php | Может использоваться плагинами/темой | При экспорте crawler'ом все ответы уже в HTML; убрать вызовы или заменить заглушками |
 
-- **Таблицы:** стандартные WP + `TVXFZYUMh_actionscheduler_*` (All in One SEO / задачи).
-- **Типы контента:** из структуры `TVXFZYUMh_posts` используются стандартные `post`, `page`, а также `nav_menu_item`, `attachment`, `revision` и др.
-- **Мультиязычность:** Polylang — в БД есть связь записей с языками (термины/мета); URL обычно с префиксом языка.
-- **Число URL для выгрузки:** точный подсчёт — по списку из WP (см. шаг 3). Ориентир: все опубликованные страницы (pages), записи (posts), архивы категорий/тегов, главная, кастомные типы (если есть), языковые варианты Polylang, 404, sitemap.xml, robots.txt.
+## Приблизительное число URL для выгрузки
 
----
+- Главная: 1  
+- Системные страницы: 9  
+- Остальные страницы (pages) и посты (posts) — из БД (TVXFZYUMh_posts, post_type in ('page','post'), post_status='publish').  
+- Категории/теги/архивы — по наличию в меню и sitemap.  
+Оценка: от ~20 до сотен URL в зависимости от количества постов и архивов. Точный список — после генерации URL из БД или обхода по sitemap/crawler.
 
-## 1.5 Динамические функции (что потребует замены/удаления)
+## Итог
 
-| Функция | Где используется | Рекомендация для статики |
-|---------|-------------------|---------------------------|
-| **Формы** | Contact Form 7 / WPForms не найдены в списке плагинов | Если появятся — Formspree/Netlify Forms или mailto |
-| **Поиск** | Тема (searchform, search-lightbox) | Статический индекс + Lunr.js / Fuse.js или отключить |
-| **Комментарии** | Тема (comments.php, comment-reply) | Скрыть блок или заменить на внешний виджет (Disqus и т.п.) |
-| **Счётчик просмотров** | `ajax_var.url` → admin-ajax.php (epcl_views_counter) | Убрать или заменить статическим числом/скрыть |
-| **Логин/кабинет** | Нет WooCommerce в списке; wps-hide-login только админка | В статике не нужен |
-| **Корзина/оплата** | Нет WooCommerce в плагинах | Не применимо |
-| **AJAX-эндпоинты** | admin-ajax.php (views counter, возможно другие) | Удалить вызовы или заменить заглушками |
-
----
-
-## 1.6 Ассеты (ориентир)
-
-- **Тема:** `wp-content/themes/zento/assets/` — dist (style.min.css, scripts.min.js, plugins), js (tocbot, masonry, slick, magnific-popup, preload-css, functions.js, shortcodes.js).
-- **Шрифты:** Google Fonts (Urbanist, DM Sans) — при оптимизации желательно self-host woff2.
-- **Загрузки:** `wp-content/uploads/2025/`, `wp-content/uploads/slider/` — изображения (webp, jpg, png), кеш слайдера.
-- **Favicon/manifest:** в корне и в header темы (favicon-96x96.png, favicon.svg, apple-touch-icon, site.webmanifest).
-
----
-
-## 1.7 Ограничения и риски
-
-1. **Polylang:** все языковые версии страниц должны попасть в экспорт (отдельные URL).
-2. **Счётчик просмотров:** без бэкенда не работает — либо убрать, либо показывать статичное значение.
-3. **Поиск:** без бэкенда — только клиентский поиск по предсобранному индексу.
-4. **100% идентичность:** возможна по виду и структуре; интерактив (комменты, просмотры, формы) — через замены или отключение.
-
----
-
-## 1.8 Результат шага 1
-
-- **Типы страниц:** главная (вероятно page с шаблоном home), страницы (page), записи (post), архивы (category, tag), возможно кастомные типы; мультиязык (Polylang).
-- **Критичные плагины для фронта:** ACF (данные в HTML), Polylang (URL), AIOSEO (мета, sitemap), HFCM (код).
-- **Динамика для замены:** просмотры (ajax), поиск, комментарии (по желанию), формы (если появятся).
-- **Приблизительное число URL:** уточняется при экспорте (скрипт/плагин/crawler); ориентир — десятки–сотни страниц с учётом языков.
-
-Далее: **Шаг 2** — поднять WP локально и проверить отображение; **Шаг 3** — статическая выгрузка в `/dist`.
+- Типы страниц: главная, страницы (в т.ч. 9 системных), посты, архивы (если используются).
+- Критичные для фронта: тема Zento, ACF, Polylang, zento-functions.
+- Динамика: формы/поиск/комментарии/кабинет — либо заменить, либо исключить (см. DYNAMIC_REPLACEMENTS.md после шага 4).
+- 100% идентичность без сервера недостижима для логина/кабинета/оплаты; статическая копия — информационный сайт с корректными ссылками и контентом.

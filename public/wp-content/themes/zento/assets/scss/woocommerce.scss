@@ -1,0 +1,25 @@
+$yellow: #ffdb48;
+// $yellow: var(--epcl-main-color);
+
+/*------------------------------------*\
+    		BASE ELEMENTS
+\*------------------------------------*/
+
+@import "settings";
+@import "generic/functions";
+@import "base/buttons";
+// @import "base/widgets";
+@import "base/titles";
+
+/*------------------------------------*\
+          WC OBJECTS/COMPONENTS
+\*------------------------------------*/
+
+@import "woocommerce/global";
+@import "woocommerce/forms";
+@import "woocommerce/single-product";
+@import "woocommerce/archives";
+@import "woocommerce/account";
+@import "woocommerce/cart";
+@import "woocommerce/checkout";
+@import "woocommerce/responsive";

@@ -1,0 +1,66 @@
+/* @group 404 Page */
+.error404{
+    #header, #footer, .epcl-cta{ display: none; }
+}
+#page-404{
+        header{
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 3;
+        padding: 30px 40px;
+        width: 100%;
+        box-sizing: border-box;
+        nav{
+            float: left;
+        }
+        .epcl-button{
+            svg{
+                width: 16px;
+                height: 16px;
+            }
+        }
+        .logo-wrapper{
+            margin-left: auto;
+            text-align: center;
+            .description{
+                font-size: 14px;
+                margin-top: -5px;
+            }
+        }
+    }
+    .left{
+        background: $main-color;
+        padding: 0;
+        align-self: flex-start;
+        height: 100%;
+        img{
+            display: block;
+            width: 70%;
+            height: 100vh;
+            background-size: contain;
+            margin: auto;
+        }
+    }
+	div.not-found{
+        padding: $section-padding;
+        margin: 150px auto;
+        max-width: 500px;
+        font-size: 18px;
+        .title{
+            margin: 0 0 30px;
+            svg.decoration{
+                width: 35px;
+                height: 35px;
+                margin-top: -10px;
+                margin-left: -45px;
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+        }
+        div.buttons{ margin-top: 30px; }
+	}	
+
+}
+
+/* @end */

@@ -1,0 +1,207 @@
+@media screen and (min-width: 768px) and (max-width: 990px){
+    $section-padding: 60px;
+    $medium-section-padding: 40px;
+    $large-section-padding: 80px;
+    body{ font-size: 14px; }
+    div.left-content{ padding-right: 0px; padding-left: 0px; float: none; }
+    .epcl-right-sidebar div.left-content{ padding-right: 0px; padding-left: 0px; float: none; }
+    .classic-sidebar div.left-content{ padding-left: 0px; }
+    .grid-sidebar div.left-content{ padding-left: 0px; }
+	.grid-container{ padding-left: 40px; padding-right: 40px; }
+	.np-tablet{ padding-left: 0; padding-right: 0; }
+    .nofloat-tablet{ float: none !important; }
+    #sidebar{ display: none; }
+    .content{ margin-top: 60px; }
+    .bg-box.section{ padding: 20px; }
+    .section{
+        padding-top: $section-padding;
+        padding-bottom: $section-padding;
+    }
+    .medium-section{
+        padding-top: $medium-section-padding;
+        padding-bottom: $medium-section-padding;
+    }
+    .large-section{
+        padding-top: $large-section-padding;
+        padding-bottom: $large-section-padding;
+    }
+    .inputbox.large{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .widget{ margin-bottom: 30px; }
+    aside{
+        .default-sidebar, .mobile-sidebar{
+            display: flex;
+            flex-flow: row wrap;
+        }
+    }
+    aside .widget{
+        width: 50%;
+        float: left;
+        border: 0;
+        padding: 0 30px;
+        flex-grow: 1;
+        box-sizing: border-box;
+        &.widget_search{
+            background: none;
+        }
+    }
+    #sidebar {      
+        float: none;
+        padding-left: 0;
+        padding-right: 0;
+        margin-top: 0 !important;         
+        .sidebar-wrapper{
+            margin: 25px 0 0;
+        }
+    }
+    .epcl-pagination{
+        padding-top: 20px; 
+    }
+    .epcl-popular-categories .bg-box{
+        padding: 15px 20px 20px;
+    }
+
+    #header{
+        .logo{
+            a{
+                font-size: 42px;
+            }
+            .title{
+                font-size: 50px;
+            }
+        }
+    }
+    nav.side-nav{
+        padding-top: 80px;
+    }
+
+    /* @group Global Articles List */
+    
+    div.articles.classic article .meta-data{
+        margin-top: 25px;
+    }
+    div.articles.grid-posts{
+        // Columns
+        &[data-columns]{
+            article{
+                width: 50%;
+            }
+        }
+        article{
+            .main-title{
+                font-size: 18px;
+            }
+        }
+    }
+
+    /* @end */
+
+    /* @group Archives */
+
+    #archives .tag-description{
+        padding: 0 0 40px;
+        .bg-decoration{
+            width: 250px;
+            height: 200px;
+        }
+    }
+    #author{
+        padding: 0 40px 40px;
+        .author-avatar{
+            width: 175px;
+            height: 175px;
+        }
+    }
+    .epcl-tags-archive{
+        margin-left: -40px;
+        margin-right: -40px;
+        .thumb{
+            width: 200px;
+            height: 200px;
+        }
+        .bg-box{
+            padding: 30px 0;
+            border-radius: 0;
+        }
+    }
+
+    /* @end */
+
+    /* @group Single */
+
+    div.text{
+        font-size: 16px;
+    }
+    #single{
+        &.fullcover{
+            .epcl-breadcrumbs{
+                margin-bottom: -50px;
+            }
+            .fullcover-wrapper .featured-image{ margin-top: $section-padding; }
+            .fullcover-wrapper .featured-image img{
+                height: 350px;
+            }
+        }
+    }
+
+    /* @end */
+
+    /* @group Membership */
+
+    .membership-page .epcl-plan{ padding-left: 10px; padding-right: 10px; }
+    .membership-page .subscribe-plan{
+        padding: 25px 20px;
+    }
+    .epcl-subscribe{
+        margin-top: 60px;
+    }
+
+    #page-subscribe .subscribe-form{
+        text-align: center;
+    }
+
+    /* @end */
+
+    /* @group Footer */
+
+    .epcl-cta{
+        margin-top: $section-padding;
+        padding: 50px;
+        .left{
+            .title{
+                font-size: 22px;
+            }
+            font-size: 16px;
+        }
+        .right{
+            font-size: 13px;
+        }
+        .bg{ left: -160px; top: 5%; }
+        .bg2{ right: -160px; top: 5%; }
+    }
+
+    #footer{
+        .widgets{
+            padding: 0 20px;
+            .widget{
+                padding-right: 20px;
+                width: 40%;
+                &:nth-child(2){
+                    width: 60%;
+                }
+            }
+        }
+        .epcl-subscribe{
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .published{
+            margin-top: 20px;
+        }
+    }
+
+    /* @end */
+
+}

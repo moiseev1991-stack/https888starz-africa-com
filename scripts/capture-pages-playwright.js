@@ -1,82 +1,138 @@
+#!/usr/bin/env node
 /**
- * Stage 1: Capture Africa and Egypt pages via Playwright.
- * For each of /apk/, /registration/, /promo-code/:
- * - Save rendered HTML
- * - Save list of resources (CSS/JS/img/font)
- * - Save fullpage screenshot
- * Output: scripts/capture-output/{africa|egypt}-{slug}.html, .json, .png
+ * Stage 1: Inventory + save HTML to public/
+ * Visits each URL on localhost:8080, collects CSS/JS/images/fonts, saves HTML, optional screenshots.
+ * Output: public/<path>/index.html, docs/inventory.md
  */
 
 const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 
-const PROJECT_ROOT = path.resolve(__dirname, '..');
-const OUT = path.join(__dirname, 'capture-output');
-const SLUGS = ['apk', 'registration', 'promo-code'];
-const AFRICA_BASE = 'https://888starz-africa.com';
-const EGYPT_BASE = 'https://888starzeg-egypt.com';
+const ROOT = path.resolve(__dirname, '..');
+const PUBLIC = path.join(ROOT, 'public');
+const DOCS = path.join(ROOT, 'docs');
+const URLS_FILE = path.join(ROOT, 'STATIC_URLS.txt');
+const BASE_URL = process.argv[2] || 'http://localhost:8080';
 
-async function capturePage(browser, url, label) {
-  const page = await browser.newPage();
-  const resources = [];
-  page.on('request', req => {
-    const u = req.url();
-    const res = req.resourceType();
-    if (['stylesheet', 'script', 'image', 'font', 'document'].includes(res)) {
-      resources.push({ url: u, type: res });
-    }
-  });
-  const res = await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 }).catch(() => null);
-  if (!res || res.status() >= 400) {
-    await page.close();
-    return { html: null, resources: [], status: res ? res.status() : 0 };
-  }
-  await page.waitForTimeout(2000);
-  const html = await page.content();
-  const slug = url.replace(/\/$/, '').split('/').pop() || 'index';
-  const outDir = path.join(OUT, label);
-  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
-  const base = path.join(outDir, slug);
-  fs.writeFileSync(base + '.html', html, 'utf8');
-  fs.writeFileSync(base + '-resources.json', JSON.stringify(resources, null, 2), 'utf8');
-  await page.screenshot({ path: base + '.png', fullPage: true }).catch(() => {});
-  await page.close();
-  return { html: base + '.html', resources, status: res.status() };
+function getUrls() {
+  const text = fs.readFileSync(URLS_FILE, 'utf8');
+  return text
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith('#'));
 }
 
-function diffResources(africaRes, egyptRes) {
-  const aUrls = new Set((africaRes || []).map(r => r.url));
-  const eUrls = new Set((egyptRes || []).map(r => r.url));
-  const onlyAfrica = [...aUrls].filter(u => !eUrls.has(u));
-  const onlyEgypt = [...eUrls].filter(u => !aUrls.has(u));
-  return { onlyAfrica, onlyEgypt, africaCount: aUrls.size, egyptCount: eUrls.size };
+function pathToDir(urlPath) {
+  const clean = urlPath.replace(/^\/+/, '').replace(/\/+$/, '') || 'index';
+  return clean === 'index' ? '' : clean;
+}
+
+function extractResources(html, baseUrl) {
+  const css = [];
+  const js = [];
+  const images = [];
+  const fonts = [];
+  const base = baseUrl.replace(/\/$/, '');
+
+  const linkRe = /<link[^>]+href=["']([^"']+)["'][^>]*>/gi;
+  let m;
+  while ((m = linkRe.exec(html)) !== null) {
+    const href = m[1].split('?')[0].trim();
+    if (/\.css$/i.test(href)) css.push(href.startsWith('http') ? href : new URL(href, base + '/').href);
+    if (m[0].includes('stylesheet')) css.push(href.startsWith('http') ? href : new URL(href, base + '/').href);
+  }
+
+  const scriptRe = /<script[^>]+src=["']([^"']+)["']/gi;
+  while ((m = scriptRe.exec(html)) !== null) {
+    const src = m[1].split('?')[0].trim();
+    if (src) js.push(src.startsWith('http') ? src : new URL(src, base + '/').href);
+  }
+
+  const imgRe = /<img[^>]+src=["']([^"']+)["']/gi;
+  while ((m = imgRe.exec(html)) !== null) {
+    const src = m[1].split('?')[0].trim();
+    if (src && !src.startsWith('data:')) images.push(src.startsWith('http') ? src : new URL(src, base + '/').href);
+  }
+
+  const srcSetRe = /srcset=["']([^"']+)["']/gi;
+  while ((m = srcSetRe.exec(html)) !== null) {
+    m[1].split(',').forEach((s) => {
+      const url = s.trim().split(/\s+/)[0];
+      if (url && !url.startsWith('data:')) images.push(url.startsWith('http') ? url : new URL(url, base + '/').href);
+    });
+  }
+
+  return { css: [...new Set(css)], js: [...new Set(js)], images: [...new Set(images)], fonts: [...new Set(fonts)] };
 }
 
 async function main() {
-  if (!fs.existsSync(OUT)) fs.mkdirSync(OUT, { recursive: true });
-  const browser = await chromium.launch({ headless: true });
-  const viewport = { width: 1280, height: 720 };
-  const results = { africa: {}, egypt: {}, diff: {} };
+  const urls = getUrls();
+  if (!urls.length) {
+    console.error('No URLs in STATIC_URLS.txt');
+    process.exit(1);
+  }
 
-  for (const slug of SLUGS) {
-    const africaUrl = `${AFRICA_BASE}/${slug}/`;
-    const egyptUrl = `${EGYPT_BASE}/${slug}/`;
-    console.log('Capture Africa', africaUrl);
-    const a = await capturePage(browser, africaUrl, 'africa');
-    results.africa[slug] = { status: a.status, resourcesCount: (a.resources || []).length };
-    console.log('Capture Egypt', egyptUrl);
-    const e = await capturePage(browser, egyptUrl, 'egypt');
-    results.egypt[slug] = { status: e.status, resourcesCount: (e.resources || []).length };
-    results.diff[slug] = diffResources(a.resources, e.resources);
+  fs.mkdirSync(PUBLIC, { recursive: true });
+  fs.mkdirSync(DOCS, { recursive: true });
+
+  const inventory = [];
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({ userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' });
+
+  for (const urlPath of urls) {
+    const fullUrl = BASE_URL.replace(/\/$/, '') + (urlPath.startsWith('/') ? urlPath : '/' + urlPath);
+    const dir = pathToDir(urlPath);
+    const outDir = path.join(PUBLIC, dir || '.');
+    const slug = dir || 'index';
+
+    try {
+      const page = await context.newPage();
+      await page.goto(fullUrl, { waitUntil: 'networkidle', timeout: 30000 });
+      await page.waitForTimeout(1500);
+
+      let html = await page.content();
+      html = html.replace(new RegExp(BASE_URL.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), '');
+
+      const resources = extractResources(html, BASE_URL);
+      inventory.push({ url: urlPath || '/', slug, css: resources.css, js: resources.js, images: resources.images, fonts: resources.fonts });
+
+      fs.mkdirSync(outDir, { recursive: true });
+      fs.writeFileSync(path.join(outDir, 'index.html'), html, 'utf8');
+      console.log('OK', urlPath || '/', '->', path.join(outDir, 'index.html'));
+
+      await page.close();
+    } catch (err) {
+      console.error('FAIL', fullUrl, err.message);
+      inventory.push({ url: urlPath || '/', slug, error: err.message });
+    }
   }
 
   await browser.close();
-  fs.writeFileSync(path.join(OUT, 'summary.json'), JSON.stringify(results, null, 2), 'utf8');
-  console.log('Summary written to capture-output/summary.json');
-  console.log('Diff (resources only in Africa):', Object.fromEntries(
-    Object.entries(results.diff).map(([k, v]) => [k, v.onlyAfrica?.length || 0])
-  ));
+
+  const md = [
+    '# Inventory (Stage 1)',
+    '',
+    '| URL | CSS | JS | Images | Fonts | Notes |',
+    '|-----|-----|-----|--------|-------|-------|',
+    ...inventory.map((i) => {
+      if (i.error) return `| ${i.url} | - | - | - | - | ${i.error} |`;
+      const css = i.css.length;
+      const js = i.js.length;
+      const img = i.images.length;
+      const fonts = i.fonts.length;
+      return `| ${i.url} | ${css} | ${js} | ${img} | ${fonts} | |`;
+    }),
+    '',
+    '## All unique CSS',
+    ...[].concat(...inventory.filter((i) => i.css).map((i) => i.css)).filter((v, i, a) => a.indexOf(v) === i).map((u) => `- ${u}`),
+    '',
+    '## All unique JS',
+    ...[].concat(...inventory.filter((i) => i.js).map((i) => i.js)).filter((v, i, a) => a.indexOf(v) === i).map((u) => `- ${u}`),
+  ].join('\n');
+
+  fs.writeFileSync(path.join(DOCS, 'inventory.md'), md, 'utf8');
+  console.log('Wrote docs/inventory.md');
 }
 
-main().catch(err => { console.error(err); process.exit(1); });
+main().catch(console.error);

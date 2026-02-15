@@ -1,0 +1,23 @@
+@import "settings";
+@import "generic/functions";
+
+/* EstudioPatagon Shortcodes */
+
+@import "plugins/shortcodes";
+
+/* Table of Contents / Tocbot - https://tscanlin.github.io/tocbot/ */
+
+@import "plugins/tocbot";
+
+/* Slick Slider: http://kenwheeler.github.io/slick/ */
+
+@import "plugins/slick";
+@import "plugins/slick-theme";
+
+/* PrismJS 1.14.0 https://prismjs.com/download.html#themes=prism-tomorrow&languages=markup+css+clike+javascript+markup-templating+git+sql+python+sass+scss&plugins=line-numbers+toolbar+remove-initial-line-feed+show-language+copy-to-clipboard */
+
+@import "plugins/prism";
+
+/* Magnific magnific-popup http://dimsemenov.com/plugins/magnific-popup/ */
+
+@import "plugins/jquery.magnific-popup";

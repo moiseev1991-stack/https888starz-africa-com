@@ -1,0 +1,78 @@
+# Translation of Plugins - WordPress Popup Builder &amp; Popup Maker – OptinMonster Email Marketing and Lead Generation - Stable (latest release) in English (Australia)
+# This file is distributed under the same license as the Plugins - WordPress Popup Builder &amp; Popup Maker – OptinMonster Email Marketing and Lead Generation - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2020-07-28 16:25:38+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: en_AU\n"
+"Project-Id-Version: Plugins - WordPress Popup Builder &amp; Popup Maker – OptinMonster Email Marketing and Lead Generation - Stable (latest release)\n"
+
+#: OMAPI/Menu.php:310 OMAPI/Pages.php:150
+msgid "Settings"
+msgstr "Settings"
+
+#: views/constantcontact.php:235
+msgid "2. Drag and drop elements to completely customize the look and feel of your campaign."
+msgstr "2. Drag and drop elements to completely customise the look and feel of your campaign."
+
+#: views/constantcontact.php:226
+msgid "When creating OptinMonster, our goal was to make a conversion optimization tool that was both EASY and POWERFUL."
+msgstr "When creating OptinMonster, our goal was to make a conversion optimisation tool that was both EASY and POWERFUL."
+
+#: OMAPI/Widget.php:190
+msgid "Title"
+msgstr "Title"
+
+#: OMAPI/Type.php:94
+msgid "Add New"
+msgstr "Add New"
+
+#: OMAPI/Widget.php:211
+msgid "Not Enabled"
+msgstr "Not Enabled"
+
+#: OMAPI/Validate.php:201
+msgid "The subscription to this OptinMonster account has expired. Please renew your subscription to use the OptinMonster API."
+msgstr "The subscription to this OptinMonster account has expired. Please renew your subscription to use the OptinMonster API."
+
+#: OMAPI/MailPoet.php:65
+msgid "Select your MailPoet list..."
+msgstr "Select your MailPoet list&hellip;"
+
+#. Plugin Name of the plugin
+#: optin-monster-wp-api.php OMAPI/Blocks.php:207 OMAPI/Elementor/Widget.php:93
+#: OMAPI/Welcome.php:175 OMAPI/Widget.php:79
+msgid "OptinMonster"
+msgstr "OptinMonster"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: optin-monster-wp-api.php
+msgid "https://optinmonster.com"
+msgstr "https://optinmonster.com"
+
+#: OMAPI/Widget.php:64
+msgid "Place an OptinMonster campaign into a widgetized area."
+msgstr "Place an OptinMonster campaign into a widgetised area."
+
+#: OMAPI/Validate.php:198
+msgid "The subscription to this OptinMonster account has been disabled, likely due to a refund or other administrator action. Please contact OptinMonster support to resolve this issue."
+msgstr "The subscription to this OptinMonster account has been disabled, likely due to a refund or other administrator action. Please contact OptinMonster support to resolve this issue."
+
+#: OMAPI/Type.php:102
+msgid "No Campaigns found in trash"
+msgstr "No Campaigns found in trash"
+
+#: OMAPI/Type.php:93
+msgctxt "post type singular name"
+msgid "Campaign"
+msgstr "Campaign"
+
+#: OMAPI/Type.php:92
+msgctxt "post type general name"
+msgid "Campaigns"
+msgstr "Campaigns"

@@ -1,0 +1,415 @@
+# Translation of Plugins - Header Footer Code Manager - Stable (latest release) in French (France)
+# This file is distributed under the same license as the Plugins - Header Footer Code Manager - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2025-03-04 15:06:30+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: fr\n"
+"Project-Id-Version: Plugins - Header Footer Code Manager - Stable (latest release)\n"
+
+#. Author of the plugin
+#: 99robots-header-footer-code-manager.php
+msgid "DraftPress"
+msgstr "DraftPress"
+
+#: includes/hfcm-add-edit.php:442
+msgid "Your site has <a href=\"https://draftpress.com/disallow-file-edit-setting-wordpress\" target=\"_blank\">disallow_file_edit</a> setting enabled inside the wp-config file to prevent file edits. By using this plugin, you acknowledge that you know what you’re doing and intend on adding code snippets only from trusted sources."
+msgstr "Votre site a le réglage <a href=\"https://draftpress.com/disallow-file-edit-setting-wordpress\" target=\"_blank\">disallow_file_edit</a> activé dans le fichier wp-config pour empêcher les modifications de fichiers. En utilisant cette extension, vous reconnaissez que vous savez ce que vous faites et que vous avez l’intention d’ajouter des extraits de code uniquement à partir de sources fiables."
+
+#: includes/hfcm-add-edit.php:412
+msgid "Warning: Using improper code or untrusted sources code can break your site or create security risks. <a href=\"https://draftpress.com/security-risks-of-wp-plugins-that-allow-code-editing-or-insertion\" target=\"_blank\">Learn more</a>."
+msgstr "Avertissement : l’utilisation d’un code inapproprié ou de sources de code non fiables peut endommager votre site ou créer des risques de sécurité. <a href=\"https://draftpress.com/security-risks-of-wp-plugins-that-allow-code-editing-or-insertion\" target=\"_blank\">En savoir plus</a>."
+
+#: includes/hfcm-tools.php:117
+msgid "Import"
+msgstr "Importer"
+
+#: 99robots-header-footer-code-manager.php:1166
+msgid "Search Snippets"
+msgstr "Rechercher des extraits"
+
+#: includes/hfcm-add-edit.php:323
+msgid "Not all locations (such as before content) exist on all page/post types. The location will only appear as an option if the appropriate hook exists on the page."
+msgstr "Tous les emplacements (par exemple, avant le contenu) n’existent pas sur tous les types de publications. L’emplacement n’apparaîtra comme une option que si le crochet approprié existe sur la page."
+
+#: includes/hfcm-add-edit.php:379
+msgid "Copy"
+msgstr "Copier"
+
+#: includes/class-hfcm-snippets-list.php:348
+msgid "Copy Shortcode"
+msgstr "Copier le code court"
+
+#: includes/class-hfcm-snippets-list.php:435
+msgid "Filter"
+msgstr "Filtre"
+
+#: includes/class-hfcm-snippets-list.php:424
+msgid "All Snippet Types"
+msgstr "Tous les types d’extraits"
+
+#: includes/class-hfcm-snippets-list.php:220 includes/hfcm-add-edit.php:108
+msgid "Archive Page"
+msgstr "Page d’archive"
+
+#: includes/class-hfcm-snippets-list.php:219 includes/hfcm-add-edit.php:107
+msgid "Search Page"
+msgstr "Page de recherche"
+
+#: includes/class-hfcm-snippets-list.php:218 includes/hfcm-add-edit.php:106
+msgid "Home Page"
+msgstr "Page d’accueil"
+
+#: includes/hfcm-tools.php:100
+msgid "Select File"
+msgstr "Sélectionner un fichier"
+
+#: includes/hfcm-tools.php:85
+msgid "Import Snippets"
+msgstr "Importer des extraits"
+
+#: includes/hfcm-tools.php:75
+msgid "Export File"
+msgstr "Exporter le fichier"
+
+#: includes/hfcm-tools.php:49
+msgid "Select Snippets"
+msgstr "Sélectionner des extraits"
+
+#: includes/hfcm-tools.php:30
+msgid "Export Snippets"
+msgstr "Exportation d’extraits de code"
+
+#: includes/hfcm-add-edit.php:323
+msgid "Note"
+msgstr "Note"
+
+#: 99robots-header-footer-code-manager.php:1254
+#: 99robots-header-footer-code-manager.php:1269
+msgid "Please upload a valid import file"
+msgstr "Veuillez téléverser un fichier valide à importer"
+
+#: includes/hfcm-tools.php:91
+msgid ""
+"Select the HFCM JSON file you would like to import. When you click the import button below,\n"
+"                                HFCM will import the field groups."
+msgstr "Sélectionnez le fichier JSON de HFCM que vous souhaitez importer. Lorsque vous cliquez sur le bouton Importer ci-dessous, HFCM importera les groupes de champs."
+
+#: includes/hfcm-tools.php:36
+msgid ""
+"Select the snippets you would like to export and then select your export method. Use the\n"
+"                                download button to export to a .json file which you can then import to another HFCM\n"
+"                                installation"
+msgstr "Sélectionnez les extraits que vous souhaitez exporter puis sélectionnez la méthode d’export. Utilisez le bouton de téléchargement pour exporter le fichier .json que vous pourrez alors importer dans un autre site avec l’extension HFCM installée."
+
+#: 99robots-header-footer-code-manager.php:1121
+msgid ""
+"Please deactivate the free version of this plugin in order to avoid duplication of the snippets.\n"
+"                    You can use our tools to import all the snippets from the free version of this plugin."
+msgstr "Veuillez désactiver la version gratuite de cette extension afin d’éviter la duplication des extraits de code. Vous pouvez utiliser nos outils pour importer tous les extraits de la version gratuite de cette extension."
+
+#: includes/class-hfcm-snippets-list.php:505 includes/hfcm-add-edit.php:334
+msgid "Inactive"
+msgstr "Désactivé"
+
+#: includes/class-hfcm-snippets-list.php:500 includes/hfcm-add-edit.php:333
+msgid "Active"
+msgstr "Activé"
+
+#: includes/class-hfcm-snippets-list.php:495
+msgid "All"
+msgstr "Tous"
+
+#: includes/class-hfcm-snippets-list.php:403
+msgid "Remove"
+msgstr "Retirer"
+
+#: includes/class-hfcm-snippets-list.php:402
+msgid "Deactivate"
+msgstr "Désactiver"
+
+#: includes/class-hfcm-snippets-list.php:401
+msgid "Activate"
+msgstr "Activer"
+
+#: includes/class-hfcm-snippets-list.php:370
+msgid "Devices"
+msgstr "Appareils"
+
+#: includes/class-hfcm-snippets-list.php:367
+msgid "Display On"
+msgstr "Afficher sur"
+
+#: includes/class-hfcm-snippets-list.php:364
+msgid "ID"
+msgstr "ID"
+
+#: includes/class-hfcm-snippets-list.php:349 includes/hfcm-add-edit.php:424
+msgid "Delete"
+msgstr "Supprimer"
+
+#: includes/class-hfcm-snippets-list.php:347
+msgid "Edit"
+msgstr "Modifier"
+
+#: includes/class-hfcm-snippets-list.php:265 includes/hfcm-add-edit.php:329
+msgid "Only Desktop"
+msgstr "Ordinateur uniquement"
+
+#: includes/class-hfcm-snippets-list.php:263 includes/hfcm-add-edit.php:330
+msgid "Only Mobile Devices"
+msgstr "Appareils mobiles uniquement"
+
+#: includes/class-hfcm-snippets-list.php:261 includes/hfcm-add-edit.php:328
+msgid "Show on All Devices"
+msgstr "Afficher sur tous les appareils"
+
+#: includes/class-hfcm-snippets-list.php:247
+msgid "N/A"
+msgstr "Indisponible"
+
+#: includes/class-hfcm-snippets-list.php:217
+msgid "Specific Tags"
+msgstr "Étiquettes spécifiques"
+
+#: includes/class-hfcm-snippets-list.php:215
+msgid "Specific Categories"
+msgstr "Catégories spécifiques"
+
+#: includes/class-hfcm-snippets-list.php:192
+msgid "No Snippets available."
+msgstr "Aucun extrait de code disponible."
+
+#: includes/hfcm-add-edit.php:417
+msgid "Save"
+msgstr "Enregistrer"
+
+#: includes/hfcm-add-edit.php:406
+msgid "Code"
+msgstr "Code"
+
+#: includes/class-hfcm-snippets-list.php:17 includes/hfcm-add-edit.php:405
+msgid "Snippet"
+msgstr "Extrait de code"
+
+#: includes/hfcm-add-edit.php:396
+msgid "Last edited by"
+msgstr "Dernière modification par"
+
+#: includes/hfcm-add-edit.php:393 includes/hfcm-add-edit.php:397
+msgid "at"
+msgstr "à"
+
+#: includes/hfcm-add-edit.php:393 includes/hfcm-add-edit.php:397
+msgid "on"
+msgstr "le"
+
+#: includes/hfcm-add-edit.php:392
+msgid "Snippet created by"
+msgstr "Extrait de code créé par"
+
+#: includes/hfcm-add-edit.php:388
+msgid "Changelog"
+msgstr "Journal des modifications"
+
+#: includes/class-hfcm-snippets-list.php:371 includes/hfcm-add-edit.php:370
+msgid "Shortcode"
+msgstr "Code court"
+
+#: includes/class-hfcm-snippets-list.php:365 includes/hfcm-add-edit.php:353
+msgid "Status"
+msgstr "État"
+
+#: includes/class-hfcm-snippets-list.php:368 includes/hfcm-add-edit.php:308
+msgid "Location"
+msgstr "Emplacement"
+
+#: includes/class-hfcm-snippets-list.php:222 includes/hfcm-add-edit.php:110
+msgid "Shortcode Only"
+msgstr "Code court uniquement"
+
+#: includes/class-hfcm-snippets-list.php:221 includes/hfcm-add-edit.php:109
+msgid "Latest Posts"
+msgstr "Derniers articles"
+
+#: includes/hfcm-add-edit.php:104
+msgid "Specific Post Types (Archive & Posts)"
+msgstr "Types de publication personnalisée spécifiques (archive et publications)"
+
+#: includes/hfcm-add-edit.php:103
+msgid "Specific Categories (Archive & Posts)"
+msgstr "Catégories spécifiques (archive et publications)"
+
+#: includes/hfcm-add-edit.php:105
+msgid "Specific Tags (Archive & Posts)"
+msgstr "Étiquettes spécifiques (archive et publications)"
+
+#: includes/class-hfcm-snippets-list.php:214 includes/hfcm-add-edit.php:102
+msgid "Specific Pages"
+msgstr "Pages spécifiques"
+
+#: includes/class-hfcm-snippets-list.php:213 includes/hfcm-add-edit.php:101
+msgid "Specific Posts"
+msgstr "Articles spécifiques"
+
+#: includes/class-hfcm-snippets-list.php:212 includes/hfcm-add-edit.php:100
+msgid "Site Wide"
+msgstr "Sur l’ensemble du site"
+
+#: includes/class-hfcm-snippets-list.php:369 includes/hfcm-add-edit.php:82
+msgid "Snippet Type"
+msgstr "Type d’extrait"
+
+#: includes/class-hfcm-snippets-list.php:273
+#: includes/class-hfcm-snippets-list.php:419 includes/hfcm-add-edit.php:78
+msgid "Javascript"
+msgstr "Javascript"
+
+#: includes/class-hfcm-snippets-list.php:272
+#: includes/class-hfcm-snippets-list.php:418 includes/hfcm-add-edit.php:77
+msgid "CSS"
+msgstr "CSS"
+
+#: includes/class-hfcm-snippets-list.php:271
+#: includes/class-hfcm-snippets-list.php:417 includes/hfcm-add-edit.php:76
+msgid "HTML"
+msgstr "HTML"
+
+#: includes/class-hfcm-snippets-list.php:366 includes/hfcm-add-edit.php:68
+msgid "Snippet Name"
+msgstr "Nom de l’extrait de code"
+
+#: includes/hfcm-add-edit.php:45
+msgid "Script Added Successfully"
+msgstr "Script ajouté avec succès"
+
+#: includes/hfcm-add-edit.php:42 includes/hfcm-add-edit.php:47
+msgid "Back to list"
+msgstr "Retour à la liste"
+
+#: includes/hfcm-add-edit.php:40
+msgid "Script updated"
+msgstr "Script mis à jour"
+
+#: includes/hfcm-add-edit.php:28
+msgid "Edit Snippet"
+msgstr "Modifier l’extrait"
+
+#: includes/class-hfcm-snippets-list.php:254 includes/hfcm-add-edit.php:16
+#: includes/hfcm-add-edit.php:297 includes/hfcm-add-edit.php:302
+#: includes/hfcm-tools.php:12
+msgid "Footer"
+msgstr "Pied de page"
+
+#: includes/class-hfcm-snippets-list.php:253 includes/hfcm-add-edit.php:15
+#: includes/hfcm-add-edit.php:296 includes/hfcm-tools.php:11
+msgid "After Content"
+msgstr "Après le contenu"
+
+#: includes/class-hfcm-snippets-list.php:252 includes/hfcm-add-edit.php:14
+#: includes/hfcm-add-edit.php:295 includes/hfcm-tools.php:10
+msgid "Before Content"
+msgstr "Avant le contenu"
+
+#: includes/class-hfcm-snippets-list.php:251 includes/hfcm-add-edit.php:13
+#: includes/hfcm-add-edit.php:294 includes/hfcm-add-edit.php:301
+#: includes/hfcm-tools.php:9
+msgid "Header"
+msgstr "Entête"
+
+#: 99robots-header-footer-code-manager.php:1157
+#: includes/class-hfcm-snippets-list.php:18
+msgid "Snippets"
+msgstr "Extraits de code"
+
+#: 99robots-header-footer-code-manager.php:292
+msgid "Settings"
+msgstr "Réglages"
+
+#: 99robots-header-footer-code-manager.php:269 includes/hfcm-add-edit.php:417
+msgid "Update"
+msgstr "Mise à jour"
+
+#: 99robots-header-footer-code-manager.php:258
+#: 99robots-header-footer-code-manager.php:259 includes/hfcm-tools.php:23
+msgid "Tools"
+msgstr "Outils"
+
+#: 99robots-header-footer-code-manager.php:249
+msgid "Add New"
+msgstr "Ajouter nouveau"
+
+#: 99robots-header-footer-code-manager.php:248
+#: 99robots-header-footer-code-manager.php:1159 includes/hfcm-add-edit.php:28
+#: includes/hfcm-add-edit.php:31
+msgid "Add New Snippet"
+msgstr "Ajouter un nouvel extrait"
+
+#: 99robots-header-footer-code-manager.php:238
+#: 99robots-header-footer-code-manager.php:239
+msgid "All Snippets"
+msgstr "Tous les extraits"
+
+#: 99robots-header-footer-code-manager.php:228
+msgid "HFCM"
+msgstr "HFCM"
+
+#. Author URI of the plugin
+#: 99robots-header-footer-code-manager.php
+msgid "https://draftpress.com/"
+msgstr "https://draftpress.com/"
+
+#. Plugin URI of the plugin
+#: 99robots-header-footer-code-manager.php
+msgid "https://draftpress.com/products"
+msgstr "https://draftpress.com/products"
+
+#. Plugin Name of the plugin
+#: 99robots-header-footer-code-manager.php
+#: 99robots-header-footer-code-manager.php:227
+msgid "Header Footer Code Manager"
+msgstr "Header Footer Code Manager"
+
+#: includes/class-hfcm-snippets-list.php:238
+msgid "No post selected"
+msgstr "Aucune publication sélectionnée"
+
+#: includes/class-hfcm-snippets-list.php:216
+msgid "Specific Custom Post Types"
+msgstr "Types de publication personnalisée spécifiques"
+
+#: includes/hfcm-add-edit.php:275
+msgid "Post Count"
+msgstr "Nombre de publications"
+
+#: includes/hfcm-add-edit.php:259
+msgid "Post Types"
+msgstr "Types de publication personnalisée"
+
+#: includes/hfcm-add-edit.php:241
+msgid "Tags List"
+msgstr "Liste des étiquettes"
+
+#: includes/hfcm-add-edit.php:223
+msgid "Category List"
+msgstr "Liste des catégories"
+
+#: includes/hfcm-add-edit.php:190
+msgid "Post List"
+msgstr "Liste des publications"
+
+#: includes/hfcm-add-edit.php:171
+msgid "Page List"
+msgstr "Liste des pages"
+
+#: includes/hfcm-add-edit.php:157
+msgid "Exclude Posts"
+msgstr "Publications exclues"
+
+#: includes/hfcm-add-edit.php:140
+msgid "Exclude Pages"
+msgstr "Pages exclues"

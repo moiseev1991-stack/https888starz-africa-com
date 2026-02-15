@@ -1,0 +1,30 @@
+<?php get_header(); ?>
+
+<!-- start: #search-results -->
+<main id="archives" class="main">
+
+    <div class="content grid-container grid-container grid-usmall np-mobile">
+        <div class="epcl-search-box">
+            <h1 class="title textcenter large"><?php esc_html_e("Search results for:", 'zento'); ?> <strong>"<?php echo get_search_query(); ?>"</strong></h1>
+            <div class="textcenter">
+                <?php get_search_form(); ?>
+            </div>
+        </div>
+    </div>
+
+    <?php if( empty($epcl_theme) || !$epcl_theme['search_layout'] || $epcl_theme['search_layout'] == 'classic' ):  ?>
+        <?php get_template_part('partials/home-blocks/classic-posts'); ?>
+    <?php elseif( $epcl_theme['search_layout'] == 'classic_sidebar'  ): ?>
+        <?php get_template_part('partials/home-blocks/classic-posts-sidebar'); ?>
+    <?php elseif(  $epcl_theme['search_layout'] == 'grid_3_cols' || $epcl_theme['search_layout'] == 'grid_4_cols'  ): ?>
+        <?php get_template_part('partials/home-blocks/grid-posts'); ?>
+    <?php elseif( $epcl_theme['search_layout'] == 'grid_sidebar'  ): ?>
+        <?php get_template_part('partials/home-blocks/grid-sidebar'); ?>
+    <?php endif; ?>
+
+    <div class="clear"></div>
+
+</main>
+<!-- end: #search-results -->
+
+<?php get_footer(); ?>

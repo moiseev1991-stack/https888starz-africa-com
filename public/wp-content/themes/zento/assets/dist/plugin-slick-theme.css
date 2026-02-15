@@ -1,0 +1,288 @@
+/*------------------------------------*\
+    			SETTINGS
+\*------------------------------------*/
+/* @group CSS2 Variables */
+:root {
+  /* Font Styles */
+  --epcl-font-family: "DM Sans", sans-serif;
+  --epcl-title-font-family: "Urbanist", sans-serif;
+  --epcl-font-size: 16px;
+  /* General content font size */
+  --epcl-line-height: 1.9;
+  /* General content line height */
+  --epcl-font-size-editor: 17px;
+  /* Single Content font size */
+  --epcl-line-height-editor: 1.9;
+  /* Single Content line height */
+  /* Colors */
+  --epcl-main-color: #6A4EE9;
+  --epcl-secondary-color: #FF2AAC;
+  --epcl-titles-color: #282424;
+  --epcl-black: #282424;
+  --epcl-meta-color: #4D6385;
+  --epcl-background-color: #FAF8FF;
+  --epcl-boxes-background-color: #fff;
+  --epcl-boxes-border-color: #E9E8FF;
+  --epcl-border-color: #E9E8FF;
+  /* General border color */
+  --epcl-boxes-shadow: 0px 2px 5px 0px rgba(0,0,0, 0.03);
+  --epcl-small-shadow: 0px 3px 5px 0px rgba(0,0,0, 0.2);
+  /* Used on small images (like widgets or related articles) */
+  --epcl-medium-shadow: 0px 8px 16px -4px rgba(0,0,0, 0.10);
+  --epcl-large-shadow: 0px 4px 25px -4px rgba(0,0,0, 0.20);
+  --epcl-transition-bezier: cubic-bezier(.5,2.5,.7,.7);
+  /* Coding */
+  --epcl-code-background: #211d3f;
+  /* Used on "code" blocks not syntax highlighter */
+  --epcl-code-color: #b0b9c5;
+  /* Used on code blocks not syntax highlighter */
+  /* Others */
+  --epcl-small-border-radius: 4px;
+  /* Used on small elements (like buttons) */
+  --epcl-medium-border-radius: 10px;
+  /* Used on medium elements (like boxes) */
+  --epcl-large-border-radius: 100px;
+  /* Used to generate circles */
+}
+
+/* @end */
+/* @group Font Families */
+/* @end */
+/* @end */
+/* @group Effects speed */
+/* @end */
+/* @group Content Width and Margins */
+/* @end */
+/* Slider */
+.slick-loading .slick-list {
+  outline: 0;
+}
+
+/* Arrows */
+.slick-prev,
+.slick-next {
+  font-size: 0;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  display: block;
+  width: 70px;
+  height: 50px;
+  padding: 0;
+  text-align: center;
+  line-height: 50px;
+  -webkit-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  outline: none;
+  background: #fff;
+  -webkit-box-shadow: var(--epcl-large-shadow);
+          box-shadow: var(--epcl-large-shadow);
+  border-radius: 30px;
+  z-index: 10;
+}
+
+.outer-arrows .slick-prev, .top-arrows .slick-prev, .outer-arrows
+.slick-next, .top-arrows
+.slick-next {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #282424;
+  -webkit-mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="14" fill="none"><path fill="%23000" fill-rule="evenodd" d="m17.212 13.6-1.697-1.836 3.89-3.954H0V5.495h19.405l-3.89-3.556L17.212.4 24 6.701 17.212 13.6Z" clip-rule="evenodd"/></svg>') no-repeat center center;
+          mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="14" fill="none"><path fill="%23000" fill-rule="evenodd" d="m17.212 13.6-1.697-1.836 3.89-3.954H0V5.495h19.405l-3.89-3.556L17.212.4 24 6.701 17.212 13.6Z" clip-rule="evenodd"/></svg>') no-repeat center center;
+}
+
+.slick-prev:before {
+  -webkit-mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="14" fill="none"><path fill="%23000" fill-rule="evenodd" d="m6.788 13.6 1.697-1.836-3.89-3.954H24V5.495H4.595l3.89-3.556L6.788.4 0 6.701 6.788 13.6Z" clip-rule="evenodd"/></svg>') no-repeat center center;
+          mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="14" fill="none"><path fill="%23000" fill-rule="evenodd" d="m6.788 13.6 1.697-1.836-3.89-3.954H24V5.495H4.595l3.89-3.556L6.788.4 0 6.701 6.788 13.6Z" clip-rule="evenodd"/></svg>') no-repeat center center;
+  background-size: 15px;
+}
+
+.outer-arrows .slick-prev {
+  left: -10px;
+}
+
+.outer-arrows .slick-next {
+  right: -10px;
+}
+
+.top-arrows .slick-prev {
+  left: auto;
+  right: 80px;
+  top: -60px;
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none;
+}
+
+.top-arrows .slick-next {
+  right: 20px;
+  top: -60px;
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none;
+}
+
+.top-arrows .slick-prev:hover, .top-arrows .slick-next:hover {
+  -webkit-transform: translate(-2px, -2px);
+      -ms-transform: translate(-2px, -2px);
+          transform: translate(-2px, -2px);
+}
+
+.bottom-arrows .slick-prev {
+  top: auto;
+  left: auto;
+  right: 40px;
+  bottom: 5px;
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none;
+}
+
+.bottom-arrows .slick-next {
+  top: auto;
+  right: 0px;
+  bottom: 5px;
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none;
+}
+
+.slick-slider .slick-arrow.slick-disabled {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.slick-prev {
+  top: auto;
+  bottom: 50px;
+  right: -10px;
+  border-radius: var(--epcl-large-border-radius) 0 0 var(--epcl-large-border-radius);
+}
+
+.slick-next {
+  top: auto;
+  bottom: 110px;
+  right: -10px;
+  border-radius: var(--epcl-large-border-radius) 0 0 var(--epcl-large-border-radius);
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  right: 0px;
+}
+
+.slick-prev:hover:before,
+.slick-prev:focus:before,
+.slick-next:hover:before,
+.slick-next:focus:before {
+  opacity: 1;
+}
+
+.slick-prev.slick-disabled:before,
+.slick-next.slick-disabled:before {
+  opacity: .25;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+
+[dir='rtl'] .slick-prev {
+  right: 20px;
+  left: auto;
+  -webkit-transform: rotate(180deg) translateY(50%);
+      -ms-transform: rotate(180deg) translateY(50%);
+          transform: rotate(180deg) translateY(50%);
+}
+
+.slick-prev:before {
+  content: '\f104';
+}
+
+[dir='rtl'] .slick-prev:before {
+  content: '\f105';
+}
+
+[dir='rtl'] .slick-next {
+  right: auto;
+  left: 20px;
+  -webkit-transform: rotate(180deg) translateY(50%);
+      -ms-transform: rotate(180deg) translateY(50%);
+          transform: rotate(180deg) translateY(50%);
+}
+
+.slick-next:before {
+  content: '\f105';
+}
+
+[dir='rtl'] .slick-next:before {
+  content: '\f104';
+}
+
+/* Dots */
+.slick-dotted.slick-slider {
+  margin-bottom: 50px;
+}
+
+.slick-dots {
+  position: absolute;
+  bottom: -40px;
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.slick-dots li {
+  position: relative;
+  display: inline-block;
+  margin: 0 7px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.slick-dots li button {
+  border-radius: 10px;
+  font-size: 0;
+  display: block;
+  width: 9px;
+  height: 9px;
+  text-align: center;
+  line-height: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  background: #DFE2FB;
+  position: relative;
+  -webkit-box-shadow: var(--epcl-medium-shadow);
+          box-shadow: var(--epcl-medium-shadow);
+}
+
+.slick-dots li.slick-active button {
+  opacity: 1;
+  width: 22px;
+  background: var(--epcl-secondary-color);
+}
+
+.slick-dots li button:hover {
+  opacity: 1;
+}

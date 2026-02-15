@@ -1,0 +1,95 @@
+/* Small Desktops and Horizontal Tablets */
+
+@media screen and (min-width: 981px) and (max-width: 1200px){
+
+    .hide-on-desktop-sm{ display: none !important; }
+	body{ min-width: inherit; font-size: 14px; }
+	img{ max-width: 100%; height: auto; }
+    .grid-container{ padding-left: 30px; padding-right: 30px; }
+    .grid-sidebar div.left-content{ padding-left: 0px; }	
+    .title{ font-size: 20px; }
+    .wpcf7 label{ font-size: 16px; }	
+    div.left-content{
+        padding-left: 20px;
+        padding-right: 0px;
+    }
+   .epcl-right-sidebar div.left-content{
+        padding-left: 0px;
+        padding-right: 20px;        
+    }
+    .content{
+        margin-top: 60px;
+    }
+    div.text{
+        font-size: 16px;
+    }
+
+    /* @group Header */
+
+    #header{
+        .logo{
+            .title{
+                font-size: 50px;
+            }
+        }
+    }
+
+    /* @end */
+
+    /* @group Single */
+
+    #single{
+        &.classic.epcl-vertical .main-article .featured-image img{
+            height: 250px;
+        }
+        &.fullcover{
+            .epcl-breadcrumbs{
+                margin-bottom: -50px;
+            }
+            .fullcover-wrapper .featured-image{ margin-top: 60px; }
+            .fullcover-wrapper .featured-image img{ height: 400px; }
+        }
+    }
+
+    /* @end */
+
+    /* @group Archives */
+
+    div.articles.classic article .meta-data{
+        margin-top: 25px;
+    }
+    div.articles.grid-posts{
+        article{
+            .main-title{
+                font-size: 17px;
+            }
+        }
+    }
+
+     /* @end */
+
+    /* @group Archives */
+
+    #author{
+        .left{
+            margin-right: 30px;
+        }
+        .author-avatar{
+            width: 200px;
+            height: 200px;
+        }
+    }
+
+    /* @end */
+
+    /* @group Footer */
+
+    #footer{
+        .widgets{
+            padding: 0 20px;
+        }
+    }
+
+    /* @end */
+
+}

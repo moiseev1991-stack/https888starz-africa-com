@@ -1,0 +1,129 @@
+/*------------------------------------*\
+    			SETTINGS
+\*------------------------------------*/
+/* @group CSS2 Variables */
+:root {
+  /* Font Styles */
+  --epcl-font-family: "DM Sans", sans-serif;
+  --epcl-title-font-family: "Urbanist", sans-serif;
+  --epcl-font-size: 16px;
+  /* General content font size */
+  --epcl-line-height: 1.9;
+  /* General content line height */
+  --epcl-font-size-editor: 17px;
+  /* Single Content font size */
+  --epcl-line-height-editor: 1.9;
+  /* Single Content line height */
+  /* Colors */
+  --epcl-main-color: #6A4EE9;
+  --epcl-secondary-color: #FF2AAC;
+  --epcl-titles-color: #282424;
+  --epcl-text-color: #282424;
+  --epcl-black: #282424;
+  --epcl-meta-color: #4D6385;
+  --epcl-background-color: #FAF8FF;
+  --epcl-boxes-background-color: #fff;
+  --epcl-boxes-border-color: #E9E8FF;
+  --epcl-border-color: #E9E8FF;
+  /* General border color */
+  --epcl-overlay-color: #211d3f;
+  --epcl-boxes-shadow: 0px 2px 5px 0px rgba(0,0,0, 0.03);
+  --epcl-small-shadow: 0px 3px 5px 0px rgba(0,0,0, 0.2);
+  /* Used on small images (like widgets or related articles) */
+  --epcl-medium-shadow: 0px 8px 16px -4px rgba(0,0,0, 0.10);
+  --epcl-large-shadow: 0px 4px 25px -4px rgba(0,0,0, 0.20);
+  --epcl-transition-bezier: cubic-bezier(.5,2.5,.7,.7);
+  /* Coding */
+  --epcl-code-background: #211d3f;
+  /* Used on "code" blocks not syntax highlighter */
+  --epcl-code-color: #b0b9c5;
+  /* Used on code blocks not syntax highlighter */
+  /* Others */
+  --epcl-small-border-radius: 4px;
+  /* Used on small elements (like buttons) */
+  --epcl-medium-border-radius: 10px;
+  /* Used on medium elements (like boxes) */
+  --epcl-large-border-radius: 100px;
+  /* Used to generate circles */
+}
+
+/* @end */
+/* @group Font Families */
+/* @end */
+/* @end */
+/* @group Effects speed */
+/* @end */
+/* @group Content Width and Margins */
+/* @end */
+/* Core Styles */
+.toc {
+  overflow-y: auto;
+}
+
+.toc > .toc-list {
+  overflow: hidden;
+  position: relative;
+}
+
+.toc > .toc-list li {
+  list-style: none;
+}
+
+.toc-list {
+  margin: 0;
+  padding-left: 30px;
+  font-size: 15px;
+}
+
+.toc-list .toc-list {
+  padding: 5px;
+  padding-left: 20px;
+  font-size: 15px;
+}
+
+a.toc-link {
+  display: inline-block;
+  height: 100%;
+  padding: 5px 0 0;
+}
+
+.is-collapsible {
+  max-height: 500px;
+  overflow: hidden;
+  opacity: 1;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+
+.is-collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+.is-position-fixed {
+  position: fixed !important;
+  top: 0;
+}
+
+.is-active-link {
+  font-weight: 600;
+  color: var(--epcl-titles-color);
+}
+
+/* Default Theme Styles */
+.toc-link::before {
+  background-color: var(--epcl-border-color);
+  content: ' ';
+  display: inline-block;
+  height: inherit;
+  left: 0;
+  margin-top: -1px;
+  position: absolute;
+  width: 2px;
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+
+.is-active-link::before {
+  background-color: var(--epcl-main-color);
+}

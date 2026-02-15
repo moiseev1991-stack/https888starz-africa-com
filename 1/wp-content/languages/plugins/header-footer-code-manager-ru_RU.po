@@ -1,0 +1,452 @@
+# Translation of Plugins - Header Footer Code Manager - Stable (latest release) in Russian
+# This file is distributed under the same license as the Plugins - Header Footer Code Manager - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-12-27 19:43:43+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2);\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: ru\n"
+"Project-Id-Version: Plugins - Header Footer Code Manager - Stable (latest release)\n"
+
+#. Author of the plugin
+#: 99robots-header-footer-code-manager.php
+msgid "DraftPress"
+msgstr "DraftPress"
+
+#: includes/hfcm-add-edit.php:442
+msgid "Your site has <a href=\"https://draftpress.com/disallow-file-edit-setting-wordpress\" target=\"_blank\">disallow_file_edit</a> setting enabled inside the wp-config file to prevent file edits. By using this plugin, you acknowledge that you know what you’re doing and intend on adding code snippets only from trusted sources."
+msgstr "На вашем сайте в файле wp-config включена настройка <a href=\"https://draftpress.com/disallow-file-edit-setting-wordpress\" target=\"_blank\">disallow_file_edit</a> для предотвращения редактирования файлов. Используя этот плагин, вы подтверждаете, что знаете, что делаете, и намерены добавлять фрагменты кода только из надёжных источников."
+
+#: includes/hfcm-add-edit.php:412
+msgid "Warning: Using improper code or untrusted sources code can break your site or create security risks. <a href=\"https://draftpress.com/security-risks-of-wp-plugins-that-allow-code-editing-or-insertion\" target=\"_blank\">Learn more</a>."
+msgstr "Предупреждение: использование неправильного кода или кода из ненадёжного источника может нарушить работу вашего сайта или создать угрозу безопасности. <a href=\"https://draftpress.com/security-risks-of-wp-plugins-that-allow-code-editing-or-insertion\" target=\"_blank\">Узнать больше</a>."
+
+#: includes/hfcm-tools.php:117
+msgid "Import"
+msgstr "Импорт"
+
+#: includes/hfcm-add-edit.php:323
+msgid "Not all locations (such as before content) exist on all page/post types. The location will only appear as an option if the appropriate hook exists on the page."
+msgstr "Не все места (такие, как перед содержимым) существуют для каждого типа страницы/записи. Место появится только в случае, если на странице есть соответствующий хук."
+
+#: 99robots-header-footer-code-manager.php:1166
+msgid "Search Snippets"
+msgstr "Поиск сниппетов"
+
+#: includes/hfcm-add-edit.php:379
+msgid "Copy"
+msgstr "Копировать"
+
+#: includes/class-hfcm-snippets-list.php:348
+msgid "Copy Shortcode"
+msgstr "Копировать шорткод"
+
+#: includes/class-hfcm-snippets-list.php:435
+msgid "Filter"
+msgstr "Фильтровать"
+
+#: includes/class-hfcm-snippets-list.php:424
+msgid "All Snippet Types"
+msgstr "Все типы сниппета"
+
+#: includes/class-hfcm-snippets-list.php:220 includes/hfcm-add-edit.php:108
+msgid "Archive Page"
+msgstr "Страница архива"
+
+#: includes/class-hfcm-snippets-list.php:219 includes/hfcm-add-edit.php:107
+msgid "Search Page"
+msgstr "Страница поиска"
+
+#: includes/class-hfcm-snippets-list.php:218 includes/hfcm-add-edit.php:106
+msgid "Home Page"
+msgstr "Домашняя страница"
+
+#: includes/hfcm-tools.php:100
+msgid "Select File"
+msgstr "Выбрать файл"
+
+#: includes/hfcm-tools.php:91
+msgid ""
+"Select the HFCM JSON file you would like to import. When you click the import button below,\n"
+"                                HFCM will import the field groups."
+msgstr "Выберите JSON файл HFCM, который вы хотите импортировать. Когда вы щёлкните по кнопке \"Импорт\" ниже, HFCM импортирует группы полей."
+
+#: includes/hfcm-tools.php:85
+msgid "Import Snippets"
+msgstr "Импортировать сниппеты"
+
+#: includes/hfcm-tools.php:75
+msgid "Export File"
+msgstr "Экспортировать файл"
+
+#: includes/hfcm-tools.php:49
+msgid "Select Snippets"
+msgstr "Выбрать сниппеты"
+
+#: includes/hfcm-tools.php:36
+msgid ""
+"Select the snippets you would like to export and then select your export method. Use the\n"
+"                                download button to export to a .json file which you can then import to another HFCM\n"
+"                                installation"
+msgstr ""
+"Выберите сниппеты для экспорта. Потом выберите метод экспорта. Используйте\n"
+"кнопку Скачать для экспорта в файл .json. Потом его можно импортировать в другую установку HFCM"
+
+#: includes/hfcm-tools.php:30
+msgid "Export Snippets"
+msgstr "Экспортировать сниппеты"
+
+#: includes/hfcm-add-edit.php:323
+msgid "Note"
+msgstr "Примечание"
+
+#: 99robots-header-footer-code-manager.php:1254
+#: 99robots-header-footer-code-manager.php:1269
+msgid "Please upload a valid import file"
+msgstr "Пожалуйста, загрузите допустимый файл импорта"
+
+#: 99robots-header-footer-code-manager.php:1121
+msgid ""
+"Please deactivate the free version of this plugin in order to avoid duplication of the snippets.\n"
+"                    You can use our tools to import all the snippets from the free version of this plugin."
+msgstr ""
+"Пожалуйста, деактивируйте бесплатную версию плагина, чтобы избежать дублирования сниппетов.\n"
+"Вы можете воспользоваться нашей утилитой по импорту всех сниппетов из бесплатной версии плагина."
+
+#: includes/hfcm-tools.php:43
+msgid "NOTE: Import/Export Functionality is only intended to operate within the same website.  Using the export/import to move snippets from one website to a different site, may result in inconsistent behavior, particularly if you have specific elements as criteria such as pages, posts, categories, or tags."
+msgstr "ПРИМЕЧАНИЕ. Функции импорта/экспорта предназначены для работы только на одном и том же веб-сайте. Использование экспорта/импорта для перемещения сниппетов с одного веб-сайта на другой может привести к непоследовательному поведению, особенно если у них есть специфические критерии, такие как страницы, записи, рубрики или теги."
+
+#: includes/class-hfcm-snippets-list.php:505 includes/hfcm-add-edit.php:334
+msgid "Inactive"
+msgstr "Неактивно"
+
+#: includes/class-hfcm-snippets-list.php:500 includes/hfcm-add-edit.php:333
+msgid "Active"
+msgstr "Активно"
+
+#: includes/class-hfcm-snippets-list.php:495
+msgid "All"
+msgstr "Все"
+
+#: includes/class-hfcm-snippets-list.php:403
+msgid "Remove"
+msgstr "Удалить"
+
+#: includes/class-hfcm-snippets-list.php:402
+msgid "Deactivate"
+msgstr "Деактивировано"
+
+#: includes/class-hfcm-snippets-list.php:401
+msgid "Activate"
+msgstr "Активировать"
+
+#: includes/class-hfcm-snippets-list.php:370
+msgid "Devices"
+msgstr "Устройства"
+
+#: includes/class-hfcm-snippets-list.php:367
+msgid "Display On"
+msgstr "Отображать на"
+
+#: includes/class-hfcm-snippets-list.php:364
+msgid "ID"
+msgstr "ID"
+
+#: includes/class-hfcm-snippets-list.php:349 includes/hfcm-add-edit.php:424
+msgid "Delete"
+msgstr "Удалить"
+
+#: includes/class-hfcm-snippets-list.php:347
+msgid "Edit"
+msgstr "Правка"
+
+#: includes/class-hfcm-snippets-list.php:265 includes/hfcm-add-edit.php:329
+msgid "Only Desktop"
+msgstr "Только для ПК"
+
+#: includes/class-hfcm-snippets-list.php:263 includes/hfcm-add-edit.php:330
+msgid "Only Mobile Devices"
+msgstr "Только мобильные устройства"
+
+#: includes/class-hfcm-snippets-list.php:261 includes/hfcm-add-edit.php:328
+msgid "Show on All Devices"
+msgstr "Показывать на всех устройствах"
+
+#: includes/class-hfcm-snippets-list.php:247
+msgid "N/A"
+msgstr "Н/Д"
+
+#: includes/class-hfcm-snippets-list.php:238
+msgid "No post selected"
+msgstr "Не выбрана запись"
+
+#: includes/class-hfcm-snippets-list.php:217
+msgid "Specific Tags"
+msgstr "Конкретные теги"
+
+#: includes/class-hfcm-snippets-list.php:216
+msgid "Specific Custom Post Types"
+msgstr "Конкретные произвольные типы записей"
+
+#: includes/class-hfcm-snippets-list.php:215
+msgid "Specific Categories"
+msgstr "Конкретные Категории"
+
+#: includes/class-hfcm-snippets-list.php:192
+msgid "No Snippets available."
+msgstr "Нет доступных сниппетов."
+
+#: includes/hfcm-add-edit.php:417
+msgid "Save"
+msgstr "Сохранить"
+
+#: includes/hfcm-add-edit.php:406
+msgid "Code"
+msgstr "Код"
+
+#: includes/class-hfcm-snippets-list.php:17 includes/hfcm-add-edit.php:405
+msgid "Snippet"
+msgstr "Сниппет"
+
+#: includes/hfcm-add-edit.php:396
+msgid "Last edited by"
+msgstr "Последний раз редактировалось"
+
+#: includes/hfcm-add-edit.php:393 includes/hfcm-add-edit.php:397
+msgid "at"
+msgstr "в"
+
+#: includes/hfcm-add-edit.php:393 includes/hfcm-add-edit.php:397
+msgid "on"
+msgstr "on"
+
+#: includes/hfcm-add-edit.php:392
+msgid "Snippet created by"
+msgstr "Сниппет создан"
+
+#: includes/hfcm-add-edit.php:388
+msgid "Changelog"
+msgstr "Список изменений"
+
+#: includes/class-hfcm-snippets-list.php:371 includes/hfcm-add-edit.php:370
+msgid "Shortcode"
+msgstr "Шорткод"
+
+#: includes/class-hfcm-snippets-list.php:365 includes/hfcm-add-edit.php:353
+msgid "Status"
+msgstr "Статус"
+
+#: includes/hfcm-add-edit.php:337
+msgid "Device Display"
+msgstr "Дисплей устройства"
+
+#: includes/class-hfcm-snippets-list.php:368 includes/hfcm-add-edit.php:308
+msgid "Location"
+msgstr "Местонахождение"
+
+#: includes/hfcm-add-edit.php:275
+msgid "Post Count"
+msgstr "Число записей"
+
+#: includes/hfcm-add-edit.php:259
+msgid "Post Types"
+msgstr "Типы записей"
+
+#: includes/hfcm-add-edit.php:241
+msgid "Tags List"
+msgstr "Список меток"
+
+#: includes/hfcm-add-edit.php:223
+msgid "Category List"
+msgstr "Список рубрик"
+
+#: includes/hfcm-add-edit.php:190
+msgid "Post List"
+msgstr "Список записей"
+
+#: includes/hfcm-add-edit.php:171
+msgid "Page List"
+msgstr "Список страниц"
+
+#: includes/hfcm-add-edit.php:157
+msgid "Exclude Posts"
+msgstr "Исключить записи"
+
+#: includes/hfcm-add-edit.php:140
+msgid "Exclude Pages"
+msgstr "Исключить страницы"
+
+#: includes/hfcm-add-edit.php:113
+msgid "Site Display"
+msgstr "Site Display"
+
+#: includes/class-hfcm-snippets-list.php:222 includes/hfcm-add-edit.php:110
+msgid "Shortcode Only"
+msgstr "Только шорткод"
+
+#: includes/class-hfcm-snippets-list.php:221 includes/hfcm-add-edit.php:109
+msgid "Latest Posts"
+msgstr "Последние записи"
+
+#: includes/hfcm-add-edit.php:105
+msgid "Specific Tags (Archive & Posts)"
+msgstr "Конкретные метки (Архивов и Записей)"
+
+#: includes/hfcm-add-edit.php:104
+msgid "Specific Post Types (Archive & Posts)"
+msgstr "Конкретные типы записей (Архивы и Записи)"
+
+#: includes/hfcm-add-edit.php:103
+msgid "Specific Categories (Archive & Posts)"
+msgstr "Конкретные категории (Архивы и Записи)"
+
+#: includes/class-hfcm-snippets-list.php:214 includes/hfcm-add-edit.php:102
+msgid "Specific Pages"
+msgstr "Отдельные страницы"
+
+#: includes/class-hfcm-snippets-list.php:213 includes/hfcm-add-edit.php:101
+msgid "Specific Posts"
+msgstr "Отдельные публикации"
+
+#: includes/class-hfcm-snippets-list.php:212 includes/hfcm-add-edit.php:100
+msgid "Site Wide"
+msgstr "Весь сайт"
+
+#: includes/class-hfcm-snippets-list.php:369 includes/hfcm-add-edit.php:82
+msgid "Snippet Type"
+msgstr "Тип сниппета"
+
+#: includes/class-hfcm-snippets-list.php:273
+#: includes/class-hfcm-snippets-list.php:419 includes/hfcm-add-edit.php:78
+msgid "Javascript"
+msgstr "Javascript"
+
+#: includes/class-hfcm-snippets-list.php:272
+#: includes/class-hfcm-snippets-list.php:418 includes/hfcm-add-edit.php:77
+msgid "CSS"
+msgstr "CSS"
+
+#: includes/class-hfcm-snippets-list.php:271
+#: includes/class-hfcm-snippets-list.php:417 includes/hfcm-add-edit.php:76
+msgid "HTML"
+msgstr "HTML"
+
+#: includes/class-hfcm-snippets-list.php:366 includes/hfcm-add-edit.php:68
+msgid "Snippet Name"
+msgstr "Название cниппета"
+
+#: includes/hfcm-add-edit.php:45
+msgid "Script Added Successfully"
+msgstr "Скрипт успешно добавлен"
+
+#: includes/hfcm-add-edit.php:42 includes/hfcm-add-edit.php:47
+msgid "Back to list"
+msgstr "Назад к списку"
+
+#: includes/hfcm-add-edit.php:40
+msgid "Script updated"
+msgstr "Скрипт обновлён"
+
+#: includes/hfcm-add-edit.php:28
+msgid "Edit Snippet"
+msgstr "Редактировать сниппет"
+
+#: includes/class-hfcm-snippets-list.php:254 includes/hfcm-add-edit.php:16
+#: includes/hfcm-add-edit.php:297 includes/hfcm-add-edit.php:302
+#: includes/hfcm-tools.php:12
+msgid "Footer"
+msgstr "Подвал (footer)"
+
+#: includes/class-hfcm-snippets-list.php:253 includes/hfcm-add-edit.php:15
+#: includes/hfcm-add-edit.php:296 includes/hfcm-tools.php:11
+msgid "After Content"
+msgstr "После содержимого"
+
+#: includes/class-hfcm-snippets-list.php:252 includes/hfcm-add-edit.php:14
+#: includes/hfcm-add-edit.php:295 includes/hfcm-tools.php:10
+msgid "Before Content"
+msgstr "Перед содержимым"
+
+#: includes/class-hfcm-snippets-list.php:251 includes/hfcm-add-edit.php:13
+#: includes/hfcm-add-edit.php:294 includes/hfcm-add-edit.php:301
+#: includes/hfcm-tools.php:9
+msgid "Header"
+msgstr "Заголовок (header)"
+
+#: 99robots-header-footer-code-manager.php:1157
+#: includes/class-hfcm-snippets-list.php:18
+msgid "Snippets"
+msgstr "Сниппеты"
+
+#: 99robots-header-footer-code-manager.php:332
+msgid "Hey there! You’ve been using the <strong>Header Footer Code Manager</strong> plugin for a while now. If you like the plugin, please support our awesome development and support team by leaving a <a class=\"hfcm-review-stars\" href=\"https://wordpress.org/support/plugin/header-footer-code-manager/reviews/\"><span class=\"dashicons dashicons-star-filled\"></span><span class=\"dashicons dashicons-star-filled\"></span><span class=\"dashicons dashicons-star-filled\"></span><span class=\"dashicons dashicons-star-filled\"></span><span class=\"dashicons dashicons-star-filled\"></span></a> rating. <a href=\"https://wordpress.org/support/plugin/header-footer-code-manager/reviews/\">Rate it!</a> It’ll mean the world to us and keep this plugin free and constantly updated. <a href=\"https://wordpress.org/support/plugin/header-footer-code-manager/reviews/\">Leave A Review</a>"
+msgstr "Привет! Вы давно используете плагин <strong>Header Footer Code Manager</strong>. Если вам нравится плагин, поддержите нашу замечательную команду разработчиков и поддержки, поставив ему <a class=\"hfcm-review-stars\" href=\"https://wordpress.org/support/plugin/header-footer-code-manager/reviews/\"><span class=\"dashicons dashicons-star-filled\"></span><span class=\"dashicons dashicons-star-filled\"></span><span class=\"dashicons dashicons-star-filled\"></span><span class=\"dashicons dashicons-star-filled\"></span><span class=\"dashicons dashicons-star-filled\"></span></a>рейтинг. <a href=\"https://wordpress.org/support/plugin/header-footer-code-manager/reviews/\">Поставьте 5*!</a> Это будет сигналом от мира к нам, и этот плагин будет бесплатным и постоянно обновляться. <a href=\"https://wordpress.org/support/plugin/header-footer-code-manager/reviews/\">Оставьте отзыв</a>"
+
+#: 99robots-header-footer-code-manager.php:292
+msgid "Settings"
+msgstr "Настройки"
+
+#: 99robots-header-footer-code-manager.php:279
+msgid "Request Handler"
+msgstr "Требуется handler"
+
+#: 99robots-header-footer-code-manager.php:278
+msgid "Request Handler Script"
+msgstr "Требуется скрипт handler-а"
+
+#: 99robots-header-footer-code-manager.php:269 includes/hfcm-add-edit.php:417
+msgid "Update"
+msgstr "Обновить"
+
+#: 99robots-header-footer-code-manager.php:268
+msgid "Update Script"
+msgstr "Обновить скрипт"
+
+#: 99robots-header-footer-code-manager.php:258
+#: 99robots-header-footer-code-manager.php:259 includes/hfcm-tools.php:23
+msgid "Tools"
+msgstr "Инструменты"
+
+#: 99robots-header-footer-code-manager.php:249
+msgid "Add New"
+msgstr "Добавить новый"
+
+#: 99robots-header-footer-code-manager.php:248
+#: 99robots-header-footer-code-manager.php:1159 includes/hfcm-add-edit.php:28
+#: includes/hfcm-add-edit.php:31
+msgid "Add New Snippet"
+msgstr "Добавить новый сниппет"
+
+#: 99robots-header-footer-code-manager.php:238
+#: 99robots-header-footer-code-manager.php:239
+msgid "All Snippets"
+msgstr "Все сниппеты"
+
+#: 99robots-header-footer-code-manager.php:228
+msgid "HFCM"
+msgstr "HFCM"
+
+#. Author URI of the plugin
+#: 99robots-header-footer-code-manager.php
+msgid "https://draftpress.com/"
+msgstr "https://draftpress.com/"
+
+#. Description of the plugin
+#: 99robots-header-footer-code-manager.php
+msgid "Header Footer Code Manager by 99 Robots is a quick and simple way for you to add tracking code snippets, conversion pixels, or other scripts required by third party services for analytics, tracking, marketing, or chat functions. For detailed documentation, please visit the plugin's <a href=\"https://draftpress.com/\"> official page</a>."
+msgstr "Header Footer Code Manager, разработанный 99 Robots - быстрый и простой способ добавить отслеживающие сниппеты, конверсионные пиксели, или другие скрипты, нужные разным сервисам для аналитических, трекинговых, маркетинговых, или чат-функций. Полное описание можно найти на <a href=\"https://draftpress.com/\">официальной странице</a> плагина."
+
+#. Plugin URI of the plugin
+#: 99robots-header-footer-code-manager.php
+msgid "https://draftpress.com/products"
+msgstr "https://draftpress.com/products"
+
+#. Plugin Name of the plugin
+#: 99robots-header-footer-code-manager.php
+#: 99robots-header-footer-code-manager.php:227
+msgid "Header Footer Code Manager"
+msgstr "Header Footer Code Manager"

@@ -1,94 +1,79 @@
-# Запуск WordPress локально (для экспорта в статику)
+# Run WordPress locally (888starz-africa)
 
-Нужен установленный **Docker** и **Docker Compose**.
+## Требования
 
----
-
-## 1. Запуск контейнеров
-
-Из корня проекта:
-
-```bash
-docker-compose up -d
-```
-
-- Первый запуск может занять несколько минут: MariaDB создаёт БД `wp_gugum` и выполняет `wp_gugum.sql` из `docker-entrypoint-initdb.d`.
-- Сайт будет доступен по **http://localhost:8080** после смены URL в БД (шаг 2).
+- Docker и Docker Compose  
+- Или: PHP 8.x, MariaDB/MySQL, веб-сервер (Apache/Nginx)
 
 ---
 
-## 2. Смена siteurl и home на локальный адрес
+## Вариант A: Docker Compose
 
-В дампе прописаны `https://888starz-africa.com`. Для локальной работы их нужно заменить на `http://localhost:8080`.
+1. В корне проекта создайте `docker-compose.yml` (см. ниже).
+2. Импорт БД:
+   - Поднять контейнеры: `docker compose up -d`
+   - Импортировать дамп:  
+     `docker compose exec db mysql -u root -p<MYSQL_ROOT_PASSWORD> wp_gugum < wp_gugum.sql`  
+     или скопировать `wp_gugum.sql` в контейнер и выполнить импорт там.
+3. Настроить `siteurl` и `home` в БД под локальный URL, например:
+   - `http://localhost:8080` или `http://wp.local`
+   - Через WP-CLI:  
+     `docker compose exec wp wp option update siteurl 'http://localhost:8080' --allow-root`  
+     `docker compose exec wp wp option update home 'http://localhost:8080' --allow-root`
+4. Указать в `1/wp-config.php` доступ к БД:
+   - DB_HOST = `db` (в Docker) или `localhost` (локально)
+   - DB_USER, DB_PASSWORD, DB_NAME — как в `docker-compose.yml` / локальной MySQL.
 
-### Вариант A: WP-CLI (если установлен локально)
+### Пример docker-compose.yml
 
-Указать корректный хост БД (порт 3306 проброшен на хост):
-
-```bash
-docker-compose exec wp wp option update siteurl http://localhost:8080 --allow-root
-docker-compose exec wp wp option update home http://localhost:8080 --allow-root
+```yaml
+version: '3'
+services:
+  db:
+    image: mariadb:10.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wp_gugum
+      MYSQL_USER: wp_user
+      MYSQL_PASSWORD: wp_pass
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  php:
+    image: php:8.2-fpm-alpine
+    volumes:
+      - ./1:/var/www/html
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./1:/var/www/html
+      - ./config/nginx.conf:/etc/nginx/conf.d/default.conf
+volumes:
+  db_data:
 ```
 
-Если WP-CLI не установлен в образе:
-
-```bash
-docker-compose exec wp bash -c "curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && php wp-cli.phar option update siteurl http://localhost:8080 --allow-root && php wp-cli.phar option update home http://localhost:8080 --allow-root"
-```
-
-### Вариант B: Прямое обновление в БД
-
-Подключиться к MySQL и выполнить:
-
-```sql
-UPDATE TVXFZYUMh_options SET option_value = 'http://localhost:8080' WHERE option_name IN ('siteurl', 'home');
-```
-
-Через Docker:
-
-```bash
-docker-compose exec db mysql -u wp_rbje6 -p'Wfy7u!Xw~1hgh34a' wp_gugum -e "UPDATE TVXFZYUMh_options SET option_value = 'http://localhost:8080' WHERE option_name IN ('siteurl', 'home');"
-```
+При использовании этого примера корень сайта — `./1` (каталог WordPress). Nginx должен указывать document root на `/var/www/html`.
 
 ---
 
-## 3. Проверка
+## Вариант B: Локальный PHP + MariaDB
 
-1. Открыть в браузере: **http://localhost:8080**
-2. Проверить: главная, несколько страниц и записей, архивы категорий/тегов, мультиязычные URL (Polylang), медиа.
-3. Убедиться, что стили и скрипты грузятся без 404.
-
-При необходимости сбросить пароль админа:
-
-```bash
-docker-compose exec wp wp user list --allow-root
-docker-compose exec wp wp user update 1 --user_pass=NEW_PASSWORD --allow-root
-```
-
-(если WP-CLI доступен в контейнере).
+1. Установить MariaDB, создать БД `wp_gugum` и пользователя с правами на неё.
+2. Импортировать дамп:  
+   `mysql -u <user> -p wp_gugum < wp_gugum.sql`
+3. В `1/wp-config.php` задать DB_NAME, DB_USER, DB_PASSWORD, DB_HOST (например `localhost` или `127.0.0.1:3306`).
+4. Поднять PHP встроенным сервером из каталога `1`:  
+   `php -S localhost:8080 -t 1`  
+   или настроить Apache/Nginx с document root на папку `1`.
+5. В БД обновить siteurl/home на выбранный URL (например `http://localhost:8080`).
 
 ---
 
-## 4. Остановка
+## После запуска
 
-```bash
-docker-compose down
-```
-
-Данные БД сохраняются в volume `wp_db_data`. Чтобы начать с чистой БД:
-
-```bash
-docker-compose down -v
-docker-compose up -d
-```
-
-и снова выполнить шаг 2 (смена siteurl/home).
-
----
-
-## 5. Дальнейшие шаги
-
-После того как сайт открывается локально по http://localhost:8080:
-
-- Запустить статический экспорт (см. **BUILD_AND_DEPLOY.md**, шаг экспорта).
-- Экспорт делается обходом сайта (wget/crawler) с базовым URL `http://localhost:8080`.
+- Открыть в браузере выбранный URL (например http://localhost:8080).
+- Проверить: главная, системные страницы (/about/, /contacts/, /terms/, …), медиа, стили/скрипты без 404.
+- Для экспорта в статику: использовать crawler (wget/httrack/playwright) или плагин экспорта с этого локального URL.

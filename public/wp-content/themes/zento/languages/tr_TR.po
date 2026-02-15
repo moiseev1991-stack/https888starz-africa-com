@@ -1,0 +1,1073 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Zento\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-12 16:03-0300\n"
+"PO-Revision-Date: 2024-11-12 16:06-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Loco-Source-Locale: tr_TR\n"
+"X-Generator: Poedit 3.4.1\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-KeywordsList: _n:1,2;_x:1,2c;__;_e;esc_html__;esc_html_e;esc_attr__;"
+"esc_attr_e;esc_html_x:1,2c;esc_attr_x:1,2c\n"
+"X-Loco-Parser: loco_parse_po\n"
+"X-Poedit-SearchPath-0: themes/zento\n"
+"X-Poedit-SearchPath-1: plugins/zento-functions/widgets\n"
+"X-Poedit-SearchPath-2: plugins/zento-functions/twitter_api\n"
+"X-Poedit-SearchPath-3: plugins/zento-functions/theme-functions\n"
+"X-Poedit-SearchPathExcluded-0: themes/zento/functions/plugins\n"
+"X-Poedit-SearchPathExcluded-1: themes/zento/assets\n"
+"X-Poedit-SearchPathExcluded-2: themes/zento/functions/merlin\n"
+
+#: plugins/zento-functions/theme-functions/render-ads.php:16
+#: plugins/zento-functions/theme-functions/render-ads.php:33
+#: plugins/zento-functions/theme-functions/render-ads.php:71
+msgid "Banner"
+msgstr "Afiş"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:13
+#: plugins/zento-functions/theme-functions/theme-functions.php:47
+msgid "Views"
+msgstr "Görüntüleme"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:17
+#: plugins/zento-functions/theme-functions/theme-functions.php:33
+#, php-format
+msgid "%d Min Read"
+msgstr "%d dakikada okunabilir"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:28
+msgid "Min Read"
+msgstr "Minimum Okuma"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:65
+#: plugins/zento-functions/theme-functions/social-buttons.php:69
+#, php-format
+msgid "Share on %s"
+msgstr "%s ile paylaş"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:82
+msgid "Share Article:"
+msgstr "İçeriği Paylaş:"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:89
+msgid "Copied!"
+msgstr "Kopyalandı!"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:89
+msgid "Copy Link"
+msgstr "Bağlantıyı Kopyala"
+
+#: plugins/zento-functions/theme-functions/social-buttons.php:157
+#: plugins/zento-functions/theme-functions/social-buttons.php:171
+#: plugins/zento-functions/widgets/about.php:99
+#: plugins/zento-functions/widgets/about.php:101
+#: plugins/zento-functions/widgets/social.php:115
+#: themes/zento/amp/author.php:62 themes/zento/amp/author.php:64
+#: themes/zento/author.php:57 themes/zento/author.php:59
+#, php-format
+msgid "Follow me on %s"
+msgstr "%s ile takip et"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:57
+msgid "Less than 1 minute ago"
+msgstr "1 dakikadan az"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:59
+#, php-format
+msgid "%s minute ago"
+msgstr "%s dakika önce"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:61
+#, php-format
+msgid "%s minutes ago"
+msgstr "%s dakika önce"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:65
+#, php-format
+msgid "%s hour ago"
+msgstr "%s saat önce"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:67
+#, php-format
+msgid "%s hours ago"
+msgstr "%s saat önce"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:71
+#, php-format
+msgid "%s day ago"
+msgstr "%s gün önce"
+
+#: plugins/zento-functions/twitter_api/Creare_Twitter.php:73
+#, php-format
+msgid "%s days ago"
+msgstr "%s gün önce"
+
+#: plugins/zento-functions/widgets/about.php:6
+msgctxt "admin"
+msgid "(EP) About me"
+msgstr "(EP) Hakkımda"
+
+#: plugins/zento-functions/widgets/about.php:8
+msgctxt "admin"
+msgid "Display about author section."
+msgstr "Yazar hakkında bölümünü göster."
+
+#: plugins/zento-functions/widgets/about.php:13
+#: plugins/zento-functions/widgets/ads-125.php:13
+#: plugins/zento-functions/widgets/ads-fluid.php:13
+#: plugins/zento-functions/widgets/article-info.php:13
+#: plugins/zento-functions/widgets/category-slider.php:13
+#: plugins/zento-functions/widgets/featured-category.php:13
+#: plugins/zento-functions/widgets/flickr.php:13
+#: plugins/zento-functions/widgets/posts-thumbs.php:13
+#: plugins/zento-functions/widgets/related-articles.php:13
+#: plugins/zento-functions/widgets/social.php:13
+#: plugins/zento-functions/widgets/tag-cloud.php:13
+#: plugins/zento-functions/widgets/toc.php:13
+#: plugins/zento-functions/widgets/topics-index.php:56
+#: plugins/zento-functions/widgets/tweets.php:13
+#: plugins/zento-functions/widgets/video.php:13
+msgctxt "admin"
+msgid "Title:"
+msgstr "Başlık:"
+
+#: plugins/zento-functions/widgets/about.php:19
+msgctxt "admin"
+msgid "Position:"
+msgstr "Pozisyon:"
+
+#: plugins/zento-functions/widgets/about.php:20
+msgctxt "admin"
+msgid "e.g. Founder & Editor"
+msgstr "Örneğin: Kurucu ve Editör"
+
+#: plugins/zento-functions/widgets/about.php:26
+msgctxt "admin"
+msgid "Author:"
+msgstr "Yazar:"
+
+#: plugins/zento-functions/widgets/about.php:27
+msgctxt "admin"
+msgid ""
+"Select an author to display all his information. Remember to fill your "
+"profile (website, Twitter and Facebook.)"
+msgstr ""
+"Tüm bilgilerini görüntülemek için bir yazar seçin. Profilinizi doldurmayı "
+"unutmayın (Web sitesi, Twitter ve Facebook.)"
+
+#: plugins/zento-functions/widgets/about.php:57
+#: themes/zento/partials/meta-info/author.php:13
+#, php-format
+msgid "Avatar Image of %s"
+msgstr "Avatar Görseli %s"
+
+#: plugins/zento-functions/widgets/about.php:73
+#: plugins/zento-functions/widgets/about.php:76 themes/zento/amp/author.php:42
+#: themes/zento/author.php:37
+msgid "Follow me on Twitter"
+msgstr "Twitter'da Takip Et"
+
+#: plugins/zento-functions/widgets/about.php:75 themes/zento/amp/author.php:43
+#: themes/zento/author.php:38
+msgid "Twitter"
+msgstr "Twitter"
+
+#: plugins/zento-functions/widgets/about.php:80
+#: plugins/zento-functions/widgets/about.php:83 themes/zento/amp/author.php:47
+#: themes/zento/author.php:42
+msgid "Follow me on Facebook"
+msgstr "Facebook'ta Takip Et"
+
+#: plugins/zento-functions/widgets/about.php:82 themes/zento/amp/author.php:48
+#: themes/zento/author.php:43
+msgid "Facebook"
+msgstr "Facebook"
+
+#: plugins/zento-functions/widgets/about.php:87
+#: plugins/zento-functions/widgets/about.php:89
+#: plugins/zento-functions/widgets/about.php:90 themes/zento/amp/author.php:52
+#: themes/zento/amp/author.php:53 themes/zento/author.php:47
+#: themes/zento/author.php:48 themes/zento/comments.php:79
+msgid "Website"
+msgstr "Website"
+
+#: plugins/zento-functions/widgets/ads-125.php:6
+msgctxt "admin"
+msgid "(EP) 125x125 Ads"
+msgstr "(EP) 125x125 Reklam"
+
+#: plugins/zento-functions/widgets/ads-125.php:8
+msgctxt "admin"
+msgid "Display 125x125 grid ads."
+msgstr "125x125 grid reklam göster."
+
+#: plugins/zento-functions/widgets/ads-125.php:14
+msgctxt "admin"
+msgid "Copy and paste your ads code:"
+msgstr "Reklam kodunuzu buraya yapıştırın:"
+
+#: plugins/zento-functions/widgets/ads-125.php:20
+msgctxt "admin"
+msgid "Ads Block n&ordm; 1:"
+msgstr "Reklam Bloku n&ordm; 1:"
+
+#: plugins/zento-functions/widgets/ads-125.php:32
+msgctxt "admin"
+msgid "Ads Block n&ordm; 2:"
+msgstr "Reklam Bloku n&ordm; 2:"
+
+#: plugins/zento-functions/widgets/ads-125.php:44
+msgctxt "admin"
+msgid "Ads Block n&ordm; 3:"
+msgstr "Reklam Bloku n&ordm; 3:"
+
+#: plugins/zento-functions/widgets/ads-125.php:56
+msgctxt "admin"
+msgid "Ads Block n&ordm; 4:"
+msgstr "Reklam Bloku n&ordm; 4:"
+
+#: plugins/zento-functions/widgets/ads-fluid.php:6
+msgctxt "admin"
+msgid "(EP) Fluid Ads"
+msgstr "(EP) Akışkan Reklam"
+
+#: plugins/zento-functions/widgets/ads-fluid.php:8
+msgctxt "admin"
+msgid ""
+"Display a fluid ads. Note: the max ads width is 300px and height is "
+"unlimited."
+msgstr ""
+"Akıcı bir reklam gösterin. Not: Maksimum reklam genişliği 300 pikseldir. "
+"Yükseklik sınırsız olabilir."
+
+#: plugins/zento-functions/widgets/ads-fluid.php:19
+msgctxt "admin"
+msgid "Width of advertise to show:"
+msgstr "Gösterilecek reklamın genişliği:"
+
+#: plugins/zento-functions/widgets/ads-fluid.php:27
+msgctxt "admin"
+msgid "Align:"
+msgstr "Hizala:"
+
+#: plugins/zento-functions/widgets/ads-fluid.php:29
+msgctxt "admin"
+msgid "Left"
+msgstr "Sol"
+
+#: plugins/zento-functions/widgets/ads-fluid.php:30
+msgctxt "admin"
+msgid "Center"
+msgstr "Merkez"
+
+#: plugins/zento-functions/widgets/ads-fluid.php:31
+msgctxt "admin"
+msgid "Right"
+msgstr "Sağ"
+
+#: plugins/zento-functions/widgets/ads-fluid.php:38
+msgctxt "admin"
+msgid "Ads Code:"
+msgstr "Reklam Kodu:"
+
+#: plugins/zento-functions/widgets/article-info.php:6
+msgctxt "admin"
+msgid "(EP) Article Information"
+msgstr "(EP) İçerik Bilgisi"
+
+#: plugins/zento-functions/widgets/article-info.php:8
+msgctxt "admin"
+msgid "Display Detailed Article Info on Single Post."
+msgstr "Ayrıntılı içerik bilgilerini gönderide görüntüleyin."
+
+#: plugins/zento-functions/widgets/article-info.php:19
+msgctxt "admin"
+msgid "Display Category:"
+msgstr "Kategoriyi Göster:"
+
+#: plugins/zento-functions/widgets/article-info.php:25
+msgctxt "admin"
+msgid "Display Modified Date:"
+msgstr "Güncelleme Tarihini Görüntüle:"
+
+#: plugins/zento-functions/widgets/article-info.php:31
+msgctxt "admin"
+msgid "Display Author:"
+msgstr "Yazarı Göster:"
+
+#: plugins/zento-functions/widgets/article-info.php:37
+msgctxt "admin"
+msgid "Display Reading Time:"
+msgstr "Okuma Süresini Görüntüle:"
+
+#: plugins/zento-functions/widgets/article-info.php:43
+msgctxt "admin"
+msgid "Display Rating:"
+msgstr "Puanlamayı Görüntüle:"
+
+#: plugins/zento-functions/widgets/article-info.php:73
+msgid "Category:"
+msgstr "Kategori:"
+
+#: plugins/zento-functions/widgets/article-info.php:89
+msgid "Author:"
+msgstr "Yazar:"
+
+#: plugins/zento-functions/widgets/article-info.php:97
+msgid "Reading time:"
+msgstr "Okuma süresi:"
+
+#: plugins/zento-functions/widgets/article-info.php:100
+#, php-format
+msgid "%d Min"
+msgstr "%d dakika okuma"
+
+#: plugins/zento-functions/widgets/category-slider.php:6
+msgctxt "admin"
+msgid "(EP) Category Slider"
+msgstr "(EP) Kategori Manşeti"
+
+#: plugins/zento-functions/widgets/category-slider.php:8
+msgctxt "admin"
+msgid "Display a Category Slider."
+msgstr "Kategori manşetini göster."
+
+#: plugins/zento-functions/widgets/category-slider.php:19
+#: plugins/zento-functions/widgets/featured-category.php:19
+#: plugins/zento-functions/widgets/flickr.php:27
+#: plugins/zento-functions/widgets/posts-thumbs.php:19
+#: plugins/zento-functions/widgets/related-articles.php:19
+#: plugins/zento-functions/widgets/tag-cloud.php:19
+msgctxt "admin"
+msgid "Max number of elements to display:"
+msgstr "Görüntülenecek maksimum öğe sayısı:"
+
+#: plugins/zento-functions/widgets/category-slider.php:30
+#: plugins/zento-functions/widgets/posts-thumbs.php:30
+#: plugins/zento-functions/widgets/tag-cloud.php:41
+msgctxt "admin"
+msgid "Order by:"
+msgstr "Sırala:"
+
+#: plugins/zento-functions/widgets/category-slider.php:32
+#: plugins/zento-functions/widgets/tag-cloud.php:43
+#: plugins/zento-functions/widgets/topics-index.php:86
+msgctxt "admin"
+msgid "Name"
+msgstr "İsim"
+
+#: plugins/zento-functions/widgets/category-slider.php:33
+#: plugins/zento-functions/widgets/tag-cloud.php:44
+#: plugins/zento-functions/widgets/topics-index.php:88
+msgctxt "admin"
+msgid "Count"
+msgstr "Sayım"
+
+#: plugins/zento-functions/widgets/category-slider.php:41
+#: plugins/zento-functions/widgets/tag-cloud.php:52
+msgctxt "admin"
+msgid "Order:"
+msgstr "Sırala:"
+
+#: plugins/zento-functions/widgets/category-slider.php:43
+#: plugins/zento-functions/widgets/tag-cloud.php:54
+#: plugins/zento-functions/widgets/topics-index.php:98
+#: plugins/zento-functions/widgets/topics-index.php:134
+msgctxt "admin"
+msgid "Ascendant"
+msgstr "Artan"
+
+#: plugins/zento-functions/widgets/category-slider.php:44
+#: plugins/zento-functions/widgets/tag-cloud.php:55
+#: plugins/zento-functions/widgets/topics-index.php:99
+#: plugins/zento-functions/widgets/topics-index.php:135
+msgctxt "admin"
+msgid "Descendant"
+msgstr "Azalan"
+
+#: plugins/zento-functions/widgets/category-slider.php:51
+msgctxt "admin"
+msgid "Show category count:"
+msgstr "Kategori sayısını göster:"
+
+#: plugins/zento-functions/widgets/category-slider.php:108
+#, php-format
+msgid "%s <span class=\"dot small\"></span> Article"
+msgid_plural "%s <span class=\"dot small\"></span> Articles"
+msgstr[0] "%s <span class=\"dot small\"></span> İçerik"
+msgstr[1] "%s <span class=\"dot small\"></span> İçerik"
+
+#: plugins/zento-functions/widgets/featured-category.php:6
+msgctxt "admin"
+msgid "(EP) Posts by Category"
+msgstr "(EP) Kategoriden İçerikler"
+
+#: plugins/zento-functions/widgets/featured-category.php:8
+msgctxt "admin"
+msgid "Display posts from a certain category."
+msgstr "Belirli bir kategorideki gönderileri görüntüleyin."
+
+#: plugins/zento-functions/widgets/featured-category.php:30
+msgctxt "admin"
+msgid "Category:"
+msgstr "Kategori:"
+
+#: plugins/zento-functions/widgets/flickr.php:6
+msgctxt "admin"
+msgid "(EP) Flickr Gallery"
+msgstr "(EP) Flickr Galerisi"
+
+#: plugins/zento-functions/widgets/flickr.php:8
+msgctxt "admin"
+msgid "Display recent photos from Flickr."
+msgstr "Flickr'daki son fotoğrafları görüntüleyin."
+
+#: plugins/zento-functions/widgets/flickr.php:20
+msgctxt "admin"
+msgid "Flickr id:"
+msgstr "Flickr Kimliği:"
+
+#: plugins/zento-functions/widgets/flickr.php:21
+#, php-format
+msgctxt "admin"
+msgid "You can find your Flickr id on: %s"
+msgstr "Flickr ID'nizi şu adreste bulabilirsiniz: %s"
+
+#: plugins/zento-functions/widgets/flickr.php:48
+msgctxt "admin"
+msgid "You must enter a valid Flickr id"
+msgstr "Geçerli bir Flickr ID girmelisiniz"
+
+#: plugins/zento-functions/widgets/flickr.php:52
+msgctxt "admin"
+msgid "Loading..."
+msgstr "Yükleniyor..."
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:6
+msgctxt "admin"
+msgid "(EP) Recent Posts with image"
+msgstr "(EP) Resimli Son İçerikler"
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:8
+msgctxt "admin"
+msgid "Display Random or Recent posts with a small image."
+msgstr "Rastgele veya içerikleri küçük bir resimle görüntüleyin."
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:32
+#: plugins/zento-functions/widgets/topics-index.php:120
+msgctxt "admin"
+msgid "Recent Posts"
+msgstr "Son İçerikler"
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:33
+#: plugins/zento-functions/widgets/topics-index.php:123
+msgctxt "admin"
+msgid "Random Posts"
+msgstr "Rastgele İçerikler"
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:42
+msgctxt "admin"
+msgid "Date:"
+msgstr "Tarih:"
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:44
+msgctxt "admin"
+msgid "All Time"
+msgstr "Tüm Zamanlar"
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:45
+msgctxt "admin"
+msgid "Past Year"
+msgstr "Geçen Yıl"
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:46
+msgctxt "admin"
+msgid "Past Month"
+msgstr "Geçen Ay"
+
+#: plugins/zento-functions/widgets/posts-thumbs.php:47
+msgctxt "admin"
+msgid "Past Week"
+msgstr "Geçen Hafta"
+
+#: plugins/zento-functions/widgets/related-articles.php:6
+msgctxt "admin"
+msgid "(EP) Related Articles"
+msgstr "(EP) Benzer İçerikler"
+
+#: plugins/zento-functions/widgets/related-articles.php:8
+msgctxt "admin"
+msgid "Display related articles from the current post."
+msgstr "Geçerli gönderideki ilgili makaleleri görüntüleyin."
+
+#: plugins/zento-functions/widgets/social.php:6
+msgctxt "admin"
+msgid "(EP) Social"
+msgstr "(EP) Sosyal Medya"
+
+#: plugins/zento-functions/widgets/social.php:8
+msgctxt "admin"
+msgid "Display your social profiles."
+msgstr "Sosyal medya hesaplarınızı görüntüleyin."
+
+#: plugins/zento-functions/widgets/social.php:14
+msgctxt "admin"
+msgid "Don't forget to fill your social profiles"
+msgstr "Sosyal medya hesaplarınızı doldurmayı unutmayın"
+
+#: plugins/zento-functions/widgets/social.php:14
+#: plugins/zento-functions/widgets/subscribe-form.php:30
+msgctxt "admin"
+msgid "here."
+msgstr "burada."
+
+#: plugins/zento-functions/widgets/subscribe-form.php:6
+msgctxt "admin"
+msgid "(EP) Subscribe Form"
+msgstr "(EP) Abonelik Formu"
+
+#: plugins/zento-functions/widgets/subscribe-form.php:8
+msgctxt "admin"
+msgid "Display a subscribe form, your website logo + a small text description."
+msgstr ""
+"Bir abone olma formunu, web sitenizin logosunu + küçük bir metin "
+"açıklamasını gösterin."
+
+#: plugins/zento-functions/widgets/subscribe-form.php:13
+msgctxt "admin"
+msgid "Title (optional):"
+msgstr "Başlık (Opsiyonel):"
+
+#: plugins/zento-functions/widgets/subscribe-form.php:20
+msgctxt "admin"
+msgid "Small description (optional)"
+msgstr "Küçük açıklama (isteğe bağlı)"
+
+#: plugins/zento-functions/widgets/subscribe-form.php:21
+msgctxt "admin"
+msgid "HTML and Shortcodes are allowed"
+msgstr "HTML ve kısa kodlara izin verilir"
+
+#: plugins/zento-functions/widgets/subscribe-form.php:30
+msgctxt "admin"
+msgid ""
+"Don't forget to properly configure your <b>Subscribe URL</b> on the Theme "
+"Option Panel: "
+msgstr ""
+"Tema Seçenek Panelinde <b>Abonelik URL'nizi</b> doğru şekilde yapılandırmayı "
+"unutmayın:"
+
+#: plugins/zento-functions/widgets/subscribe-form.php:59
+#: themes/zento/partials/subscribe-form.php:11
+msgid "Enter your email address"
+msgstr "E-posta adresinizi giriniz"
+
+#: plugins/zento-functions/widgets/subscribe-form.php:60
+#: themes/zento/partials/subscribe-form.php:12
+msgid "Get Started"
+msgstr "Başlarken"
+
+#: plugins/zento-functions/widgets/tag-cloud.php:6
+msgctxt "admin"
+msgid "(EP) Tag Cloud"
+msgstr "(EP) Etiket Bulutu"
+
+#: plugins/zento-functions/widgets/tag-cloud.php:8
+msgctxt "admin"
+msgid "Display tags or categories with limit and special filters."
+msgstr "Etiketleri veya kategorileri limitli ve özel filtrelerle görüntüleyin."
+
+#: plugins/zento-functions/widgets/tag-cloud.php:30
+msgctxt "admin"
+msgid "Taxonomy (mode):"
+msgstr "Sınıflandırma (mod):"
+
+#: plugins/zento-functions/widgets/tag-cloud.php:32
+msgctxt "admin"
+msgid "Post Category"
+msgstr "İçerik Kategorisi"
+
+#: plugins/zento-functions/widgets/tag-cloud.php:33
+msgctxt "admin"
+msgid "Post Tags"
+msgstr "İçerik Etiketleri"
+
+#: plugins/zento-functions/widgets/tag-cloud.php:62
+msgctxt "admin"
+msgid "Show tag counts:"
+msgstr "Etiket sayılarını göster:"
+
+#: plugins/zento-functions/widgets/toc.php:6
+msgctxt "admin"
+msgid "(EP) Table of Contents"
+msgstr "(EP) İçindekiler Tablosu"
+
+#: plugins/zento-functions/widgets/toc.php:8
+msgctxt "admin"
+msgid "Display TOC on Single Post."
+msgstr "İçindekiler tablosunu yazı içerisinde görüntüle."
+
+#: plugins/zento-functions/widgets/toc.php:26
+msgid "Max Height in pixels (Optional)"
+msgstr ""
+
+#: plugins/zento-functions/widgets/toc.php:27
+msgid "Default: none"
+msgstr ""
+
+#: plugins/zento-functions/widgets/toc.php:28
+msgid ""
+"This will automatically add a Scroll Bar if max height is reached. e.g. 250"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:49
+msgctxt "admin"
+msgid "(EP) Topics Index"
+msgstr "(EP) Başlıklar Dizini"
+
+#: plugins/zento-functions/widgets/topics-index.php:51
+msgctxt "admin"
+msgid ""
+"A widget that displays multiple articles, organized by categories for easy "
+"and quick navigation."
+msgstr ""
+"Kolay ve hızlı gezinme için kategorilere göre düzenlenmiş, birden çok "
+"içeriği görüntüleyen bir bileşen."
+
+#: plugins/zento-functions/widgets/topics-index.php:61
+msgctxt "admin"
+msgid "Category Limit:"
+msgstr "Kategori Limiti:"
+
+#: plugins/zento-functions/widgets/topics-index.php:63
+msgctxt "admin"
+msgid "Max number of Categories to display."
+msgstr "Görüntülenecek maksimum kategori sayısı."
+
+#: plugins/zento-functions/widgets/topics-index.php:72
+msgctxt "admin"
+msgid "Excluded Categories"
+msgstr "Hariç Tutulan Kategoriler"
+
+#: plugins/zento-functions/widgets/topics-index.php:74
+#, fuzzy
+#| msgctxt "admin"
+#| msgid "(Optional) Usefull if you dont want specific categories."
+msgctxt "admin"
+msgid ""
+"(Optional) Usefull if you dont want specific categories. Ctrl (CMD on Mac) + "
+"Click to select multiple categories."
+msgstr "(İsteğe bağlı) Belirli kategoriler istemiyorsanız kullanışlıdır."
+
+#: plugins/zento-functions/widgets/topics-index.php:84
+msgctxt "admin"
+msgid "Category Order by:"
+msgstr "Kategori Sıralaması:"
+
+#: plugins/zento-functions/widgets/topics-index.php:87
+#: plugins/zento-functions/widgets/topics-index.php:121
+msgctxt "admin"
+msgid "Slug"
+msgstr ""
+
+#: plugins/zento-functions/widgets/topics-index.php:96
+msgctxt "admin"
+msgid "Category Order:"
+msgstr "Kategori Sıralaması:"
+
+#: plugins/zento-functions/widgets/topics-index.php:106
+msgctxt "admin"
+msgid "Posts Limit:"
+msgstr "İçerik Limiti:"
+
+#: plugins/zento-functions/widgets/topics-index.php:107
+msgctxt "admin"
+msgid "Max number of articles per category to display:"
+msgstr "Kategori başına görüntülenecek maksimum içerik sayısı:"
+
+#: plugins/zento-functions/widgets/topics-index.php:118
+msgctxt "admin"
+msgid "Posts Order by:"
+msgstr "İçerik Sıralaması:"
+
+#: plugins/zento-functions/widgets/topics-index.php:122
+#, fuzzy
+#| msgctxt "admin"
+#| msgid "Order:"
+msgctxt "admin"
+msgid "Menu Order"
+msgstr "Sırala:"
+
+#: plugins/zento-functions/widgets/topics-index.php:132
+msgctxt "admin"
+msgid "Post Order:"
+msgstr "İçerik Sıralaması:"
+
+#: plugins/zento-functions/widgets/tweets.php:6
+msgctxt "admin"
+msgid "(EP) Recent Tweets"
+msgstr "(EP) Son Tweetler"
+
+#: plugins/zento-functions/widgets/tweets.php:8
+msgctxt "admin"
+msgid "Display recent tweets."
+msgstr "Son tweetleri görüntüle."
+
+#: plugins/zento-functions/widgets/tweets.php:18
+msgctxt "admin"
+msgid "Number of tweets to show:"
+msgstr "Gösterilecek tweet sayısı:"
+
+#: plugins/zento-functions/widgets/tweets.php:28
+msgctxt "admin"
+msgid "Twitter ID: (without @)"
+msgstr "Twitter Kimliği: (@ olmadan)"
+
+#: plugins/zento-functions/widgets/tweets.php:33
+msgctxt "admin"
+msgid "Exclude Replies"
+msgstr "Yanıtları Hariç Tut"
+
+#: plugins/zento-functions/widgets/video.php:6
+msgctxt "admin"
+msgid "(EP) Video"
+msgstr "(EP) Video"
+
+#: plugins/zento-functions/widgets/video.php:8
+msgctxt "admin"
+msgid "Display a Youtube or Vimeo video."
+msgstr "Bir Youtube veya Vimeo videosunu göster."
+
+#: plugins/zento-functions/widgets/video.php:20
+msgctxt "admin"
+msgid "Type:"
+msgstr "Tür:"
+
+#: plugins/zento-functions/widgets/video.php:22
+msgctxt "admin"
+msgid "Youtube"
+msgstr "Youtube"
+
+#: plugins/zento-functions/widgets/video.php:23
+msgctxt "admin"
+msgid "Vimeo"
+msgstr "Vimeo"
+
+#: plugins/zento-functions/widgets/video.php:30
+msgctxt "admin"
+msgid "URL:"
+msgstr "URL:"
+
+#: plugins/zento-functions/widgets/video.php:36
+msgctxt "admin"
+msgid "Height:"
+msgstr "Yükseklik:"
+
+#: themes/zento/404.php:22 themes/zento/amp/404.php:22
+msgid "Page not found"
+msgstr "Sayfa bulunamadı"
+
+#: themes/zento/404.php:23 themes/zento/amp/404.php:23
+msgid "Unfortunately the page you are looking for is not available."
+msgstr "Maalesef aradığınız sayfa mevcut değil."
+
+#: themes/zento/404.php:25 themes/zento/amp/404.php:25
+#: themes/zento/partials/no-results.php:10
+msgid "Go back to home"
+msgstr "Anasayfaya dön"
+
+#: themes/zento/amp/category.php:27 themes/zento/amp/tag.php:13
+#: themes/zento/category.php:27 themes/zento/tag.php:13
+#, php-format
+msgid "A collection of <b>1 post</b>"
+msgid_plural "A collection of <b>%1$s posts</b>"
+msgstr[0] "<b>1 içerikten</b> oluşan bir koleksiyon"
+msgstr[1] "<b>%1$s içerikten</b> oluşan bir koleksiyon"
+
+#: themes/zento/amp/page-templates/page-explore-tags.php:50
+#: themes/zento/page-templates/page-explore-tags.php:52
+#, php-format
+msgid "1 Article"
+msgid_plural "%1$s Articles"
+msgstr[0] "1 İçerik"
+msgstr[1] "%1$s İçerik"
+
+#: themes/zento/amp/page.php:87 themes/zento/amp/single.php:152
+#: themes/zento/page.php:89 themes/zento/single.php:164
+msgid "Pages"
+msgstr "Sayfalar"
+
+#: themes/zento/amp/page.php:93 themes/zento/amp/single.php:158
+#: themes/zento/functions/theme-functions.php:197
+#: themes/zento/functions/theme-functions.php:208 themes/zento/page.php:95
+#: themes/zento/single.php:170
+msgid "Next"
+msgstr "Sonraki"
+
+#: themes/zento/amp/page.php:94 themes/zento/amp/single.php:159
+#: themes/zento/functions/theme-functions.php:193
+#: themes/zento/functions/theme-functions.php:212 themes/zento/page.php:96
+#: themes/zento/single.php:171
+msgid "Previous"
+msgstr "Önceki"
+
+#: themes/zento/amp/partials/header.php:64 themes/zento/partials/header.php:64
+msgid "Quick Search..."
+msgstr "Hızlı Arama..."
+
+#: themes/zento/amp/search.php:12 themes/zento/search.php:8
+msgid "Search results for:"
+msgstr "Arama sonuçları:"
+
+#: themes/zento/amp/single.php:118 themes/zento/single.php:135
+msgid "Published in:"
+msgstr "Yayınlanma:"
+
+#: themes/zento/amp/single.php:129
+msgid "Leave a Comment"
+msgstr "Yorum Yap"
+
+#: themes/zento/amp/single.php:137 themes/zento/single.php:148
+msgid "Categorized in:"
+msgstr "Kategoriler:"
+
+#: themes/zento/amp/single.php:143 themes/zento/single.php:154
+msgid "Tagged in:"
+msgstr "Etiketler"
+
+#: themes/zento/comments.php:26
+msgid "on"
+msgstr "aktif"
+
+#: themes/zento/comments.php:30
+msgid "Your comment is awaiting moderation."
+msgstr "Yorumunuz kontrol edilmektedir."
+
+#: themes/zento/comments.php:45
+#: themes/zento/partials/single/comments-area.php:14
+#: themes/zento/partials/single/comments-area.php:24
+msgid "Comments"
+msgstr "Yorumlar"
+
+#: themes/zento/comments.php:59
+msgid "Older Comments"
+msgstr "Eski Yorumlar"
+
+#: themes/zento/comments.php:60
+msgid "Newer Comments"
+msgstr "Yeni Yorumlar"
+
+#: themes/zento/comments.php:67
+msgid "Comments are closed."
+msgstr "Yorumlar kapalı."
+
+#: themes/zento/comments.php:77
+msgid "Name"
+msgstr "İsim"
+
+#: themes/zento/comments.php:78
+msgid "Email"
+msgstr "E-posta"
+
+#: themes/zento/comments.php:84
+msgid "Comment"
+msgstr "Yorum"
+
+#: themes/zento/comments.php:85
+msgid "Log In"
+msgstr "Giriş Yap"
+
+#: themes/zento/functions.php:104
+msgid "Header"
+msgstr "Header"
+
+#: themes/zento/functions/enqueue-scripts.php:101
+msgctxt "Urbanist font: on or off"
+msgid "on"
+msgstr "aktif"
+
+#: themes/zento/functions/enqueue-scripts.php:105
+msgctxt "DM Sans font: on or off"
+msgid "on"
+msgstr "aktif"
+
+#: themes/zento/functions/sidebars.php:12
+msgctxt "admin"
+msgid "Article Sidebar"
+msgstr "İçerik Kenar Çubuğu"
+
+#: themes/zento/functions/sidebars.php:14
+msgctxt "admin"
+msgid "Right sidebar inside single posts."
+msgstr "Gönderilerin içindeki sağ kenar çubuğu."
+
+#: themes/zento/functions/sidebars.php:24
+msgctxt "admin"
+msgid "Home Sidebar"
+msgstr "Ana Sayfa Kenar Çubuğu"
+
+#: themes/zento/functions/sidebars.php:26
+msgctxt "admin"
+msgid "Sidebar for home, archives and results"
+msgstr "Ana sayfa, arşivler ve arama sonuçları için kenar çubuğu"
+
+#: themes/zento/functions/sidebars.php:36
+msgctxt "admin"
+msgid "Footer"
+msgstr "Footer"
+
+#: themes/zento/functions/sidebars.php:38
+msgctxt "admin"
+msgid "Footer Sidebar"
+msgstr "Footer Kenar Çubuğu"
+
+#: themes/zento/functions/sidebars.php:48
+msgctxt "admin"
+msgid "Footer Mobile"
+msgstr "Footer Mobil"
+
+#: themes/zento/functions/sidebars.php:50
+msgctxt "admin"
+msgid "Footer Mobile Sidebar"
+msgstr "Footer Mobil Kenar Çubuğu"
+
+#: themes/zento/functions/theme-functions.php:195
+#, php-format
+msgid "Page %d of %d"
+msgstr "Sayfa %d / %d"
+
+#: themes/zento/functions/theme-functions.php:219
+msgctxt "admin"
+msgid "(EP) Medium (768x768px)"
+msgstr "(EP) Medium (768x768px)"
+
+#: themes/zento/functions/theme-functions.php:245 themes/zento/searchform.php:5
+msgid "Search"
+msgstr "Ara"
+
+#: themes/zento/functions/theme-functions.php:252
+msgid "Subscribe"
+msgstr "Abone Ol"
+
+#: themes/zento/functions/theme-functions.php:515
+msgid "Avatar"
+msgstr "Avatar"
+
+#: themes/zento/page-templates/home.php:17
+msgid "You must add some module before publish this page"
+msgstr "Bu sayfayı yayınlamadan önce bazı modüller eklemelisiniz"
+
+#: themes/zento/partials/header/search-lightbox.php:5
+#, php-format
+msgid "Press %s to close"
+msgstr "Kapatmak için %s basınız."
+
+#: themes/zento/partials/home-blocks/posts-carousel.php:98
+msgid "Read More"
+msgstr "Devamını Oku"
+
+#: themes/zento/partials/loops/classic-article-image.php:80
+#: themes/zento/partials/loops/classic-article.php:82
+#: themes/zento/partials/loops/grid-article-image.php:48
+msgid "Featured Article"
+msgstr "Öne Çıkan İçerik"
+
+#: themes/zento/partials/meta-info/comments.php:3
+msgid "Go to comments"
+msgstr "Yorumlara git"
+
+#: themes/zento/partials/meta-info/comments.php:6
+#, php-format
+msgid "%1$s Comment"
+msgid_plural "%1$s Comments"
+msgstr[0] "%1$s Yorum"
+msgstr[1] "%1$s Yorum"
+
+#: themes/zento/partials/meta-info/modified-date.php:3
+msgid "Updated:"
+msgstr "Güncelleme:"
+
+#: themes/zento/partials/no-results.php:6
+msgid "Something's wrong here..."
+msgstr "Burada bir şeyler yanlış..."
+
+#: themes/zento/partials/no-results.php:7
+msgid "We can't find any result for your search term."
+msgstr "Aradığınız terim için herhangi bir sonuç bulamadık."
+
+#: themes/zento/partials/single/comments-area.php:17
+msgid "Please enable JavaScript to view the"
+msgstr "Görüntülemek için lütfen JavaScript'i etkinleştirin"
+
+#: themes/zento/partials/single/comments-area.php:17
+msgid "comments powered by Disqus."
+msgstr "Yorumlar Disqus tarafından desteklenmektedir."
+
+#: themes/zento/partials/single/related-articles.php:35
+msgid "More in this <b>Category</b>"
+msgstr "Bu <b>kategori</b> için daha fazlası"
+
+#: themes/zento/partials/single/related-articles.php:38
+#: themes/zento/partials/single/related-articles.php:61
+msgid "View All Articles"
+msgstr "Tüm İçerikleri Görüntüle"
+
+#: themes/zento/partials/single/siblings-articles.php:19
+#: themes/zento/partials/single/siblings-articles.php:23
+msgid "Previous Article"
+msgstr "Önceki İçerik"
+
+#: themes/zento/partials/single/siblings-articles.php:42
+#: themes/zento/partials/single/siblings-articles.php:46
+msgid "Next Article"
+msgstr "Sonraki İçerik"
+
+#: themes/zento/partials/single/single-post-info.php:14
+msgid "Published:"
+msgstr "Yayınlanma:"
+
+#: themes/zento/searchform.php:3
+msgid "Type to start your search"
+msgstr "Aramaya başlamak için yazın"
+
+#: themes/zento/searchform.php:4
+msgid "Submit"
+msgstr "Gönder"
+
+#: themes/zento/single.php:128
+msgid "Table of Contents"
+msgstr "İçindekiler dizini"
+
+#~ msgctxt "admin"
+#~ msgid "Post views"
+#~ msgstr "İçerik görüntülenmesi"
+
+#~ msgid "404"
+#~ msgstr "404"
+
+#~ msgid "Or check our latest articles..."
+#~ msgstr "Veya son içeriklerimize göz atın..."
+
+#, php-format
+#~ msgid "%1$s <span class=\"dot\"></span> Article in this Category"
+#~ msgid_plural ""
+#~ "%1$s &nbsp;<span class=\"dot\"></span> Articles in this Category"
+#~ msgstr[0] "%1$s <span class=\"dot\"></span> Bu kategorideki içerik"
+#~ msgstr[1] "%1$s &nbsp;<span class=\"dot\"></span> Bu kategorideki içerikler"
+
+#~ msgid "Explore"
+#~ msgstr "Keşfet"
+
+#, php-format
+#~ msgid "%1$s <span class=\"dot\"></span> Article with this Tag"
+#~ msgid_plural "%1$s &nbsp;<span class=\"dot\"></span> Articles with this Tag"
+#~ msgstr[0] "%1$s <span class=\"dot\"></span> Bu etiketi içeren içerik"
+#~ msgstr[1] ""
+#~ "%1$s &nbsp;<span class=\"dot\"></span> Bu etiketi içeren içerikler"

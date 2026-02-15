@@ -1,0 +1,14 @@
+/
+/contacts/
+/about/
+/terms/
+/responsible/
+/privacy-policy/
+/self-exclusion/
+/dispute-resolution/
+/fairness-rng-testing-methods/
+/accounts-withdrawals-and-bonuses/
+/cookies/
+/registration/
+/apk/
+/promo-code/

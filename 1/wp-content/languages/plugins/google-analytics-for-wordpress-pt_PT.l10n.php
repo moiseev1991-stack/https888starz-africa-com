@@ -1,0 +1,2 @@
+<?php
+return ['x-generator'=>'GlotPress/4.0.1','translation-revision-date'=>'2018-01-23 10:41:08+0000','plural-forms'=>'nplurals=2; plural=n != 1;','project-id-version'=>'Plugins - MonsterInsights &#8211; Google Analytics Dashboard for WordPress (Website Stats Made Easy) - Stable (latest release)','language'=>'pt','messages'=>['MonsterInsights'=>'MonsterInsights','Insights'=>'Insights','Overview'=>'Visão geral','General'=>'Gerais','Settings'=>'Definições','Reports'=>'Relatórios']];

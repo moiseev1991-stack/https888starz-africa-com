@@ -1,0 +1,171 @@
+/* All Mobile Devices */
+
+@media screen and (max-width: 1200px){
+
+    /* @group Global Styles */
+    
+    [data-aos="fade-up"], [data-aos="fade"]{ opacity: 1 !important; transform: none !important; }
+    body{
+        font-size: 14px;
+    }
+    body.menu-open{ overflow-x: hidden; }
+    .content{ margin-top: 40px; }
+    div.left-content, .epcl-right-sidebar div.left-content{
+        padding-right: 30px;
+    }
+	.one-sidebar .left-content{ width: auto; }
+    .module-wrapper .no-sidebar div.left-content{ padding-left: 0; padding-right: 0; }
+	.title{
+		font-size: 20px;
+		&.ularge{ font-size: 30px;  }
+		&.large{ font-size: 28px; }
+		&.medium{ font-size: 18px; }
+		&.small{ font-size: 16px; }
+		&.usmall{ font-size: 13px; }
+	}    
+    .grid-sidebar div.left-content{ padding-right: 0; }
+    
+    .button, .epcl-button:not(.epcl-shortcode){
+        font-size: 13px;
+    }
+
+    .widget_epcl_about .bio{
+        font-size: 13px;
+    }
+
+    .epcl-tags-archive{
+        .bg-box{
+            padding: 30px 0;
+        }
+    }
+
+
+	/* @end */
+
+	/* @group Header */
+
+	#header{
+        div.menu-wrapper{
+            padding-top: 0;
+            .grid-container{
+                border-radius: 0;
+            }
+        }
+        .open-menu{
+            margin-left: auto;
+        }
+        &[data-stuck]{
+            .grid-wrapper{ padding: 20px 40px; }
+        }
+    }
+    .main-nav ul.menu li .link{
+        font-size: 16px;
+    }
+    nav.side-nav{
+        .title{ font-size: 34px; }
+        ul.menu{ font-size: 16px; }
+    }
+
+    #header{
+        &.disable-sticky-mobile div.menu-wrapper{ position: relative !important; }
+        div.menu-wrapper .grid-container{
+            padding: 0;
+            background: $white;
+            box-shadow: $boxes-shadow;
+            border: 1px solid $border-color;
+        }
+        .grid-wrapper{
+            padding: 20px 40px !important;
+        }
+		.logo{ float: none; margin: 0 auto !important; }
+		.open-menu{
+			display: block;
+			position: absolute;
+			right: 40px;
+            top: 50%;
+            height: 31px;
+			cursor: pointer;
+			transform: translateY(-50%);
+            z-index: 200;
+            @include transition;
+        }
+		nav{
+            display: none !important;       
+		}        
+        .epcl-search-button{
+            top: 50%;
+            transform: translateY(-50%);
+            left: 40px;
+            display: block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            svg{ width: 25px; height: 25px; }
+        }
+        &.compact{
+            .logo{
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+            }
+        }
+        &.advertising .logo{ float: none; padding: 0; }
+    }
+
+
+    /* @end */
+
+    /* @group Global: Modules */
+
+    .intro-text{
+        p{
+            font-size: 16px;
+            margin: 20px auto;
+        }
+    }
+    .membership-page .subscribe-plan ul li{
+        font-size: 13px;
+        padding-left: 25px;
+    }
+    .membership-page .epcl-switch{
+        margin-bottom: $medium-section-padding;
+    }
+
+    /* @end */
+
+    /* @group Global: Articles Lists */
+
+    div.articles{
+        article{
+            padding-right: 0;
+            margin-bottom: 40px;
+        }
+        &.classic{
+            article{
+                .info{
+                    padding-left: 10px;
+                    padding-right: 30px;
+                }
+                .main-title{
+                    font-size: 18px;
+                }
+            }   
+        }
+    }
+
+    /* @end */
+
+    /* @group Single */
+
+     /* @end */
+
+     /* @group Footer */
+
+     #footer{
+        margin-top: 60px;
+     }
+
+     /* @end */
+
+}

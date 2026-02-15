@@ -1,0 +1,9 @@
+# Snippet for serving static /dist (add to server block)
+# Cache static assets
+location ~* \.(css|js|woff2?|ttf|eot|ico|png|jpe?g|gif|webp|svg)$ {
+    expires 1y;
+    add_header Cache-Control "public, immutable";
+}
+# Optional: gzip
+gzip on;
+gzip_types text/plain text/css application/json application/javascript text/xml application/xml;

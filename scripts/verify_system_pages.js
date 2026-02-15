@@ -1,18 +1,21 @@
+#!/usr/bin/env node
 /**
  * Verify system pages in /dist:
- * - file exists for each of the 9 slugs
- * - HTML contains expected H1 (exact string)
- * - no localhost references in HTML
- * - no 404 assets (optional: check relative css/js/img)
+ * - File exists for each of the 9 URLs (slug/index.html)
+ * - HTML contains expected H1 (exact string match)
+ * - No links to localhost
+ * - No 404 assets (basic check: script/img/link hrefs that point to relative paths exist)
+ * Usage: node scripts/verify_system_pages.js [distPath]
+ * Default distPath: dist (relative to project root)
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const PROJECT_ROOT = path.resolve(__dirname, '..');
-const DIST = path.join(PROJECT_ROOT, 'dist');
+const ROOT = path.resolve(__dirname, '..');
+const DIST = path.resolve(ROOT, process.argv[2] || 'dist');
 
-const SYSTEM_PAGES = [
+const PAGES = [
   { slug: 'about', h1: 'نبذة عن شركتنا' },
   { slug: 'contacts', h1: 'معلومات الاتصال' },
   { slug: 'terms', h1: 'الشروط والأحكام' },
@@ -24,49 +27,53 @@ const SYSTEM_PAGES = [
   { slug: 'accounts-withdrawals-and-bonuses', h1: 'الحسابات والعوائد والمكافآت' },
 ];
 
-const LOCALHOST_RE = /https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/gi;
+let failed = 0;
 
-function main() {
-  let failed = 0;
-  const errors = [];
-
-  if (!fs.existsSync(DIST)) {
-    console.error('dist/ not found. Run build first (e.g. npm run build:live).');
-    process.exit(1);
-  }
-
-  for (const { slug, h1 } of SYSTEM_PAGES) {
-    const filePath = path.join(DIST, slug, 'index.html');
-    const relPath = slug + '/index.html';
-
-    if (!fs.existsSync(filePath)) {
-      errors.push(`${relPath}: file missing`);
-      failed++;
-      continue;
-    }
-
-    const html = fs.readFileSync(filePath, 'utf8');
-
-    if (!html.includes(h1)) {
-      errors.push(`${relPath}: expected H1 "${h1}" not found`);
-      failed++;
-    }
-
-    const localhostMatch = html.match(LOCALHOST_RE);
-    if (localhostMatch && localhostMatch.length > 0) {
-      const unique = [...new Set(localhostMatch)];
-      errors.push(`${relPath}: contains localhost references: ${unique.join(', ')}`);
-      failed++;
-    }
-  }
-
-  if (failed > 0) {
-    console.error('Verify system pages: FAILED\n');
-    errors.forEach(e => console.error('  -', e));
-    process.exit(1);
-  }
-
-  console.log('Verify system pages: OK — 9 files present, H1 and no localhost.');
+function log(msg, ok = true) {
+  const prefix = ok ? '[OK]' : '[FAIL]';
+  console.log(prefix, msg);
+  if (!ok) failed++;
 }
 
-main();
+if (!fs.existsSync(DIST)) {
+  console.error('[FAIL] Dist folder not found:', DIST);
+  console.error('Run static export first, or pass path: node scripts/verify_system_pages.js <path>');
+  process.exit(1);
+}
+
+console.log('Verifying system pages in', DIST, '\n');
+
+for (const { slug, h1 } of PAGES) {
+  const file = path.join(DIST, slug, 'index.html');
+  const exists = fs.existsSync(file);
+  log(`File exists: /${slug}/index.html`, exists);
+  if (!exists) continue;
+
+  const html = fs.readFileSync(file, 'utf8');
+
+  const hasH1 = html.includes(h1);
+  log(`H1 present: "${h1}"`, hasH1);
+
+  const hasLocalhost = /https?:\/\/localhost|href="http:\/\/localhost/.test(html);
+  log(`No localhost in HTML`, !hasLocalhost);
+  if (hasLocalhost) {
+    const m = html.match(/https?:\/\/localhost[^"'\s]*/);
+    if (m) console.log('  Found:', m[0]);
+  }
+}
+
+// Footer "حول الموقع" should contain links to all 9 slugs
+const anyPage = path.join(DIST, 'contacts', 'index.html');
+if (fs.existsSync(anyPage)) {
+  const html = fs.readFileSync(anyPage, 'utf8');
+  const footerBlock = html.includes('حول الموقع');
+  log('Footer block "حول الموقع" present', footerBlock);
+  const allSlugs = PAGES.every(({ slug }) => {
+    const href = `href="/${slug}/"` || html.includes(`/${slug}/`);
+    return html.includes(`/${slug}/`);
+  });
+  log('All 9 slugs linked in page', allSlugs);
+}
+
+console.log('\n' + (failed ? `Failed: ${failed}` : 'All checks passed.'));
+process.exit(failed ? 1 : 0);

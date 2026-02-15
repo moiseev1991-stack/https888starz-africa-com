@@ -1,0 +1,41 @@
+# Local WordPress for 888starz-africa (static export source)
+# Usage: docker compose up -d
+# Then: import wp_gugum.sql into db, set siteurl/home to http://localhost:8080
+
+services:
+  db:
+    image: mariadb:10.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wp_gugum
+      MYSQL_USER: wp_rbje6
+      MYSQL_PASSWORD: Wfy7u!Xw~1hgh34a
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  wp:
+    image: wordpress:6.4-php8.2-apache
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wp_gugum
+      WORDPRESS_DB_USER: wp_rbje6
+      WORDPRESS_DB_PASSWORD: Wfy7u!Xw~1hgh34a
+      WORDPRESS_TABLE_PREFIX: TVXFZYUMh_
+    volumes:
+      - ./1:/var/www/html
+    ports:
+      - "8080:80"
+
+volumes:
+  db_data:

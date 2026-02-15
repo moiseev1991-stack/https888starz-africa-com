@@ -1,33 +1,20 @@
 {
   "name": "888starz-africa-static",
   "version": "1.0.0",
+  "description": "Static export and verification for 888starz-africa",
   "private": true,
-  "description": "Static export and build for 888starz-africa.com",
   "scripts": {
-    "export:static": "node scripts/export-crawler.js",
-    "export:live": "node scripts/export-crawler.js",
-    "export:wget": "bash scripts/export-static.sh",
-    "postexport:copy-assets": "node scripts/copy-wp-assets.js",
-    "build": "npm run export:static && npm run postexport:copy-assets",
-    "build:live": "npm run export:live && node scripts/download-all-assets.js && node scripts/copy-wp-assets.js && node scripts/download-slider-assets.js && node scripts/fix-html-paths.js && node scripts/inject-static-pages.js && node scripts/fetch-africa-pages.js && node scripts/replace-slider-slaid.js && node scripts/download-embla.js && node scripts/inject-lite-slider-apk.js && node scripts/download-africa-page-assets.js && node scripts/optimize-html-performance.js",
-    "download-assets": "node scripts/download-all-assets.js",
-    "serve": "node scripts/serve.js",
-    "test": "playwright test",
-    "verify:system-pages": "node scripts/verify_system_pages.js",
-    "capture:pages": "node scripts/capture-pages-playwright.js"
-  },
-  "dependencies": {
-    "chalk": "^4.1.2",
-    "p-limit": "^3.1.0",
-    "p-queue": "^6.6.2",
-    "playwright": "^1.40.0"
+    "verify": "node scripts/verify_system_pages.js",
+    "verify:dist": "node scripts/verify_system_pages.js dist",
+    "export": "node scripts/export-static.js",
+    "export:local": "node scripts/export-static.js http://localhost:8080",
+    "capture": "node scripts/capture-pages-playwright.js http://localhost:8080",
+    "copy-assets": "node scripts/copy-wp-assets.js",
+    "inject-app": "node scripts/inject-static-pages.js",
+    "check-paths": "node scripts/fix-html-paths.js",
+    "serve:static": "npx serve public"
   },
   "devDependencies": {
-    "@playwright/test": "^1.40.0",
-    "serve": "^14.2.0"
-  },
-  "staticExport": {
-    "baseUrl": "http://localhost:8080",
-    "outDir": "dist"
+    "playwright": "^1.40.0"
   }
 }

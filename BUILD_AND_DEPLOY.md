@@ -1,115 +1,59 @@
-# Сборка и выкат статической версии
+# Build and Deploy — статический сайт из WordPress
 
-Пошаговая инструкция: как собрать статику и развернуть её на хостинге.
+## Сборка в public/ (полный пайплайн по ТЗ)
 
----
+1. **Поднять WP:** `docker compose up -d`, импортировать БД, открыть http://localhost:8080
+2. **Снять слепок и сохранить HTML:**  
+   `node scripts/capture-pages-playwright.js http://localhost:8080`  
+   Пишет в `public/<path>/index.html` и `docs/inventory.md`.
+3. **Скопировать ассеты:**  
+   `node scripts/copy-wp-assets.js`  
+   Копирует `wp-content/uploads`, темы, плагины, `wp-includes/js` в `public/`.
+4. **Подключить app.js:**  
+   `node scripts/inject-static-pages.js`  
+   Добавляет `<script src="/assets/js/app.js" defer>` и убирает Yandex/canonical.
+5. **Проверка путей:**  
+   `node scripts/fix-html-paths.js`  
+   Список локальных путей, которых нет в `public/`.
 
-## Требования
+**Локальный просмотр:** из корня репозитория `npx serve public`, затем http://localhost:3000
 
-- **Локально:** Docker и Docker Compose (для запуска WP), либо уже работающий локальный WP с тем же контентом.
-- **Экспорт:** Node.js 16+ (для скрипта на Playwright) или wget (для скрипта export-static.sh/.ps1).
-- **Перед первой сборкой (Node):** выполнить `npx playwright install chromium` — без этого экспорт выдаст ошибку «Executable doesn't exist».
+## Сборка статики (альтернатива: только dist)
 
----
+1. **Поднять локальный WP**  
+   См. [RUN_LOCAL.md](RUN_LOCAL.md). Убедиться, что siteurl/home указывают на URL, с которого будет идти обход (например `http://localhost:8080`).
 
-## 1. Запустить WordPress локально
+2. **Экспорт в /dist**  
+   Один из вариантов:
+   - **Скрипт (Playwright):**  
+     `npm install && npx playwright install chromium`  
+     затем `npm run export:local` (читает URLS.txt, сохраняет HTML в `dist/<path>/index.html`). Ассеты не скачиваются — для полной копии с медиа используйте wget.
+   - **Crawler (wget):**  
+     `wget --mirror --convert-links --adjust-extension --page-requisites --no-parent -P dist http://localhost:8080/`
+   - **Плагин** (Simply Static / WP2Static): настроить экспорт в папку `dist` в корне проекта.
 
-1. Из корня проекта: `docker-compose up -d`
-2. Дождаться инициализации БД (первый запуск — несколько минут).
-3. Обновить в БД `siteurl` и `home` на `http://localhost:8080` (см. **RUN_LOCAL.md**).
-4. Проверить в браузере: http://localhost:8080 — сайт открывается, стили и медиа загружаются.
+3. **Структура URL**  
+   Сохранять trailing slash: для каждой страницы `/about/` → `dist/about/index.html`. Внутренние ссылки — относительные или на финальный домен (без localhost).
 
----
+4. **Ассеты**  
+   CSS/JS/шрифты/картинки должны лежать внутри проекта (например `dist/wp-content/...` или скопированы в `dist/assets`) и подключаться относительными путями. Проверить отсутствие 404.
 
-## 2. Собрать статическую выгрузку
+5. **Проверка системных страниц**  
+   Запустить:  
+   `node scripts/verify_system_pages.js`  
+   (ожидает папку `dist` в корне; при ином пути: `node scripts/verify_system_pages.js path/to/dist`).
 
-**Без WordPress (полностью автономно):** краулер обходит живой сайт https://888starz-africa.com, сохраняет HTML, затем скрипт **скачивает с сайта** все ресурсы (CSS, JS, картинки, шрифты) в `dist/`. При сбоях загрузки подставляются файлы из локального проекта; в конце в `dist` дописывается локальный `wp-content` (uploads, тема) для недостающих файлов. Сайт в `dist/` работает локально без интернета и без WordPress.
+## Деплой
 
-```bash
-npm install
-npm run build:live
-```
+- **Статический хостинг** (Netlify, Vercel, GitHub Pages, S3+CloudFront и т.п.):
+  - Корень сайта — каталог `dist` (или папка со статикой).
+  - При использовании подкаталога (например `https://site.com/africa/`) задать base path в скрипте экспорта и в конфиге хостинга.
+- **Nginx/Apache:**  
+  Указать document root на папку `dist`; при необходимости добавить правила для SPA/чистых URL (try_files на index.html для каталогов). Примеры заголовков кеша — в OPTIMIZATION_REPORT.md / nginx.conf.snippet.
 
-После `download-all-assets.js` выполняется **copy-wp-assets.js** — в `dist/` копируются локальные `wp-content/uploads` и `wp-content/themes/zento/assets`, чтобы все картинки (логотипы, баннеры, превью игр) и ассеты темы были доступны по путям `/wp-content/...`.
+## Чек-лист перед деплоем
 
-В `dist/` появятся: HTML-страницы, все стили и скрипты, изображения, **URLS.txt**, **pages.json** (индекс страниц), **asset-urls.json** (список URL ресурсов).
-
-**С локальным WordPress** (если нужно снять с локальной копии):
-
-```bash
-docker-compose up -d
-# в БД: siteurl/home = http://localhost:8080
-STATIC_BASE_URL=http://localhost:8080 npm run build
-```
-
-Переменные окружения (опционально):
-
-- `STATIC_BASE_URL` — откуда обходить (по умолчанию `https://888starz-africa.com`).
-- `STATIC_OUT_DIR=dist` — папка вывода.
-
-После выполнения в папке **dist/** будет статический сайт, в корне проекта — **URLS.txt**.
-
-### Вариант B: wget (Linux / Git Bash / WSL)
-
-```bash
-bash scripts/export-static.sh http://localhost:8080 dist
-```
-
-Затем скопировать ассеты (если нужно):
-
-```bash
-node scripts/copy-wp-assets.js
-```
-
-### Вариант C: PowerShell (Windows, при наличии wget)
-
-```powershell
-.\scripts\export-static.ps1 -BaseUrl "http://localhost:8080" -OutDir "dist"
-node scripts/copy-wp-assets.js
-```
-
----
-
-## 3. Проверка после сборки
-
-- Локально открыть статику: `npm run serve` → http://localhost:3080 (порт задаётся через `SERVE_PORT`, по умолчанию 3080)
-- Проверить главную, несколько страниц и записей, медиа, архивы.
-- Убедиться, что нет битых ссылок и отсутствующих CSS/JS/картинок (при необходимости донастроить копирование ассетов в `copy-wp-assets.js`).
-
----
-
-## 4. Деплой на хостинг
-
-- Содержимое папки **dist/** загрузить в корень документа сервера (или в нужный подкаталог).
-- Настроить веб-сервер:
-  - **nginx:** использовать фрагмент из **nginx.conf.snippet** (try_files, кеш, при необходимости gzip/brotli).
-  - **Apache:** использовать **.htaccess.snippet** (правила для index.html, кеш, deflate).
-- Для продакшена указать в конфиге сервера корень сайта на каталог с выгруженной статикой.
-
-Домен и SSL настраиваются как обычно (DNS, сертификат). Статика не требует PHP и MySQL.
-
----
-
-## 5. QA после сборки
-
-- **Ссылки:** проверить ключевые страницы вручную или запустить линк-чекер по dist (например, `npx linkinator dist --recurse`).
-- **Ассеты:** убедиться, что нет 404 на CSS, JS, изображения, шрифты (вкладка Network в DevTools).
-- **SEO:** проверить наличие title, meta description, og-тегов на главной и типовых страницах; при наличии — sitemap.xml и robots.txt в dist.
-- **Скорость:** ориентир — Lighthouse Performance 90+ для главной (зависит от хостинга и размера медиа).
-
-Опционально: регрессионные скриншоты (Playwright) — см. папку **tests/**.
-
----
-
-## 6. Повторная сборка
-
-1. При изменении контента в WP: обновить дамп БД или контент в локальном WP, снова выполнить шаги 1–2.
-2. При смене домена: в экспортированном HTML уже стоят относительные пути (или локальный URL заменён на пустой); при необходимости выполнить поиск-замену старого домена на новый в файлах в dist (или задать production URL в скрипте и делать замену при сборке).
-
----
-
-## Итог
-
-- **Сборка:** запуск WP локально → экспорт (Playwright или wget) → копирование ассетов → проверка в dist.
-- **Деплой:** загрузка dist на хостинг, настройка nginx/Apache по snippet’ам.
-- Дополнительно: **AUDIT.md**, **DYNAMIC_REPLACEMENTS.md**, **OPTIMIZATION_REPORT.md**, **RUN_LOCAL.md**.
+- [ ] Все 9 системных страниц есть в dist и проходят verify_system_pages.js.
+- [ ] В HTML нет ссылок на localhost.
+- [ ] Нет битых внутренних ссылок и 404 на ассеты (css/js/img).
+- [ ] sitemap.xml и robots.txt при необходимости сгенерированы и лежат в dist.

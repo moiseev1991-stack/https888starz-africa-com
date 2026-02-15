@@ -1,0 +1,190 @@
+
+@import "settings";
+@import "generic/functions";
+
+/* Disable Animations */
+
+[data-aos=fade], [data-aos=fade-up]{
+    opacity: 1 !important;
+}
+
+// AMP elements
+
+amp-img.cover img {
+    object-fit: cover;
+}
+amp-carousel{
+    .amp-carousel-button{
+        border-radius: 50%;
+        background-color: $main-color;
+        &:focus, &:active{
+            border-color: $main-color,
+        }
+    }
+    .amp-carousel-slide{
+        border-radius: $small-border-radius;
+        box-sizing: border-box;
+    }
+    amp-img.cover img {
+        object-fit: cover !important;
+    }
+}
+amp-sidebar{
+    background: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 300px;
+    padding-top: 60px;
+    .logo{
+        text-align: center;
+    }	
+    .tagline{
+        text-align: center;
+        margin-top: -20px;
+    }
+    .close{
+        text-align: right;
+        background: $main-color;
+        color: $white;
+        position: absolute;
+        right: 0;
+        top: 20px;
+        z-index: 1000;
+        border-radius: $large-border-radius 0 0 $large-border-radius;
+        padding: 7px;
+        padding-left: 14px;
+        @include transition;
+        cursor: pointer;
+        svg{ width: 28px; height: 28px; }
+        &:hover{
+            padding-right: 14px;
+        }
+    }
+    // Bottom buttons
+    .epcl-buttons{
+        text-align: center;
+        margin-top: 20px;
+        a{
+            display: inline-block;
+            margin: 0 5px 5px;
+            min-width: 100px;
+        }
+    } 
+    
+    ul.menu{
+        display: block !important;
+        font-size: 0;
+        padding: 40px 20px;
+        max-width: 275px;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    ul.menu > li{
+        padding: 15px;
+        padding-right: 20px;
+        display: block;
+        position: relative;
+    }
+    ul.menu li a{
+        padding: 5px 0;
+        color: $text-color;
+        font-size: 15px;
+        font-weight: 500;
+        font-family: $title-font-family;
+        line-height: 1.25;
+    }
+    ul.menu li.menu-item-has-children{
+        display: block;
+        margin-right: 0;
+        padding-right: 20px;
+        position: relative;
+        &:after{
+            content: '';
+            background: no-repeat center center url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11.9997 13.1714L16.9495 8.22168L18.3637 9.63589L11.9997 15.9999L5.63574 9.63589L7.04996 8.22168L11.9997 13.1714Z' %3E%3C/path%3E%3C/svg%3E");
+            display: block;
+            position: absolute;
+            width: 20px;
+            height: 25px;
+            right: 0;
+            top: 10px;
+            z-index: 5;
+        }
+        &:hover{
+            > ul.sub-menu{
+                opacity: 1;
+                visibility: visible;
+                max-height: 50vh !important;
+                overflow: auto;
+                padding: 10px 0 0;
+                .menu-item-has-children:hover ul.sub-menu{
+                    padding-top: 0px;
+                }
+            }
+        }
+        li.menu-item-has-children{
+            padding-right: 0;
+        }
+        li.menu-item-has-children:after{
+            top: 6px;
+            right: 0px;
+        }
+    }
+    ul.sub-menu{
+        position: relative !important;
+        max-height: 0 !important;
+        overflow: hidden;
+        background: none;
+        padding: 0;
+        margin-right: -20px;
+        @include transition;
+        li{
+            padding: 0;
+        }
+        li a{
+            padding: 10px 0;
+            color: $text-color;
+            font-size: 14px;
+            font-weight: 400;
+            display: block;
+        }
+        ul.sub-menu{
+            margin-left: 5px;
+            li a{
+                padding-left: 10px;
+            }
+        }
+    }
+    ul.menu li.current-menu-item > a, ul.menu > li.current-menu-ancestor > a{
+        position: relative;
+        font-weight: 700;
+        &:before{
+            display: block;
+            content: '';
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            left: -20px;
+            top: 2px;
+            background-color: $secondary-color;
+            mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none"><g clip-path="url(%23a)"><path fill="%23FF2AAC" d="M5.558 1.96a.758.758 0 0 1 1.34-.085l.044.086.782 1.758a8.25 8.25 0 0 0 3.252 3.699l.242.141 1.388.78c.486.274.513.95.081 1.269l-.08.052-1.389.781a8.25 8.25 0 0 0-3.376 3.586l-.118.254-.782 1.758a.758.758 0 0 1-1.34.086l-.044-.086-.782-1.758a8.25 8.25 0 0 0-3.252-3.699l-.242-.141-1.388-.78a.758.758 0 0 1-.081-1.269l.08-.052 1.39-.781a8.25 8.25 0 0 0 3.375-3.586l.118-.254.782-1.758Zm6.857-.37a4.3 4.3 0 0 0 1.811 2.006c.12.067.12.24 0 .308a4.3 4.3 0 0 0-1.81 2.005.18.18 0 0 1-.331 0 4.3 4.3 0 0 0-1.811-2.005.177.177 0 0 1 0-.308 4.299 4.299 0 0 0 1.81-2.005.18.18 0 0 1 .331 0Z"/></g><defs><clipPath id="a"><path fill="%23fff" d="M0 0h18v18H0z"/></clipPath></defs></svg>');
+            mask-size: 16px;
+        }
+    }
+}
+
+// Fixes
+
+div.text{
+    .wp-block-gallery{
+        li{ list-style: none; }
+    }
+}
+div.meta.absolute{
+    display: none !important;
+}
+div.articles .post-format-audio{ height: 225px; }
+
+@media screen and (max-width: 767px){
+    div.articles .post-format-audio amp-iframe{ height: 100% !important; }
+}

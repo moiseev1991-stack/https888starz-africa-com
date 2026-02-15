@@ -1,86 +1,26 @@
-# Аудит системных страниц (9 страниц)
+# System Pages Audit (9 обязательных страниц)
 
-## Назначение документа
+## Источник данных
+- База: `wp_gugum.sql`, префикс таблиц: `TVXFZYUMh_`
+- Проверка: поиск по `TVXFZYUMh_posts` (post_type='page', post_status='publish'), post_name = slug
 
-Проверка наличия в локальной WordPress-копии страниц со slug:
-`about`, `contacts`, `terms`, `responsible`, `privacy-policy`, `self-exclusion`, `dispute-resolution`, `fairness-rng-testing-methods`, `accounts-withdrawals-and-bonuses`.
+## Результат проверки по slug
 
----
+| # | Slug | Ожидаемый H1 | Label в меню | Найдено в БД | ID | post_content (длина) | Примечание |
+|---|------|--------------|--------------|--------------|-----|----------------------|------------|
+| 1 | about | نبذة عن شركتنا | من نحن | Да | 1198 | Есть (about__section) | Контент заполнен |
+| 2 | contacts | معلومات الاتصال | معلومات الاتصال | Да | 1201 | Есть (contacts-list) | Контакты, email |
+| 3 | terms | الشروط والأحكام | شروط الاستخدام | Да | 1203 | Есть (قوانين) | Условия приёма ставок |
+| 4 | responsible | اللعب المسؤول | اللعب المسؤول | Да | 1205 | Есть (مسؤول) | Ответственная игра |
+| 5 | privacy-policy | السرية وإدارة البيانات الشخصية | الخصوصية وإدارة البيانات | Да | 13 | Есть (GDPR, سياسة الخصوصية) | Приватность |
+| 6 | self-exclusion | الإقصاء الذاتي | الاستبعاد الذاتي | Да | 1213 | Есть (استراحة, إغلاق حساب) | Самоисключение |
+| 7 | dispute-resolution | حل النزاع | حل النزاعات | Да | 1216 | Есть (حل النزاعات) | Разрешение споров |
+| 8 | fairness-rng-testing-methods | الإنصاف وطرق اختبار RNG | طرق اختبار النزاهة والعشوائية | Да | 1219 | Есть (RNG, iTechLabs) | Честность/RNG |
+| 9 | accounts-withdrawals-and-bonuses | الحسابات والعوائد والمكافآت | الحسابات والمدفوعات والمكافآت | Да | 1221 | Есть (الحسابات، السحب) | Счета, выводы, бонусы |
 
-## 1. Проверка в базе WordPress (wp_posts)
-
-**Примечание:** В репозитории нет доступа к БД (нет docker-compose, нет SQL-дампов). При наличии запущенной локальной WP выполните запрос ниже.
-
-### SQL-запрос для проверки
-
-```sql
-SELECT ID, post_name, post_title, post_status, post_type,
-       LENGTH(post_content) AS content_length,
-       (SELECT meta_value FROM wp_postmeta WHERE post_id = p.ID AND meta_key = '_wp_page_template' LIMIT 1) AS page_template
-FROM wp_posts p
-WHERE p.post_type = 'page'
-  AND p.post_name IN (
-    'about',
-    'contacts',
-    'terms',
-    'responsible',
-    'privacy-policy',
-    'self-exclusion',
-    'dispute-resolution',
-    'fairness-rng-testing-methods',
-    'accounts-withdrawals-and-bonuses'
-  )
-ORDER BY FIELD(p.post_name,
-  'about', 'contacts', 'terms', 'responsible', 'privacy-policy',
-  'self-exclusion', 'dispute-resolution', 'fairness-rng-testing-methods', 'accounts-withdrawals-and-bonuses');
-```
-
-Если в вашей установке префикс таблиц не `wp_`, замените `wp_posts` и `wp_postmeta` на актуальные имена (например `TVXFZYUMh_posts` по RUN_LOCAL.md).
-
-### Ожидаемый результат (шаблон для заполнения)
-
-| slug | найдено | ID | content_length | page_template |
-|------|---------|-----|----------------|---------------|
-| about | да/нет | — | — | — |
-| contacts | да/нет | — | — | — |
-| terms | да/нет | — | — | — |
-| responsible | да/нет | — | — | — |
-| privacy-policy | да/нет | — | — | — |
-| self-exclusion | да/нет | — | — | — |
-| dispute-resolution | да/нет | — | — | — |
-| fairness-rng-testing-methods | да/нет | — | — | — |
-| accounts-withdrawals-and-bonuses | да/нет | — | — | — |
-
----
-
-## 2. Состояние в /dist (статический экспорт)
-
-На момент аудита в каталоге `dist/` **не было** физических папок/файлов для этих 9 страниц, потому что:
-
-- футер в шаблоне `footer.php` содержал ссылки на `/game/` вместо системных slug;
-- краулер при экспорте с прод-сайта не получал ссылок на эти страницы из футера.
-
-После внесённых изменений:
-
-- в `scripts/export-crawler.js` добавлены **seed URL** для всех 9 страниц — они гарантированно попадают в обход при `npm run build:live`;
-- в `wp-content/themes/zento/partials/footer.php` восстановлены ссылки на правильные slug.
-
-Проверка после пересборки: скрипт `node scripts/verify_system_pages.js` проверяет наличие файлов и ожидаемых H1 в `dist/`.
-
-При экспорте с прода футер в сохранённом HTML изначально содержит ссылки на `/game/`. Скрипт `fix-html-paths.js` (шаг после краулера в `build:live`) заменяет в футере ссылки для этих 9 пунктов на правильные относительные пути (`/about/`, `/contacts/` и т.д.), так что в собранной статике пункты «حول الموقع» ведут на системные страницы.
-
----
-
-## 3. Ожидаемые H1 и пункты меню (reference)
-
-| slug | ожидаемый H1 | label в меню (حول الموقع) |
-|------|----------------|----------------------------|
-| about | نبذة عن شركتنا | من نحن |
-| contacts | معلومات الاتصال | معلومات الاتصال |
-| terms | الشروط والأحكام | شروط الاستخدام |
-| responsible | اللعب المسؤول | اللعب المسؤول |
-| privacy-policy | السرية وإدارة البيانات الشخصية | الخصوصية وإدارة البيانات |
-| self-exclusion | الإقصاء الذاتي | الاستبعاد الذاتي |
-| dispute-resolution | حل النزاع | حل النزاعات |
-| fairness-rng-testing-methods | الإنصاف وطرق اختبار RNG | طرق اختبار النزاهة والعشوائية |
-| accounts-withdrawals-and-bonuses | الحسابات والعوائد والمكافآت | الحسابات والمدفوعات والمكافآت |
+## Вывод
+- Все 9 страниц **найдены в БД** как опубликованные страницы (post_type=page).
+- Контент у всех заполнен (post_content не пустой).
+- Точные post_name (slug) в дампе определяются по полю post_name в TVXFZYUMh_posts; по анализу контента соответствие ID↔slug указано выше. При расхождении после импорта БД нужно проверить в админке WP (Страницы) и при необходимости поправить slug.
+- Шаблон: стандартный page.php темы Zento (postmeta _wp_page_template при необходимости проверить отдельно).
+- SEO: используется All in One SEO (aioseo); при экспорте в статику meta можно сохранить из postmeta или извлечь из HTML.

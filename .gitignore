@@ -1,19 +1,6 @@
-# Static export
-/dist/
-/deploy/
-deploy.tar.gz
-
-# Node
 node_modules/
-npm-debug.log*
-
-# Playwright + capture output (Stage 1)
-/test-results/
-/scripts/capture-output/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-
-# Local env (optional)
 .env
-.env.local
+*.log
+.DS_Store
+1.zip
+wp_gugum.sql

@@ -1,0 +1,58 @@
+
+/* Tablet Portrait */
+
+@media screen and (max-width: 980px){
+    .woocommerce-account .woocommerce-MyAccount-navigation{
+        padding-bottom: 30px;
+    }
+}
+
+/* Mobile */
+
+@media screen and (max-width: 767px){
+
+    .woocommerce{
+        // Global Elements
+        .bg-white{
+            padding: 25px;
+        }
+        a.button, button.button, a.button.alt, button.button.alt{
+            font-size: 12px;
+            padding: 10px 10px;
+        }	
+        span.onsale, ul.products li.product .onsale{
+            font-size: 12px;
+            padding: 3px 7px;
+        }
+        // Product List
+        // ul.products[class*=columns-] li.product, .woocommerce-page ul.products[class*=columns-] li.product{
+        //     width: auto;
+        // }
+        // Single Product
+        div.product .woocommerce-tabs ul.tabs{
+            // padding-left: 0;
+            li{
+                padding: 5px 7px;
+                a{ font-size: 11px; }
+            }
+        }
+        #reviews #comments ol.commentlist li .comment-text .description{ font-size: 13px; }
+        #single #comments{ padding: 20px 0; }
+         #single section.related.products{ padding: 20px; }
+        
+        // Cart
+        .cart .quantity .qty{ margin-right: 0; }
+        table.shop_table td.actions .coupon .input-text{
+            width: 40%;
+        }
+        .cart-collaterals, .woocommerce-page .cart-collaterals{
+            width: auto;
+            table.shop_table_responsive tr td{ background: inherit; }
+        }
+        .woocommerce-error, .woocommerce-info, .woocommerce-message{
+            font-size: 13px;
+            line-height: 20px;
+        }
+    }
+    
+}
