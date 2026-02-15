@@ -12,6 +12,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check FTP secrets
+        run: |
+          if [ -z "${{ secrets.FTP_SERVER }}" ]; then
+            echo "::error::FTP_SERVER is not set. Add it in Settings → Secrets and variables → Actions"
+            exit 1
+          fi
+          if [ -z "${{ secrets.FTP_USERNAME }}" ]; then
+            echo "::error::FTP_USERNAME is not set. Add it in Settings → Secrets and variables → Actions"
+            exit 1
+          fi
+          if [ -z "${{ secrets.FTP_PASSWORD }}" ]; then
+            echo "::error::FTP_PASSWORD is not set. Add it in Settings → Secrets and variables → Actions"
+            exit 1
+          fi
+          echo "FTP secrets are configured."
+
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
