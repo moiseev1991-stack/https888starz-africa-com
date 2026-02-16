@@ -1,12 +1,19 @@
-# Deploy static site (public/) to Beget via FTP
-# Важно: если сайт отдаётся из папки 888starzeg-egypt.com/public_html, создай секрет
-# SERVER_DIR = 888starzeg-egypt.com/public_html (без слэшей по краям)
+# Деплой статического сайта (папка public/) на Beget по FTP
+#
+# Секреты в Settings → Secrets and variables → Actions:
+#   FTP_SERVER    — хост FTP (например smirno34.beget.tech)
+#   FTP_USERNAME — логин FTP
+#   FTP_PASSWORD — пароль FTP
+#   SERVER_DIR   — папка на сервере (например 888starzeg-egypt.com/public_html)
+#                  если не задан, заливка идёт в корень FTP (/)
+#
 name: Deploy to Beget
 on:
   push:
     branches:
       - main
   workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,7 +33,8 @@ jobs:
       - name: Skip deploy (no FTP secrets)
         if: steps.ftp-check.outputs.ready != 'true'
         run: |
-          echo "Deploy skipped. Add FTP_SERVER, FTP_USERNAME, FTP_PASSWORD in Settings → Secrets and variables → Actions to enable deploy."
+          echo "::warning::Deploy пропущен. Добавь FTP_SERVER, FTP_USERNAME, FTP_PASSWORD в Settings → Secrets and variables → Actions."
+          exit 0
 
       - name: FTP Deploy
         if: steps.ftp-check.outputs.ready == 'true'
@@ -37,3 +45,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./public/
           server-dir: ${{ secrets.SERVER_DIR || '/' }}
+
+      - name: Deploy success
+        if: steps.ftp-check.outputs.ready == 'true'
+        run: echo "✅ Деплой завершён. Файлы залиты на Beget."
