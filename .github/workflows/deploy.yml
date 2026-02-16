@@ -1,4 +1,6 @@
 # Deploy static site (public/) to Beget via FTP
+# Важно: если сайт отдаётся из папки 888starzeg-egypt.com/public_html, создай секрет
+# SERVER_DIR = 888starzeg-egypt.com/public_html (без слэшей по краям)
 name: Deploy to Beget
 on:
   push:
@@ -34,4 +36,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./public/
-          server-dir: /
+          server-dir: ${{ secrets.SERVER_DIR || '/' }}

@@ -2,6 +2,8 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteBase /
+	# Не отдавать статику в PHP: запросы к /assets/ — только как файлы
+	RewriteRule ^assets/ - [L]
 	RewriteCond %{REQUEST_FILENAME} -f
 	RewriteRule ^ - [L]
 	RewriteCond %{REQUEST_FILENAME} -d
