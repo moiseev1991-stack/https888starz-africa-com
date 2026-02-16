@@ -3908,6 +3908,10 @@ html
 		flex-direction:column;
 		padding:20px
 	}
+	/* Скрыть блок "باقة الكازينو الترحيبية" на мобильных устройствах */
+	.slider-888-container .owl-item.hide-on-mobile {
+		display: none !important;
+	}
 
 	.slider-888-slide::after
 	{
@@ -5768,6 +5772,14 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 			touchDrag: true,
 			mouseDrag: true,
 			dots: true,
+		});
+		// Скрыть блок "باقة الكازينو الترحيبية" на мобильных устройствах
+		$(".slider-888-container .owl-item").each(function() {
+			var $item = $(this);
+			var $title = $item.find(".slider-888-slide-title");
+			if ($title.length && $title.text().trim() === "باقة الكازينو الترحيبية") {
+				$item.addClass("hide-on-mobile");
+			}
 		});
 	}
 
