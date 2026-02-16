@@ -3600,6 +3600,113 @@ table:not([class]) tbody,table:not([class]) tr,
 	display:none
 }
 
+#single .post-content .owl-carousel .owl-nav,
+#single .post-content .owl-mobile .owl-nav
+{
+	display:flex !important;
+	visibility:visible !important;
+	position:absolute;
+	left:0;
+	right:0;
+	top:50%;
+	transform:translateY(-50%);
+	justify-content:space-between;
+	pointer-events:none;
+	margin:0;
+	padding:0 8px;
+	z-index:10
+}
+#single .post-content .owl-carousel .owl-nav.disabled,
+#single .post-content .owl-mobile .owl-nav.disabled
+{
+	display:flex !important;
+	visibility:visible !important
+}
+#single .post-content .owl-carousel .owl-nav button,
+#single .post-content .owl-mobile .owl-nav button
+{
+	pointer-events:auto;
+	width:44px;
+	height:44px;
+	min-width:44px;
+	min-height:44px;
+	border-radius:50%;
+	background:rgba(0,0,0,0.6);
+	color:#fff;
+	border:none;
+	cursor:pointer;
+	font-size:24px;
+	line-height:1;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	transition:background .2s
+}
+#single .post-content .owl-carousel .owl-nav button:hover,
+#single .post-content .owl-mobile .owl-nav button:hover
+{
+	background:rgba(0,0,0,0.85)
+}
+#single .post-content .owl-carousel .owl-prev,
+#single .post-content .owl-mobile .owl-prev
+{
+	position:absolute;
+	left:8px
+}
+#single .post-content .owl-carousel .owl-next,
+#single .post-content .owl-mobile .owl-next
+{
+	position:absolute;
+	right:8px
+}
+#single .post-content .owl-carousel,
+#single .post-content .owl-mobile
+{
+	position:relative
+}
+#single .post-content .owl-dots
+{
+	display:flex !important;
+	visibility:visible !important;
+	flex-wrap:wrap;
+	gap:6px;
+	justify-content:center;
+	margin-top:14px;
+	padding:10px 0
+}
+#single .post-content .owl-dots .owl-dot
+{
+	display:inline-flex !important;
+	visibility:visible !important;
+	align-items:center;
+	justify-content:center;
+	width:32px;
+	height:32px;
+	min-width:32px;
+	border-radius:50%;
+	background:#3d3d3d;
+	color:#fff;
+	font-size:14px;
+	font-weight:600;
+	cursor:pointer;
+	border:none;
+	transition:background .2s
+}
+#single .post-content .owl-dots .owl-dot:hover
+{
+	background:#555
+}
+#single .post-content .owl-dots .owl-dot.active
+{
+	background:#900
+}
+.owl-carousel,
+.owl-mobile,
+.slider-888-container
+{
+	position:relative
+}
+
 .owl-mobile
 {
 	margin:20px 0;
@@ -6764,6 +6871,8 @@ document.addEventListener("DOMContentLoaded", function() {
     </div>
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
@@ -6782,10 +6891,20 @@ document.addEventListener("DOMContentLoaded", function() {
 	function initOwlAndFancybox() {
 		var $ = window.jQuery;
 		if (!$ || !$.fn.owlCarousel) return;
-		$(".owl-carousel, .owl-mobile").each(function() {
-			if ($(this).hasClass("owl-loaded")) {
-				$(this).trigger("destroy.owl.carousel");
-				$(this).removeClass("owl-loaded owl-drag owl-grab");
+		$(".owl-carousel").each(function() {
+			var $el = $(this);
+			if ($el.find(".owl-stage-outer").length) {
+				var $slides = $el.find(".owl-item .slide").detach();
+				$el.empty().removeClass("owl-loaded owl-drag owl-grab");
+				$el.append($slides);
+			}
+		});
+		$(".owl-mobile").each(function() {
+			var $el = $(this);
+			if ($el.find(".owl-stage-outer").length) {
+				var $slides = $el.find(".owl-item .mobile-slide").detach();
+				$el.empty().removeClass("owl-loaded owl-drag owl-grab");
+				$el.append($slides);
 			}
 		});
 		$(".slider-888-slider").each(function() {
@@ -6800,7 +6919,8 @@ document.addEventListener("DOMContentLoaded", function() {
 			items: 1,
 			margin: 30,
 			loop: true,
-			nav: false,
+			nav: true,
+			navText: ["‹","›"],
 			dots: true,
 			autoplay: true,
 			autoplayTimeout: 5000,
@@ -6814,7 +6934,8 @@ document.addEventListener("DOMContentLoaded", function() {
 			items: 3,
 			margin: 30,
 			loop: true,
-			nav: false,
+			nav: true,
+			navText: ["‹","›"],
 			dots: true,
 			rtl:false,
 			ltr:true,
@@ -6877,8 +6998,10 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 		function addAriaLabelsToDots() {
 			$(".owl-dots .owl-dot").each(function(index) {
 				var $dot = $(this);
-				if (!$dot.attr("aria-label")) {
-					$dot.attr("aria-label", "Go to slide " + (index + 1));
+				var n = index + 1;
+				if (!$dot.attr("aria-label")) $dot.attr("aria-label", "Go to slide " + n);
+				if ($dot.closest("#single .post-content").length) {
+					$dot.addClass("owl-dot-number").html("<span>" + n + "</span>");
 				}
 			});
 		}
@@ -6898,6 +7021,23 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 		});
 		$(".owl-carousel, .owl-mobile").on("initialized.owl.carousel", addAriaLabelsToDots);
 		markCasinoWelcomeHidden();
+		$(document).off("click.contentSliders", "#single .post-content .owl-prev, #single .post-content .owl-next");
+		$(document).on("click.contentSliders", "#single .post-content .owl-prev", function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			$(this).closest(".owl-carousel, .owl-mobile").trigger("prev.owl.carousel");
+		});
+		$(document).on("click.contentSliders", "#single .post-content .owl-next", function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			$(this).closest(".owl-carousel, .owl-mobile").trigger("next.owl.carousel");
+		});
+		$(document).off("click.contentSlidersDots", "#single .post-content .owl-dots .owl-dot");
+		$(document).on("click.contentSlidersDots", "#single .post-content .owl-dots .owl-dot", function(e) {
+			e.preventDefault();
+			var idx = $(this).index();
+			$(this).closest(".owl-carousel, .owl-mobile").trigger("to.owl.carousel", [idx]);
+		});
 	}
 
 	(function runWhenReady(){

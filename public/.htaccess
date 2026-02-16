@@ -1,3 +1,8 @@
+# Отдавать статический index.html, а не WordPress index.php (если оба в корне)
+<IfModule mod_dir.c>
+	DirectoryIndex index.html index.php
+</IfModule>
+
 # Ensure existing files (JS, CSS, etc.) are served as static — avoid 500 when parent rewrites to PHP
 <IfModule mod_rewrite.c>
 	RewriteEngine On
