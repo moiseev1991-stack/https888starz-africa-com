@@ -173,25 +173,6 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 }
 </script>
 <!-- /end HFCM by 99 Robots -->
-<!-- HFCM by 99 Robots - Snippet # 12: metrik -->
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();
-   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-   ym(102192350, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        webvisor:true
-   });
-</script>
-<noscript><div><img loading="lazy" src="https://mc.yandex.ru/watch/102192350" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-<!-- /end HFCM by 99 Robots -->
 <style id="epcl-theme-header-css">body{ background: #2b2b2b; }:root{ --epcl-main-color: #990000; }input[type=email]:focus, input[type=number]:focus, input[type=password]:focus, input[type=tel]:focus, input[type=text]:focus, input[type=url]:focus, textarea:focus{ 
             border-color: #990000; box-shadow: none; }:root{ --epcl-secondary-color: #000000; }:root{ --epcl-titles-color: #990000; }#header nav ul.menu > li > a:not(.epcl-button), nav.side-nav ul.menu > li > a:not(.epcl-button),
                  #header nav ul.menu li.menu-item-has-children:after{ 
@@ -3910,12 +3891,15 @@ html
 	}
 }
 @media (max-width: 940px) {
-	/* Скрыть весь контейнер слайдера на мобильных/планшетах */
-	.slider-888-container {
+	/* Скрыть весь контейнер слайдера на мобильных/планшетах (высокая специфичность + вариант с опечаткой lider) */
+	#wrapper .slider-888-container,
+	#wrapper .lider-888-container,
+	.slider-888-container,
+	.lider-888-container {
 		display: none !important;
 	}
-	/* Скрыть блок "باقة الكازينو الترحيبية" на мобильных/планшетах */
-	.slider-888-container .owl-item.hide-on-mobile {
+	.slider-888-container .owl-item.hide-on-mobile,
+	.lider-888-container .owl-item.hide-on-mobile {
 		display: none !important;
 	}
 }
