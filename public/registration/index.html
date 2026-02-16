@@ -3579,9 +3579,17 @@ table:not([class]) tbody,table:not([class]) tr,
 
 .owl-dots
 {
-	display:flex;
-	gap:2px;
-	justify-content:center
+	display:flex !important;
+	visibility:visible !important;
+	gap:8px;
+	justify-content:center;
+	margin-top:12px;
+	padding:8px 0
+}
+.owl-dots .owl-dot
+{
+	display:inline-block !important;
+	visibility:visible !important
 }
 
 .disabled
@@ -6498,17 +6506,20 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 		markCasinoWelcomeHidden();
 	}
 
-	$(document).ready(function(){
-		fixEmptyTocLinks();
-		if (window.jQuery && window.jQuery.fn.owlCarousel) {
-			initOwlAndFancybox();
-		} else {
-			var s = document.createElement("script");
-			s.src = "https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js";
-			s.onload = function() { window.jQuery && initOwlAndFancybox(); };
-			document.head.appendChild(s);
+	(function runWhenReady(){
+		if (!window.jQuery) {
+			setTimeout(runWhenReady, 50);
+			return;
 		}
-	});
+		if (!window.jQuery.fn.owlCarousel) {
+			setTimeout(runWhenReady, 50);
+			return;
+		}
+		jQuery(document).ready(function(){
+			fixEmptyTocLinks();
+			initOwlAndFancybox();
+		});
+	})();
 </script>
 
 
