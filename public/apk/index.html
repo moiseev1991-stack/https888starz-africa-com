@@ -4352,69 +4352,57 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 <script>
-    jQuery(document).ready(function ($) {
-      $('.faq-question').click(function () {
-        var isOpen = $(this).hasClass('open');
-  
-        // Toggle the open/close state for the clicked question
-        $(this).toggleClass('open');
-        $(this).find('.checkmark').toggleClass('rotate');
-        $(this).next('.faq-answer').slideToggle();
-  
-        // Close other open answers if the clicked question was closed
-        if (!isOpen) {
-          $('.faq-question.open').not(this).removeClass('open');
-          $('.faq-answer').not($(this).next()).slideUp();
-          $('.checkmark').not($(this).find('.checkmark')).removeClass('rotate');
-        }
-      });
-	  $('.ez-question').click(function () {
-			var isOpen = $(this).hasClass('open');
-
-			// Toggle the open/close state for the clicked question
-			$(this).toggleClass('open');
-			$(this).find('.checkmark').toggleClass('rotate');
-			$(this).next('.ez-answer').slideToggle();
-			// Close other open answers if the clicked question was closed
-			if (!isOpen) {
-				$('.ez-question.open').not(this).removeClass('open');
-				$('.ez-answer').not($(this).next()).slideUp();
-				$('.checkmark').not($(this).find('.checkmark')).removeClass('rotate');
-			}
-		});
-    });
-
-  
-	  
-
-
     document.addEventListener('DOMContentLoaded', function() {
-        const links = document.querySelectorAll('.link-game-888');
-        const toggleBtn = document.getElementById('toggle-btn');
-        let isExpanded = false;
-        
-        // Изначально показываем только 8 элементов
-        const visibleLinks = 8;
-        links.forEach((link, index) => {
-            if (index >= visibleLinks) link.style.display = 'none';
-        });
-
-        // Обработчик события для кнопки
-        toggleBtn.addEventListener('click', () => {
-            isExpanded = !isExpanded;
-            if (isExpanded) {
-                // Показываем все элементы
-                links.forEach(link => link.style.display = 'flex');
-				links.forEach(link => link.style.direction = 'column');
-                toggleBtn.innerText = 'Hide';
-            } else {
-                // Скрываем элементы за пределами первых 8
-                links.forEach((link, index) => {
-                    if (index >= visibleLinks) link.style.display = 'none';
+        function toggleAccordion(questionClass, answerClass) {
+            document.querySelectorAll(questionClass).forEach(function(el) {
+                el.addEventListener('click', function() {
+                    var answer = this.nextElementSibling;
+                    var checkmark = this.querySelector('.checkmark');
+                    if (!answer || !answer.classList.contains(answerClass.slice(1))) return;
+                    var isOpen = this.classList.contains('open');
+                    this.classList.toggle('open');
+                    if (checkmark) checkmark.classList.toggle('rotate');
+                    answer.style.display = answer.style.display === 'none' ? 'flex' : 'none';
+                    if (!isOpen) {
+                        document.querySelectorAll(questionClass + '.open').forEach(function(o) {
+                            if (o !== el) {
+                                o.classList.remove('open');
+                                var next = o.nextElementSibling;
+                                if (next) next.style.display = 'none';
+                                var ck = o.querySelector('.checkmark');
+                                if (ck) ck.classList.remove('rotate');
+                            }
+                        });
+                    }
                 });
-                toggleBtn.innerText = 'Show more';
-            }
-        });
+            });
+        }
+        toggleAccordion('.faq-question', '.faq-answer');
+        toggleAccordion('.ez-question', '.ez-answer');
+
+        var links = document.querySelectorAll('.link-game-888');
+        var toggleBtn = document.getElementById('toggle-btn');
+        var visibleLinks = 8;
+        if (links.length) {
+            links.forEach(function(link, index) {
+                if (index >= visibleLinks) link.style.display = 'none';
+            });
+        }
+        if (toggleBtn) {
+            var isExpanded = false;
+            toggleBtn.addEventListener('click', function() {
+                isExpanded = !isExpanded;
+                if (isExpanded) {
+                    links.forEach(function(link) { link.style.display = 'flex'; link.style.direction = 'column'; });
+                    toggleBtn.innerText = 'Hide';
+                } else {
+                    links.forEach(function(link, index) {
+                        link.style.display = index >= visibleLinks ? 'none' : '';
+                    });
+                    toggleBtn.innerText = '\u0627\u0643\u062a\u0634\u0641 \u0627\u0644\u0645\u0632\u064a\u062f';
+                }
+            });
+        }
     });
   </script>	
 </head>
