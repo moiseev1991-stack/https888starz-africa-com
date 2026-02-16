@@ -2,6 +2,11 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteBase /
+	# Редирект /path/index.html -> /path/ (один URL для Google, без дублей)
+	RewriteCond %{THE_REQUEST} \s/index\.html [NC]
+	RewriteRule ^ / [R=301,L]
+	RewriteCond %{THE_REQUEST} \s/(.+)/index\.html [NC]
+	RewriteRule ^ /%1/ [R=301,L]
 	# Не отдавать статику в PHP: запросы к /assets/ — только как файлы
 	RewriteRule ^assets/ - [L]
 	RewriteCond %{REQUEST_FILENAME} -f
