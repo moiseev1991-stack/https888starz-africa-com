@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html><html dir="rtl" lang="ar" prefix="og: https://ogp.me/ns#"><head>
+<!DOCTYPE html><html dir="rtl" lang="ar" prefix="og: https://ogp.me/ns#"><head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
 	
@@ -6810,9 +6810,9 @@ document.addEventListener("DOMContentLoaded", function() {
 			autoplayTimeout: 5000,
 			touchDrag: true,
 			mouseDrag: true,
-			dots: true,
 			rtl:false,
 			ltr:true,
+			onInitialized: addAriaLabelsToDots
 		});
 		$(".owl-mobile").owlCarousel({
 			items: 3,
@@ -6830,7 +6830,8 @@ document.addEventListener("DOMContentLoaded", function() {
 				0: { items: 1, margin: 10 },
 				600: { items: 2, margin: 20 },
 				1000: { items: 3, margin: 30 }
-			}
+			},
+			onInitialized: addAriaLabelsToDots
 		});
 		// Исключаем клонированные элементы из выборки
 $('[data-fancybox="gallery"]:not(.owl-item.cloned [data-fancybox="gallery"])').fancybox({
@@ -6860,7 +6861,10 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 			autoplayTimeout: 5000,
 			touchDrag: true,
 			mouseDrag: true,
-			dots: true,
+			onInitialized: function() {
+				markCasinoWelcomeHidden();
+				addAriaLabelsToDots();
+			}
 		});
 		// Скрыть блок "باقة الكازينو الترحيبية" на мобильных (класс добавляем после инициализации Owl)
 		function markCasinoWelcomeHidden() {
@@ -6873,11 +6877,35 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 				}
 			});
 		}
-		$(".slider-888-slider").on("initialized.owl.carousel", markCasinoWelcomeHidden);
+		// Добавить aria-label для owl-dot кнопок (accessibility fix)
+		function addAriaLabelsToDots() {
+			$(".owl-dots .owl-dot").each(function(index) {
+				var $dot = $(this);
+				if (!$dot.attr("aria-label")) {
+					$dot.attr("aria-label", "Go to slide " + (index + 1));
+				}
+			});
+		}
+		// Исправить пустые ссылки в custom-toc (accessibility fix)
+		function fixEmptyTocLinks() {
+			$(".custom-toc a[href='#']").each(function() {
+				var $link = $(this);
+				if (!$link.text().trim() && !$link.attr("aria-label")) {
+					$link.attr("aria-hidden", "true");
+					$link.attr("tabindex", "-1");
+				}
+			});
+		}
+		$(".slider-888-slider, .owl-carousel, .owl-mobile").on("initialized.owl.carousel", function() {
+			markCasinoWelcomeHidden();
+			addAriaLabelsToDots();
+		});
+		$(".owl-carousel, .owl-mobile").on("initialized.owl.carousel", addAriaLabelsToDots);
 		markCasinoWelcomeHidden();
 	}
 
 	$(document).ready(function(){
+		fixEmptyTocLinks();
 		if (window.jQuery && window.jQuery.fn.owlCarousel) {
 			initOwlAndFancybox();
 		} else {
