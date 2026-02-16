@@ -3898,6 +3898,16 @@ html
 	#footer .mobile-version{
 		display:none;
 	}
+@media (max-width: 940px) {
+	/* Скрыть весь контейнер слайдера на мобильных/планшетах */
+	.slider-888-container {
+		display: none !important;
+	}
+	/* Скрыть блок "باقة الكازينو الترحيبية" на мобильных/планшетах */
+	.slider-888-container .owl-item.hide-on-mobile {
+		display: none !important;
+	}
+}
 @media (max-width: 768px) {
 	.slider-888-container .img-slide-after{
 		width:100%;
@@ -3907,10 +3917,6 @@ html
 	{
 		flex-direction:column;
 		padding:20px
-	}
-	/* Скрыть блок "باقة الكازينو الترحيبية" на мобильных устройствах */
-	.slider-888-container .owl-item.hide-on-mobile {
-		display: none !important;
 	}
 
 	.slider-888-slide::after
@@ -6052,14 +6058,19 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 			mouseDrag: true,
 			dots: true,
 		});
-		// Скрыть блок "باقة الكازينو الترحيبية" на мобильных устройствах
-		$(".slider-888-container .owl-item").each(function() {
-			var $item = $(this);
-			var $title = $item.find(".slider-888-slide-title");
-			if ($title.length && $title.text().trim() === "باقة الكازينو الترحيبية") {
-				$item.addClass("hide-on-mobile");
-			}
-		});
+		// Скрыть блок "باقة الكازينو الترحيبية" на мобильных (класс добавляем после инициализации Owl)
+		function markCasinoWelcomeHidden() {
+			var targetTitle = "باقة الكازينو الترحيبية";
+			$(".slider-888-container .owl-item").each(function() {
+				var $item = $(this);
+				var $title = $item.find(".slider-888-slide-title");
+				if ($title.length && $title.text().trim().indexOf(targetTitle) !== -1) {
+					$item.addClass("hide-on-mobile");
+				}
+			});
+		}
+		$(".slider-888-slider").on("initialized.owl.carousel", markCasinoWelcomeHidden);
+		markCasinoWelcomeHidden();
 	}
 
 	$(document).ready(function(){
