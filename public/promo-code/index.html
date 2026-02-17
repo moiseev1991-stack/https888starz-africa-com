@@ -3603,77 +3603,83 @@ table:not([class]) tbody,table:not([class]) tr,
 #single .post-content .owl-carousel .owl-nav,
 #single .post-content .owl-mobile .owl-nav
 {
-	display:flex !important;
-	visibility:visible !important;
-	position:absolute;
-	left:0;
-	right:0;
-	top:50%;
-	transform:translateY(-50%);
-	justify-content:space-between;
-	pointer-events:none;
-	margin:0;
-	padding:0 8px;
-	z-index:10
+	display:none !important;
+	visibility:hidden !important;
 }
-#single .post-content .owl-carousel .owl-nav.disabled,
-#single .post-content .owl-mobile .owl-nav.disabled
-{
-	display:flex !important;
-	visibility:visible !important
-}
-#single .post-content .owl-carousel .owl-nav button,
-#single .post-content .owl-mobile .owl-nav button
-{
-	pointer-events:auto;
-	width:44px;
-	height:44px;
-	min-width:44px;
-	min-height:44px;
-	border-radius:50%;
-	background:rgba(0,0,0,0.6);
-	color:#fff;
-	border:none;
-	cursor:pointer;
-	font-size:24px;
-	line-height:1;
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	transition:background .2s
-}
-#single .post-content .owl-carousel .owl-nav button:hover,
-#single .post-content .owl-mobile .owl-nav button:hover
-{
-	background:rgba(0,0,0,0.85)
-}
-#single .post-content .owl-carousel .owl-prev,
-#single .post-content .owl-mobile .owl-prev
-{
-	position:absolute;
-	left:8px
-}
-#single .post-content .owl-carousel .owl-next,
-#single .post-content .owl-mobile .owl-next
-{
-	position:absolute;
-	right:8px
-}
+
 #single .post-content .owl-carousel,
 #single .post-content .owl-mobile
 {
 	position:relative
 }
-#single .post-content .owl-dots
+/* Кастомная навигация для .owl-carousel и .owl-mobile */
+.owl-carousel-custom-nav,
+.owl-mobile-custom-nav
 {
-	display:flex !important;
-	visibility:visible !important;
-	flex-wrap:wrap;
-	gap:6px;
-	justify-content:center;
-	margin-top:14px;
-	padding:10px 0
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	margin-top:15px;
+	padding:0 20px;
 }
+.owl-carousel-custom-nav button,
+.owl-mobile-custom-nav button
+{
+	background:#3d3d3d;
+	color:#fff;
+	border:2px solid transparent;
+	border-radius:50%;
+	width:40px;
+	height:40px;
+	font-size:18px;
+	cursor:pointer;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	transition:all .3s ease;
+	font-weight:700;
+}
+.owl-carousel-custom-nav button:hover,
+.owl-mobile-custom-nav button:hover
+{
+	background:#666;
+	border-color:#900;
+	transform:scale(1.1);
+}
+.owl-carousel-custom-nav .slide-counter,
+.owl-mobile-custom-nav .slide-counter
+{
+	font-size:16px;
+	font-weight:700;
+	color:#333;
+	padding:8px 16px;
+	background:#f0f0f0;
+	border-radius:20px;
+	min-width:80px;
+	text-align:center;
+}
+/* Скрываем dots для .owl-carousel и .owl-mobile на всех устройствах */
+.owl-carousel .owl-dots,
+.owl-mobile .owl-dots
+{
+	display:none !important;
+	visibility:hidden !important;
+}
+.owl-carousel,
+.owl-mobile
+{
+	position:relative
+}
+.owl-carousel .owl-stage-outer,
+.owl-mobile .owl-stage-outer
+{
+	position:relative;
+	z-index:1
+}
+/* На мобильных устройствах скрываем dots для .owl-mobile */
+@media screen and (max-width:767px)
+{
+	
 #single .post-content .owl-dots .owl-dot
 {
 	display:inline-flex !important;
@@ -4275,2622 +4281,46 @@ html
     
 		</style>
 		<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var showMoreButton = document.getElementById('show-more');
-    var tocItems = document.querySelectorAll('.custom-toc .toc-item.toc-hidden');
-
-    if (showMoreButton) {
-        showMoreButton.addEventListener('click', function() {
-            // Показать скрытые элементы
-            tocItems.forEach(function(item) {
-                item.classList.remove('toc-hidden');
-            });
-
-            // Скрыть кнопку
-            showMoreButton.style.display = 'none';
-        });
-    }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Найти все таблицы без класса
-  const tables = document.querySelectorAll("table:not([class])");
-  
-  tables.forEach((table) => {
-    // Создать обертку
-    const wrapper = document.createElement("div");
-    wrapper.className = "table-wrapper";
-    
-    // Вставить обертку перед таблицей
-    table.parentNode.insertBefore(wrapper, table);
-    // Поместить таблицу внутрь обертки
-    wrapper.appendChild(table);
-  });
-});
-	
-function copyPromoCode(event) {
-  var notification = document.getElementById("copyNotification");
-  
-  // Check if the notification is not visible
-  if (notification.style.display !== "block") {
-    var promoCode = document.getElementById("promoCode").innerText;
-    var tempInput = document.createElement("input");
-    document.body.appendChild(tempInput);
-    tempInput.setAttribute("value", promoCode);
-    tempInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempInput);
-
-    notification.style.display = "block";
-
-    setTimeout(function() {
-      notification.style.display = "none";
-    }, 2000);
-  }
-}
-  </script>
-	
-<script>
-var initialHours = 0;
-var initialMinutes = 3;
-var initialSeconds = 0;
-
-function formatTime(time) {
-  return time < 10 ? "0" + time : time;
-}
-
-function getRemainingTime(endTime) {
-  var currentTime = Date.now();
-  var timeRemaining = Math.floor((endTime - currentTime) / 1000);
-  return timeRemaining;
-}
-
-function initializeTimer(hours, minutes, seconds) {
-  // Проверяем, есть ли сохраненное время окончания в localStorage
-  var savedEndTime = localStorage.getItem('endTime');
-  var timeRemaining;
-  if (savedEndTime) {
-    timeRemaining = getRemainingTime(savedEndTime);
-    if (timeRemaining <= 0) {
-      // Если сохраненное время уже истекло, очищаем localStorage и перезапускаем таймер с начальными параметрами
-      localStorage.removeItem('endTime');
-      var newEndTime = Date.now() + (hours * 3600 + minutes * 60 + seconds) * 1000;
-      localStorage.setItem('endTime', newEndTime);
-      timeRemaining = getRemainingTime(newEndTime);
-    }
-  } else {
-    // Если в localStorage нет сохраненного времени, инициализируем новое время окончания
-    var endTime = Date.now() + (hours * 3600 + minutes * 60 + seconds) * 1000;
-    localStorage.setItem('endTime', endTime);
-    timeRemaining = getRemainingTime(endTime);
-  }
-
-  startTimer(timeRemaining);
-}
-function startTimer(timeRemaining) {
-    var timerInterval = setInterval(function() {
-        // Проверяем наличие необходимых элементов
-        var hoursElement = document.querySelector(".timer__hours");
-        var minutesElement = document.querySelector(".timer__minutes");
-        var secondsElement = document.querySelector(".timer__seconds");
-        
-        if (!hoursElement || !minutesElement || !secondsElement) {
-            clearInterval(timerInterval);
-            return;
-        }
-        
-        if (timeRemaining <= 0) {
-            clearInterval(timerInterval);
-            hoursElement.innerText = "00";
-            minutesElement.innerText = "00";
-            secondsElement.innerText = "00";
-            localStorage.removeItem('endTime');
-            
-            // Очищаем, чтобы можно было перезапустить
-            if (typeof initializeTimer === 'function') {
-                initializeTimer(initialHours, initialMinutes, initialSeconds);
-            } else {
-                console.error('Функция initializeTimer не определена.');
-            }
-            // Автоматический перезапуск с начальными параметрами
-            return;
-        }
-
-        var hours = Math.floor(timeRemaining / 3600);
-        var minutes = Math.floor((timeRemaining % 3600) / 60);
-        var seconds = Math.floor(timeRemaining % 60);
-
-        hoursElement.innerText = formatTime(hours);
-        minutesElement.innerText = formatTime(minutes);
-        secondsElement.innerText = formatTime(seconds);
-
-        timeRemaining--;
-    }, 1000);
-}
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  initializeTimer(initialHours, initialMinutes, initialSeconds);
-});
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function toggleAccordion(questionClass, answerClass) {
-            document.querySelectorAll(questionClass).forEach(function(el) {
-                el.addEventListener('click', function() {
-                    var answer = this.nextElementSibling;
-                    var checkmark = this.querySelector('.checkmark');
-                    if (!answer || !answer.classList.contains(answerClass.slice(1))) return;
-                    var isOpen = this.classList.contains('open');
-                    this.classList.toggle('open');
-                    if (checkmark) checkmark.classList.toggle('rotate');
-                    answer.style.display = answer.style.display === 'none' ? 'flex' : 'none';
-                    if (!isOpen) {
-                        document.querySelectorAll(questionClass + '.open').forEach(function(o) {
-                            if (o !== el) {
-                                o.classList.remove('open');
-                                var next = o.nextElementSibling;
-                                if (next) next.style.display = 'none';
-                                var ck = o.querySelector('.checkmark');
-                                if (ck) ck.classList.remove('rotate');
-                            }
-                        });
-                    }
-                });
-            });
-        }
-        toggleAccordion('.faq-question', '.faq-answer');
-        toggleAccordion('.ez-question', '.ez-answer');
-
-        var links = document.querySelectorAll('.link-game-888');
-        var toggleBtn = document.getElementById('toggle-btn');
-        var visibleLinks = 8;
-        if (links.length) {
-            links.forEach(function(link, index) {
-                if (index >= visibleLinks) link.style.display = 'none';
-            });
-        }
-        if (toggleBtn) {
-            var isExpanded = false;
-            toggleBtn.addEventListener('click', function() {
-                isExpanded = !isExpanded;
-                if (isExpanded) {
-                    links.forEach(function(link) { link.style.display = 'flex'; link.style.direction = 'column'; });
-                    toggleBtn.innerText = 'Hide';
-                } else {
-                    links.forEach(function(link, index) {
-                        link.style.display = index >= visibleLinks ? 'none' : '';
-                    });
-                    toggleBtn.innerText = '\u0627\u0643\u062a\u0634\u0641 \u0627\u0644\u0645\u0632\u064a\u062f';
-                }
-            });
-        }
-    });
-  </script>	
-</head>
-<body class="rtl wp-singular page-template page-template-page-templates page-template-page-fullwidth page-template-page-templatespage-fullwidth-php page page-id-1323 wp-embed-responsive wp-theme-zento  enable-optimization">  
-    <img loading="eager" fetchpriority="high" src="/wp-content/themes/zento/assets/images/svg-icons.svg" alt="Social Icons" style="display:none;">
-    <!-- start: .mobile.main-nav -->
-<nav class="mobile side-nav">
-
-    <div class="close"><svg class="icon"><use xlink:href="/wp-content/themes/zento/assets/images/svg-icons.svg#close-icon"></use></svg></div>
-
-        <div class="logo">
-        <a href="https://888starz-africa.com/">
-            <!-- Desktop Logo -->
-            <img loading="lazy" class="hide-on-mobile" src="https://888starz-africa.com/wp-content/uploads/2025/01/c2d1291cb995ce2eb60df24214bfcfdd.svg" alt="888Starz الموقع الرسمي للمراهنات الرياضية في مصر" width="" style="width: 160px;">
-            <!-- Mobile Logo -->
-            <img loading="lazy" class="hide-on-desktop hide-on-tablet" src="https://888starz-africa.com/wp-content/uploads/2025/01/c2d1291cb995ce2eb60df24214bfcfdd.svg" alt="888Starz الموقع الرسمي للمراهنات الرياضية في مصر" width="" height="">
-        </a>
-            </div>
-        <div class="lang-dropdown"><div class="lang-current"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAANlBMVEUAYjMTYDs3R0AvV0NObzE3dSoTWzhAZjgyfEY0gl1EcDFqpIhKj28TVzaLs41ol1JSaF1JW1NzUHm9AAAAPUlEQVR4AY2MtQEAMAgE447tv2xKvuQqeEtRcikZ/9p6b9X/Mdfeaw4PnPvehQhNvpcnJYiInIqraqYpyAd1AAFxIEreLQAAAABJRU5ErkJggg==" alt="" width="16" height="11" style="width: 16px; height: 11px;"><span class="lang-name">العربية</span><span class="lang-arrow">▾</span></div><ul class="lang-list"><li class="lang-item active"><a href="/promo-code/"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAANlBMVEUAYjMTYDs3R0AvV0NObzE3dSoTWzhAZjgyfEY0gl1EcDFqpIhKj28TVzaLs41ol1JSaF1JW1NzUHm9AAAAPUlEQVR4AY2MtQEAMAgE447tv2xKvuQqeEtRcikZ/9p6b9X/Mdfeaw4PnPvehQhNvpcnJYiInIqraqYpyAd1AAFxIEreLQAAAABJRU5ErkJggg==" alt="" width="16" height="11" style="width: 16px; height: 11px;"><span class="lang-name">العربية</span></a></li></ul></div>
-    <style>
-        /* Стили для переключателя языков */
-        .lang-dropdown {
-            position: relative;
-            display: inline-block;
-            min-width: 120px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            z-index: 100;
-			direction:ltr;
-        }
-        
-        .lang-dropdown .lang-current {
-            display: flex;
-            align-items: center;
-            padding: 3px 12px;
-			background-color: #3d3d3d;
-			color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        .lang-dropdown .lang-arrow {
-            margin-left: auto;
-            font-size: 12px;
-            transition: transform 0.2s;
-        }
-        
-        .lang-dropdown:hover .lang-arrow {
-            transform: rotate(180deg);
-        }
-        
-        .lang-dropdown img {
-            margin-right: 8px;
-            width: 16px;
-            height: 11px;
-            display: inline-block;
-            vertical-align: middle;
-            border: none;
-        }
-        
-        .lang-dropdown .lang-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-top: none;
-            border-radius: 0 0 4px 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: none;
-            overflow: hidden;
-        }
-        
-        .lang-dropdown:hover .lang-list {
-            display: block;
-        }
-        
-        .lang-dropdown .lang-item {
-            display: block;
-            margin: 0;
-            border-bottom: 1px solid #f1f1f1;
-        }
-        
-        .lang-dropdown .lang-item:last-child {
-            border-bottom: none;
-        }
-        
-        .lang-dropdown .lang-item a {
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            text-decoration: none;
-            color: #333;
-            transition: background-color 0.2s;
-        }
-        
-        .lang-dropdown .lang-item a:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .lang-dropdown .lang-item.active a {
-            font-weight: bold;
-            background-color: #f0f0f0;
-        }
-        
-        /* Анимация появления списка */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .lang-dropdown:hover .lang-list {
-            animation: fadeIn 0.2s ease-out;
-        }
-    </style>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Чтобы переключатель работал и на мобильных устройствах
-            var langSwitchers = document.querySelectorAll(".lang-dropdown");
-            
-            langSwitchers.forEach(function(switcher) {
-                var current = switcher.querySelector(".lang-current");
-                var list = switcher.querySelector(".lang-list");
-                var isOpen = false;
-                
-                // Открытие/закрытие по клику для мобильных устройств
-                current.addEventListener("click", function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        if (isOpen) {
-                            list.style.display = "none";
-                            isOpen = false;
-                        } else {
-                            list.style.display = "block";
-                            isOpen = true;
-                        }
-                    }
-                });
-                
-                // Закрытие при клике вне переключателя
-                document.addEventListener("click", function(e) {
-                    if (!switcher.contains(e.target) && isOpen) {
-                        list.style.display = "none";
-                        isOpen = false;
-                    }
-                });
-            });
-        });
-    </script>	<div class="link-reg-mobile">
-			<a href="/game/" class="link-game-button ink-game-button-reg-mobiles" rel="nofollow">
-				التسجيل			</a>
-			<a href="/game/" class="link-game-button" rel="nofollow">
-				تسجيل الدخول			</a>
-	</div>
-
-    <ul id="menu-header-english" class="menu underline-effect"><li id="menu-item-695" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-695"><a href="/game/">الخطوط</a>
-<ul class="sub-menu">
-	<li id="menu-item-696" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-696"><a href="/game/">راهن على نفسك</a></li>
-	<li id="menu-item-697" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-697"><a href="/game/">نتائج البطولة</a></li>
-</ul>
-</li>
-<li id="menu-item-698" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-698"><a href="/game/">بث مباشر</a>
-<ul class="sub-menu">
-	<li id="menu-item-699" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-699"><a href="/game/">متعدد البث المباشر</a></li>
-	<li id="menu-item-700" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-700"><a href="/game/">راهن على نفسك</a></li>
-	<li id="menu-item-701" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-701"><a href="/game/">رخام مباشر</a></li>
-</ul>
-</li>
-<li id="menu-item-1342" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1342"><a href="/registration/">التسجيل</a></li>
-<li id="menu-item-1343" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-1323 current_page_item menu-item-1343"><a href="/promo-code/" aria-current="page">الرمز الترويجي</a></li>
-<li id="menu-item-1344" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1344"><a href="/apk/">APK و IOS</a></li>
-</ul>  
-       
-	
-</nav>
-<!-- end: .mobile.main-nav -->
-<div class="menu-overlay"></div>
-    <!-- start: #wrapper -->
-    <div id="wrapper">
-		
-
-<!-- start: #header -->
-<header id="header" class="classic disable-sticky-mobile">
-		<div class="container-header-desc">
-		<a href="#" class="logo-img" aria-label="888Starz Home">    </a><div class="logo"><a href="#" class="logo-img" aria-label="888Starz Home">    </a><a href="https://888starz-africa.com/">
-            <!-- Desktop Logo -->
-            <img loading="lazy" class="hide-on-mobile" src="https://888starz-africa.com/wp-content/uploads/2025/01/c2d1291cb995ce2eb60df24214bfcfdd.svg" alt="888Starz الموقع الرسمي للمراهنات الرياضية في مصر" width="" style="width: 160px;">
-            <!-- Mobile Logo -->
-            <img loading="lazy" class="hide-on-desktop hide-on-tablet" src="https://888starz-africa.com/wp-content/uploads/2025/01/c2d1291cb995ce2eb60df24214bfcfdd.svg" alt="888Starz الموقع الرسمي للمراهنات الرياضية في مصر" width="" height="">
-        </a>
-            </div>
-    
-		<div class="container-header-desc__container-right-side-header">
-			<div class="container-right-side-header__top">
-				<div class="top__left-header">
-					<a href="/game/" class="left-header__link-game-top-games crystal-games-header" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/game-249-animation.svg" alt="Crystal">
-						<span>Crystal</span>
-					</a>
-					<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/740a96629ce88bbf075e4e3003a3ff1e.svg" alt="Aviator">
-					</a>
-					<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/3ca73a69e5275a2051000fb92ce2e288.webp" alt="League Champions">
-					</a>
-					<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/dd6d3a947117b4b8e79c5159c091ada3.webp" alt="League Champions">
-					</a>
-					<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/e9c65966664d9c2e4e0ba094a0760d40.svg" alt="Premier-league">
-					</a>
-					<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/ef82153ad04426601aca85827938d210.svg" alt="La Liga">
-					</a>
-					<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/a88c2145994b996d246eade556be38b0.svg" alt="Seria A">
-					</a>
-				</div>
-				<div class="top__right-header">
-					<a href="/game/" class="link-game-square" rel="nofollow" aria-label="Registration">`n						<svg data-v-1655dfd0="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img" data-v-ico="common|handshake-circle-dollar"><path d="M7.99 0a3.99 3.99 0 1 1 0 7.98 3.99 3.99 0 0 1 0-7.98ZM6.85 5.76c.16.15.3.28.49.37.1.04.2.08.3.1l.02.26a.35.35 0 0 0 .69-.02v-.24A1.31 1.31 0 0 0 9.4 4.97c0-.77-.69-1.31-1.42-1.31-.6 0-.99-.62-.53-1.03.31-.28.99-.21 1.2.1a.35.35 0 0 0 .57-.39 1.31 1.31 0 0 0-.54-.42 2.2 2.2 0 0 0-.36-.13v-.3a.35.35 0 1 0-.7.02v.27c-.59.14-1.06.64-1.06 1.27 0 .76.69 1.3 1.42 1.3.35 0 .72.24.72.62 0 .37-.37.6-.72.6a.73.73 0 0 1-.34-.07c-.1-.05-.2-.13-.32-.24a.35.35 0 0 0-.48.5Z"></path><path d="m13.28 8.01-.84.19a.52.52 0 0 0-.42.62l1.06 4.35c.06.28.36.45.65.39l.85-.19a.5.5 0 0 0 .4-.62L13.95 8.4a.55.55 0 0 0-.66-.39Zm-10.56 0 .84.19c.3.06.48.34.42.62l-1.06 4.35a.55.55 0 0 1-.65.39l-.85-.19a.52.52 0 0 1-.4-.62L2.05 8.4a.55.55 0 0 1 .66-.39Zm9.93 5.13-.63.26-2.63-2.5a1.44 1.44 0 0 0-1.77-.15c-.43.28-.86.53-1.26.59a1.1 1.1 0 0 1-.97-.32c.43-.37.83-.82 1.2-1.23.5-.57.95-1.07 1.32-1.2.56-.2.97.02 1.81.5l.7.37c.38.2.81.23 1.22.06l.12-.05.89 3.67Z"></path><path d="m6.28 9.54.44-.5H4.34l-.94 3.88 3.14 2.94c.2.19.53.19.72 0 .2-.19.2-.49.01-.68l-.82-.78a.19.19 0 0 1 0-.27c.08-.08.2-.08.29 0L8.5 15.8c.2.19.53.19.72 0 .2-.18.2-.49.01-.68L7.62 13.6a.19.19 0 0 1 0-.28c.08-.07.2-.07.29 0l2.17 2.06c.2.19.52.19.72 0 .2-.18.2-.5 0-.68l-2.1-2a.19.19 0 0 1 0-.27c.08-.08.2-.08.29 0L11 14.35c.2.18.51.18.7 0 .2-.2.24-.48.02-.69L9.1 11.18a1.02 1.02 0 0 0-1.25-.11c-.47.3-.94.58-1.42.65-.51.08-1-.06-1.47-.59a.19.19 0 0 1 .01-.28c.47-.37.9-.86 1.3-1.31Z"></path></svg>
-					</a>
-					<a href="/game/" class="link-game-square" rel="nofollow" aria-label="Cashback">`n						<svg data-v-1655dfd0="" viewBox="0 0 288 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|dollar-sign"><path d="M209 233l-108-31c-12-4-21-15-21-28 0-17 13-30 30-30h66c12 0 24 4 34 11 6 4 14 3 20-2l34-34c7-7 6-19-1-25-25-19-56-30-87-30V16c0-9-7-16-16-16h-32c-9 0-16 7-16 16v48h-2C46 64-5 119 1 184c4 46 39 83 83 96l103 30c12 4 21 15 21 28 0 17-13 30-29 30h-67c-12 0-24-4-34-10-6-5-14-4-19 2l-35 34c-7 6-6 18 2 24 24 19 55 30 86 30v48c0 9 7 16 16 16h32c9 0 16-7 16-16v-48c47-1 90-29 106-73 21-61-15-125-73-142z"></path></svg>
-					</a>
-					<a href="/game/" class="link-game-square" rel="nofollow" aria-label="Bonus">`n						<svg data-v-1655dfd0="" viewBox="0 0 512 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|bonus"><path d="M479 100h-38a66 66 0 00-30-93c-24-12-51-7-71 11l-47 42a50 50 0 00-74 0l-47-42a65 65 0 00-71-12 66 66 0 00-40 68c1 9 5 18 10 26H33c-18 0-33 15-33 33v50c0 9 7 17 17 17h478c10 0 17-8 17-17v-50c0-18-15-33-33-33zm-273-6v6h-79a33 33 0 1122-58l57 52zm211-24c-1 17-17 30-34 30h-77v-6l56-51c8-8 20-11 31-8 16 5 25 18 24 35zM33 233v245c0 19 15 34 34 34h156V233H33zm256 0v279h156c19 0 34-15 34-34V233H289z"></path></svg>
-					</a>
-					<a href="/game/" class="link-game-button" rel="nofollow">
-						التسجيل					</a>
-					<a href="/game/" class="link-game-button" rel="nofollow">
-						تسجيل الدخول					</a>
-					<div class="open-menu">
-						<div class="lang-dropdown"><div class="lang-current"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAANlBMVEUAYjMTYDs3R0AvV0NObzE3dSoTWzhAZjgyfEY0gl1EcDFqpIhKj28TVzaLs41ol1JSaF1JW1NzUHm9AAAAPUlEQVR4AY2MtQEAMAgE447tv2xKvuQqeEtRcikZ/9p6b9X/Mdfeaw4PnPvehQhNvpcnJYiInIqraqYpyAd1AAFxIEreLQAAAABJRU5ErkJggg==" alt="" width="16" height="11" style="width: 16px; height: 11px;"><span class="lang-name">العربية</span><span class="lang-arrow">▾</span></div><ul class="lang-list"><li class="lang-item active"><a href="/promo-code/"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAANlBMVEUAYjMTYDs3R0AvV0NObzE3dSoTWzhAZjgyfEY0gl1EcDFqpIhKj28TVzaLs41ol1JSaF1JW1NzUHm9AAAAPUlEQVR4AY2MtQEAMAgE447tv2xKvuQqeEtRcikZ/9p6b9X/Mdfeaw4PnPvehQhNvpcnJYiInIqraqYpyAd1AAFxIEreLQAAAABJRU5ErkJggg==" alt="" width="16" height="11" style="width: 16px; height: 11px;"><span class="lang-name">العربية</span></a></li></ul></div>
-    <style>
-        /* Стили для переключателя языков */
-        .lang-dropdown {
-            position: relative;
-            display: inline-block;
-            min-width: 120px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            z-index: 100;
-			direction:ltr;
-        }
-        
-        .lang-dropdown .lang-current {
-            display: flex;
-            align-items: center;
-            padding: 3px 12px;
-			background-color: #3d3d3d;
-			color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        .lang-dropdown .lang-arrow {
-            margin-left: auto;
-            font-size: 12px;
-            transition: transform 0.2s;
-        }
-        
-        .lang-dropdown:hover .lang-arrow {
-            transform: rotate(180deg);
-        }
-        
-        .lang-dropdown img {
-            margin-right: 8px;
-            width: 16px;
-            height: 11px;
-            display: inline-block;
-            vertical-align: middle;
-            border: none;
-        }
-        
-        .lang-dropdown .lang-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-top: none;
-            border-radius: 0 0 4px 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: none;
-            overflow: hidden;
-        }
-        
-        .lang-dropdown:hover .lang-list {
-            display: block;
-        }
-        
-        .lang-dropdown .lang-item {
-            display: block;
-            margin: 0;
-            border-bottom: 1px solid #f1f1f1;
-        }
-        
-        .lang-dropdown .lang-item:last-child {
-            border-bottom: none;
-        }
-        
-        .lang-dropdown .lang-item a {
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            text-decoration: none;
-            color: #333;
-            transition: background-color 0.2s;
-        }
-        
-        .lang-dropdown .lang-item a:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .lang-dropdown .lang-item.active a {
-            font-weight: bold;
-            background-color: #f0f0f0;
-        }
-        
-        /* Анимация появления списка */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .lang-dropdown:hover .lang-list {
-            animation: fadeIn 0.2s ease-out;
-        }
-    </style>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Чтобы переключатель работал и на мобильных устройствах
-            var langSwitchers = document.querySelectorAll(".lang-dropdown");
-            
-            langSwitchers.forEach(function(switcher) {
-                var current = switcher.querySelector(".lang-current");
-                var list = switcher.querySelector(".lang-list");
-                var isOpen = false;
-                
-                // Открытие/закрытие по клику для мобильных устройств
-                current.addEventListener("click", function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        if (isOpen) {
-                            list.style.display = "none";
-                            isOpen = false;
-                        } else {
-                            list.style.display = "block";
-                            isOpen = true;
-                        }
-                    }
-                });
-                
-                // Закрытие при клике вне переключателя
-                document.addEventListener("click", function(e) {
-                    if (!switcher.contains(e.target) && isOpen) {
-                        list.style.display = "none";
-                        isOpen = false;
-                    }
-                });
-            });
-        });
-    </script>					</div>
-					
-
-					
-				</div>
-				<div class="mobile-button-top-right-header-888">
-						<a href="/game/" class="link-game-square" rel="nofollow" aria-label="Bonus">`n						<svg data-v-1655dfd0="" viewBox="0 0 512 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|bonus"><path d="M479 100h-38a66 66 0 00-30-93c-24-12-51-7-71 11l-47 42a50 50 0 00-74 0l-47-42a65 65 0 00-71-12 66 66 0 00-40 68c1 9 5 18 10 26H33c-18 0-33 15-33 33v50c0 9 7 17 17 17h478c10 0 17-8 17-17v-50c0-18-15-33-33-33zm-273-6v6h-79a33 33 0 1122-58l57 52zm211-24c-1 17-17 30-34 30h-77v-6l56-51c8-8 20-11 31-8 16 5 25 18 24 35zM33 233v245c0 19 15 34 34 34h156V233H33zm256 0v279h156c19 0 34-15 34-34V233H289z"></path></svg>
-						</a>
-						<a href="/game/" class="link-game-button" rel="nofollow">
-							 تسجيل الدخول						</a>
-						<a href="/game/" class="link-game-button reg-button-header-mobile" rel="nofollow">
-							التسجيل						</a>
-					</div>
-			</div>
-			<div class="container-right-side-header__bottom">
-
-				
-                
-					<!-- start: .main-nav -->
-					<nav class="main-nav bottom__main-navigate">
-						<ul id="menu-header-english-1" class="menu underline-effect"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-695"><a href="/game/">الخطوط</a>
-<ul class="sub-menu">
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-696"><a href="/game/">راهن على نفسك</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-697"><a href="/game/">نتائج البطولة</a></li>
-</ul>
-</li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-698"><a href="/game/">بث مباشر</a>
-<ul class="sub-menu">
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-699"><a href="/game/">متعدد البث المباشر</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-700"><a href="/game/">راهن على نفسك</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-701"><a href="/game/">رخام مباشر</a></li>
-</ul>
-</li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1342"><a href="/registration/">التسجيل</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-1323 current_page_item menu-item-1343"><a href="/promo-code/" aria-current="page">الرمز الترويجي</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1344"><a href="/apk/">APK و IOS</a></li>
-</ul>																									<ul id="menu-header-english-2" class="menu underline-effect">
-						  <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-666696">
-							<a href="/game/" rel="nofollow">
-								<svg width="20px" height="16px" viewBox="0 0 576 512" class="ico__svg" focusable="false" role="img" style="fill: white;"><path d="M259.3 17.8L194 150.2 47.9 171.5a32 32 0 00-17.7 54.6l105.7 103-25 145.5a32 32 0 0046.4 33.7L288 439.6l130.7 68.7a32 32 0 0046.4-33.7l-25-145.5 105.7-103a32 32 0 00-17.7-54.6L382 150.2 316.7 17.8a32 32 0 00-57.4 0z"></path></svg>
-								المكافآت							</a>
-							<ul class="sub-menu header-navigation-promo">
-							  <li class="header-navigation-promo__item">
-								<a href="/game/" rel="nofollow" class="header-navigation-promo__link header-navigation-promo-link">
-								  <span class="ico--flame ico header-navigation-promo-link__ico" aria-hidden="true">
-									<svg viewBox="0 0 32 32" class="ico__svg" focusable="false" role="img">
-									  <path d="M28 18.7c-.5-3.8-2-7.5-4.6-10.4C21.6 6 20 3.8 20 .7a.7.7 0 00-1-.6 17 17 0 00-6.3 9c-.5 2.3-.7 4.6-.7 6.8-2.7-.6-3.3-4.6-3.3-4.7a.7.7 0 00-1-.5c-.1.1-3.5 1.8-3.7 8.6v.7a12 12 0 0012 12 12 12 0 0012-13.3zm-12 12a4.1 4.1 0 01-4-4.3V26c0-.7.1-1.4.4-2a2.4 2.4 0 002.2 1.5.7.7 0 00.7-.6c0-1 0-2 .2-3 .3-1 .8-1.9 1.4-2.6.3.9.8 1.7 1.4 2.5 1 1.2 1.5 2.6 1.7 4.1v.4a4.1 4.1 0 01-4 4.3z"></path>
-									</svg>
-								  </span>
-								  <span class="header-navigation-promo-link__info">
-									<span class="ui-tag ui-tag--size-xs ui-tag--theme-accent ui-tag--rounded-top">جديد</span>
-								  </span>
-								  <span class="header-navigation-promo-link__title">100% للإيداع الأول</span>
-								</a>
-							  </li>
-							  <li class="header-navigation-promo__item">
-								<a href="/game/" rel="nofollow" class="header-navigation-promo__link header-navigation-promo-link">
-								  <span class="ico--dollar-round ico header-navigation-promo-link__ico" aria-hidden="true">
-									<svg viewBox="0 0 32 32" class="ico__svg" focusable="false" role="img">
-									  <path d="M16 0a16 16 0 100 32 16 16 0 000-32zm4.1 21.7c-.6.7-1.4 1.3-2.4 1.5a.7.7 0 00-.5.8v1.2a.5.5 0 01-.6.6h-1.4a.5.5 0 01-.6-.6v-1c0-.6 0-.6-.7-.8a9 9 0 01-2.7-.8.7.7 0 01-.2-1l.4-1.3c.2-.6.3-.6.8-.4a8 8 0 002.7.8c.6.1 1.2 0 1.8-.2A1.4 1.4 0 0017 18c-.3-.3-.6-.5-1-.6l-2.8-1.3a3.9 3.9 0 01-2.2-3.7 4.1 4.1 0 013-3.8c.8-.3.8-.3.8-1v-.8c0-.6.1-.7.7-.7h.5c1.2 0 1.2 0 1.3 1.2 0 .9 0 .9.8 1a7 7 0 012.1.7.6.6 0 01.2.6l-.5 1.6c-.1.5-.3.6-.8.4a6 6 0 00-3-.6l-.8.1a1.2 1.2 0 00-.3 2c.4.4.9.6 1.3.8l2.4 1.1a4.3 4.3 0 011.4 6.6z"></path>
-									</svg>
-								  </span>
-								  <span class="header-navigation-promo-link__info">
-									<span class="ui-tag ui-tag--size-xs ui-tag--theme-accent ui-tag--rounded-top">جديد</span>
-								  </span>
-								  <span class="header-navigation-promo-link__title">كازينو كاش باك VIP</span>
-								</a>
-							  </li>
-							  <li class="header-navigation-promo__item">
-								<a href="/game/" rel="nofollow" class="header-navigation-promo__link header-navigation-promo-link">
-								  <span class="ico--cherry ico header-navigation-promo-link__ico" aria-hidden="true">
-									<svg viewBox="0 0 32 32" class="ico__svg" focusable="false" role="img">
-									  <path d="M8.5 9.4c1.4 0 2.7-.4 3.7-1-1 2-1.7 4.4-1.8 6.8-4.2.4-7.5 4-7.5 8.3 0 4.7 3.8 8.5 8.4 8.5 1.4 0 2.8-.4 4-1a10.4 10.4 0 010-14.9c-.9-.5-2-.8-3-1 .4-6.6 5.4-12 11.9-13-1.7 2.2-2.6 5-2.6 7.9v5.2c-4.2.4-7.5 4-7.5 8.3 0 4.7 3.8 8.5 8.5 8.5 4.6 0 8.4-3.8 8.4-8.5 0-4.3-3.3-7.9-7.5-8.3V10c0-3.2 1.2-6.2 3.5-8.4L28.6 0h-2.3C22 0 18 1.8 15 4.7a9.8 9.8 0 00-6.5-2.8c-4 0-6.7 3-6.8 3l-.7.7.7.7c.1.1 2.8 3 6.8 3zm14 11.3a2.8 2.8 0 00-2.8 2.8H18c0-2.6 2-4.7 4.7-4.7v1.9zm-11.2 0a2.8 2.8 0 00-2.8 2.8H6.6c0-2.6 2.1-4.7 4.7-4.7v1.9z"></path>
-									</svg>
-								  </span>
-								  <span class="header-navigation-promo-link__info">
-									<span class="ui-tag ui-tag--size-xs ui-tag--theme-accent ui-tag--rounded-top">جديد</span>
-								  </span>
-								  <span class="header-navigation-promo-link__title">باقة ترحيبية</span>
-								</a>
-							  </li>
-							  <li class="header-navigation-promo__item">
-								<a href="/game/" rel="nofollow" class="header-navigation-promo__link header-navigation-promo-link">
-								  <span class="ico--flame ico header-navigation-promo-link__ico" aria-hidden="true">
-									<svg viewBox="0 0 32 32" class="ico__svg" focusable="false" role="img">
-									  <path d="M28 18.7c-.5-3.8-2-7.5-4.6-10.4C21.6 6 20 3.8 20 .7a.7.7 0 00-1-.6 17 17 0 00-6.3 9c-.5 2.3-.7 4.6-.7 6.8-2.7-.6-3.3-4.6-3.3-4.7a.7.7 0 00-1-.5c-.1.1-3.5 1.8-3.7 8.6v.7a12 12 0 0012 12 12 12 0 0012-13.3zm-12 12a4.1 4.1 0 01-4-4.3V26c0-.7.1-1.4.4-2a2.4 2.4 0 002.2 1.5.7.7 0 00.7-.6c0-1 0-2 .2-3 .3-1 .8-1.9 1.4-2.6.3.9.8 1.7 1.4 2.5 1 1.2 1.5 2.6 1.7 4.1v.4a4.1 4.1 0 01-4 4.3z"></path>
-									</svg>
-								  </span>
-								  <span class="header-navigation-promo-link__info">
-									<span class="ui-tag ui-tag--size-xs ui-tag--theme-accent ui-tag--rounded-top">جديد</span>
-								  </span>
-								  <span class="header-navigation-promo-link__title">مكافأة 50% يوم الثلاثاء</span>
-								</a>
-							  </li>
-							  <li class="header-navigation-promo__item">
-								<a href="/game/" rel="nofollow" class="header-navigation-promo__link header-navigation-promo-link">
-								  <span class="ico--flame ico header-navigation-promo-link__ico" aria-hidden="true">
-									<svg viewBox="0 0 32 32" class="ico__svg" focusable="false" role="img">
-									  <path d="M28 18.7c-.5-3.8-2-7.5-4.6-10.4C21.6 6 20 3.8 20 .7a.7.7 0 00-1-.6 17 17 0 00-6.3 9c-.5 2.3-.7 4.6-.7 6.8-2.7-.6-3.3-4.6-3.3-4.7a.7.7 0 00-1-.5c-.1.1-3.5 1.8-3.7 8.6v.7a12 12 0 0012 12 12 12 0 0012-13.3zm-12 12a4.1 4.1 0 01-4-4.3V26c0-.7.1-1.4.4-2a2.4 2.4 0 002.2 1.5.7.7 0 00.7-.6c0-1 0-2 .2-3 .3-1 .8-1.9 1.4-2.6.3.9.8 1.7 1.4 2.5 1 1.2 1.5 2.6 1.7 4.1v.4a4.1 4.1 0 01-4 4.3z"></path>
-									</svg>
-								  </span>
-								<span class="header-navigation-promo-link__info">
-									<span class="ui-tag ui-tag--size-xs ui-tag--theme-accent ui-tag--rounded-top">جديد</span>
-								  </span>
-								  <span class="header-navigation-promo-link__title">100٪ مكافأة على الألعاب الرياضية</span>
-								</a>
-							  </li>
-							  <ul id="menu-header-english-3" class="menu underline-effect">
-									<li><a href="/game/" rel="nofollow">العروض الترويجية والمكافآت</a></li>  
-									<li><a href="/game/" rel="nofollow">عرض الرمز الترويجي</a></li>  
-									<li><a href="/game/" rel="nofollow">ألعاب المكافآت</a></li>  
-									<li><a href="/game/" rel="nofollow">البطولات</a></li>  
-							  </ul>
-							  <a href="/game/" rel="nofollow" id="game-show-more-1-header">عرض المزيد</a>
-							</ul>
-							  
-						  </li>
-						<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-666696">
-							<a href="/game/" rel="nofollow">
-								<svg width="20px" height="16px" viewBox="0 0 480 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|cherry" fill="white"><path d="M120 150c23 0 43-6 60-14-17 32-27 68-29 106-68 8-121 64-121 134 0 74 61 136 135 136 23 0 45-6 65-17a167 167 0 010-237c-16-8-32-14-49-16 6-106 86-193 189-209-26 37-40 81-40 127v83c-67 7-120 64-120 133 0 74 61 136 135 136s135-62 135-136c0-69-53-126-120-133v-83c0-51 20-99 56-134l25-26h-36c-70 0-134 29-181 75-12-12-51-45-104-45C57 30 13 77 11 79L0 90l11 11c2 2 46 49 109 49zm225 181c-25 0-45 20-45 45h-30c0-41 34-75 75-75v30zm-180 0c-25 0-45 20-45 45H90c0-41 34-75 75-75v30z"></path></svg>
-								الآلات الميكانيكية							</a>
-							<ul class="sub-menu header-navigation-promo">
-						      <li class="header-navigation-promo__item promo-slots-item-header-li">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-9.png" alt="888Starz" width="75">
-							  	  <img loading="lazy" src="/wp-content/uploads/2025/03/140-8.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-7.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-6.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-5.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-4.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-3.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-2.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-1.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140.png" alt="888Starz" width="75">
-						      </li>
-							  <ul id="menu-header-english-3" class="menu underline-effect">
-									<li><a href="/game/" rel="nofollow">Rival</a></li>  
-									<li><a href="/game/" rel="nofollow">Spade Gaming</a></li>  
-									<li><a href="/game/" rel="nofollow">Evolution</a></li>  
-									<li><a href="/game/" rel="nofollow">Spinmatic</a></li>  
-								  <li><a href="/game/" rel="nofollow">Simple play</a></li> 
-								   <li><a href="/game/" rel="nofollow">Spinthon</a></li>
-								  <li><a href="/game/" rel="nofollow">Evoplay</a></li> 
-								   <li><a href="/game/" rel="nofollow">Aviator</a></li> 
-								  <li><a href="/game/" rel="nofollow">Smartsoft</a></li> 
-								  <li><a href="/game/" rel="nofollow">Superlotto games</a></li> 
-							  </ul>
-							  <a href="/game/" rel="nofollow" id="game-show-more-1-header">عرض المزيد</a>
-							</ul> 
-							  
-						  </li>
-							<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666696">
-								<a href="/game/" rel="nofollow">
-									<svg data-v-4ba7e595="" width="16px" fill="white" viewBox="0 0 512 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|bonus"><path d="M479 100h-38a66 66 0 00-30-93c-24-12-51-7-71 11l-47 42a50 50 0 00-74 0l-47-42a65 65 0 00-71-12 66 66 0 00-40 68c1 9 5 18 10 26H33c-18 0-33 15-33 33v50c0 9 7 17 17 17h478c10 0 17-8 17-17v-50c0-18-15-33-33-33zm-273-6v6h-79a33 33 0 1122-58l57 52zm211-24c-1 17-17 30-34 30h-77v-6l56-51c8-8 20-11 31-8 16 5 25 18 24 35zM33 233v245c0 19 15 34 34 34h156V233H33zm256 0v279h156c19 0 34-15 34-34V233H289z"></path></svg>
-									كازينو مباشر								</a>
-							</li>
-							<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666696">
-								<a href="/game/" rel="nofollow">
-									888Games
-								</a>
-							</li>
-							<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666696">
-								<a href="/game/" rel="nofollow">
-									الرياضات الإلكترونية								</a>
-							</li>
-							<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-666696">
-								<a href="/game/" rel="nofollow">
-									المزيد								</a>
-							</li>
-							
-						</ul>
-					</nav>
-					<!-- end: .main-nav -->
-
-							</div>
-		</div>
-	</div>
-	
-	<div class="mobile-bottom-navigator-header">
-		<a href="/game/" rel="nofollow" class="item-navigator-mobile">
-			<svg data-v-72c25320="" width="19px" height="19px" viewBox="0 0 16 16" class="ico__svg" fill="#707070" focusable="false" role="img" data-v-ico="common|cup"><path clip-rule="evenodd" d="M13 0H3v1H1.75C.78 1 0 1.65 0 2.44v1.04c0 .82.4 1.6 1.1 2.18L3 7.23a5 5 0 0 0 3.72 4.6L6 14H4a1 1 0 0 0-1 1v1h10v-1a1 1 0 0 0-1-1h-2l-.72-2.16A5 5 0 0 0 13 7.1l2-1.7c.64-.56 1-1.3 1-2.07v-.98C16 1.61 15.29 1 14.4 1h-1.38v1.17h1.39c.12 0 .23.08.23.2v.97c0 .46-.22.9-.6 1.24L13 5.46V0ZM1.75 2.24H3v3.24l-.84-.7a1.7 1.7 0 0 1-.66-1.3V2.44c0-.11.11-.2.25-.2Zm6.44 1.35a.2.2 0 0 0-.38 0l-.44 1.34a.2.2 0 0 1-.19.14H5.76a.2.2 0 0 0-.12.36l1.15.84c.07.05.1.14.08.22l-.44 1.35a.2.2 0 0 0 .3.23l1.15-.84a.2.2 0 0 1 .24 0l1.15.84a.2.2 0 0 0 .3-.23L9.13 6.5a.2.2 0 0 1 .08-.22l1.15-.84a.2.2 0 0 0-.12-.36H8.82a.2.2 0 0 1-.2-.14L8.2 3.6Z" fill-rule="evenodd"></path></svg>
-		    رياضات		</a>
-		<a href="/game/" rel="nofollow" class="item-navigator-mobile">
-			<svg data-v-72c25320="" width="19px" height="19px" fill="#707070" viewBox="0 0 16 17" class="ico__svg" focusable="false" role="img" data-v-ico="common|casino-chip"><path d="M15.2 11a7.6 7.6 0 0 1-8.5 5A7.6 7.6 0 0 1 1 11C.6 10.2.4 9.3.4 8.5c0-1 .2-1.9.6-2.7A7.6 7.6 0 0 1 9.3.9 7.6 7.6 0 0 1 15 5.7c.4.8.6 1.7.6 2.7 0 .8-.2 1.7-.4 2.5Zm-8.5 4h2.6v-1.6a5 5 0 0 1-1.3.2c-.4 0-.9 0-1.3-.2V15ZM3 12.8l1.3-.8a5 5 0 0 1-1.2-2.2l-1.4.7c.3.8.8 1.6 1.3 2.2v.1Zm.1-8.6c-.5.6-1 1.3-1.3 2.1l1.3.7a5 5 0 0 1 1.3-2.2l-1.3-.6ZM9.3 2H6.7v1.6A5 5 0 0 1 8 3.4c.4 0 .9 0 1.3.2V2ZM8 4.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM13 4l-1.3 1a5 5 0 0 1 1.3 2l1.3-.8c-.3-.8-.7-1.5-1.3-2.2Zm0 5.8a5 5 0 0 1-1.2 2.2l1.3.7c.6-.6 1-1.4 1.3-2.2l-1.4-1v.3Z"></path><path d="M11.1 8.5c0 1.7-1.4 3.2-3 3.2a3.1 3.1 0 0 1-3.2-3.2C5 6.7 6.3 5.3 8 5.3c1.7 0 3.1 1.4 3.1 3.2Z"></path></svg>
-			كازينو		</a>
-		<a href="/game/" rel="nofollow" class="item-navigator-mobile">
-			<div data-v-50587210="" class="bottom-navigation-link-coupon-content__wrapper"><svg data-v-72c25320="" viewBox="0 0 19 20" class="ico__svg" focusable="false" role="img" data-v-ico="common|coupon"><path clip-rule="evenodd" d="M3.12 5.75 2.8 5.5.12 8.2l3.1 3.1L4.5 10l.66.66-1.28 1.29 7.55 7.56 2.68-2.68-.23-.33a1.52 1.52 0 0 1 2.1-2.09l.32.23 2.68-2.68-7.56-7.55-1.28 1.28-.67-.66 1.29-1.29L7.66.65 5 3.33l.23.32a1.52 1.52 0 0 1-2.1 2.1Zm5.64-.02.67.67L8 7.8l-.66-.66 1.41-1.42ZM6.62 7.88l.66.66-1.41 1.42-.67-.67 1.42-1.41Z" fill-rule="evenodd"></path></svg></div>
-			قسيمة		</a>
-		<a href="/game/" rel="nofollow" class="item-navigator-mobile">
-			<svg data-v-72c25320="" width="19px" height="19px" fill="#707070" viewBox="0 0 448 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|user"><path d="M224 256a128 128 0 100-256 128 128 0 000 256zm90 32h-17a174 174 0 01-146 0h-17C60 288 0 348 0 422v42c0 27 22 48 48 48h352c27 0 48-21 48-48v-42c0-74-60-134-134-134z"></path></svg>
-			تسجيل الدخول		</a>
-		
-		 <div class="open-menu">
-			<svg width="19px" height="14px" viewBox="0 0 12 12" enable-background="new 0 0 12 12" id="Слой_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#707070"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <rect fill="#1D1D1B" height="1" width="11" x="0.5" y="5.5"></rect> <rect fill="#1D1D1B" height="1" width="11" x="0.5" y="2.5"></rect> <rect fill="#1D1D1B" height="1" width="11" x="0.5" y="8.5"></rect> </g> </g></svg>
-			 القائمة		</div>
-		
-	</div>
-</header>
-
-	<div class="mobile-header-widget">
-		<div class="overflow-game-header-top">
-			<div class="top__games-header">
-						<a href="/game/" class="left-header__link-game-top-games crystal-games-header" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/game-249-animation.svg" alt="Crystal">
-							<span>Crystal</span>
-						</a>
-						<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/740a96629ce88bbf075e4e3003a3ff1e.svg" alt="Aviator" width="70" height="32">
-						</a>
-						<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/3ca73a69e5275a2051000fb92ce2e288.webp" alt="League Champions" width="32" height="32">
-						</a>
-						<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/dd6d3a947117b4b8e79c5159c091ada3.webp" alt="League Champions" width="32" height="32">
-						</a>
-						<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/e9c65966664d9c2e4e0ba094a0760d40.svg" alt="Premier-league" width="32" height="32">
-						</a>
-						<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/ef82153ad04426601aca85827938d210.svg" alt="La Liga" width="32" height="32">
-						</a>
-						<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/a88c2145994b996d246eade556be38b0.svg" alt="Seria A" width="32" height="32">
-						</a>
-			</div>
-		</div>
-		<div class="overflow-888-game-header">
-			<div class="container-game-888-header">
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/1st.webp" alt="+100% مكافأة على أول إيداع لك">
-					<span class="desc-game-header">+100% مكافأة على أول إيداع لك</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/slot-first-deposit.webp" alt="1500 EUR + 150 FS">
-					<span class="desc-game-header">1500 EUR + 150 FS</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/50-_second_deposit_-1-.webp" alt="50% SECOND DEPOSIT BONUS">
-					<span class="desc-game-header">50% مكافأة الإيداع الثاني</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/320-250.webp" alt="WINNERS LOTTERY">
-					<span class="desc-game-header">يانصيب الفائزين</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/Bonus_NHL_2024_315x250.webp" alt="Ice Win">
-					<span class="desc-game-header">فوز الجليد</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/vip-cashback.webp" alt="Casino VIP Cashback">
-					<span class="desc-game-header">استرداد نقدي VIP كازينو</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/3-_Tuesday.webp" alt="3% cashback every Tuesday">
-					<span class="desc-game-header">استرداد نقدي بنسبة 3% كل يوم ثلاثاء</span>
-				</a>
-
-
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/accumulator_insurance.webp" alt="ACCUMULATOR INSURANCE">
-					<span class="desc-game-header">تأمين المجمع</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/accumulator_of_the_day.webp" alt="ACCUMULATOR OF THE DAY">
-					<span class="desc-game-header">مجمع اليوم</span>
-				</a>
-
-			</div>
-		</div>
-		<nav class="home-navigation betting-main__navigation">
-			<ul class="home-navigation__menu">
-				<li class="home-navigation__item">
-					<a href="/game/" rel="nofollow" title="مباشر" class="home-navigation__link home-navigation__link--live">
-						مباشر
-					</a>
-				</li>
-				<li class="home-navigation__item">
-					<a href="/game/" rel="nofollow" title="الخط" class="home-navigation__link">
-						الخط
-					</a>
-				</li>
-				<li class="home-navigation__item">
-					<a href="/game/" rel="nofollow title=" المفضلة"="" class="home-navigation__link home-navigation__link--favorite" style="display: flex;">
-						<svg width="22px" height="19px" fill="#ff0000" viewBox="0 0 576 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|star"><path d="M259.3 17.8L194 150.2 47.9 171.5a32 32 0 00-17.7 54.6l105.7 103-25 145.5a32 32 0 0046.4 33.7L288 439.6l130.7 68.7a32 32 0 0046.4-33.7l-25-145.5 105.7-103a32 32 0 00-17.7-54.6L382 150.2 316.7 17.8a32 32 0 00-57.4 0z"></path></svg>
-					</a>
-				</li>
-				<li class="home-navigation__item">
-					<a href="/game/" rel="nofollow title=" بحث"="" class="home-navigation__link home-navigation__link--search" style="display: flex;">
-						<svg width="16px" height="16px" fill="#424242" viewBox="0 0 512 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|search"><path d="M505 443L405 343c-4-4-10-7-17-7h-16a208 208 0 10-36 36v16c0 7 3 13 7 17l100 100c9 9 24 9 34 0l28-28c9-10 9-25 0-34zM208 336a128 128 0 110-256 128 128 0 010 256z"></path></svg>
-					</a>
-				</li>
-			</ul>
-		</nav>
-	</div>
-    
-
-
-
-
-<!-- end: #header -->
-
-<div class="clear"></div>   
-
-
-
-
-<div class="slider-888-container" dir="ltr">
-        <div class="slider-888-slider owl-loaded owl-drag">
-            <!-- Slide 1 -->
-            
-            
-            <!-- Slide 2 -->
-            
-            
-            <!-- Slide 3 -->
-            
-        <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-2520px, 0px, 0px); transition: all; width: 8820px;"><div class="owl-item cloned" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">استرداد نقدي أسبوعي 3%</div>
-                    <p class="slider-888-slide-description">ضع رهاناتك خلال الأسبوع واحصل على استرداد نقدي بنسبة 3% من مبلغ الرهانات كل يوم ثلاثاء</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">المزيد من التفاصيل</a>
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/3-_Tuesday_945x370_1.png" alt="888Starz" class="img-slide-after">
-            </div></div><div class="owl-item cloned" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">باقة الكازينو الترحيبية</div>
-                    <p class="slider-888-slide-description">باقة ترحيبية لـ4 إيداعات + 150 دورة مجانية</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">سجل الآن</a>
-					
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/slot-first-deposit-slider.webp" alt="888Starz" class="img-slide-after">
-            </div></div><div class="owl-item active" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">مكافأة 100% على الإيداع الأول</div>
-                    <p class="slider-888-slide-description">سجل في 888STARZ واحصل على مكافأة مضمونة لإيداعك الأول</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">سجل الآن</a>
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/1st-slider_-1-.webp" alt="888Starz" class="img-slide-after">
-            </div></div><div class="owl-item" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">استرداد نقدي أسبوعي 3%</div>
-                    <p class="slider-888-slide-description">ضع رهاناتك خلال الأسبوع واحصل على استرداد نقدي بنسبة 3% من مبلغ الرهانات كل يوم ثلاثاء</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">المزيد من التفاصيل</a>
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/3-_Tuesday_945x370_1.png" alt="888Starz" class="img-slide-after">
-            </div></div><div class="owl-item" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">باقة الكازينو الترحيبية</div>
-                    <p class="slider-888-slide-description">باقة ترحيبية لـ4 إيداعات + 150 دورة مجانية</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">سجل الآن</a>
-					
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/slot-first-deposit-slider.webp" alt="888Starz" class="img-slide-after">
-            </div></div><div class="owl-item cloned" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">مكافأة 100% على الإيداع الأول</div>
-                    <p class="slider-888-slide-description">سجل في 888STARZ واحصل على مكافأة مضمونة لإيداعك الأول</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">سجل الآن</a>
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/1st-slider_-1-.webp" alt="888Starz" class="img-slide-after">
-            </div></div><div class="owl-item cloned" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">استرداد نقدي أسبوعي 3%</div>
-                    <p class="slider-888-slide-description">ضع رهاناتك خلال الأسبوع واحصل على استرداد نقدي بنسبة 3% من مبلغ الرهانات كل يوم ثلاثاء</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">المزيد من التفاصيل</a>
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/3-_Tuesday_945x370_1.png" alt="888Starz" class="img-slide-after">
-            </div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div></div>
-	</div>
-			<!-- start: #page -->
-<main id="page" class="main grid-container">
-			<!-- start: .center -->
-	    <div id="single" class="content">
-			
-			<div class="epcl-breadcrumbs">
-                			<!-- Flexy Breadcrumb -->
-			<div class="fbc fbc-page">
-
-				<!-- Breadcrumb wrapper -->
-				<div class="fbc-wrap">
-
-					<!-- Ordered list-->
-					<ol class="fbc-items" itemscope="" itemtype="https://schema.org/BreadcrumbList">
-						<li class="active" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem"><span itemprop="name" title="رمز ترويجي 888Starz في مصر"></span><meta itemprop="position" content="2"></li>					</ol>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-			 
-            </div>
-                  
-
-	        <!-- start: .left-content -->
-	        <div class="left-content np-mobile">
-	            <article class="post-1323 page type-page status-publish hentry">
-
-	                <section class="post-content">
-                           
-                            <h1 class="title ularge textcenter">رمز ترويجي 888Starz في مصر</h1>
-                        
-	                    <div class="text">
-	                        <section class=" section-wrapper2-ar section-wrapper2 grid-wrapper2 d-grid2 padding-horizontal2 js-grid-wrapper2">
-            <div class="grid-item2">
-                <div class="item1 d-flex2 fd-column2">
-                    <div class="content2 d-flex2 fd-column2 align-top2">
-                        <div class="ribbon-2">عروض</div>
-                        <div class="card-head1 d-flex2 ai-center1 align-top2">
-                            <div class="timer-img">
-                                <noindex>
-                                    <a target="_blank" rel="nofollow noopener" href="/game/" class="ui-link">
-                                        <img loading="lazy" decoding="async" alt="888Starz" src="/wp-content/uploads/2025/01/favicon.png" class="loaded2">
-                                    </a>
-                                </noindex>
-                                <div class="timer" dir="ltr">
-                                    <div class="timer__items">
-                                        <div class="timer__item timer__hours">00</div>
-                                        <div class="timer__item timer__minutes">01</div>
-                                        <div class="timer__item timer__seconds">28</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="bonustitle">احصل على هذا <span style="border-bottom: 2px solid #f37021; padding-bottom: 3px;">قبل 1500€</span> باستخدام الرمز الترويجي!</p>
-                            <div class="promo" id="promoCode" onclick="copyPromoCode()">AR888BONUS
-                                <div class="copy-icon">
-                                    <i class="fa fa-clone" aria-hidden="true"></i>
-                                    <div class="copy-notification" id="copyNotification">تم النسخ</div>
-                                </div>
-                            </div>
-                            <noindex><a target="_blank" rel="nofollow noopener" href="/game/" class="button2 filled-green2 radius-41 ui-link"><br>
-                                    <span class="text-overflow1">اذهب إلى 888Starz</span><br> </a></noindex>
-                            <div class="promotext">يمكنك الحصول على المكافأة فقط عند الانتقال من موقعنا</div>
-                        </div>
-                    </div>
-                </div>
-        </div></section>
-
-	<div class="contaienr-button-two">
-		<a href="/game/" rel="nofollow" class="link-twobutton-game">
-			<svg fill="#ffffff" height="32px" width="32px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-146 129 218 256" xml:space="preserve" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M-2.9,150.4l2.8-4.2l2.8-4.1l6.2-9.3c0.8-1.1,0.5-2.7-0.7-3.4c-1.1-0.8-2.7-0.5-3.4,0.7l-6.6,9.9l-2.8,4.2l-2.8,4.2 c-9-3.5-18.9-5.4-29.5-5.4c-10.5,0-20.5,1.9-29.5,5.4l-2.8-4.2L-72,140l-6.6-9.9c-0.8-1.1-2.3-1.4-3.4-0.7 c-1.1,0.8-1.4,2.3-0.7,3.4l6.2,9.3l2.8,4.1l2.8,4.2c-21,9.8-35.3,28.3-35.3,49.6H32.5C32.4,178.7,18.2,160.2-2.9,150.4z M-66.7,180.1c-4.1,0-7.4-3.3-7.4-7.4c0-4.1,3.3-7.4,7.4-7.4c4.1,0,7.4,3.3,7.4,7.4S-62.6,180.1-66.7,180.1z M-7.3,180.1 c-4.1,0-7.4-3.3-7.4-7.4c0-4.1,3.3-7.4,7.4-7.4c4.1,0,7.4,3.3,7.4,7.4C0.2,176.8-3.1,180.1-7.3,180.1z"></path> <path d="M-105.3,209.8l-1.1,0.1v12.3v10.1v86.6c0,8.7,7,15.7,15.7,15.7h11.3c-0.4,1.3-0.6,2.7-0.6,4.1v0.8v5v25.6 c0,8.2,6.7,14.9,14.9,14.9s14.9-6.7,14.9-14.9v-25.6v-5v-0.8c0-1.4-0.2-2.8-0.6-4.1h27.6c-0.4,1.3-0.6,2.7-0.6,4.1v0.8v5v25.6 c0,8.2,6.7,14.9,14.9,14.9c8.2,0,14.9-6.7,14.9-14.9v-25.6v-5v-0.8c0-1.4-0.2-2.8-0.6-4.1h11.3c8.7,0,15.7-7,15.7-15.7v-86.6v-10.1 v-12.4h-1.1H-105.3z"></path> <path d="M-131.1,209.9c-8.2,0-14.9,6.7-14.9,14.9v63.6c0,8.2,6.7,14.9,14.9,14.9c8.2,0,14.9-6.7,14.9-14.9v-63.6 C-116.3,216.5-122.9,209.9-131.1,209.9z"></path> <path d="M57.2,209.9c-8.2,0-14.9,6.7-14.9,14.9v63.6c0,8.2,6.7,14.9,14.9,14.9s14.9-6.7,14.9-14.9v-63.6 C72,216.5,65.4,209.9,57.2,209.9z"></path> </g> </g></svg>
-			تحميل على أندرويد 
-		</a>
-		<a href="/game/" rel="nofollow" class="link-twobutton-game">
-			<svg width="32px" height="32px" viewBox="-1.5 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#ffffff" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>apple [#173]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-102.000000, -7439.000000)" fill="#ffffff"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M57.5708873,7282.19296 C58.2999598,7281.34797 58.7914012,7280.17098 58.6569121,7279 C57.6062792,7279.04 56.3352055,7279.67099 55.5818643,7280.51498 C54.905374,7281.26397 54.3148354,7282.46095 54.4735932,7283.60894 C55.6455696,7283.69593 56.8418148,7283.03894 57.5708873,7282.19296 M60.1989864,7289.62485 C60.2283111,7292.65181 62.9696641,7293.65879 63,7293.67179 C62.9777537,7293.74279 62.562152,7295.10677 61.5560117,7296.51675 C60.6853718,7297.73474 59.7823735,7298.94772 58.3596204,7298.97372 C56.9621472,7298.99872 56.5121648,7298.17973 54.9134635,7298.17973 C53.3157735,7298.17973 52.8162425,7298.94772 51.4935978,7298.99872 C50.1203933,7299.04772 49.0738052,7297.68074 48.197098,7296.46676 C46.4032359,7293.98379 45.0330649,7289.44985 46.8734421,7286.3899 C47.7875635,7284.87092 49.4206455,7283.90793 51.1942837,7283.88393 C52.5422083,7283.85893 53.8153044,7284.75292 54.6394294,7284.75292 C55.4635543,7284.75292 57.0106846,7283.67793 58.6366882,7283.83593 C59.3172232,7283.86293 61.2283842,7284.09893 62.4549652,7285.8199 C62.355868,7285.8789 60.1747177,7287.09489 60.1989864,7289.62485" id="apple-[#173]"> </path> </g> </g> </g> </g></svg>
-			
-			تحميل على آي أو إس
-		</a>
-	</div>
-    
-<p>يقدم موقع 888Starz في العالم العربي مكافأة ترحيبية حصرية للاعبين الجدد والتي يمكن تفعيلها باستخدام رمز ترويجي. من خلال استخدام رمز خاص أثناء التسجيل، يمكن للمستخدمين زيادة مبلغ إيداعهم الأول والحصول على مكافآت إضافية في شكل رهانات مجانية أو دورات مجانية في الكازينو.</p>
-<blockquote><p><strong>مهم! يمكنك دائمًا العثور على أكواد الخصم الحالية على موقعنا.</strong></p></blockquote>
-<div class="table-wrapper"><table width="0">
-<tbody>
-<tr>
-<td width="147"><img loading="lazy" draggable="false" role="img" class="emoji" alt="🌍" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f30d.svg">الموقع الرسمي لمكتب المراهنات</td>
-<td width="476">888starz.com</td>
-</tr>
-<tr>
-<td width="147"><img loading="lazy" draggable="false" role="img" class="emoji" alt="📌" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f4cc.svg">تاريخ إطلاق الموقع</td>
-<td width="476">2020</td>
-</tr>
-<tr>
-<td width="147"><img loading="lazy" draggable="false" role="img" class="emoji" alt="📃" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f4c3.svg">رخصة</td>
-<td width="476">نعم، صادرة عن سلطة كوراساو القضائية</td>
-</tr>
-<tr>
-<td width="147"><img loading="lazy" draggable="false" role="img" class="emoji" alt="🌍" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f30d.svg">لغات الواجهة المدعومة</td>
-<td width="476">العربية، الإنجليزية، الروسية، الكازاخستانية وغيرها.</td>
-</tr>
-<tr>
-<td width="147"><img loading="lazy" draggable="false" role="img" class="emoji" alt="💲" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f4b2.svg">العملات المدعومة</td>
-<td width="476">يورو، دولار أمريكي، روبل روسي، إلخ.</td>
-</tr>
-<tr>
-<td width="147"><img loading="lazy" draggable="false" role="img" class="emoji" alt="🏦" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f3e6.svg">أنظمة الدفع للتحويلات</td>
-<td width="476">البطاقات المصرفية، وخدمات الدفع الإلكتروني، والعملات المشفرة</td>
-</tr>
-<tr>
-<td width="147"><img loading="lazy" draggable="false" role="img" class="emoji" alt="🎁" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f381.svg">مكافأة ترحيبية</td>
-<td width="476">يأكل</td>
-</tr>
-<tr>
-<td width="147"><img loading="lazy" draggable="false" role="img" class="emoji" alt="📱" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f4f1.svg">تطبيق الهاتف المحمول</td>
-<td width="476">iOS، أندرويد</td>
-</tr>
-<tr>
-<td width="147"><img loading="lazy" draggable="false" role="img" class="emoji" alt="🎟️" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f39f.svg">اليانصيب والبطولات</td>
-<td width="476">يأكل</td>
-</tr>
-<tr>
-<td width="147"><img loading="lazy" draggable="false" role="img" class="emoji" alt="📞" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f4de.svg">طرق التواصل مع خدمة الدعم</td>
-<td width="476">الدردشة، البريد الإلكتروني، الهاتف</td>
-</tr>
-</tbody>
-</table></div>
-     <div class="owl-mobile owl-theme owl-loaded owl-drag" dir="ltr">
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-     <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-2033px, 0px, 0px); transition: all; width: 8134px;"><div class="owl-item cloned" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/ألعاب-الكازينو.webp" data-fancybox="gallerymob">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/ألعاب-الكازينو.webp" loading="lazy" alt="ألعاب-الكازينو" title="ألعاب-الكازينو">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/حساب-تجريبي-888-ستارز.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/حساب-تجريبي-888-ستارز.webp" alt="حساب-تجريبي-888-ستارز" title="حساب-تجريبي-888-ستارز">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/لعبة-الطيار.webp" data-fancybox="gallerymob">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/لعبة-الطيار.webp" loading="lazy" alt="لعبة-الطيار" title="لعبة-الطيار">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/ماكينات-القمار-888ستارز.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/ماكينات-القمار-888ستارز.webp" alt="ماكينات-القمار-888ستارز" title="ماكينات-القمار-888ستارز">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/نوع-الألعاب-في-الكازينو.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/نوع-الألعاب-في-الكازينو.webp" alt="نوع-الألعاب-في-الكازينو" title="نوع-الألعاب-في-الكازينو">
-               </a>
-          </div></div><div class="owl-item active" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/888starz.com_.webp" data-fancybox="gallerymob">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/888starz.com_.webp" loading="lazy" alt="888starz.com" title="888starz.com">
-               </a>
-          </div></div><div class="owl-item active" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/888ألعاب-888GAMES.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/888ألعاب-888GAMES.webp" alt="ألعاب-888GAMES" title="ألعاب-888GAMES">
-               </a>
-          </div></div><div class="owl-item active" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/الألعاب-التلفزيونية.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الألعاب-التلفزيونية.webp" alt="الألعاب-التلفزيونية" title="الألعاب-التلفزيونية">
-               </a>
-          </div></div><div class="owl-item" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/الرمز-الترويجي-1500-و150-دورة-مجانية.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الرمز-الترويجي-1500-و150-دورة-مجانية.webp" alt="الرمز-الترويجي-1500-و150-دورة-مجانية" title="الرمز-الترويجي-1500-و150-دورة-مجانية">
-               </a>
-          </div></div><div class="owl-item" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/الرهان-على-الرياضات-الإلكترونية.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الرهان-على-الرياضات-الإلكترونية.webp" alt="الرهان-على-الرياضات-الإلكترونية" title="الرهان-على-الرياضات-الإلكترونية">
-               </a>
-          </div></div><div class="owl-item" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/ألعاب-الكازينو.webp" data-fancybox="gallerymob">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/ألعاب-الكازينو.webp" loading="lazy" alt="ألعاب-الكازينو" title="ألعاب-الكازينو">
-               </a>
-          </div></div><div class="owl-item" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/حساب-تجريبي-888-ستارز.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/حساب-تجريبي-888-ستارز.webp" alt="حساب-تجريبي-888-ستارز" title="حساب-تجريبي-888-ستارز">
-               </a>
-          </div></div><div class="owl-item" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/لعبة-الطيار.webp" data-fancybox="gallerymob">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/لعبة-الطيار.webp" loading="lazy" alt="لعبة-الطيار" title="لعبة-الطيار">
-               </a>
-          </div></div><div class="owl-item" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/ماكينات-القمار-888ستارز.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/ماكينات-القمار-888ستارز.webp" alt="ماكينات-القمار-888ستارز" title="ماكينات-القمار-888ستارز">
-               </a>
-          </div></div><div class="owl-item" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/نوع-الألعاب-في-الكازينو.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/نوع-الألعاب-في-الكازينو.webp" alt="نوع-الألعاب-في-الكازينو" title="نوع-الألعاب-في-الكازينو">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/888starz.com_.webp" data-fancybox="gallerymob">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/888starz.com_.webp" loading="lazy" alt="888starz.com" title="888starz.com">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/888ألعاب-888GAMES.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/888ألعاب-888GAMES.webp" alt="ألعاب-888GAMES" title="ألعاب-888GAMES">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/الألعاب-التلفزيونية.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الألعاب-التلفزيونية.webp" alt="الألعاب-التلفزيونية" title="الألعاب-التلفزيونية">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/الرمز-الترويجي-1500-و150-دورة-مجانية.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الرمز-الترويجي-1500-و150-دورة-مجانية.webp" alt="الرمز-الترويجي-1500-و150-دورة-مجانية" title="الرمز-الترويجي-1500-و150-دورة-مجانية">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 376.667px; margin-right: 30px;"><div class="mobile-slide">
-               <a href="/wp-content/uploads/2025/03/الرهان-على-الرياضات-الإلكترونية.webp" data-fancybox="gallerymob">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الرهان-على-الرياضات-الإلكترونية.webp" alt="الرهان-على-الرياضات-الإلكترونية" title="الرهان-على-الرياضات-الإلكترونية">
-               </a>
-          </div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div></div>
-
-
-     
-<h2 id="حول-رمز-خصم-888starz">حول رمز خصم 888Starz</h2>
-<p>يقدم موقع 888Starz أكواد ترويجية حصرية تسمح للاعبين بتلقي مكافآت إضافية عند التسجيل وتجديد الحساب والمشاركة في العروض الترويجية. يعد استخدام رمز ترويجي طريقة رائعة لزيادة رأس مالك الأولي والحصول على المزيد من الفرص للمراهنة واللعب في الكازينو.</p>
-<p><img fetchpriority="high" decoding="async" class="aligncenter wp-image-1284 size-medium_large" src="https://888starz-africa.com/wp-content/uploads/2025/03/مكافأة-الإيداع-الأول-768x768.webp" loading="lazy" alt="مكافأة الإيداع الأول" width="726" height="726" srcset="/wp-content/uploads/2025/03/مكافأة-الإيداع-الأول-768x768.webp 768w, /wp-content/uploads/2025/03/مكافأة-الإيداع-الأول-300x300.webp 300w, /wp-content/uploads/2025/03/مكافأة-الإيداع-الأول-150x150.webp 150w, /wp-content/uploads/2025/03/مكافأة-الإيداع-الأول-660x660.webp 660w, /wp-content/uploads/2025/03/مكافأة-الإيداع-الأول.webp 904w" sizes="(max-width: 726px) 100vw, 726px"></p>
-<h3 id="ما-هو-الرمز-الترويجي-ولماذا-هو-ضروري">ما هو الرمز الترويجي ولماذا هو ضروري؟</h3>
-<p>كود خصم 888Starz هو كود خاص مكون من أحرف وأرقام يقوم بتفعيل عرض المكافأة. يمكن إدخالها أثناء التسجيل أو في قسم “المكافآت” في حسابك الشخصي.</p>
-<h4>لماذا تحتاج إلى رمز ترويجي؟</h4>
-<ul>
-<li>زيادة المكافأة – تسمح لك أكواد الترويج بالحصول على المزيد من أموال المكافأة على إيداعك مقارنة بالعرض القياسي.</li>
-<li>الرهانات المجانية والدورات المجانية – بعض الرموز تمنح اللاعبين رهانات أو دورات مجانية في الكازينو.</li>
-<li>الوصول إلى العروض الترويجية الحصرية – يمكن لرموز العرض الترويجي فتح عروض فريدة غير متاحة للاعبين الآخرين.</li>
-</ul>
-<p><img decoding="async" class="aligncenter wp-image-1283 size-medium_large" src="https://888starz-africa.com/wp-content/uploads/2025/03/تنزيل-التطبيق-768x768.webp" loading="lazy" alt="تنزيل التطبيق" width="726" height="726" srcset="/wp-content/uploads/2025/03/تنزيل-التطبيق-768x768.webp 768w, /wp-content/uploads/2025/03/تنزيل-التطبيق-300x300.webp 300w, /wp-content/uploads/2025/03/تنزيل-التطبيق-150x150.webp 150w, /wp-content/uploads/2025/03/تنزيل-التطبيق-660x660.webp 660w, /wp-content/uploads/2025/03/تنزيل-التطبيق.webp 904w" sizes="(max-width: 726px) 100vw, 726px"></p>
-<h3 id="ما-هي-المكافآت-التي-يمكنك-الحصول-عليها-باستخدام-رمز-الترويجي-في-الدول-العربية">ما هي المكافآت التي يمكنك الحصول عليها باستخدام رمز الترويجي في الدول العربية؟</h3>
-<p>يمكن للاعبين من مصر والإمارات العربية المتحدة والمملكة العربية السعودية والكويت وقطر ودول عربية أخرى استخدام رمز الخصم 888Starz للحصول على مكافآت حصرية.</p>
-
-     <div class="owl-carousel owl-theme owl-loaded owl-drag" dir="ltr">
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-     <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-6100px, 0px, 0px); transition: all; width: 24400px;"><div class="owl-item cloned" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/النتائج.webp" data-fancybox="gallery">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/النتائج.webp" loading="lazy" alt="النتائج" title="النتائج">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/بوكر.webp" data-fancybox="gallery">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/بوكر.webp" loading="lazy" alt="بوكر" title="بوكر">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/جميع-الألعاب-888.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/جميع-الألعاب-888.webp" alt="جميع-الألعاب-888" title="جميع-الألعاب-888">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/جميع-المكافآت.webp" data-fancybox="gallery">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/جميع-المكافآت.webp" loading="lazy" alt="جميع-المكافآت" title="جميع-المكافآت">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/ماكينات-سلوتس-888-ستارز.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/ماكينات-سلوتس-888-ستارز.webp" alt="ماكينات-سلوتس-888-ستارز" title="ماكينات-سلوتس-888-ستارز">
-               </a>
-          </div></div><div class="owl-item active" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/الإحصاءات.webp" data-fancybox="gallery">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/الإحصاءات.webp" loading="lazy" alt="الإحصاءات" title="الإحصاءات">
-               </a>
-          </div></div><div class="owl-item" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/البنغو.webp" data-fancybox="gallery">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/البنغو.webp" loading="lazy" alt="البنغو" title="البنغو">
-               </a>
-          </div></div><div class="owl-item" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/الرياضة-الإلكترونية.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الرياضة-الإلكترونية.webp" alt="الرياضة-الإلكترونية" title="الرياضة-الإلكترونية">
-               </a>
-          </div></div><div class="owl-item" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/الصفحة-الرئيسية-888ستارز.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الصفحة-الرئيسية-888ستارز.webp" alt="الصفحة-الرئيسية-888ستارز" title="الصفحة-الرئيسية-888ستارز">
-               </a>
-          </div></div><div class="owl-item" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/ألعاب-الكازينو-1.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/ألعاب-الكازينو-1.webp" alt="ألعاب-الكازينو-1" title="ألعاب-الكازينو-1">
-               </a>
-          </div></div><div class="owl-item" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/النتائج.webp" data-fancybox="gallery">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/النتائج.webp" loading="lazy" alt="النتائج" title="النتائج">
-               </a>
-          </div></div><div class="owl-item" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/بوكر.webp" data-fancybox="gallery">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/بوكر.webp" loading="lazy" alt="بوكر" title="بوكر">
-               </a>
-          </div></div><div class="owl-item" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/جميع-الألعاب-888.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/جميع-الألعاب-888.webp" alt="جميع-الألعاب-888" title="جميع-الألعاب-888">
-               </a>
-          </div></div><div class="owl-item" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/جميع-المكافآت.webp" data-fancybox="gallery">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/جميع-المكافآت.webp" loading="lazy" alt="جميع-المكافآت" title="جميع-المكافآت">
-               </a>
-          </div></div><div class="owl-item" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/ماكينات-سلوتس-888-ستارز.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/ماكينات-سلوتس-888-ستارز.webp" alt="ماكينات-سلوتس-888-ستارز" title="ماكينات-سلوتس-888-ستارز">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/الإحصاءات.webp" data-fancybox="gallery">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/الإحصاءات.webp" loading="lazy" alt="الإحصاءات" title="الإحصاءات">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/البنغو.webp" data-fancybox="gallery">
-                    <img decoding="async" src="/wp-content/uploads/2025/03/البنغو.webp" loading="lazy" alt="البنغو" title="البنغو">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/الرياضة-الإلكترونية.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الرياضة-الإلكترونية.webp" alt="الرياضة-الإلكترونية" title="الرياضة-الإلكترونية">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/الصفحة-الرئيسية-888ستارز.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/الصفحة-الرئيسية-888ستارز.webp" alt="الصفحة-الرئيسية-888ستارز" title="الصفحة-الرئيسية-888ستارز">
-               </a>
-          </div></div><div class="owl-item cloned" style="width: 1190px; margin-right: 30px;"><div class="slide">
-               <a href="/wp-content/uploads/2025/03/ألعاب-الكازينو-1.webp" data-fancybox="gallery">
-                    <img loading="lazy" decoding="async" src="/wp-content/uploads/2025/03/ألعاب-الكازينو-1.webp" alt="ألعاب-الكازينو-1" title="ألعاب-الكازينو-1">
-               </a>
-          </div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div></div>
-
-
-     
-<h4>مكافأة ترحيبية للرياضة</h4>
-<ul>
-<li>100% على إيداعك الأول حتى 1500 يورو.</li>
-<li>الحد الأدنى للإيداع: 10 يورو (أو 200 جنيه مصري / 40 درهم إماراتي / 40 ريال سعودي).</li>
-<li>الرهان: x5 في الرهانات السريعة (الحد الأدنى 3 أحداث مع احتمالات من 1.4).</li>
-<li>فترة الرهان هي 30 يومًا.</li>
-</ul>
-<h4>مكافأة الترحيب في الكازينو</h4>
-<ul>
-<li>ما يصل إلى 1500 يورو + 150 دورة مجانية.</li>
-<li>الرهان: x35 في الفتحات.</li>
-<li>الحد الأقصى للرهان: 5 يورو.</li>
-<li>يتم إصدار 25 دورة مجانية يوميًا لمدة 6 أيام.</li>
-</ul>
-<p>يتم إصدار المكافأة لأول 4 إيداعات:</p>
-<ul>
-<li>الإيداع الأول: مكافأة 100%.</li>
-<li>الإيداع الثاني: مكافأة 50%.</li>
-<li>الإيداع الثالث: مكافأة 25%.</li>
-<li>الإيداع الرابع: مكافأة 25%.</li>
-</ul>
-<h4>مكافآت إضافية مع رمز الترويج</h4>
-<p><img loading="lazy" draggable="false" role="img" class="emoji" alt="🔹" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f539.svg"> رهانات مجانية على الرياضة – رهانات مجانية للمستخدمين النشطين.<br>
-<img loading="lazy" draggable="false" role="img" class="emoji" alt="🔹" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f539.svg"> استرداد نقدي على الرهانات الخاسرة – استرداد ما يصل إلى 10% من الأموال المفقودة.<br>
-<img loading="lazy" draggable="false" role="img" class="emoji" alt="🔹" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f539.svg"> العروض الترويجية الأسبوعية – مكافآت لتجديد حسابك يومي الثلاثاء والخميس.<br>
-<img loading="lazy" draggable="false" role="img" class="emoji" alt="🔹" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f539.svg"> برنامج VIP – أكواد ترويجية شخصية للاعبين المنتظمين.</p>
-<p>إن استخدام كود خصم 888Starz في الدول العربية يمنح اللاعبين فوائد إضافية، مما يساعدهم على تحقيق أقصى استفادة من إيداعاتهم وزيادة فرصهم في الفوز.</p>
-<h3 id="أنواع-أكواد-الخصم-لـ-888starz-الرياضة-الكازينو-استرداد-النقود-الرهانات-المجانية">أنواع أكواد الخصم لـ 888Starz (الرياضة، الكازينو، استرداد النقود، الرهانات المجانية)</h3>
-<p>يقدم موقع 888Starz أنواعًا مختلفة من أكواد الترويج التي تعمل على تنشيط المكافآت الخاصة بالمراهنات الرياضية والكازينو والمراهنات المجانية واسترداد النقود.</p>
-<h4>رموز ترويجية للمراهنة الرياضية</h4>
-<ul>
-<li>مكافأة الإيداع الأول بنسبة 100% – تزيد من إيداعك الأول حتى 1500 يورو.</li>
-<li>الرهانات المجانية (Freebets) هي فرصة لوضع الرهانات دون مخاطرة.</li>
-<li>زيادة الاحتمالات – تعمل أكواد الترويج الخاصة على زيادة الاحتمالات لبعض الأحداث.</li>
-<li>استرداد نقدي على الرهانات الخاسرة – ما يصل إلى 10% من الرهانات الخاسرة يتم إرجاعها كل أسبوع.</li>
-</ul>
-
-        <h2 class="all-bonuses">جميع المكافآت</h2>
-        <div class="container-game-888">
-            <a href="/game/" class="link-game-888" rel="nofollow">
-                <img decoding="async" src="/wp-content/uploads/2025/01/1st.webp" loading="lazy" alt="+100% مكافأة على أول إيداع لك">
-                <span class="desc-game">+100% مكافأة على أول إيداع لك</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888 " rel="nofollow">
-                <img decoding="async" src="/wp-content/uploads/2025/01/slot-first-deposit.webp" loading="lazy" alt="باقة ترحيبية تصل إلى 1500 يورو + 150 FS">
-                <span class="desc-game">باقة ترحيبية تصل إلى 1500 يورو + 150 FS</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-			
-            <a href="/game/" class="link-game-888" rel="nofollow">
-                <img decoding="async" src="/wp-content/uploads/2025/01/50-_second_deposit_-1-.webp" loading="lazy" alt="50% SECOND DEPOSIT BONUS">
-                <span class="desc-game">50% مكافأة الإيداع الثاني</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888" rel="nofollow">
-                <img decoding="async" src="/wp-content/uploads/2025/01/320-250.webp" loading="lazy" alt="WINNERS LOTTERY">
-                <span class="desc-game">يانصيب الفائزين</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888" rel="nofollow">
-                <img decoding="async" src="/wp-content/uploads/2025/01/315x250.webp" loading="lazy" alt="TOP FOOTBALL LEAGUES">
-                <span class="desc-game">أفضل دوريات كرة القدم</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888" rel="nofollow">
-                <img decoding="async" src="/wp-content/uploads/2025/01/Bonus_NHL_2024_315x250.webp" loading="lazy" alt="Ice Win">
-                <span class="desc-game">فوز الجليد</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888" rel="nofollow">
-                <img decoding="async" src="/wp-content/uploads/2025/01/vip-cashback.webp" loading="lazy" alt="Casino VIP Cashback">
-                <span class="desc-game">استرداد نقدي VIP كازينو</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888" rel="nofollow">
-                <img decoding="async" src="/wp-content/uploads/2025/01/3-_Tuesday.webp" loading="lazy" alt="3% cashback every Tuesday">
-                <span class="desc-game">استرداد نقدي بنسبة 3% كل يوم ثلاثاء</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888" rel="nofollow" style="display: none;">
-                <img decoding="async" src="/wp-content/uploads/2025/01/dailytournament_23.webp" loading="lazy" alt="Great prizes up for grabs every day!">
-                <span class="desc-game">جوائز رائعة في انتظارك كل يوم!</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888" rel="nofollow" style="display: none;">
-                <img decoding="async" src="/wp-content/uploads/2025/01/50-_TUESDAY_-1-.webp" loading="lazy" alt="50% BONUS FOR SPORTS BETS EVERY TUESDAY">
-                <span class="desc-game">50% مكافأة على الرهانات الرياضية كل يوم ثلاثاء</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888" rel="nofollow" style="display: none;">
-                <img decoding="async" src="/wp-content/uploads/2025/01/100-_thursday_946.webp" loading="lazy" alt="100% SPORTS BETTING BONUS EVERY THURSDAY">
-                <span class="desc-game">100% مكافأة على الرهانات الرياضية كل يوم خميس</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888" rel="nofollow" style="display: none;">
-                <img decoding="async" src="/wp-content/uploads/2025/01/accumulator_insurance.webp" loading="lazy" alt="ACCUMULATOR INSURANCE">
-                <span class="desc-game">تأمين المجمع</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888" rel="nofollow" style="display: none;">
-                <img decoding="async" src="/wp-content/uploads/2025/01/accumulator_of_the_day.webp" loading="lazy" alt="ACCUMULATOR OF THE DAY">
-                <span class="desc-game">مجمع اليوم</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888" rel="nofollow" style="display: none;">
-                <img decoding="async" src="/wp-content/uploads/2025/01/888games-day.webp" loading="lazy" alt="888GAMES DAY">
-                <span class="desc-game">يوم 888GAMES</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-            <a href="/game/" class="link-game-888" rel="nofollow" style="display: none;">
-                <img decoding="async" src="/wp-content/uploads/2025/01/lucky-ticket.webp" loading="lazy" alt="Lucky ticket">
-                <span class="desc-game">تذكرة الحظ</span>
-                <div class="out-more">اكتشف المزيد</div>
-            </a>
-        </div>
-        <button id="toggle-btn" class="toggle-btn">اكتشف المزيد</button>
-    
-<h4>رموز ترويجية للكازينوهات</h4>
-<ul>
-<li>مكافأة الإيداع الأول – ما يصل إلى 1500 يورو + 150 دورة مجانية.</li>
-<li>دورات مجانية في ماكينات القمار الشهيرة – دورات مجانية في أفضل ماكينات القمار.</li>
-<li>استرداد نقدي على خسائر الكازينو – استرداد ما يصل إلى 5% من الرهانات الخاسرة في ماكينات القمار والكازينو المباشر.</li>
-</ul>
-<h4>رموز ترويجية لعروض ترويجية حصرية</h4>
-<ul>
-<li>رموز الترويج لأعياد الميلاد هي مكافآت شخصية للمستخدمين المسجلين.</li>
-<li>رموز ترويجية للاعبين VIP – عروض مكافآت شخصية مع حدود متزايدة.</li>
-<li>رموز ترويجية للأحداث الرياضية الكبرى – عروض ترويجية للمراهنة على دوري أبطال أوروبا وكأس العالم وUFC.</li>
-</ul>
-<p>يتيح استخدام أكواد الترويج للاعبين الحصول على فوائد إضافية وزيادة فرصهم في الفوز.</p>
-<p><img decoding="async" class="aligncenter wp-image-1281 size-medium_large" src="https://888starz-africa.com/wp-content/uploads/2025/03/المال-للتسجيل-768x768.webp" loading="lazy" alt="المال للتسجيل" width="726" height="726" srcset="/wp-content/uploads/2025/03/المال-للتسجيل-768x768.webp 768w, /wp-content/uploads/2025/03/المال-للتسجيل-300x300.webp 300w, /wp-content/uploads/2025/03/المال-للتسجيل-150x150.webp 150w, /wp-content/uploads/2025/03/المال-للتسجيل-660x660.webp 660w, /wp-content/uploads/2025/03/المال-للتسجيل.webp 904w" sizes="(max-width: 726px) 100vw, 726px"></p>
-<h3 id="أين-يمكنني-العثور-على-أكواد-الخصم-الحالية-لـ-888starz">أين يمكنني العثور على أكواد الخصم الحالية لـ 888Starz؟</h3>
-<p>للحصول على أكواد ترويجية محدثة، يمكن للاعبين استخدام العديد من المصادر الموثوقة.</p>
-<h4>الموقع الرسمي لـ 888Starz</h4>
-<ul>
-<li>قسم “المكافآت” – في حسابك الشخصي يمكنك العثور على العروض النشطة.</li>
-<li>صفحة العروض الترويجية – جميع العروض الترويجية الحالية مع الرموز.</li>
-</ul>
-<h4>تطبيق 888Starz للجوال</h4>
-<ul>
-<li>رموز الترويج الحصرية متاحة فقط لمستخدمي التطبيق.</li>
-<li>إرسال إشعارات حول العروض الترويجية والمكافآت الجديدة.</li>
-</ul>
-<h4>النشرات الإخبارية عبر البريد الإلكتروني</h4>
-<ul>
-<li>يتلقى المستخدمون المسجلون رموزًا ترويجية شخصية عبر البريد الإلكتروني.</li>
-<li>عروض منتظمة للاعبين النشطين.</li>
-</ul>
-<h4>الشبكات الاجتماعية والمواقع الشريكة</h4>
-<ul>
-<li>قنوات ومجموعات Telegram مع مكافآت 888Starz.</li>
-<li>الصفحات الرسمية لـ 888Starz على وسائل التواصل الاجتماعي (تويتر، فيسبوك).</li>
-<li>المواقع التابعة التي تنشر أكواد ترويجية حصرية.</li>
-</ul>
-<h4>مكتب المساعدة</h4>
-<ul>
-<li>يمكنك التحقق من توفر رمز ترويجي شخصي في الدردشة عبر الإنترنت.</li>
-<li>قد يقدم الدعم مكافأة عند الاتصال.</li>
-</ul>
-<p>للبقاء على اطلاع بأحدث أكواد الخصم، نوصيك بالاشتراك في الإشعارات داخل التطبيق، والنشرات الإخبارية عبر البريد الإلكتروني، ومتابعة قنوات 888Starz الرسمية.</p>
-<div class="custom-toc"><div class="ez-question">المحتوى <svg class="checkmark" width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 7L15 12L10 17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg> </div><ul class="ez-answer"><li class="toc-item toc-level-2" style="list-style-type: none;"><a href="#حول-رمز-خصم-888starz">حول رمز خصم 888Starz</a></li><li class="toc-item toc-level-3" style="list-style-type: none;"><a href="#ما-هو-الرمز-الترويجي-ولماذا-هو-ضروري">ما هو الرمز الترويجي ولماذا هو ضروري؟</a></li><li class="toc-item toc-level-3" style="list-style-type: none;"><a href="#ما-هي-المكافآت-التي-يمكنك-الحصول-عليها-باستخدام-رمز-الترويجي-في-الدول-العربية">ما هي المكافآت التي يمكنك الحصول عليها باستخدام رمز الترويجي في الدول العربية؟</a></li><li class="toc-item toc-level-3" style="list-style-type: none;"><a href="#أنواع-أكواد-الخصم-لـ-888starz-الرياضة-الكازينو-استرداد-النقود-الرهانات-المجانية">أنواع أكواد الخصم لـ 888Starz (الرياضة، الكازينو، استرداد النقود، الرهانات المجانية)</a></li><li class="toc-item toc-level-3" style="list-style-type: none;"><a href="#أين-يمكنني-العثور-على-أكواد-الخصم-الحالية-لـ-888starz">أين يمكنني العثور على أكواد الخصم الحالية لـ 888Starz؟</a></li><li class="toc-item toc-level-2" style="list-style-type: none;"><a href="#كيفية-تفعيل-رمز-الخصم-888starz">كيفية تفعيل رمز الخصم 888Starz؟</a></li><li class="toc-item toc-level-3" style="list-style-type: none;"><a href="#تعليمات-خطوة-بخطوة-لتفعيل-رمز-الترويجي">تعليمات خطوة بخطوة لتفعيل رمز الترويجي</a></li><li class="toc-item toc-level-3" style="list-style-type: none;"><a href="#كيفية-إدخال-رمز-ترويجي-أثناء-التسجيل">كيفية إدخال رمز ترويجي أثناء التسجيل؟</a></li><li class="toc-item toc-level-3" style="list-style-type: none;"><a href="#كيفية-استخدام-رمز-الترويجي-عند-إجراء-الإيداع">كيفية استخدام رمز الترويجي عند إجراء الإيداع؟</a></li><li class="toc-item toc-level-3" style="list-style-type: none;"><a href="#هل-من-الممكن-تفعيل-عدة-رموز-ترويجية-في-نفس-الوقت">هل من الممكن تفعيل عدة رموز ترويجية في نفس الوقت؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#كيفية-استخدام-رمز-الترويجي-عند-إجراء-الإيداع">كيفية استخدام رمز الترويجي عند إجراء الإيداع؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#هل-من-الممكن-تفعيل-عدة-رموز-ترويجية-في-نفس-الوقت">هل من الممكن تفعيل عدة رموز ترويجية في نفس الوقت؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#"></a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#صلاحية-المكافأة-ومتطلبات-الرهان">صلاحية المكافأة ومتطلبات الرهان</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#ما-هي-الرهانات-التي-يتم-احتسابها-ضمن-المراهنة">ما هي الرهانات التي يتم احتسابها ضمن المراهنة؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#كيفية-سحب-أموال-المكافأة">كيفية سحب أموال المكافأة؟</a></li><li class="toc-item toc-level-2 toc-hidden" style="list-style-type: none;"><a href="#أنظمة-الإيداع-والدفع-888starz">أنظمة الإيداع والدفع 888Starz</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#طرق-تجديد-الحساب-المتاحة">طرق تجديد الحساب المتاحة</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#كيفية-شحن-رصيدك-بسرعة">كيفية شحن رصيدك بسرعة؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#هل-من-الممكن-شحن-حسابك-بالعملة-المشفرة">هل من الممكن شحن حسابك بالعملة المشفرة؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#تعليمات-خطوة-بخطوة-لإجراء-الإيداع">تعليمات خطوة بخطوة لإجراء الإيداع</a></li><li class="toc-item toc-level-2 toc-hidden" style="list-style-type: none;"><a href="#سحب-الأموال-من-حساب-المكافأة-888starz">سحب الأموال من حساب المكافأة 888Starz</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#ما-هي-الشروط-التي-يجب-توافرها-قبل-الانسحاب">ما هي الشروط التي يجب توافرها قبل الانسحاب؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#طرق-السحب-المتاحة-البطاقات-المصرفية-المحافظ-الإلكترونية-العملات-المشفرة">طرق السحب المتاحة (البطاقات المصرفية، المحافظ الإلكترونية، العملات المشفرة)</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#لماذا-قد-يتأخر-الانسحاب">لماذا قد يتأخر الانسحاب؟</a></li><li class="toc-item toc-level-2 toc-hidden" style="list-style-type: none;"><a href="#مكافآت-وعروض-ترويجية-أخرى-من-888starz">مكافآت وعروض ترويجية أخرى من 888Starz</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#مكافأة-50-على-الإيداع-الثاني-حتى-100-يورو">مكافأة 50% على الإيداع الثاني حتى 100 يورو</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#مكافأة-50-يوم-الثلاثاء-حتى-100-يورو">مكافأة 50% يوم الثلاثاء حتى 100 يورو</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#مكافأة-100-يوم-الخميس-تصل-إلى-100-يورو">مكافأة 100% يوم الخميس تصل إلى 100 يورو</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#استرداد-نقدي-على-الرهانات-الخاسرة">استرداد نقدي على الرهانات الخاسرة</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#برنامج-vip-وعروض-حصرية">برنامج VIP وعروض حصرية</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#رموز-ترويجية-خاصة-للاعبين-النشطين">رموز ترويجية خاصة للاعبين النشطين</a></li><li class="toc-item toc-level-2 toc-hidden" style="list-style-type: none;"><a href="#ماذا-أفعل-إذا-لم-يعمل-الرمز-الترويجي">ماذا أفعل إذا لم يعمل الرمز الترويجي؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#الأخطاء-المحتملة-عند-تفعيل-رمز-ترويجي">الأخطاء المحتملة عند تفعيل رمز ترويجي</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#كيفية-التحقق-من-تاريخ-انتهاء-صلاحية-رمز-العرض-الترويجي">كيفية التحقق من تاريخ انتهاء صلاحية رمز العرض الترويجي؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#كيف-يمكنني-التأكد-من-إدخال-رمز-العرض-الترويجي-بشكل-صحيح">كيف يمكنني التأكد من إدخال رمز العرض الترويجي بشكل صحيح؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#ما-هي-أكواد-الخصم-التي-لا-يمكن-تفعيلها">ما هي أكواد الخصم التي لا يمكن تفعيلها؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#كيفية-التواصل-مع-الدعم-إذا-لم-يتم-تفعيل-الرمز-الترويجي">كيفية التواصل مع الدعم إذا لم يتم تفعيل الرمز الترويجي؟</a></li><li class="toc-item toc-level-2 toc-hidden" style="list-style-type: none;"><a href="#استخدام-رمز-ترويجي-عبر-تطبيق-888starz-للجوال">استخدام رمز ترويجي عبر تطبيق 888Starz للجوال</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#كيفية-تنزيل-وتثبيت-تطبيق-888starz">كيفية تنزيل وتثبيت تطبيق 888Starz؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#كيفية-التسجيل-في-تطبيق-الهاتف-المحمول">كيفية التسجيل في تطبيق الهاتف المحمول؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#كيفية-تفعيل-رمز-الترويجي-من-خلال-التطبيق">كيفية تفعيل رمز الترويجي من خلال التطبيق؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#مكافآت-حصرية-للهواتف-المحمولة-مع-رمز-ترويجي">مكافآت حصرية للهواتف المحمولة مع رمز ترويجي</a></li><li class="toc-item toc-level-2 toc-hidden" style="list-style-type: none;"><a href="#الأسئلة-الشائعة">الأسئلة الشائعة</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#هل-يمكن-استخدام-رمز-ترويجي-واحد-عدة-مرات">هل يمكن استخدام رمز ترويجي واحد عدة مرات؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#هل-من-الضروري-إدخال-رمز-ترويجي-للحصول-على-المكافأة">هل من الضروري إدخال رمز ترويجي للحصول على المكافأة؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#كيفية-سحب-الأموال-المستلمة-من-رمز-الترويجي">كيفية سحب الأموال المستلمة من رمز الترويجي؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#هل-يمكنني-استخدام-رمز-ترويجي-دون-إجراء-إيداع">هل يمكنني استخدام رمز ترويجي دون إجراء إيداع؟</a></li><li class="toc-item toc-level-3 toc-hidden" style="list-style-type: none;"><a href="#هل-تعمل-أكواد-الترويج-للمستخدمين-القدامى">هل تعمل أكواد الترويج للمستخدمين القدامى؟</a></li><button id="show-more" class="show-more-btn">اعرض المزيد</button></ul></div>
-<h2 id="كيفية-تفعيل-رمز-الخصم-888starz">كيفية تفعيل رمز الخصم 888Starz؟</h2>
-<p>يتيح لك تفعيل رمز الترويج 888Starz الحصول على مكافآت إضافية عند التسجيل أو تجديد حسابك أو المشاركة في العروض الترويجية الخاصة. يمكن أن توفر أكواد الترويج زيادة في الودائع، ورهانات مجانية، ودورات مجانية، واسترداد نقدي. فيما يلي تعليمات مفصلة حول كيفية استخدام أكواد الخصم على المنصة بشكل صحيح.</p>
-<p><img loading="lazy" decoding="async" class="aligncenter wp-image-1279 size-medium_large" src="https://888starz-africa.com/wp-content/uploads/2025/03/starburst-768x768.webp" alt="starburst" width="726" height="726" srcset="/wp-content/uploads/2025/03/starburst-768x768.webp 768w, /wp-content/uploads/2025/03/starburst-300x300.webp 300w, /wp-content/uploads/2025/03/starburst-150x150.webp 150w, /wp-content/uploads/2025/03/starburst-660x660.webp 660w, /wp-content/uploads/2025/03/starburst.webp 904w" sizes="auto, (max-width: 726px) 100vw, 726px"></p>
-<h3 id="تعليمات-خطوة-بخطوة-لتفعيل-رمز-الترويجي">تعليمات خطوة بخطوة لتفعيل رمز الترويجي</h3>
-<ol>
-<li>حدد رمز الترويج الحالي – تحقق من قائمة الرموز النشطة على الموقع الرسمي، أو في تطبيق الهاتف المحمول أو النشرة الإخبارية عبر البريد الإلكتروني.</li>
-<li>قرر ما تريد الحصول على مكافأة مقابله – تتوفر أكواد ترويجية للمراهنة الرياضية أو الكازينوهات أو استرداد النقود.</li>
-<li>تأكيد رمز العرض الترويجي – تأكد من أنه تم تطبيقه بنجاح ويتم عرضه في قسم “المكافآت النشطة”.</li>
-<li>استخدم المكافأة وفقًا لشروط العرض الترويجي – استوف متطلبات الرهان (على سبيل المثال، x5 للمراهنات الرياضية أو x35 للكازينوهات).</li>
-</ol>
-<p>قم بتفعيل الرمز الترويجي بإحدى الطرق التالية:</p>
-<ul>
-<li>عند التسجيل أدخل الكود الذي تم استخدامه عند إنشاء الحساب.</li>
-<li>عند تجديد حسابك، أدخل الرمز في حقل “رمز العرض الترويجي” قبل تأكيد الإيداع.</li>
-<li>في حسابك الشخصي – إذا كان رمز العرض الترويجي صالحًا للمكافآت العادية.</li>
-</ul>
-<h3 id="كيفية-إدخال-رمز-ترويجي-أثناء-التسجيل">كيفية إدخال رمز ترويجي أثناء التسجيل؟</h3>
-<p>إذا كان لديك رمز ترويجي لمكافأة الترحيب، فيمكنك إدخاله مباشرةً أثناء التسجيل.</p>
-<ol>
-<li>افتح موقع 888Starz أو تطبيق الهاتف المحمول.</li>
-<li>انقر على زر “التسجيل”.</li>
-<li>حدد طريقة التسجيل (عن طريق الهاتف أو البريد الإلكتروني أو بنقرة واحدة).</li>
-<li>أدخل رمز العرض الترويجي في الحقل الخاص (إذا لم يتم عرضه، انقر فوق “لدي رمز ترويجي”).</li>
-<li>أكمل التسجيل وأكد حسابك.</li>
-<li>بعد الإيداع الأول، سيتم إضافة المكافأة تلقائيًا إلى الرصيد.</li>
-</ol>
-<p>مثال على المكافأة باستخدام رمز ترويجي عند التسجيل:</p>
-<ul>
-<li>100% على الإيداع الأول حتى 1500 يورو (رياضة).</li>
-<li>1500 يورو + 150 دورة مجانية (كازينو).</li>
-</ul>
-
-    <section class="prilka">
-    <div class="grid-prilka" dir="ltr">
-    <div class="prilkalogo">
-    <img decoding="async" alt="888Starz" src="/wp-content/uploads/2025/01/favicon.png" loading="lazy">
-    <div class="prilkatext">
-    <div class="prilkatext1">888Starz</div>
-    <div class="prilkatext2"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star stargray" aria-hidden="true"></i> 5.0</div>
-    <div class="prilkatext3"><span class="prilkarazrab">مطور 888Starz</span></div>
-    </div>
-    </div>
-    <div class="prilkaicon">
-    <div class="prilkaicon1">
-    <div class="prilkazagolovok">الحجم</div>
-    <div class="prilkazagolovok2">67.50 MB</div>
-    </div>
-    <div class="prilkaicon2">
-    <div class="prilkazagolovok">التنزيلات</div>
-    <div class="prilkazagolovok2">26873</div>
-    </div>
-    <div class="prilkaicon3">
-    <div class="prilkazagolovok">الإصدار</div>
-    <div class="prilkazagolovok2">2.03.23</div>
-    </div>
-    </div>
-    <div class="prilkaicon">
-    <div class="prilkaicon1">
-    <div class="prilkazagolovok">اللغة</div>
-    <div class="prilkazagolovok2">العربية</div>
-    </div>
-    <div class="prilkaicon2">
-    <div class="prilkazagolovok">Android</div>
-    <div class="prilkazagolovok2">6.0+</div>
-    </div>
-    <div class="prilkaicon3">
-    <div class="prilkazagolovok">قسيمة</div>
-    <div class="prilkazagolovok2">1500€</div>
-    </div>
-    </div>
-    <noindex><a target="_blank" rel="nofollow noopener" href="/game/" class="button3 filled-green3"><br>
-    <span class="text-overflow1">قم بتنزيل التطبيق <br> <small>نحن نضمن الأمان</small></span><br></a></noindex>
-    </div>
-    </section>
-<h3 id="كيفية-استخدام-رمز-الترويجي-عند-إجراء-الإيداع">كيفية استخدام رمز الترويجي عند إجراء الإيداع؟</h3>
-<p>يتم تفعيل بعض أكواد الترويج ليس عند التسجيل، بل عند شحن حسابك.</p>
-<ol>
-<li>انتقل إلى قسم “أمين الصندوق” وانقر على “شحن حسابك”.</li>
-<li>حدد طريقة الدفع (Visa، Mastercard، Skrill، Bitcoin، إلخ.).</li>
-<li>أدخل مبلغ الإيداع (من 10 يورو أو 200 جنيه مصري).</li>
-<li>في حقل “رمز العرض الترويجي”، أدخل الرمز الحالي.</li>
-<li>تأكيد الدفع – سيتم إضافة المكافأة تلقائيًا بعد تجديد الحساب بنجاح.</li>
-</ol>
-<p>أمثلة على المكافآت باستخدام رمز ترويجي عند إجراء إيداع:</p>
-<ul>
-<li>مكافأة 50% تصل إلى 100 يورو للإيداعات يوم الثلاثاء.</li>
-<li>مكافأة 100% تصل إلى 100 يورو للإيداع يوم الخميس.</li>
-<li>10% استرداد نقدي على الرهانات الخاسرة.</li>
-</ul>
-<p><img loading="lazy" decoding="async" class="aligncenter wp-image-1282 size-medium_large" src="https://888starz-africa.com/wp-content/uploads/2025/03/المراهنات-والكازينو-768x768.webp" alt="المراهنات والكازينو" width="726" height="726" srcset="/wp-content/uploads/2025/03/المراهنات-والكازينو-768x768.webp 768w, /wp-content/uploads/2025/03/المراهنات-والكازينو-300x300.webp 300w, /wp-content/uploads/2025/03/المراهنات-والكازينو-150x150.webp 150w, /wp-content/uploads/2025/03/المراهنات-والكازينو-660x660.webp 660w, /wp-content/uploads/2025/03/المراهنات-والكازينو.webp 904w" sizes="auto, (max-width: 726px) 100vw, 726px"></p>
-<h3 id="هل-من-الممكن-تفعيل-عدة-رموز-ترويجية-في-نفس-الوقت">هل من الممكن تفعيل عدة رموز ترويجية في نفس الوقت؟</h3>
-<p>لا، يمكنك تفعيل رمز ترويجي واحد فقط في كل مرة.</p>
-<ul>
-<li>إذا كنت قد قمت بالفعل بتفعيل مكافأة، فلن تتمكن من استخدام رمز ترويجي جديد حتى يتم استيفاء متطلبات الرهان الخاصة بالرمز السابق.</li>
-<li>الاستثناء هو بعض أكواد VIP الترويجية التي توفر استردادًا نقديًا أو رهانات مجانية بالإضافة إلى المكافأة الرئيسية.</li>
-<li>إذا كنت تريد تغيير رمز العرض الترويجي، قم بإلغاء المكافأة الحالية في قسم “المكافآت النشطة” وأدخل رمزًا جديدًا.</li>
-</ul>
-<div class="game-section">
-		  <div class="game-card">
-			<img decoding="async" src="/wp-content/uploads/2025/01/casino.webp" loading="lazy" alt="Казино">
-			<div class="card-content">
-			  <div class="caption_h3">كازينو</div>
-			  <p>أفضل ألعاب الطاولة</p>
-			  <a href="/game/" rel="_nofollow">اللعب</a>
-			</div>
-		  </div>
-		  <div class="game-card">
-			<img decoding="async" src="/wp-content/uploads/2025/01/live.webp" loading="lazy" alt="Live">
-			<div class="card-content">
-			  <div class="caption_h3">Live</div>
-			  <p>العب مع الموزعين</p>
-			  <a href="/game/" rel="_nofollow">اللعب</a>
-			</div>
-		  </div>
-		  <div class="game-card">
-			<img decoding="async" src="/wp-content/uploads/2025/01/slots.webp" loading="lazy" alt="Слоты">
-			<div class="card-content">
-			  <div class="caption_h3">Slots</div>
-			  <p>حظًا سعيدًا في انتظارك!</p>
-			  <a href="/game/" rel="_nofollow">دَوَّار</a>
-			</div>
-		  </div>
-		  <div class="game-card">
-			<img decoding="async" src="/wp-content/uploads/2025/01/888gamesS.webp" loading="lazy" alt="888Games">
-			<div class="card-content">
-			  <div class="caption_h3">888Games</div>
-			  <p>ألعاب حصرية</p>
-			  <a href="/game/" rel="_nofollow">إطلاق</a>
-			</div>
-		  </div>
-		</div>
-<h3 id="كيفية-استخدام-رمز-الترويجي-عند-إجراء-الإيداع">كيفية استخدام رمز الترويجي عند إجراء الإيداع؟</h3>
-<p>يتم تفعيل بعض أكواد الترويج ليس عند التسجيل، بل عند شحن حسابك.</p>
-<ol>
-<li>انتقل إلى قسم “أمين الصندوق” وانقر على “شحن حسابك”.</li>
-<li>حدد طريقة الدفع (Visa، Mastercard، Skrill، Bitcoin، إلخ.).</li>
-<li>أدخل مبلغ الإيداع (من 10 يورو أو 200 جنيه مصري).</li>
-<li>في حقل “رمز العرض الترويجي”، أدخل الرمز الحالي.</li>
-<li>تأكيد الدفع – سيتم إضافة المكافأة تلقائيًا بعد تجديد الحساب بنجاح.</li>
-</ol>
-<p>أمثلة على المكافآت باستخدام رمز ترويجي عند إجراء إيداع:</p>
-<ul>
-<li>مكافأة 50% تصل إلى 100 يورو للإيداعات يوم الثلاثاء.</li>
-<li>مكافأة 100% تصل إلى 100 يورو للإيداع يوم الخميس.</li>
-<li>10% استرداد نقدي على الرهانات الخاسرة.</li>
-</ul>
-<h3 id="هل-من-الممكن-تفعيل-عدة-رموز-ترويجية-في-نفس-الوقت">هل من الممكن تفعيل عدة رموز ترويجية في نفس الوقت؟</h3>
-<p>لا، يمكنك تفعيل رمز ترويجي واحد فقط في كل مرة.</p>
-<ul>
-<li>إذا كنت قد قمت بالفعل بتفعيل مكافأة، فلن تتمكن من استخدام رمز ترويجي جديد حتى يتم استيفاء متطلبات الرهان الخاصة بالرمز السابق.</li>
-<li>الاستثناء هو بعض أكواد VIP الترويجية التي توفر استردادًا نقديًا أو رهانات مجانية بالإضافة إلى المكافأة الرئيسية.</li>
-<li>إذا كنت تريد تغيير رمز العرض الترويجي، قم بإلغاء المكافأة الحالية في قسم “المكافآت النشطة” وأدخل رمزًا جديدًا.</li>
-</ul>
-<div class="container-banner-main-22">
-        <div class="banner">
-            <div class="banner__logo"><img decoding="async" src="/wp-content/uploads/2025/01/c2d1291cb995ce2eb60df24214bfcfdd.svg" loading="lazy" alt="888Starz" width="191px"></div>
-            <div class="banner__caption-h1">افز معانا!</div>
-            <p>راهن على أفضل الأحداث الآن.</p>
-            <a href="/game/" class="cta-button">العب الآن</a>
-        </div>
-</div>
-<h3 id=""></h3>
-<p>لتفعيل المكافأة، يجب عليك شحن حسابك بالمبلغ الأدنى المحدد في قواعد العرض الترويجي.</p>
-<ul>
-<li>مكافأة ترحيبية رياضية – الحد الأدنى للإيداع 10 يورو (أو 200 جنيه مصري، 40 درهم إماراتي، 40 ريال سعودي).</li>
-<li>مكافأة ترحيبية بالكازينو – الحد الأدنى للإيداع 10 يورو (أو 200 جنيه مصري، 40 درهم إماراتي، 40 ريال سعودي).</li>
-<li>الرهانات المجانية واسترداد النقود – يمكن تفعيلها بدون إيداع (اعتمادًا على شروط العرض الترويجي).</li>
-</ul>
-<p>إذا كان مبلغ الإيداع أقل من الحد الأدنى، فلن يتم إضافة المكافأة تلقائيًا.</p>
-<h3 id="صلاحية-المكافأة-ومتطلبات-الرهان">صلاحية المكافأة ومتطلبات الرهان</h3>
-<p>كل مكافأة لها تاريخ انتهاء صلاحية يجب على اللاعب خلاله استيفاء متطلبات الرهان.</p>
-<ul>
-<li>مكافأة الترحيب (الرياضة) – يجب المراهنة عليها خلال 30 يومًا.</li>
-<li>مكافأة الترحيب (الكازينو) – يجب إكمال الرهان خلال 7 أيام.</li>
-<li>الرهانات المجانية والدورات المجانية – صالحة لمدة تتراوح من 24 إلى 72 ساعة من لحظة التنشيط.</li>
-<li>يتم إضافة النقود المستردة مرة واحدة في الأسبوع ويمكن استخدامها خلال 7 أيام.</li>
-</ul>
-<p>إذا لم يتم الرهان على المكافأة خلال الفترة المحددة، فسيتم إلغاؤها وخصم أموال المكافأة.</p>
-<h4>متطلبات الرهان</h4>
-<ul>
-<li>الرياضة: يجب المراهنة على المكافأة 5 مرات (x5) على الرهانات السريعة بحد أدنى 3 أحداث وفرص من 1.4.</li>
-<li>الكازينو: يجب المراهنة بأموال المكافأة 35 مرة (x35) على الفتحات المحددة.</li>
-</ul>
-<h3 id="ما-هي-الرهانات-التي-يتم-احتسابها-ضمن-المراهنة">ما هي الرهانات التي يتم احتسابها ضمن المراهنة؟</h3>
-<h4><img loading="lazy" draggable="false" role="img" class="emoji" alt="✅" src="https://s.w.org/images/core/emoji/17.0.2/svg/2705.svg"> مقبولة لرهانات المكافأة:</h4>
-<ul>
-<li>الرهانات السريعة (الرياضية) – الحد الأدنى 3 أحداث مع احتمالات من 1.4.</li>
-<li>الرهانات الفردية – فقط إذا تم تحديد ذلك في شروط العرض الترويجي.</li>
-<li>الفتحات (الكازينو) – تُحتسب معظم ماكينات القمار ضمن متطلبات الرهان.</li>
-</ul>
-<h4><img loading="lazy" draggable="false" role="img" class="emoji" alt="❌" src="https://s.w.org/images/core/emoji/17.0.2/svg/274c.svg"> لا يتم احتساب ما يلي ضمن متطلبات الرهان:</h4>
-<ul>
-<li>الرهانات ذات احتمالات أقل من 1.4.</li>
-<li>الرهانات الملغاة أو المستردة (سحب النقود).</li>
-<li>ألعاب الكازينو المباشرة وألعاب الطاولة (للحصول على مكافآت الكازينو).</li>
-</ul>
-<p>ننصح اللاعبين بالتحقق بعناية من الشروط والأحكام الخاصة بمكافأة معينة للتأكد من أنها لا تنتهك متطلبات الرهان.</p>
-<h3 id="كيفية-سحب-أموال-المكافأة">كيفية سحب أموال المكافأة؟</h3>
-<p>لسحب أموال المكافأة، يجب عليك استيفاء جميع متطلبات الرهان.</p>
-<h4>تعليمات خطوة بخطوة لسحب المكافأة:</h4>
-<ol>
-<li>قم بتشغيل المكافأة ضمن الإطار الزمني المحدد (انظر أعلاه).</li>
-<li>تأكد من استيفاء جميع المتطلبات في قسم “المكافآت” في حسابك الشخصي.</li>
-<li>التحقق من المرور (إذا تم طلب ذلك) – تحميل المستندات (جواز السفر / الهوية، تأكيد طريقة الدفع).</li>
-<li>انتقل إلى قسم “أمين الصندوق” → “سحب الأموال”.</li>
-<li>حدد طريقة الدفع – بطاقة بنكية، محفظة إلكترونية، عملة مشفرة.</li>
-<li>حدد مبلغ السحب (مع الأخذ بعين الاعتبار الحدود الدنيا).</li>
-<li>قم بتأكيد طلبك – ستستغرق عملية المعالجة من 15 دقيقة إلى 3 أيام (اعتمادًا على الطريقة).</li>
-</ol>
-
-	<section class="cover-main">
-    <img decoding="async" src="/wp-content/uploads/2025/01/astronaut.png" loading="lazy" alt="888Starz" class="logo-big">
-    <div class="container-cover-main">
-          <h2 class="caption-h2-cover">
-                احصل على 100% مكافأة حتى 122 €
-          </h2>
-          <h3 class="caption-h3-cover">
-                888Starz - واحدة من أكبر شركات المراهنات التي تعمل دوليًا. 
-          </h3>
-		  <p>
-          <a href="/game/" class="link-ref-cover">احصل على مكافأة</a></p>
-          <p class="small-text">18+ T&amp;C apply | begambleaware.org | Play Responsibly</p>       
-    </div>   
-	</section>
-<ol>
-<li></li>
-</ol>
-<h4>الحد الأدنى لسحب أموال المكافأة:</h4>
-<ul>
-<li>البطاقات البنكية – 100 جنيه مصري (أو ما يعادلها بعملة الحساب).</li>
-<li>المحافظ الإلكترونية – 50 جنيهًا مصريًا.</li>
-<li>العملات المشفرة – تعتمد على الشبكة (على سبيل المثال 0.001 BTC).</li>
-</ul>
-<p>إذا لم يتم استيفاء شروط المكافأة بالكامل، فسوف يرفض النظام طلب السحب حتى اكتمال الرهان.</p>
-<h2 id="أنظمة-الإيداع-والدفع-888starz">أنظمة الإيداع والدفع 888Starz</h2>
-<p>يقدم موقع 888Starz للاعبين مجموعة واسعة من طرق الدفع، مما يسمح لهم بتمويل حساباتهم بسرعة وأمان باستخدام البطاقات المصرفية والمحافظ الإلكترونية والعملات المشفرة. يتم تجديد الحساب بشكل فوري، والحدود الدنيا تجعل المنصة متاحة للاعبين بميزانيات مختلفة.</p>
-<h3 id="طرق-تجديد-الحساب-المتاحة">طرق تجديد الحساب المتاحة</h3>
-<p>يدعم 888Starz أكثر من 50 طريقة إيداع بما في ذلك التحويلات المصرفية والمحافظ الإلكترونية والعملات المشفرة.</p>
-<h4>الطرق الرئيسية للتجديد:</h4>
-<p><strong>البطاقات المصرفية (فيزا، ماستركارد، مايسترو)</strong></p>
-<ul>
-<li>الحد الأدنى للإيداع: 100 جنيه مصري / 10 يورو / 40 درهم إماراتي / 40 ريال سعودي</li>
-<li>وقت الاعتماد: على الفور</li>
-<li>العمولة: لا يوجد</li>
-</ul>
-<p><strong>المحافظ الإلكترونية (Skrill، Neteller، Perfect Money، ecoPayz، Jeton، Sticpay، MuchBetter)</strong></p>
-<ul>
-<li>الحد الأدنى للإيداع: 50 جنيه مصري / 5 يورو / 20 درهم إماراتي / 20 ريال سعودي</li>
-<li>وقت الاعتماد: على الفور</li>
-<li>العمولة: 0%</li>
-</ul>
-<p><strong>مدفوعات العملات المشفرة (بيتكوين، إيثريوم، USDT، لايتكوين، دوجكوين وأكثر من 40 عملة مشفرة أخرى)</strong></p>
-<ul>
-<li>الحد الأدنى للإيداع: 0.0001 BTC / 0.01 ETH / 10 USDT</li>
-<li>مدة الاعتماد: 5-30 دقيقة حسب حمل الشبكة</li>
-<li>العمولة: تعتمد على blockchain</li>
-</ul>
-<p><strong>أنظمة الدفع المحلية (متوفرة في بلدان مختارة)</strong></p>
-<ul>
-<li>يتضمن التحويلات المصرفية المختلفة والمدفوعات عبر الهاتف المحمول.</li>
-<li>مدة الاعتماد: من 1 إلى 5 دقائق.</li>
-</ul>
-<p>يمكنك شحن رصيدك دون عمولة، كما أن دعم مدفوعات العملات المشفرة يجعل المنصة متاحة حتى للمستخدمين من البلدان التي تفرض قيودًا على المقامرة.</p>
-<h3 id="كيفية-شحن-رصيدك-بسرعة">كيفية شحن رصيدك بسرعة؟</h3>
-<p>لتجديد الحساب بشكل فوري، يوصى باستخدام المحافظ الإلكترونية أو العملات المشفرة، حيث تتطلب البطاقات المصرفية في بعض الأحيان التحقق الإضافي.</p>
-<p><img loading="lazy" draggable="false" role="img" class="emoji" alt="✅" src="https://s.w.org/images/core/emoji/17.0.2/svg/2705.svg"> أسرع طرق الشحن:</p>
-<ul>
-<li>Skrill / Neteller / Perfect Money – يتم إضافة الأموال على الفور.</li>
-<li>Bitcoin / Ethereum / USDT – يعتمد على حمل الشبكة، عادةً من 5 إلى 15 دقيقة.</li>
-<li>البطاقات المصرفية – على الفور، ولكن في حالات نادرة تصل إلى 30 دقيقة.</li>
-</ul>
-<p>إذا لم يتم إضافة الأموال خلال 30 دقيقة، فمن المستحسن التحقق من سجل الدفع والاتصال بالدعم.</p>
-<h3 id="هل-من-الممكن-شحن-حسابك-بالعملة-المشفرة">هل من الممكن شحن حسابك بالعملة المشفرة؟</h3>
-<p>نعم، يدعم 888Starz أكثر من 40 عملة مشفرة بما في ذلك Bitcoin وEthereum وUSDT وLitecoin وDogecoin وRipple وTron والمزيد.</p>
-<h4>فوائد تجديد العملة المشفرة:</h4>
-<ul>
-<li>عدم الكشف عن الهوية – لا تتطلب مدفوعات العملات المشفرة التحقق من البنك.</li>
-<li>المعاملات الفورية – تستغرق عادةً من 5 إلى 30 دقيقة للمعالجة.</li>
-<li>رسوم بسيطة – لا توجد رسوم إضافية من 888Starz.</li>
-<li>حدود مرنة – الحد الأدنى للإيداع يبدأ من 10 USDT أو 0.0001 BTC.</li>
-</ul>
-<p>تعد إيداعات العملات المشفرة ملائمة بشكل خاص للاعبين من البلدان التي تفرض قيودًا على مدفوعات المقامرة، لأنها تسمح لك بتجاوز حظر البنك.</p>
-<h3 id="تعليمات-خطوة-بخطوة-لإجراء-الإيداع">تعليمات خطوة بخطوة لإجراء الإيداع</h3>
-<h4>كيفية تمويل حساب 888Starz الخاص بك:</h4>
-<ol>
-<li>قم بتسجيل الدخول إلى حساب 888Starz الخاص بك عبر الموقع الإلكتروني أو تطبيق الهاتف المحمول.</li>
-<li>انتقل إلى قسم “أمين الصندوق” وانقر على “شحن حسابك”.</li>
-<li>اختر طريقة الدفع المناسبة لك (بطاقة بنكية أو محفظة إلكترونية أو عملة مشفرة).</li>
-<li>أدخل مبلغ الإيداع (الحد الأدنى 10 يورو / 200 جنيه مصري / 40 درهم إماراتي / 40 ريال سعودي).</li>
-<li>إذا كان لديك رمز ترويجي، أدخله في الحقل المناسب.</li>
-<li>قم بتأكيد الدفع واتبع تعليمات النظام.</li>
-<li>بعد إتمام معاملة ناجحة، سيتم إضافة الأموال إلى رصيدك، ويمكنك البدء في وضع الرهانات أو اللعب في الكازينو.</li>
-</ol>
-<h4>مثال على الإيداع باستخدام العملة المشفرة:</h4>
-<ol>
-<li>حدد Bitcoin (BTC) في قسم أمين الصندوق.</li>
-<li>احصل على عنوان محفظة فريد للتحويل.</li>
-<li>قم بتحويل المبلغ المطلوب من محفظة العملات المشفرة الشخصية الخاصة بك (Binance، Trust Wallet، MetaMask، إلخ).</li>
-<li>يرجى الانتظار لمدة 5-15 دقيقة حتى تتم معالجة المعاملة بواسطة blockchain.</li>
-<li>سيتم إضافة الأموال تلقائيًا إلى رصيد حسابك.</li>
-</ol>
-<h4>ماذا أفعل إذا لم يتم إيداع المبلغ؟</h4>
-<ul>
-<li>التحقق من حالة الدفع في سجل المعاملات.</li>
-<li>يرجى التأكد من أنك استخدمت التفاصيل الصحيحة.</li>
-<li>إذا لم تصل الأموال خلال ساعة واحدة، يرجى الاتصال بدعم 888Starz.</li>
-</ul>
-<h2 id="سحب-الأموال-من-حساب-المكافأة-888starz">سحب الأموال من حساب المكافأة 888Starz</h2>
-<p>لا يمكن إجراء عمليات سحب من حساب المكافأة الخاص بك على 888Starz إلا بعد استيفاء جميع متطلبات الرهان. يعد هذا ضروريًا لمنع إساءة استخدام برنامج المكافآت. يمكن سحب الأرباح عن طريق البطاقات المصرفية والمحافظ الإلكترونية والعملات المشفرة، وعادةً ما يستغرق معالجة الطلبات من 15 دقيقة إلى 3 أيام.</p>
-<h3 id="ما-هي-الشروط-التي-يجب-توافرها-قبل-الانسحاب">ما هي الشروط التي يجب توافرها قبل الانسحاب؟</h3>
-<p>قبل أن تتمكن من سحب الأموال من حساب المكافأة الخاص بك، يجب عليك استيفاء متطلبات الرهان.</p>
-<p><strong>الرهان الإضافي</strong></p>
-<ul>
-<li>بالنسبة لمكافآت الرياضة: يجب عليك المراهنة بمبلغ المكافأة x5 على الرهانات السريعة مع 3 أحداث على الأقل وفرص 1.4.</li>
-<li>بالنسبة لمكافآت الكازينو: يجب عليك المراهنة بمبلغ المكافأة x35 في ماكينات القمار.</li>
-</ul>
-<p><strong>مواعيد الرهان النهائية</strong></p>
-<ul>
-<li>يجب المراهنة على أموال المكافأة خلال 30 يومًا للحصول على مكافآت الرياضة.</li>
-<li>بالنسبة لمكافآت الكازينو، فترة الرهان هي 7 أيام.</li>
-</ul>
-<p><strong>الحد الأدنى للإيداع قبل السحب</strong></p>
-<ul>
-<li>تتطلب بعض العروض الترويجية إيداعًا أدنى قبل أن تتمكن من سحب أموال المكافأة.</li>
-<li>عادة ما يكون 10 يورو (أو 200 جنيه مصري، 40 درهم إماراتي، 40 ريال سعودي).</li>
-</ul>
-<p><strong>اجتياز التحقق</strong></p>
-<ul>
-<li>بالنسبة للسحب الأول، قد يطلب النظام إثبات الهوية (جواز السفر، بطاقة الهوية، رخصة القيادة).</li>
-<li>يستغرق التحقق من 24 إلى 72 ساعة.</li>
-</ul>
-<p>إذا لم يتم استيفاء متطلبات الرهان، فمن المستحيل سحب أموال المكافأة – سيتم إلغاؤها.</p>
-<h3 id="طرق-السحب-المتاحة-البطاقات-المصرفية-المحافظ-الإلكترونية-العملات-المشفرة">طرق السحب المتاحة (البطاقات المصرفية، المحافظ الإلكترونية، العملات المشفرة)</h3>
-<p>يدعم موقع 888Starz مجموعة متنوعة من طرق السحب لضمان قدرة اللاعبين على استخدام الطرق الأكثر ملاءمة وسرعة.</p>
-<p><strong>البطاقات المصرفية (فيزا، ماستركارد، مايسترو)</strong></p>
-<ul>
-<li>طريقة مريحة، ولكن عملية السحب تستغرق من 1 إلى 3 أيام عمل.</li>
-<li>متوفر في مصر والإمارات العربية المتحدة والمملكة العربية السعودية ودول أخرى.</li>
-</ul>
-<p><strong>المحافظ الإلكترونية (Skrill، Neteller، Perfect Money، ecoPayz، Jeton، Sticpay)</strong></p>
-<ul>
-<li>سحب سريع (من 15 دقيقة إلى 24 ساعة).</li>
-<li>لا يوجد عمولة.</li>
-<li>خيار جيد للمعاملات المجهولة.</li>
-</ul>
-<p><strong>تحويلات العملات المشفرة (بيتكوين، إيثريوم، USDT، لايتكوين، دوجكوين، إلخ.)</strong></p>
-<ul>
-<li>يستغرق السحب من 5 إلى 60 دقيقة (اعتمادًا على حمل شبكة blockchain).</li>
-<li>عمولة ضئيلة، وفي بعض الأحيان تكون غائبة.</li>
-<li>إخفاء الهوية بشكل كامل، وهو أمر مهم بشكل خاص بالنسبة للاعبين القادمين من البلدان التي تفرض قيودًا.</li>
-</ul>
-<p>عند اختيار طريقة السحب، يجدر النظر في سرعة المعاملة والحدود والرسوم المحتملة.</p>
-<h3 id="لماذا-قد-يتأخر-الانسحاب">لماذا قد يتأخر الانسحاب؟</h3>
-<p>في بعض الحالات، قد يستغرق معالجة طلب السحب وقتًا أطول من المتوقع. الأسباب الرئيسية للتأخير:</p>
-<p><strong>رهان غير مكتمل للمكافأة</strong></p>
-<ul>
-<li>إذا لم يتم الرهان على أموال المكافأة بالكامل، فسيتم رفض الطلب.</li>
-<li>يمكنك التحقق من الحالة في قسم “المكافآت النشطة”.</li>
-</ul>
-<p><strong>التحقق من الحساب</strong></p>
-<ul>
-<li>إذا طلب النظام التحقق، يجب عليك تحميل المستندات لتأكيد هويتك.</li>
-<li>يستغرق التحقق من 24 إلى 72 ساعة.</li>
-</ul>
-<p><strong>استخدام طرق الدفع المختلفة</strong></p>
-<ul>
-<li>يجب أن تتم عمليات السحب بنفس طريقة الإيداع.</li>
-<li>على سبيل المثال، إذا تم إجراء إيداع عبر Skrill، فلن تتمكن من سحب الأموال إلى بطاقة بنكية.</li>
-</ul>
-<p><strong>مشاكل في نظام الدفع</strong></p>
-<ul>
-<li>في بعض الأحيان تحدث التأخيرات بسبب الشيكات المصرفية أو العمل الفني لدى مزود الدفع.</li>
-<li>في هذه الحالة، عليك الانتظار حتى اكتمال عملية التحقق.</li>
-</ul>
-<p><strong>تجاوز حدود السحب</strong></p>
-<ul>
-<li>بعض أنظمة الدفع لها حدود معاملات يومية/أسبوعية.</li>
-<li>على سبيل المثال، الحد الأقصى لمبلغ السحب إلى بطاقة بنكية هو 5000 يورو لكل معاملة.</li>
-</ul>
-<p><strong>تم حظر الحساب بسبب انتهاك القواعد</strong></p>
-<ul>
-<li>إذا اشتبه النظام في وجود حسابات متعددة أو انتهاك شروط المكافأة، فقد يتم تجميد السحب حتى تتضح الظروف.</li>
-<li>في هذه الحالة، سوف تحتاج إلى الاتصال بالدعم.</li>
-</ul>
-<h2 id="مكافآت-وعروض-ترويجية-أخرى-من-888starz">مكافآت وعروض ترويجية أخرى من 888Starz</h2>
-<p>بالإضافة إلى مكافأة الترحيب، تقدم 888Starz للاعبين عروضًا ترويجية وحوافز مختلفة، بما في ذلك مكافآت إعادة التحميل، واسترداد النقود، وبرنامج VIP، وأكواد ترويجية حصرية. تتيح لك هذه العروض زيادة رصيدك وتقليل المخاطر والحصول على امتيازات إضافية.</p>
-<h3 id="مكافأة-50-على-الإيداع-الثاني-حتى-100-يورو">مكافأة 50% على الإيداع الثاني حتى 100 يورو</h3>
-<p>يمكن للاعبين الذين استخدموا بالفعل مكافأة الترحيب الحصول على خصم 50% على إيداعهم الثاني.</p>
-<h4>شروط المكافأة:</h4>
-<ul>
-<li>قيمة المكافأة: 50% من مبلغ الإيداع (حتى 100 يورو / 4000 جنيه مصري / 400 درهم إماراتي / 400 ريال سعودي).</li>
-<li>الحد الأدنى للإيداع: 10 يورو (أو 200 جنيه مصري، 40 درهم إماراتي، 40 ريال سعودي).</li>
-<li>الرهان: x5 للمراهنة الرياضية / x35 للكازينو.</li>
-<li>فترة التفعيل: 7 أيام بعد الإيداع الأول.</li>
-</ul>
-<p>لتفعيل هذه المكافأة، يجب عليك شحن حسابك مرة ثانية وتحديد المكافأة في قسم “العروض الترويجية”.</p>
-<h3 id="مكافأة-50-يوم-الثلاثاء-حتى-100-يورو">مكافأة 50% يوم الثلاثاء حتى 100 يورو</h3>
-<p>كل يوم ثلاثاء، يقدم 888Starz للاعبين مكافأة إيداع بنسبة 50%، مما يمنحهم أموالاً إضافية لإنفاقها على رهاناتهم وألعاب الكازينو.</p>
-<h4>شروط المكافأة:</h4>
-<ul>
-<li>الحد الأدنى للإيداع: 10 يورو (أو 200 جنيه مصري، 40 درهم إماراتي، 40 ريال سعودي).</li>
-<li>الحد الأقصى للمكافأة: 100 يورو (أو 4000 جنيه مصري، 400 درهم إماراتي، 400 ريال سعودي).</li>
-<li>الرهان: x5 (للرهان الرياضي) أو x35 (للكازينو).</li>
-<li>يمكن استخدامه مرة واحدة في الأسبوع.</li>
-</ul>
-<p>تتوفر هذه المكافأة كل يوم ثلاثاء ويتم تنشيطها تلقائيًا عند شحن حسابك.</p>
-<h3 id="مكافأة-100-يوم-الخميس-تصل-إلى-100-يورو">مكافأة 100% يوم الخميس تصل إلى 100 يورو</h3>
-<p>بالنسبة للاعبين النشطين، يقدم 888Starz مكافأة إيداع بنسبة 100% أيام الخميس.</p>
-<h4>شروط المكافأة:</h4>
-<ul>
-<li>الحد الأدنى للإيداع: 10 يورو (أو 200 جنيه مصري، 40 درهم إماراتي، 40 ريال سعودي).</li>
-<li>الحد الأقصى للمكافأة: 100 يورو (أو 4000 جنيه مصري، 400 درهم إماراتي، 400 ريال سعودي).</li>
-<li>الرهان: x5 (الرياضة) / x35 (الكازينو).</li>
-<li>يمكن استخدامه مرة واحدة في الأسبوع.</li>
-</ul>
-<p>تضاعف هذه المكافأة مبلغ الإيداع وتتيح لك وضع رهانات أكبر أو اللعب في الكازينو برصيد متزايد.</p>
-<h3 id="استرداد-نقدي-على-الرهانات-الخاسرة">استرداد نقدي على الرهانات الخاسرة</h3>
-<p>يقدم موقع 888Starz ميزة استرداد النقود، والتي تسمح للاعبين باستعادة جزء من رهاناتهم المفقودة.</p>
-<h4>شروط استرداد النقود:</h4>
-<ul>
-<li>مبلغ الاسترداد: ما يصل إلى 10٪ من الرهانات الخاسرة.</li>
-<li>الحد الأدنى لاسترداد المبلغ: 5 يورو (أو 100 جنيه مصري).</li>
-<li>يتم دفع النقود مرة واحدة في الأسبوع.</li>
-<li>لا يتطلب استرداد النقود أي رهان – يمكنك سحبه على الفور.</li>
-</ul>
-<p>يعد هذا العرض الترويجي مفيدًا بشكل خاص للاعبين الذين يراهنون بمبالغ كبيرة على الأحداث الرياضية أو الكازينوهات.</p>
-<h3 id="برنامج-vip-وعروض-حصرية">برنامج VIP وعروض حصرية</h3>
-<p>يقدم 888Starz برنامج ولاء يكافئ اللاعبين النشطين.</p>
-<h4>الامتيازات الرئيسية لوضع VIP:</h4>
-<ul>
-<li>المكافآت الشخصية والرموز الترويجية.</li>
-<li>زيادة استرداد النقود – ما يصل إلى 20% عائدًا على الرهانات الخاسرة.</li>
-<li>حدود سحب مخفضة – تتم معالجة المدفوعات بشكل أسرع.</li>
-<li>البطولات الحصرية – الوصول إلى المسابقات المغلقة ذات الجوائز الكبيرة.</li>
-</ul>
-<p>يتلقى اللاعبون وضع VIP تلقائيًا، اعتمادًا على نشاطهم على المنصة.</p>
-<h3 id="رموز-ترويجية-خاصة-للاعبين-النشطين">رموز ترويجية خاصة للاعبين النشطين</h3>
-<p>يقدم موقع 888Starz بانتظام أكواد ترويجية حصرية تسمح لك بتلقي مكافآت إضافية.</p>
-<h4>ماذا تعطي رموز الترويجي؟</h4>
-<ul>
-<li>رهانات مجانية على الرياضة – رهانات مجانية بدون مخاطرة.</li>
-<li>دورات مجانية في الكازينو.</li>
-<li>زيادة مكافآت الإيداع.</li>
-<li>عروض شخصية للاعبين الدائمين.</li>
-</ul>
-<p>يمكن العثور على أكواد الخصم في النشرة الإخبارية عبر البريد الإلكتروني والتطبيق المحمول والشبكات الاجتماعية الرسمية لـ 888Starz.</p>
-<h2 id="ماذا-أفعل-إذا-لم-يعمل-الرمز-الترويجي">ماذا أفعل إذا لم يعمل الرمز الترويجي؟</h2>
-<p>في بعض الأحيان يواجه المستخدمون موقفًا حيث لا يتم تنشيط رمز الترويج 888Starz. قد تكون الأسباب مختلفة: أخطاء عند الإدخال، أو انتهاء الصلاحية، أو عدم الامتثال لشروط المكافأة أو المشكلات الفنية. في هذا القسم سوف نلقي نظرة على الأسباب الرئيسية وطرق القضاء عليها.</p>
-<h3 id="الأخطاء-المحتملة-عند-تفعيل-رمز-ترويجي">الأخطاء المحتملة عند تفعيل رمز ترويجي</h3>
-<p>إذا لم يعمل رمز العرض الترويجي، فمن المفيد التحقق من الأخطاء الرئيسية التي قد تحدث أثناء التنشيط:</p>
-<p><strong>إدخال رمز ترويجي غير صحيح</strong></p>
-<ul>
-<li>رموز العرض الترويجي حساسة لحالة الأحرف (التمييز بين الأحرف الكبيرة والصغيرة).</li>
-<li>قد تؤدي المسافات الإضافية قبل أو بعد الكود إلى إبطاله.</li>
-<li>من المستحسن نسخ ولصق رمز العرض الترويجي بدلاً من إدخاله يدويًا.</li>
-</ul>
-<p><strong>منتهي الصلاحية</strong></p>
-<ul>
-<li>بعض أكواد الخصم صالحة لفترة محدودة (من 24 ساعة إلى 30 يومًا).</li>
-<li>في حالة انتهاء صلاحية الكود، لن يتم تفعيل المكافأة.</li>
-</ul>
-<p><strong>عدم الامتثال لشروط المكافأة</strong></p>
-<ul>
-<li>بعض رموز الترويج تعمل فقط للمراهنة الرياضية أو المراهنة في الكازينو.</li>
-<li>تتطلب بعض الرموز إيداعًا معينًا (على سبيل المثال الحد الأدنى 10 يورو / 200 جنيه مصري).</li>
-<li>قد يكون هناك قيود إقليمية – قد لا يعمل رمز العرض الترويجي في بعض البلدان.</li>
-</ul>
-<p><strong>تم تفعيل المكافأة الأخرى</strong></p>
-<ul>
-<li>إذا كان لدى المستخدم بالفعل مكافأة نشطة، فلن يتم تطبيق رمز العرض الترويجي الجديد.</li>
-<li>يجب عليك أولاً المراهنة على المكافأة الحالية ثم تنشيط المكافأة التالية.</li>
-</ul>
-<p><strong>الحد من استخدام رمز العرض الترويجي</strong></p>
-<ul>
-<li>بعض الرموز لا يمكن استخدامها إلا مرة واحدة.</li>
-<li>إذا تم استخدام رمز العرض الترويجي من قبل، فلا يمكن استخدامه مرة أخرى.</li>
-</ul>
-<h3 id="كيفية-التحقق-من-تاريخ-انتهاء-صلاحية-رمز-العرض-الترويجي">كيفية التحقق من تاريخ انتهاء صلاحية رمز العرض الترويجي؟</h3>
-<p>إذا لم يعمل رمز العرض الترويجي، فمن المهم التحقق من مدى ملاءمته.</p>
-<h4>أين يمكنني العثور على معلومات حول تاريخ انتهاء الصلاحية؟</h4>
-<ul>
-<li>في قسم “المكافآت” في حسابك الشخصي.</li>
-<li>في النشرة الإخبارية عبر البريد الإلكتروني (إذا تم استلام الرمز عبر البريد).</li>
-<li>على الموقع الرسمي لـ 888Starz في قسم “العروض الترويجية”.</li>
-<li>وفقًا لشروط العرض الترويجي، إذا تم استلام الكود من خلال المواقع الشريكة.</li>
-</ul>
-<p>إذا انتهت فترة الصلاحية، فلن تتمكن من استعادة الرمز الترويجي وستحتاج إلى البحث عن رمز ترويجي صالح جديد.</p>
-<h3 id="كيف-يمكنني-التأكد-من-إدخال-رمز-العرض-الترويجي-بشكل-صحيح">كيف يمكنني التأكد من إدخال رمز العرض الترويجي بشكل صحيح؟</h3>
-<p>قبل إرسال طلب إلى خدمة الدعم، يجدر التأكد من إدخال رمز العرض الترويجي بشكل صحيح:</p>
-<p><img loading="lazy" draggable="false" role="img" class="emoji" alt="✅" src="https://s.w.org/images/core/emoji/17.0.2/svg/2705.svg"> تحقق من حالة الأحرف – تميز أكواد الترويج بين الأحرف الكبيرة والصغيرة.<br>
-<img loading="lazy" draggable="false" role="img" class="emoji" alt="✅" src="https://s.w.org/images/core/emoji/17.0.2/svg/2705.svg"> قم بإزالة المسافات قبل أو بعد الكود.<br>
-<img loading="lazy" draggable="false" role="img" class="emoji" alt="✅" src="https://s.w.org/images/core/emoji/17.0.2/svg/2705.svg"> تأكد من استخدام الكود في القسم الصحيح (مكافأة رياضية أو مكافأة كازينو).<br>
-<img loading="lazy" draggable="false" role="img" class="emoji" alt="✅" src="https://s.w.org/images/core/emoji/17.0.2/svg/2705.svg"> تحقق من الحد الأدنى للإيداع – إذا تم تفعيل الرمز عند التجديد، يجب أن يتوافق مبلغ الإيداع مع الشروط.</p>
-<p>إذا تم إدخال جميع البيانات بشكل صحيح، ولكن الكود لا يعمل، فقد يكون قد تم استخدامه بالفعل أو انتهت صلاحيته.</p>
-<h3 id="ما-هي-أكواد-الخصم-التي-لا-يمكن-تفعيلها">ما هي أكواد الخصم التي لا يمكن تفعيلها؟</h3>
-<p>لا يمكن استخدام بعض الرموز للأسباب التالية:</p>
-<p><img loading="lazy" draggable="false" role="img" class="emoji" alt="🚫" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f6ab.svg"> لقد تم استخدام رمز العرض الترويجي بالفعل – لا يُسمح بإعادة التنشيط.<br>
-<img loading="lazy" draggable="false" role="img" class="emoji" alt="🚫" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f6ab.svg"> الكود خاص بالمستخدمين الجدد، والحساب مسجل مسبقاً.<br>
-<img loading="lazy" draggable="false" role="img" class="emoji" alt="🚫" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f6ab.svg"> انتهى العرض الترويجي – الرموز القديمة لم تعد صالحة.<br>
-<img loading="lazy" draggable="false" role="img" class="emoji" alt="🚫" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f6ab.svg"> عدم التوافق مع المكافأة الحالية – إذا تم بالفعل تفعيل مكافأة أخرى، فلا يمكن استخدام رمز العرض الترويجي الجديد.<br>
-<img loading="lazy" draggable="false" role="img" class="emoji" alt="🚫" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f6ab.svg"> حد التنشيط – بعض الرموز لها عدد محدود من الاستخدامات (على سبيل المثال، يمكن لأول 1000 مستخدم فقط تنشيط المكافأة).</p>
-<p>في مثل هذه الحالات، تحتاج إلى العثور على رمز ترويجي حالي جديد في قسم عروض 888Starz.</p>
-<h3 id="كيفية-التواصل-مع-الدعم-إذا-لم-يتم-تفعيل-الرمز-الترويجي">كيفية التواصل مع الدعم إذا لم يتم تفعيل الرمز الترويجي؟</h3>
-<p>إذا تم إكمال جميع الفحوصات ولم يعمل رمز العرض الترويجي، فيمكنك الاتصال بدعم 888Starz.</p>
-<h4>طرق التواصل المتاحة:</h4>
-<p><strong><img loading="lazy" draggable="false" role="img" class="emoji" alt="📌" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f4cc.svg"> الدردشة عبر الإنترنت (استجابة فورية)</strong></p>
-<ul>
-<li>متاح على مدار الساعة طوال أيام الأسبوع في تطبيق الهاتف المحمول وعلى الموقع الإلكتروني.</li>
-<li>يستجيب المشغلون خلال 1-3 دقائق.</li>
-</ul>
-<p><strong><img loading="lazy" draggable="false" role="img" class="emoji" alt="📌" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f4cc.svg"> دعم البريد الإلكتروني</strong></p>
-<ul>
-<li>support@888starz.com – استفسارات عامة.</li>
-<li>payments@888starz.com – إذا كان رمز العرض الترويجي مرتبطًا بالإيداعات.</li>
-<li>الرد خلال 24 ساعة.</li>
-</ul>
-<p><strong><img loading="lazy" draggable="false" role="img" class="emoji" alt="📌" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f4cc.svg"> رقم هاتف الخط الساخن (في بعض المناطق)</strong></p>
-<ul>
-<li>يمكن العثور على الأرقام الحالية في قسم “جهات الاتصال”.</li>
-</ul>
-<h4>ماذا يجب أن أدرج في طلبي؟</h4>
-<ol>
-<li>معرف اللعبة الخاص بك (رقم الحساب).</li>
-<li>كود الخصم غير مفعل</li>
-<li>خطأ يظهر عند ادخال الكود</li>
-<li>لقطة شاشة (إن أمكن).</li>
-</ol>
-<p>بعد التحقق، سيتمكن المشغل من توفير رمز ترويجي جديد أو شرح سبب عدم عمل الرمز الحالي.</p>
-<h2 id="استخدام-رمز-ترويجي-عبر-تطبيق-888starz-للجوال">استخدام رمز ترويجي عبر تطبيق 888Starz للجوال</h2>
-<p>يتيح تطبيق 888Starz للجوال للاعبين وضع الرهانات بسهولة ولعب ألعاب الكازينو واسترداد رموز الترويج مباشرة من هواتفهم الذكية. يقدم التطبيق مكافآت حصرية لا يمكن الحصول عليها في إصدار الويب. في هذا القسم سنتعرف على كيفية تنزيل التطبيق والتسجيل فيه واستخدام أكواد الخصم.</p>
-<h3 id="كيفية-تنزيل-وتثبيت-تطبيق-888starz">كيفية تنزيل وتثبيت تطبيق 888Starz؟</h3>
-<p>تطبيق 888Starz متاح لنظامي التشغيل Android وiOS، ولكنه غير متاح على Google Play وApp Store في بعض البلدان.</p>
-<h4>التعليمات للاندرويد:</h4>
-<ol>
-<li>انتقل إلى موقع 888Starz الرسمي باستخدام متصفح هاتفك.</li>
-<li>في قسم تطبيق الهاتف المحمول، انقر فوق تنزيل لنظام Android.</li>
-<li>السماح بتثبيت التطبيقات من مصادر غير معروفة (الإعدادات → الأمان).</li>
-<li>افتح ملف 888Starz.apk الذي تم تنزيله وقم بتثبيت التطبيق.</li>
-</ol>
-<h4>التعليمات لنظام iOS:</h4>
-<ol>
-<li>انتقل إلى موقع 888Starz وحدد التنزيل لنظام iOS.</li>
-<li>إذا كان التطبيق متاحًا في متجر التطبيقات، فقم بتثبيته مباشرةً.</li>
-<li>إذا لم يكن التطبيق متاحًا في متجر التطبيقات، فقم بتثبيته عبر ملف تعريف المطور في إعدادات الجهاز.</li>
-</ol>
-<p>بعد التثبيت، يمكن للاعبين التسجيل واستخدام كافة ميزات المنصة، بما في ذلك تفعيل أكواد الترويج.</p>
-<h3 id="كيفية-التسجيل-في-تطبيق-الهاتف-المحمول">كيفية التسجيل في تطبيق الهاتف المحمول؟</h3>
-<p>تستغرق عملية التسجيل في التطبيق أقل من دقيقتين.</p>
-<h4>التعليمات خطوة بخطوة:</h4>
-<ol>
-<li>افتح تطبيق 888Starz وانقر على التسجيل.</li>
-<li>حدد طريقة التسجيل.</li>
-<li>أدخل رمز العرض الترويجي في الحقل المناسب (إن وجد).</li>
-<li>قم بتأكيد تسجيلك وتسجيل الدخول إلى حسابك.</li>
-</ol>
-<p>بعد إنشاء حساب، يمكنك شحن حسابك وتفعيل رمز العرض الترويجي الإضافي.</p>
-<h3 id="كيفية-تفعيل-رمز-الترويجي-من-خلال-التطبيق">كيفية تفعيل رمز الترويجي من خلال التطبيق؟</h3>
-<p>إن تفعيل رمز الترويج في تطبيق الهاتف المحمول سهل كما هو الحال في إصدار الويب.</p>
-<h4>طرق تفعيل الكود الترويجي:</h4>
-<h4><img loading="lazy" draggable="false" role="img" class="emoji" alt="✅" src="https://s.w.org/images/core/emoji/17.0.2/svg/2705.svg"> عند التسجيل</h4>
-<ul>
-<li>أدخل رمز العرض الترويجي في حقل “إدخال رمز العرض الترويجي” عند إنشاء حساب.</li>
-<li>بعد الإيداع الأول سيتم إضافة المكافأة تلقائيًا.</li>
-</ul>
-<h4><img loading="lazy" draggable="false" role="img" class="emoji" alt="✅" src="https://s.w.org/images/core/emoji/17.0.2/svg/2705.svg"> عند تجديد الحساب</h4>
-<ol>
-<li>افتح قسم “أمين الصندوق”.</li>
-<li>حدد طريقة الدفع وأدخل المبلغ.</li>
-<li>أدخل الرمز في حقل “رمز العرض الترويجي”.</li>
-<li>تأكيد الدفع – سيتم تفعيل المكافأة تلقائيًا.</li>
-</ol>
-<h4><img loading="lazy" draggable="false" role="img" class="emoji" alt="✅" src="https://s.w.org/images/core/emoji/17.0.2/svg/2705.svg"> في قسم “المكافآت”</h4>
-<ul>
-<li>انتقل إلى حسابك الشخصي → “العروض الترويجية”.</li>
-<li>قم باختيار المكافأة وأدخل رمز العرض الترويجي في الحقل المناسب.</li>
-</ul>
-<p>بعد تفعيل المكافأة، يجب عليك استيفاء متطلبات الرهان حتى تتمكن من سحب أرباحك.</p>
-<h3 id="مكافآت-حصرية-للهواتف-المحمولة-مع-رمز-ترويجي">مكافآت حصرية للهواتف المحمولة مع رمز ترويجي</h3>
-<p>يمكن للاعبين الذين يستخدمون تطبيق 888Starz للجوال الحصول على مكافآت فريدة غير متوفرة في إصدار الويب.</p>
-<h4>المكافآت الحصرية المتاحة للهواتف المحمولة:</h4>
-<ol>
-<li>رهانات مجانية لتثبيت التطبيق – رهانات مجانية بعد الإيداع الأول.</li>
-<li>دورات مجانية إضافية في الكازينو – 50-100 دورة مجانية عند تفعيل رمز ترويجي للجوال.</li>
-<li>استرداد نقدي سريع – ما يصل إلى 10% عائدًا على الرهانات الخاسرة للاعبين عبر الهاتف المحمول.</li>
-<li>رموز ترويجية شخصية – يتم إرسالها عبر إشعارات الدفع فقط لمستخدمي التطبيق.</li>
-</ol>
-<p>لتجنب تفويت العروض الحصرية، قم بتمكين إشعارات الدفع في إعدادات التطبيق.</p>
-<h2 id="الأسئلة-الشائعة">الأسئلة الشائعة</h2>
-<h3 id="هل-يمكن-استخدام-رمز-ترويجي-واحد-عدة-مرات">هل يمكن استخدام رمز ترويجي واحد عدة مرات؟</h3>
-<p>لا، يمكن استخدام معظم رموز العرض الترويجي مرة واحدة فقط لكل لاعب.</p>
-<ul>
-<li>الاستثناء هو العروض الترويجية الخاصة المتكررة، مثل “مكافأة 50% يوم الثلاثاء” و”مكافأة 100% يوم الخميس”، حيث يمكن تفعيل رمز العرض الترويجي مرة واحدة في الأسبوع.</li>
-<li>بعض أكواد الترويج VIP متاحة فقط لمجموعة محددة من اللاعبين ويمكن تفعيلها عدة مرات.</li>
-<li>إذا تم استخدام رمز العرض الترويجي بالفعل، فلن يسمح لك النظام بإدخاله مرة أخرى.</li>
-</ul>
-<p>يمكنك التحقق من أكواد الخصم النشطة في قسم “المكافآت” في حسابك الشخصي.</p>
-<h3 id="هل-من-الضروري-إدخال-رمز-ترويجي-للحصول-على-المكافأة">هل من الضروري إدخال رمز ترويجي للحصول على المكافأة؟</h3>
-<p>لا، ليس دائما.</p>
-<ul>
-<li>يتم منح بعض المكافآت تلقائيًا، مثل مكافأة الترحيب على إيداعك الأول.</li>
-<li>إذا كانت المكافأة تتطلب رمزًا ترويجيًا، فسيظهر حقل الإدخال أثناء التسجيل أو الإيداع.</li>
-<li>في تطبيق الهاتف المحمول، يتم تفعيل بعض رموز العرض الترويجي عبر إشعارات الدفع أو في قسم “العروض الترويجية”.</li>
-</ul>
-<p>نصيحة: إذا كان لديك رمز ترويجي ولكنك نسيت إدخاله، فحاول الاتصال بالدعم – في بعض الحالات يمكنهم مساعدتك في تنشيطه يدويًا.</p>
-<h3 id="كيفية-سحب-الأموال-المستلمة-من-رمز-الترويجي">كيفية سحب الأموال المستلمة من رمز الترويجي؟</h3>
-<p>لسحب أموال المكافأة، يجب عليك استيفاء متطلبات الرهان.</p>
-<p>عادة ما تكون المتطلبات هي:</p>
-<ul>
-<li>الرياضة – راهن بمبلغ المكافأة 5 مرات (x5) في رهانات سريعة (الحد الأدنى 3 أحداث مع احتمالات 1.4).</li>
-<li>كازينو – راهن بمبلغ المكافأة 35 مرة (x35) في ماكينات القمار.</li>
-</ul>
-<h4>تعليمات خطوة بخطوة لسحب الأموال باستخدام رمز ترويجي:</h4>
-<ol>
-<li>قم بلعب المكافأة ضمن الإطار الزمني المحدد (عادةً من 7 إلى 30 يومًا).</li>
-<li>تأكد من استيفاء الشروط في قسم “المكافآت”.</li>
-<li>التحقق من المرور (إذا تم طلب ذلك).</li>
-<li>انتقل إلى قسم “أمين الصندوق” → “سحب الأموال”.</li>
-<li>حدد طريقة الدفع وأكد طلبك.</li>
-</ol>
-<p>في حالة عدم استيفاء الشروط سيتم إلغاء المكافأة والأموال التي تم ربحها منها.</p>
-<h3 id="هل-يمكنني-استخدام-رمز-ترويجي-دون-إجراء-إيداع">هل يمكنني استخدام رمز ترويجي دون إجراء إيداع؟</h3>
-<p>نعم، ولكن فقط لبعض العروض الترويجية.</p>
-<ul>
-<li>بعض أكواد الترويج تمنح رهانات مجانية أو دورات مجانية بدون إيداع.</li>
-<li>تتيح لك أكواد الخصم النقدي استرداد جزء من الأموال المفقودة دون الحاجة إلى إجراء إيداع.</li>
-<li>في بعض الأحيان لا تتطلب أكواد الترويج لأعياد الميلاد أو العروض الترويجية الشخصية VIP وديعة.</li>
-</ul>
-<p>يمكنك التحقق من شروط رمز ترويجي معين في قسم “العروض الترويجية” أو من خلال خدمة الدعم.</p>
-<h3 id="هل-تعمل-أكواد-الترويج-للمستخدمين-القدامى">هل تعمل أكواد الترويج للمستخدمين القدامى؟</h3>
-<p>نعم، يقدم موقع 888Starz أكواد ترويجية ليس فقط للاعبين الجدد ولكن أيضًا للاعبين النشطين.</p>
-<p><img loading="lazy" draggable="false" role="img" class="emoji" alt="✅" src="https://s.w.org/images/core/emoji/17.0.2/svg/2705.svg"> المكافآت الأسبوعية:</p>
-<ul>
-<li>مكافأة 50% يوم الثلاثاء – يمكن تفعيلها مرة واحدة في الأسبوع.</li>
-<li>مكافأة 100% يوم الخميس – مضاعفة إيداعك كل أسبوع.</li>
-</ul>
-<p><img loading="lazy" draggable="false" role="img" class="emoji" alt="✅" src="https://s.w.org/images/core/emoji/17.0.2/svg/2705.svg"> رموز ترويجية VIP:</p>
-<ul>
-<li>متاح للاعبين العاديين فقط.</li>
-<li>إنهم يوفرون زيادة في استرداد النقود، ورهانات مجانية شخصية ورهانات مكافأة.</li>
-</ul>
-<p><img loading="lazy" draggable="false" role="img" class="emoji" alt="✅" src="https://s.w.org/images/core/emoji/17.0.2/svg/2705.svg"> أكواد ترويجية للأحداث الكبرى:</p>
-<ul>
-<li>العروض الترويجية لدوري أبطال أوروبا وبطولة العالم وبطولة UFC وغيرها من الأحداث.</li>
-<li>يسمح لك بتلقي رهانات مجانية أو احتمالات متزايدة.</li>
-</ul>
-<p>الاستنتاج: يمكن للمستخدمين القدامى استخدام أكواد الترويج بانتظام، ولكن للقيام بذلك، تحتاج إلى مراقبة العروض الترويجية الجديدة في تطبيق الهاتف المحمول وعلى موقع 888Starz.</p>
-	                    </div>
-	                    <div class="clear"></div>
-	                </section>
-
-	            </article>
-				<!--comment:start -->
-				
-				<!--comment:end -->
-	        </div>
-	        <!-- end: .content -->
-
-	        <div class="clear"></div>
-
-	    </div>
-	    <!-- end: .center -->
-    </main>
-<!-- end: #page -->
-        
-<div class="clear"></div>
-<!-- start: .epcl-cta -->
-<div class="epcl-cta bg-box no-border-radius">
-    <div class="grid-container epcl-flex">
-        <div class="left grid-50 tablet-grid-50 np-mobile text">
-                    </div>
-            </div>
-    <div class="clear"></div>
-
-    </div>
-<!-- end: .epcl-cta -->        
-        <div class="container-games-all-888">
-	<div class="continaer-item-all-888-games">
-		<div class="continaer-item-all-888-games__caption">
-			ألعاب			<a href="/game/" rel="nofollow">المزيد من الألعاب<svg data-v-72c25320="" viewBox="0 0 448 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|chevron-double-right"><path d="M58 38l209 210c5 4 5 12 0 17L58 474c-5 5-13 5-17 0l-20-20c-5-5-5-12 0-17l181-181L21 75c-5-5-5-12 0-17l20-20c4-5 12-5 17 0zm143 0l-20 20c-5 5-5 12 0 17l181 181-181 181c-5 5-5 12 0 17l20 20c4 5 12 5 17 0l209-209c5-5 5-13 0-17L218 38c-5-5-13-5-17 0z"></path></svg></a>
-		</div>
-		<div class="container-item-all-888-games__line">
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-360.webp" alt="Treasure Tomb" class="item-game__image" width="174" height="104">
-				<span>Treasure Tomb</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-371.webp" alt="Crash" class="item-game__image" width="174" height="104">
-				<span>Crash</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-249.webp" alt="Crystal" class="item-game__image" width="174" height="104">
-				<span>Crystal</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-169.webp" alt="Western slot" class="item-game__image" width="174" height="104">
-				<span>Western slot</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-58.webp" alt="21" class="item-game__image" width="174" height="104">
-				<span>21</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-69.webp" alt="Under and over 7" class="item-game__image" width="174" height="104">
-				<span>Under and over 7</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-158.webp" alt="Solitaire" class="item-game__image" width="174" height="104">
-				<span>Solitaire</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-373.webp" alt="Burning Hot" class="item-game__image" width="174" height="104">
-				<span>Burning Hot</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-456.webp" alt="Vampier Curse" class="item-game__image" width="174" height="104">
-				<span>Vampier Curse</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-572.webp" alt="Midgard Zombies" class="item-game__image" width="174" height="104">
-				<span>Midgard Zombies</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-189.webp" alt="Scratch Card" class="item-game__image" width="174" height="104">
-				<span>Scratch Card</span>
-			</a>
-		</div>
-		<div class="continaer-item-all-888-games__caption">
-			 كازينو			<a href="/game/" rel="nofollow">المزيد من الكازينو <svg data-v-72c25320="" viewBox="0 0 448 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|chevron-double-right"><path d="M58 38l209 210c5 4 5 12 0 17L58 474c-5 5-13 5-17 0l-20-20c-5-5-5-12 0-17l181-181L21 75c-5-5-5-12 0-17l20-20c4-5 12-5 17 0zm143 0l-20 20c-5 5-5 12 0 17l181 181-181 181c-5 5-5 12 0 17l20 20c4 5 12 5 17 0l209-209c5-5 5-13 0-17L218 38c-5-5-13-5-17 0z"></path></svg></a>
-		</div>
-		<div class="container-item-all-888-games__line">
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img78166.jpg" alt="Little Farm" class="item-game__image" width="174" height="104">
-				<span>Little Farm</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img65045.jpg" alt="777" class="item-game__image" width="174" height="104">
-				<span>777</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/101185.jpg" alt="Fortune" class="item-game__image" width="174" height="104">
-				<span>Fortune</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/Magic-Pipes_301180.jpg" alt="Magic Pipes" class="item-game__image" width="174" height="104">
-				<span>Magic Pipes</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img85493.jpg" alt="Big Wild Cats" class="item-game__image" width="174" height="104">
-				<span>Big Wild Cats</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img50962.jpg" alt="Treasure" class="item-game__image" width="174" height="104">
-				<span>Treasure</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img50962.jpg" alt="Treasure" class="item-game__image" width="174" height="104">
-				<span>Treasure</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img75413.jpg" alt="AirPlane" class="item-game__image" width="174" height="104">
-				<span>AirPlane</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img79359.jpg" alt="Sun Goddess" class="item-game__image" width="174" height="104">
-				<span>Sun Goddess</span>
-			</a>
-		</div>
-		<div class="continaer-item-all-888-games__caption">
-			مباشر 
-			<a href="/game/" rel="nofollow">المزيد من البث المباشر <svg data-v-72c25320="" viewBox="0 0 448 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|chevron-double-right"><path d="M58 38l209 210c5 4 5 12 0 17L58 474c-5 5-13 5-17 0l-20-20c-5-5-5-12 0-17l181-181L21 75c-5-5-5-12 0-17l20-20c4-5 12-5 17 0zm143 0l-20 20c-5 5-5 12 0 17l181 181-181 181c-5 5-5 12 0 17l20 20c4 5 12 5 17 0l209-209c5-5 5-13 0-17L218 38c-5-5-13-5-17 0z"></path></svg></a>
-		</div>
-		<div class="container-item-all-888-games__line">
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img94769.jpg" alt="Top Card" class="item-game__image" width="174" height="104">
-				<span>Top Card</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img55372.jpg" alt="Mega Wheel" class="item-game__image" width="174" height="104">
-				<span>Mega Wheel</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img97191.jpg" alt="Football Auto Roulette" class="item-game__image" width="174" height="104">
-				<span>Football Auto Roulette</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img80299.jpg" alt="Cabaret Roulette" class="item-game__image" width="174" height="104">
-				<span>Cabaret Roulette</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img32973.jpg" alt="Dragon Tiger D60" class="item-game__image" width="174" height="104">
-				<span>Dragon Tiger D60</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img67366.jpg" alt="Speed Baccarat C08" class="item-game__image" width="174" height="104">
-				<span>Speed Baccarat C08</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img106494.jpg" alt="Oasis Blackjack" class="item-game__image" width="174" height="104">
-				<span>Oasis Blackjack</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/129845.jpg" alt="Horse racing Auto Roulette" class="item-game__image" width="174" height="104">
-				<span>Horse racing Auto Roulette</span>
-			</a>
-		</div>
-		<div class="continaer-item-all-888-games__caption">
-			ألعاب التلفزيون			<a href="/game/" rel="nofollow">المزيد من ألعاب التلفزيون <svg data-v-72c25320="" viewBox="0 0 448 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|chevron-double-right"><path d="M58 38l209 210c5 4 5 12 0 17L58 474c-5 5-13 5-17 0l-20-20c-5-5-5-12 0-17l181-181L21 75c-5-5-5-12 0-17l20-20c4-5 12-5 17 0zm143 0l-20 20c-5 5-5 12 0 17l181 181-181 181c-5 5-5 12 0 17l20 20c4 5 12 5 17 0l209-209c5-5 5-13 0-17L218 38c-5-5-13-5-17 0z"></path></svg></a>
-		</div>
-		<div class="container-item-all-888-games__line">
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img71534.jpg" alt="Fast Keno" class="item-game__image" width="174" height="104">
-				<span>Fast Keno</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img61608.jpg" alt="Wheel" class="item-game__image" width="174" height="104">
-				<span>Wheel</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img61609.jpg" alt="Poker" class="item-game__image" width="174" height="104">
-				<span>Poker</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/47521.jpg" alt="TVBET" class="item-game__image" width="174" height="104">
-				<span>TVBET</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img61611.jpg" alt="War" class="item-game__image" width="174" height="104">
-				<span>War</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img61612.jpg" alt="5Bet" class="item-game__image" width="174" height="104">
-				<span>5Bet</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img61613.jpg" alt="7Bet" class="item-game__image" width="174" height="104">
-				<span>7Bet</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img61615.jpg" alt="Keno" class="item-game__image" width="174" height="104">
-				<span>Keno</span>
-			</a>
-		</div>
-		
-	</div>
-</div>
-<!-- start: #footer -->
-<footer id="footer" class="no-sidebar">
-			<div class="desktop-version" dir="rtl">
-				<nav class="navigation-footer">
-					<div class="block-ul-footer">
-						<strong>حول الموقع</strong>
-						<a href="/about/">من نحن</a>
-						<a href="/game/" target="_blank">برنامج الشراكة</a>
-						<a href="/contacts/">معلومات الاتصال</a>
-						<a href="/terms/">شروط الاستخدام</a>
-						<a href="/responsible/">اللعب المسؤول</a>
-						<a href="/privacy-policy/">الخصوصية وإدارة البيانات</a>
-						<a href="/game/">سياسة ملفات تعريف الارتباط</a>
-						<a href="/game/">سياسة مكافحة غسل الأموال</a>
-						<a href="/game/">سياسة اعرف عميلك</a>
-						<a href="/self-exclusion/">الاستبعاد الذاتي</a>
-						<a href="/dispute-resolution/">حل النزاعات</a>
-						<a href="/fairness-rng-testing-methods/">طرق اختبار النزاهة والعشوائية</a>
-						<a href="/accounts-withdrawals-and-bonuses/">الحسابات والمدفوعات والمكافآت</a>
-					</div>
-			<div class="block-ul-footer">
-   <strong>الرهان</strong>
-   <a href="/game/">الرياضة</a>
-   <a href="/game/">مباشر</a>
-   <a href="/game/">كرة القدم</a>
-   <a href="/game/">الكريكيت</a>
-   <a href="/game/">الرياضات الإلكترونية</a>
-   <a href="/game/">هوكي الجليد</a>
-   <a href="/game/">التنس</a>
-</div>
-<div class="block-ul-footer">
-   <strong>الألعاب</strong>
-   <a href="/game/">ألعاب السلوت</a>
-   <a href="/game/">ألعاب 888</a>
-   <a href="/game/">كازينو مباشر</a>
-   <a href="/game/">الرياضات الافتراضية</a>
-   <a href="/game/">بينغو</a>
-   <a href="/game/">ألعاب التلفزيون</a>
-</div>
-<div class="block-ul-footer">
-   <strong>الإحصائيات</strong>
-   <a href="/game/">إحصائيات</a>
-   <a href="/game/">النتائج</a>
-</div>
-<div class="block-ul-footer">
-   <strong>روابط مفيدة</strong>
-   <a href="/game/">طرق الدفع</a>
-   <a href="/game/">النسخة المحمولة</a>
-   <a href="/game/">التسجيل</a>
-   <a href="/game/">اكسب مع 888starz</a>
-</div>
-			<div class="block-ul-footer">
-				<strong>التطبيقات</strong>
-				<a href="/888starz.apk" class="link-footer-aps"><svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-						<path d="M11.68 10.26a.63.63 0 0 1-.37-.12.7.7 0 0 1-.24-.32.77.77 0 0 1 .14-.79c.1-.1.21-.16.34-.2a.62.62 0 0 1 .39.05c.12.05.22.15.3.26a.76.76 0 0 1-.09.9.64.64 0 0 1-.47.22Zm-7.36 0a.63.63 0 0 1-.37-.12.7.7 0 0 1-.25-.32.77.77 0 0 1 .15-.79c.09-.1.2-.16.34-.2a.62.62 0 0 1 .38.05c.13.05.23.15.3.26a.76.76 0 0 1-.08.9.64.64 0 0 1-.47.22Zm7.6-4.32 1.33-2.48a.31.31 0 0 0 .04-.23.31.31 0 0 0-.04-.1.29.29 0 0 0-.09-.09.26.26 0 0 0-.32.03.3.3 0 0 0-.07.1l-1.35 2.5a7.88 7.88 0 0 0-6.84 0l-1.35-2.5a.3.3 0 0 0-.07-.1.26.26 0 0 0-.32-.03.29.29 0 0 0-.09.08.3.3 0 0 0-.05.23l.05.11 1.33 2.48A8.51 8.51 0 0 0 0 12.71h16a8.51 8.51 0 0 0-4.08-6.77Z">
-						</path>
-					</svg>أندرويد</a>
-			</div>
-		</nav>
-		<nav class="navigation-footer">
-			<div class="container-copyrithing">
-			Copyright © 2020 - 2025 «888starz».</div>
-			<div class="container-social">
-				<div class="container-social-media">
-					<a href="https://twitter.com/888Tron" class="link-social-footer" target="_blank">
-						<svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path d="M12.6 0h2.45L9.7 6.78 16 16h-4.94L7.2 10.4 2.77 16H.32l5.73-7.25L0 0h5.06l3.5 5.11L12.6 0Zm-.86 14.38h1.36L4.32 1.54H2.87l8.87 12.84Z">
-							</path>
-						</svg>
-					</a>
-					<a href="https://www.instagram.com/888starz_en/" class="link-social-footer" target="_blank">
-						<svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path d="M10.65 8a2.65 2.65 0 1 1-5.3 0 2.65 2.65 0 0 1 5.3 0Z"></path>
-							<path d="M12.47 0H3.53A3.53 3.53 0 0 0 0 3.53v8.94A3.53 3.53 0 0 0 3.53 16h8.94A3.53 3.53 0 0 0 16 12.47V3.53A3.53 3.53 0 0 0 12.47 0ZM8 12.41a4.42 4.42 0 1 1 0-8.83 4.42 4.42 0 0 1 0 8.83Zm5.06-8.59a.88.88 0 1 1 0-1.76.88.88 0 0 1 0 1.76Z">
-							</path>
-						</svg>
-					</a>
-					<a href="https://www.facebook.com/888starzEN/" class="link-social-footer" target="_blank">
-						<svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path clip-rule="evenodd" d="M11.14 8H8.9v8H5.58V8H4V5.19h1.58V3.35C5.58 2.05 6.2 0 8.93 0h2.47v2.75H9.6a.68.68 0 0 0-.7.77v1.66h2.53l-.29 2.83Z">
-							</path>
-						</svg>
-					</a>
-					<a href="https://t.me/starz_official" class="link-social-footer" target="_blank">
-						<svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path clip-rule="evenodd" d="m3.85 9.25 1.99 5.04 2.6-2.62 4.44 3.57L16 1 0 7.75l3.85 1.5Zm7.58-4.16-4.9 4.52-.61 2.33-1.13-2.85 6.64-4Z">
-							</path>
-						</svg>
-					</a>
-				</div>
-				<div class="contaienr-18plus">
-					18+
-				</div>
-			</div>
-		</nav>
-	</div>
-	
-	<div class="mobile-version">
-		<div class="caption-seo-module faq-question">
-						<svg viewBox="0 0 32 19" focusable="false" role="img" class="ico_rotater_footer"><path d="M15.2 18.6.4 4c-.5-.5-.5-1.1 0-1.6l1.9-2c.5-.5 1.3-.5 1.7 0l12 11.8L28 .4c.4-.5 1.2-.5 1.7 0l2 2c.4.5.4 1 0 1.6L17 18.6c-.5.5-1.3.5-1.7 0Z"></path></svg>
-		</div>
-		<div class="seo-module faq-answer" id="seo-module" style="display: none;">
-			<div class="seo-module-column-1">
-							</div>
-			<div class="seo-module-column-2">
-			  			</div>
-		</div>
-		<div class="container-mobile-setion-app">
-			<a href="/888starz.apk" rel="nofollow" class="link-game-button-footer">
-				<div class="download-app-widget__stores download-app-widget-stores">
-					<img loading="lazy" alt="888starz" src="/wp-content/uploads/2025/03/image_2025-03-05_22-08-13-1.svg" class="download-app-android">
-				</div>
-				<div data-v-b7a9987b="" class="download-app-widget__description download-app-widget-description">
-					<img loading="lazy" alt="888starz" src="/wp-content/uploads/2025/03/12e2ff49a51305fa9bc4edc93e44442f.svg" class="download-app-widget-description__logo">
-					<span class="download-app-widget-description__title">Mobile application</span>
-				</div>
-			</a>
-		</div>
-		<div class="container-mobile-footer-social">
-			<a href="https://t.me/starz_official" class="container-mobile-item-social" aria-label="Telegram">
-				<svg width="19px" height="19px" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path d="M12.6 0h2.45L9.7 6.78 16 16h-4.94L7.2 10.4 2.77 16H.32l5.73-7.25L0 0h5.06l3.5 5.11L12.6 0Zm-.86 14.38h1.36L4.32 1.54H2.87l8.87 12.84Z">
-							</path>
-				</svg>
-			</a>
-			<a href="https://www.facebook.com/888starzEN/" class="container-mobile-item-social" aria-label="Facebook">
-				<svg width="19px" height="19px" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path d="M10.65 8a2.65 2.65 0 1 1-5.3 0 2.65 2.65 0 0 1 5.3 0Z"></path>
-							<path d="M12.47 0H3.53A3.53 3.53 0 0 0 0 3.53v8.94A3.53 3.53 0 0 0 3.53 16h8.94A3.53 3.53 0 0 0 16 12.47V3.53A3.53 3.53 0 0 0 12.47 0ZM8 12.41a4.42 4.42 0 1 1 0-8.83 4.42 4.42 0 0 1 0 8.83Zm5.06-8.59a.88.88 0 1 1 0-1.76.88.88 0 0 1 0 1.76Z">
-							</path>
-				</svg>
-			</a>
-			<a href="https://www.instagram.com/888starz_en/" class="container-mobile-item-social" aria-label="Instagram">
-				<svg width="19px" height="19px" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path clip-rule="evenodd" d="M11.14 8H8.9v8H5.58V8H4V5.19h1.58V3.35C5.58 2.05 6.2 0 8.93 0h2.47v2.75H9.6a.68.68 0 0 0-.7.77v1.66h2.53l-.29 2.83Z">
-							</path>
-				</svg>
-			</a>
-			<a href="https://twitter.com/888Tron" class="container-mobile-item-social" aria-label="Twitter">
-				<svg width="19px" height="19px" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path clip-rule="evenodd" d="m3.85 9.25 1.99 5.04 2.6-2.62 4.44 3.57L16 1 0 7.75l3.85 1.5Zm7.58-4.16-4.9 4.52-.61 2.33-1.13-2.85 6.64-4Z">
-							</path>
-				</svg>
-			</a>
-		</div>
-		<div class="container-copyrithing-mobile-footer">
-			<p class="read-copy">
-				Copyright © 2020 - 2025 «888starz».
-			</p>
-			<p class="read-desc-copy">
-			يستخدم 888starz ملفات تعريف الارتباط لضمان حصولك على أفضل تجربة استخدام. من خلال بقائك على الموقع الإلكتروني، فإنك توافق على استخدام ملفات تعريف الارتباط الخاصة بك على 888starz.<a href="/cookies/">سياسة ملفات تعريف الارتباط</a>
-			
-			</p>
-			<div class="container-horizontal-info">
-				<p class="p18plus">
-					+18
-				</p>
-				<div class="lang-dropdown"><div class="lang-current"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAANlBMVEUAYjMTYDs3R0AvV0NObzE3dSoTWzhAZjgyfEY0gl1EcDFqpIhKj28TVzaLs41ol1JSaF1JW1NzUHm9AAAAPUlEQVR4AY2MtQEAMAgE447tv2xKvuQqeEtRcikZ/9p6b9X/Mdfeaw4PnPvehQhNvpcnJYiInIqraqYpyAd1AAFxIEreLQAAAABJRU5ErkJggg==" alt="" width="16" height="11" style="width: 16px; height: 11px;"><span class="lang-name">العربية</span><span class="lang-arrow">▾</span></div><ul class="lang-list"><li class="lang-item active"><a href="/promo-code/"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAANlBMVEUAYjMTYDs3R0AvV0NObzE3dSoTWzhAZjgyfEY0gl1EcDFqpIhKj28TVzaLs41ol1JSaF1JW1NzUHm9AAAAPUlEQVR4AY2MtQEAMAgE447tv2xKvuQqeEtRcikZ/9p6b9X/Mdfeaw4PnPvehQhNvpcnJYiInIqraqYpyAd1AAFxIEreLQAAAABJRU5ErkJggg==" alt="" width="16" height="11" style="width: 16px; height: 11px;"><span class="lang-name">العربية</span></a></li></ul></div>
-    <style>
-        /* Стили для переключателя языков */
-        .lang-dropdown {
-            position: relative;
-            display: inline-block;
-            min-width: 120px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            z-index: 100;
-			direction:ltr;
-        }
-        
-        .lang-dropdown .lang-current {
-            display: flex;
-            align-items: center;
-            padding: 3px 12px;
-			background-color: #3d3d3d;
-			color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        .lang-dropdown .lang-arrow {
-            margin-left: auto;
-            font-size: 12px;
-            transition: transform 0.2s;
-        }
-        
-        .lang-dropdown:hover .lang-arrow {
-            transform: rotate(180deg);
-        }
-        
-        .lang-dropdown img {
-            margin-right: 8px;
-            width: 16px;
-            height: 11px;
-            display: inline-block;
-            vertical-align: middle;
-            border: none;
-        }
-        
-        .lang-dropdown .lang-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-top: none;
-            border-radius: 0 0 4px 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: none;
-            overflow: hidden;
-        }
-        
-        .lang-dropdown:hover .lang-list {
-            display: block;
-        }
-        
-        .lang-dropdown .lang-item {
-            display: block;
-            margin: 0;
-            border-bottom: 1px solid #f1f1f1;
-        }
-        
-        .lang-dropdown .lang-item:last-child {
-            border-bottom: none;
-        }
-        
-        .lang-dropdown .lang-item a {
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            text-decoration: none;
-            color: #333;
-            transition: background-color 0.2s;
-        }
-        
-        .lang-dropdown .lang-item a:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .lang-dropdown .lang-item.active a {
-            font-weight: bold;
-            background-color: #f0f0f0;
-        }
-        
-        /* Анимация появления списка */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .lang-dropdown:hover .lang-list {
-            animation: fadeIn 0.2s ease-out;
-        }
-    </style>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Чтобы переключатель работал и на мобильных устройствах
-            var langSwitchers = document.querySelectorAll(".lang-dropdown");
-            
-            langSwitchers.forEach(function(switcher) {
-                var current = switcher.querySelector(".lang-current");
-                var list = switcher.querySelector(".lang-list");
-                var isOpen = false;
-                
-                // Открытие/закрытие по клику для мобильных устройств
-                current.addEventListener("click", function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        if (isOpen) {
-                            list.style.display = "none";
-                            isOpen = false;
-                        } else {
-                            list.style.display = "block";
-                            isOpen = true;
-                        }
-                    }
-                });
-                
-                // Закрытие при клике вне переключателя
-                document.addEventListener("click", function(e) {
-                    if (!switcher.contains(e.target) && isOpen) {
-                        list.style.display = "none";
-                        isOpen = false;
-                    }
-                });
-            });
-        });
-    </script>			</div>
-		</div>
-	</div>
-	
-                  
-    
-    
-        
-    
-    <div class="clear"></div>
-
-</footer>
-
-<!-- end: #footer -->
-        <div class="clear"></div>
-    </div>
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-
-<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-<script>
-	// Отключение пассивных обработчиков событий для всего документа
-	var originalAddEventListener = EventTarget.prototype.addEventListener;
-	EventTarget.prototype.addEventListener = function(type, listener, options) {
-		if (typeof options === "object" && options.passive === true) {
-			options.passive = false; // Отключаем passive
-		}
-		originalAddEventListener.call(this, type, listener, options);
-	};
-
-	function initOwlAndFancybox() {
+	// Исправить пустые ссылки в custom-toc (accessibility fix)
+	// Исправить пустые ссылки в custom-toc (accessibility fix)
+	function fixEmptyTocLinks() {
+		var $ = window.jQuery;
+		if (!$) return;
+		$(".custom-toc a[href='#']").each(function() {
+			var $link = $(this);
+			if (!$link.text().trim() && !$link.attr("aria-label")) {
+				$link.attr("aria-hidden", "true");
+				$link.attr("tabindex", "-1");
+			}
+		});
+	}
+
+		function initOwlAndFancybox() {
 		var $ = window.jQuery;
 		if (!$ || !$.fn.owlCarousel) return;
+		
+		// Патч для устранения предупреждений о non-passive event listeners
+		// Автоматически добавляем passive: true для touchstart событий
+		if (typeof EventTarget !== 'undefined' && EventTarget.prototype.addEventListener) {
+			var originalAddEventListener = EventTarget.prototype.addEventListener;
+			EventTarget.prototype.addEventListener = function(type, listener, options) {
+				// Для touchstart событий автоматически добавляем passive: true, если не указано явно
+				if (type === 'touchstart' || type === 'touchmove' || type === 'touchend') {
+					if (typeof options === 'object' && options !== null) {
+						if (options.passive === undefined) {
+							options.passive = true;
+						}
+					} else if (typeof options === 'boolean') {
+						// Если options - это useCapture (boolean), создаем объект с passive
+						options = { capture: options, passive: true };
+					} else {
+						// Если options не указан, используем passive: true
+						options = { passive: true };
+					}
+				}
+				return originalAddEventListener.call(this, type, listener, options);
+			};
+		}
 		$(".owl-carousel").each(function() {
 			var $el = $(this);
 			if ($el.find(".owl-stage-outer").length) {
@@ -6919,24 +4349,29 @@ document.addEventListener("DOMContentLoaded", function() {
 			items: 1,
 			margin: 30,
 			loop: true,
-			nav: true,
-			navText: ["‹","›"],
-			dots: true,
+			nav: false,
+			dots: false,
+			dotsEach: false,
 			autoplay: true,
 			autoplayTimeout: 5000,
 			touchDrag: true,
 			mouseDrag: true,
 			rtl:false,
 			ltr:true,
-			onInitialized: addAriaLabelsToDots
-		});
+			onInitialized: function() {
+				addAriaLabelsToDots();
+				initCarouselCustomNav(this);
+			},
+			onChanged: function(event) {
+				updateCarouselCustomNav(event.target);
+			}
+		})
 		$(".owl-mobile").owlCarousel({
 			items: 3,
 			margin: 30,
 			loop: true,
-			nav: true,
-			navText: ["‹","›"],
-			dots: true,
+			nav: false,
+			dots: false,
 			rtl:false,
 			ltr:true,
 			autoplay: true,
@@ -6948,8 +4383,14 @@ document.addEventListener("DOMContentLoaded", function() {
 				600: { items: 2, margin: 20 },
 				1000: { items: 3, margin: 30 }
 			},
-			onInitialized: addAriaLabelsToDots
-		});
+			onInitialized: function() {
+				addAriaLabelsToDots();
+				initMobileCustomNav(this);
+			},
+			onChanged: function(event) {
+				updateMobileCustomNav(event.target);
+			}
+		})
 		// Исключаем клонированные элементы из выборки
 $('[data-fancybox="gallery"]:not(.owl-item.cloned [data-fancybox="gallery"])').fancybox({
     buttons: ["zoom","share","slideShow","fullScreen","download","thumbs","close"],
@@ -6957,7 +4398,7 @@ $('[data-fancybox="gallery"]:not(.owl-item.cloned [data-fancybox="gallery"])').f
     protect: true,
     animationEffect: "zoom",
     transitionEffect: "fade"
-});
+})
 $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"])').fancybox({
     buttons: ["zoom","share","slideShow","fullScreen","download","thumbs","close"],
     loop: true,
@@ -6973,7 +4414,7 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 			nav: false,
 			rtl:false,
 			ltr:true,
-			dots: true,
+			dots: false,
 			autoplay: true,
 			autoplayTimeout: 5000,
 			touchDrag: true,
@@ -7001,7 +4442,7 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 				var n = index + 1;
 				if (!$dot.attr("aria-label")) $dot.attr("aria-label", "Go to slide " + n);
 				if ($dot.closest("#single .post-content").length) {
-					$dot.addClass("owl-dot-number").html("<span>" + n + "</span>");
+					$dot.empty();
 				}
 			});
 		}
@@ -7014,12 +4455,146 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 					$link.attr("tabindex", "-1");
 				}
 			});
+		
+		// Инициализация кастомной мобильной навигации
+		
+		// Инициализация кастомной навигации для .owl-carousel
+		function initCarouselCustomNav(carousel) {
+			if (!carousel || !window.jQuery) return;
+			var $ = window.jQuery;
+			var $carousel = $(carousel);
+			if (!$carousel.length) return;
+			
+			var $nav = $carousel.siblings('.owl-carousel-custom-nav');
+			if ($nav.length === 0) {
+				var navHtml = '<div class="owl-carousel-custom-nav">' +
+					'<button class="owl-carousel-prev" aria-label="Previous slide">‹</button>' +
+					'<span class="slide-counter">1 / 1</span>' +
+					'<button class="owl-carousel-next" aria-label="Next slide">›</button>' +
+					'</div>';
+				$nav = $(navHtml);
+				try {
+					if ($carousel[0] && $carousel[0].parentNode) {
+						$carousel[0].parentNode.insertBefore($nav[0], $carousel[0].nextSibling);
+					} else {
+						$carousel.after($nav);
+					}
+				} catch (e) {
+					console.warn('Error inserting carousel nav:', e);
+					return;
+				}
+			}
+			
+			updateCarouselCustomNav(carousel);
+			
+			// Обработчики кликов
+			$nav.find('.owl-carousel-prev').off('click.carouselNav').on('click.carouselNav', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$carousel.trigger('prev.owl.carousel');
+			});
+			$nav.find('.owl-carousel-next').off('click.carouselNav').on('click.carouselNav', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$carousel.trigger('next.owl.carousel');
+			});
 		}
+		// Обновление счетчика слайдов для .owl-carousel
+		function updateCarouselCustomNav(carousel) {
+			if (!carousel || !window.jQuery) return;
+			var $ = window.jQuery;
+			var $carousel = $(carousel);
+			if (!$carousel.length) return;
+			
+			var $nav = $carousel.siblings('.owl-carousel-custom-nav');
+			if ($nav.length) {
+				try {
+					var $active = $carousel.find('.owl-item.active').first();
+					if (!$active.length) return;
+					
+					var current = $active.index() + 1;
+					var total = $carousel.find('.owl-item:not(.cloned)').length;
+					
+					// Если loop включен, нужно правильно считать текущий слайд
+					var owlData = $carousel.data('owl.carousel');
+					if (owlData && owlData.settings && owlData.settings.loop && typeof owlData.relative === 'function') {
+						var realIndex = owlData.relative($active.index());
+						if (realIndex !== undefined && realIndex !== null) {
+							current = realIndex + 1;
+						}
+					}
+					
+					if (total > 0 && current > 0) {
+						$nav.find('.slide-counter').text(current + ' / ' + total);
+					}
+				} catch (e) {
+					console.warn('Error updating carousel nav counter:', e);
+				}
+			}
+		}
+		function initMobileCustomNav(carousel) {
+			if (!carousel || !window.jQuery) return;
+			var $ = window.jQuery;
+			var $carousel = $(carousel);
+			if (!$carousel.length) return;
+			
+			var $nav = $carousel.siblings('.owl-mobile-custom-nav');
+			if ($nav.length === 0) {
+				var navHtml = '<div class="owl-mobile-custom-nav">' +
+					'<button class="owl-mobile-prev" aria-label="Previous slide">‹</button>' +
+					'<span class="slide-counter">1 / 1</span>' +
+					'<button class="owl-mobile-next" aria-label="Next slide">›</button>' +
+					'</div>';
+				$nav = $(navHtml);
+				$carousel.after($nav);
+			}
+			
+			updateMobileCustomNav(carousel);
+			
+			// Обработчики кликов
+			$nav.find('.owl-mobile-prev').off('click.mobileNav').on('click.mobileNav', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$carousel.trigger('prev.owl.carousel');
+			});
+			$nav.find('.owl-mobile-next').off('click.mobileNav').on('click.mobileNav', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$carousel.trigger('next.owl.carousel');
+			});
+		}
+		// Обновление счетчика слайдов
+		function updateMobileCustomNav(carousel) {
+			var $carousel = $(carousel);
+			var $nav = $carousel.siblings('.owl-mobile-custom-nav');
+			if ($nav.length) {
+				var $active = $carousel.find('.owl-item.active').first();
+				var current = $active.index() + 1;
+				var total = $carousel.find('.owl-item:not(.cloned)').length;
+				// Если loop включен, нужно правильно считать текущий слайд
+				if ($carousel.data('owl.carousel') && $carousel.data('owl.carousel').settings.loop) {
+					var realIndex = $carousel.data('owl.carousel').relative($active.index());
+					current = realIndex + 1;
+				}
+				$nav.find('.slide-counter').text(current + ' / ' + total);
+			}
+		}}
 		$(".slider-888-slider, .owl-carousel, .owl-mobile").on("initialized.owl.carousel", function() {
 			markCasinoWelcomeHidden();
 			addAriaLabelsToDots();
+			if ($(this).hasClass('owl-carousel')) {
+				initCarouselCustomNav(this);
+			} else if ($(this).hasClass('owl-mobile')) {
+				initMobileCustomNav(this);
+			}
 		});
 		$(".owl-carousel, .owl-mobile").on("initialized.owl.carousel", addAriaLabelsToDots);
+		$(".owl-carousel").on("changed.owl.carousel", function(event) {
+			updateCarouselCustomNav(event.target);
+		});
+		$(".owl-mobile").on("changed.owl.carousel", function(event) {
+			updateMobileCustomNav(event.target);
+		});
 		markCasinoWelcomeHidden();
 		$(document).off("click.contentSliders", "#single .post-content .owl-prev, #single .post-content .owl-next");
 		$(document).on("click.contentSliders", "#single .post-content .owl-prev", function(e) {

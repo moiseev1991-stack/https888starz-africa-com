@@ -3635,122 +3635,76 @@ table:not([class]) tbody,table:not([class]) tr,
 }
 
 /* Только два слайдера в контенте: стрелки слева/справа и нумерованные точки снизу */
-#single .post-content .owl-carousel .owl-nav,
-#single .post-content .owl-mobile .owl-nav
+/* Навигация (стрелки) - отключены для .owl-carousel и .owl-mobile */
+.owl-carousel .owl-nav,
+.owl-mobile .owl-nav
 {
-	display:flex !important;
-	visibility:visible !important;
-	position:absolute;
-	left:0;
-	right:0;
-	top:50%;
-	transform:translateY(-50%);
+	display:none !important;
+	visibility:hidden !important;
+}
+/* Кастомная навигация для .owl-carousel и .owl-mobile */
+.owl-carousel-custom-nav,
+.owl-mobile-custom-nav
+{
+	display:flex;
 	justify-content:space-between;
-	pointer-events:none;
-	margin:0;
-	padding:0 8px;
-	z-index:9999
+	align-items:center;
+	margin-top:15px;
+	padding:0 20px;
 }
-#single .post-content .owl-carousel .owl-nav button,
-#single .post-content .owl-mobile .owl-nav button
+.owl-carousel-custom-nav button,
+.owl-mobile-custom-nav button
 {
-	z-index:10000
-}
-#single .post-content .owl-carousel .owl-nav.disabled,
-#single .post-content .owl-mobile .owl-nav.disabled
-{
-	display:flex !important;
-	visibility:visible !important
-}
-#single .post-content .owl-carousel .owl-nav button,
-#single .post-content .owl-mobile .owl-nav button
-{
-	pointer-events:auto !important;
-	width:44px;
-	height:44px;
-	min-width:44px;
-	min-height:44px;
-	border-radius:50%;
-	background:rgba(0,0,0,0.6);
+	background:#3d3d3d;
 	color:#fff;
-	border:none;
+	border:2px solid transparent;
+	border-radius:50%;
+	width:40px;
+	height:40px;
+	font-size:18px;
 	cursor:pointer;
-	font-size:24px;
-	line-height:1;
 	display:flex;
 	align-items:center;
 	justify-content:center;
-	transition:background .2s;
-	position:relative;
-	z-index:101
+	transition:all .3s ease;
+	font-weight:700;
 }
-#single .post-content .owl-carousel .owl-nav button:hover,
-#single .post-content .owl-mobile .owl-nav button:hover
+.owl-carousel-custom-nav button:hover,
+.owl-mobile-custom-nav button:hover
 {
-	background:rgba(0,0,0,0.85)
+	background:#666;
+	border-color:#900;
+	transform:scale(1.1);
 }
-#single .post-content .owl-carousel .owl-prev,
-#single .post-content .owl-mobile .owl-prev
+.owl-carousel-custom-nav .slide-counter,
+.owl-mobile-custom-nav .slide-counter
 {
-	position:absolute;
-	left:8px
+	font-size:16px;
+	font-weight:700;
+	color:#333;
+	padding:8px 16px;
+	background:#f0f0f0;
+	border-radius:20px;
+	min-width:80px;
+	text-align:center;
 }
-#single .post-content .owl-carousel .owl-next,
-#single .post-content .owl-mobile .owl-next
+/* Скрываем dots для .owl-carousel и .owl-mobile на всех устройствах */
+.owl-carousel .owl-dots,
+.owl-mobile .owl-dots
 {
-	position:absolute;
-	right:8px
+	display:none !important;
+	visibility:hidden !important;
 }
-#single .post-content .owl-carousel,
-#single .post-content .owl-mobile
+.owl-carousel,
+.owl-mobile
 {
 	position:relative
 }
-#single .post-content .owl-carousel .owl-stage-outer,
-#single .post-content .owl-mobile .owl-stage-outer
+.owl-carousel .owl-stage-outer,
+.owl-mobile .owl-stage-outer
 {
 	position:relative;
 	z-index:1
-}
-/* Точки под слайдерами в контенте — показывать номера 1, 2, 3, 4, 5… */
-#single .post-content .owl-dots
-{
-	display:flex !important;
-	visibility:visible !important;
-	flex-wrap:wrap;
-	gap:6px;
-	justify-content:center;
-	margin-top:14px;
-	padding:10px 0
-}
-#single .post-content .owl-dots .owl-dot
-{
-	display:inline-flex !important;
-	visibility:visible !important;
-	pointer-events:auto !important;
-	align-items:center;
-	justify-content:center;
-	width:32px;
-	height:32px;
-	min-width:32px;
-	border-radius:50%;
-	background:#3d3d3d;
-	color:#fff;
-	font-size:14px;
-	font-weight:600;
-	cursor:pointer;
-	border:none;
-	transition:background .2s;
-	position:relative;
-	z-index:9999
-}
-#single .post-content .owl-dots .owl-dot:hover
-{
-	background:#555
-}
-#single .post-content .owl-dots .owl-dot.active
-{
-	background:#900
 }
 .owl-carousel,
 .owl-mobile,
@@ -6623,20 +6577,51 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+<script>
+	// Патч для устранения предупреждений о non-passive event listeners
+	// Применяем ДО загрузки jQuery и Owl Carousel
+	(function() {
+		if (typeof EventTarget !== 'undefined' && EventTarget.prototype.addEventListener) {
+			var originalAddEventListener = EventTarget.prototype.addEventListener;
+			EventTarget.prototype.addEventListener = function(type, listener, options) {
+				// Для touchstart событий автоматически добавляем passive: true, если не указано явно
+				if (type === 'touchstart' || type === 'touchmove' || type === 'touchend') {
+					if (typeof options === 'object' && options !== null) {
+						// Если passive не указан явно (ни true, ни false), устанавливаем true
+						if (!('passive' in options)) {
+							options.passive = true;
+						}
+					} else if (typeof options === 'boolean') {
+						// Если options - это useCapture (boolean), создаем объект с passive
+						options = { capture: options, passive: true };
+					} else {
+						// Если options не указан, используем passive: true
+						options = { passive: true };
+					}
+				}
+				return originalAddEventListener.call(this, type, listener, options);
+			};
+		}
+	})();
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 <script>
-	// Отключение пассивных обработчиков событий для всего документа
-	var originalAddEventListener = EventTarget.prototype.addEventListener;
-	EventTarget.prototype.addEventListener = function(type, listener, options) {
-		if (typeof options === "object" && options.passive === true) {
-			options.passive = false; // Отключаем passive
-		}
-		originalAddEventListener.call(this, type, listener, options);
-	};
+	// Исправить пустые ссылки в custom-toc (accessibility fix)
+	function fixEmptyTocLinks() {
+		var $ = window.jQuery;
+		if (!$) return;
+		$(".custom-toc a[href='#']").each(function() {
+			var $link = $(this);
+			if (!$link.text().trim() && !$link.attr("aria-label")) {
+				$link.attr("aria-hidden", "true");
+				$link.attr("tabindex", "-1");
+			}
+		});
+	}
 
 	function initOwlAndFancybox() {
 		var $ = window.jQuery;
@@ -6666,41 +6651,206 @@ document.addEventListener("DOMContentLoaded", function() {
 				$el.append($slides);
 			}
 		});
-		$(".owl-carousel").owlCarousel({
-			items: 1,
-			margin: 30,
-			loop: true,
-			nav: true,
-			navText: ["‹","›"],
-			dots: true,
-			autoplay: true,
-			autoplayTimeout: 5000,
-			touchDrag: true,
-			mouseDrag: true,
-			rtl:false,
-			ltr:true,
-			onInitialized: addAriaLabelsToDots
+		$(".owl-carousel").each(function() {
+			var $carousel = $(this);
+			$carousel.owlCarousel({
+				items: 1,
+				margin: 30,
+				loop: true,
+				nav: false,
+				dots: false,
+				dotsEach: false,
+				autoplay: true,
+				autoplayTimeout: 5000,
+				touchDrag: true,
+				mouseDrag: true,
+				rtl:false,
+				ltr:true,
+				onInitialized: function(event) {
+					addAriaLabelsToDots();
+					initCarouselCustomNav($carousel[0]);
+				},
+				onChanged: function(event) {
+					updateCarouselCustomNav($carousel[0]);
+				}
+			});
 		});
-		$(".owl-mobile").owlCarousel({
-			items: 3,
-			margin: 30,
-			loop: true,
-			nav: true,
-			navText: ["‹","›"],
-			dots: true,
-			rtl:false,
-			ltr:true,
-			autoplay: true,
-			autoplayTimeout: 5000,
-			touchDrag: true,
-			mouseDrag: true,
-			responsive: {
-				0: { items: 1, margin: 10 },
-				600: { items: 2, margin: 20 },
-				1000: { items: 3, margin: 30 }
-			},
-			onInitialized: addAriaLabelsToDots
+		$(".owl-mobile").each(function() {
+			var $carousel = $(this);
+			$carousel.owlCarousel({
+				items: 3,
+				margin: 30,
+				loop: true,
+				nav: false,
+				dots: false,
+				rtl:false,
+				ltr:true,
+				autoplay: true,
+				autoplayTimeout: 5000,
+				touchDrag: true,
+				mouseDrag: true,
+				responsive: {
+					0: { items: 1, margin: 10 },
+					600: { items: 2, margin: 20 },
+					1000: { items: 3, margin: 30 }
+				},
+				onInitialized: function(event) {
+					addAriaLabelsToDots();
+					initMobileCustomNav($carousel[0]);
+				},
+				onChanged: function(event) {
+					updateMobileCustomNav($carousel[0]);
+				}
+			});
 		});
+		// Инициализация кастомной навигации для .owl-carousel
+		function initCarouselCustomNav(carousel) {
+			if (!carousel || !window.jQuery) return;
+			var $ = window.jQuery;
+			var $carousel = $(carousel);
+			if (!$carousel.length) return;
+			
+			var $nav = $carousel.siblings('.owl-carousel-custom-nav');
+			if ($nav.length === 0) {
+				var navHtml = '<div class="owl-carousel-custom-nav">' +
+					'<button class="owl-carousel-prev" aria-label="Previous slide">‹</button>' +
+					'<span class="slide-counter">1 / 1</span>' +
+					'<button class="owl-carousel-next" aria-label="Next slide">›</button>' +
+					'</div>';
+				$nav = $(navHtml);
+				try {
+					if ($carousel[0] && $carousel[0].parentNode) {
+						$carousel[0].parentNode.insertBefore($nav[0], $carousel[0].nextSibling);
+					} else {
+						$carousel.after($nav);
+					}
+				} catch (e) {
+					console.warn('Error inserting carousel nav:', e);
+					return;
+				}
+			}
+			
+			updateCarouselCustomNav(carousel);
+			
+			// Обработчики кликов
+			$nav.find('.owl-carousel-prev').off('click.carouselNav').on('click.carouselNav', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$carousel.trigger('prev.owl.carousel');
+			});
+			$nav.find('.owl-carousel-next').off('click.carouselNav').on('click.carouselNav', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$carousel.trigger('next.owl.carousel');
+			});
+		}
+		// Обновление счетчика слайдов для .owl-carousel
+		function updateCarouselCustomNav(carousel) {
+			if (!carousel || !window.jQuery) return;
+			var $ = window.jQuery;
+			var $carousel = $(carousel);
+			if (!$carousel.length) return;
+			
+			var $nav = $carousel.siblings('.owl-carousel-custom-nav');
+			if ($nav.length) {
+				try {
+					var $active = $carousel.find('.owl-item.active').first();
+					if (!$active.length) return;
+					
+					var current = $active.index() + 1;
+					var total = $carousel.find('.owl-item:not(.cloned)').length;
+					
+					// Если loop включен, нужно правильно считать текущий слайд
+					var owlData = $carousel.data('owl.carousel');
+					if (owlData && owlData.settings && owlData.settings.loop && typeof owlData.relative === 'function') {
+						var realIndex = owlData.relative($active.index());
+						if (realIndex !== undefined && realIndex !== null) {
+							current = realIndex + 1;
+						}
+					}
+					
+					if (total > 0 && current > 0) {
+						$nav.find('.slide-counter').text(current + ' / ' + total);
+					}
+				} catch (e) {
+					console.warn('Error updating carousel nav counter:', e);
+				}
+			}
+		}
+		// Инициализация кастомной мобильной навигации
+		function initMobileCustomNav(carousel) {
+			if (!carousel || !window.jQuery) return;
+			var $ = window.jQuery;
+			var $carousel = $(carousel);
+			if (!$carousel.length) return;
+			
+			var $nav = $carousel.siblings('.owl-mobile-custom-nav');
+			if ($nav.length === 0) {
+				var navHtml = '<div class="owl-mobile-custom-nav">' +
+					'<button class="owl-mobile-prev" aria-label="Previous slide">‹</button>' +
+					'<span class="slide-counter">1 / 1</span>' +
+					'<button class="owl-mobile-next" aria-label="Next slide">›</button>' +
+					'</div>';
+				$nav = $(navHtml);
+				try {
+					if ($carousel[0] && $carousel[0].parentNode) {
+						$carousel[0].parentNode.insertBefore($nav[0], $carousel[0].nextSibling);
+					} else {
+						$carousel.after($nav);
+					}
+				} catch (e) {
+					console.warn('Error inserting mobile nav:', e);
+					return;
+				}
+			}
+			
+			updateMobileCustomNav(carousel);
+			
+			// Обработчики кликов
+			$nav.find('.owl-mobile-prev').off('click.mobileNav').on('click.mobileNav', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$carousel.trigger('prev.owl.carousel');
+			});
+			$nav.find('.owl-mobile-next').off('click.mobileNav').on('click.mobileNav', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$carousel.trigger('next.owl.carousel');
+			});
+		}
+		// Обновление счетчика слайдов
+		function updateMobileCustomNav(carousel) {
+			if (!carousel || !window.jQuery) return;
+			var $ = window.jQuery;
+			var $carousel = $(carousel);
+			if (!$carousel.length) return;
+			
+			var $nav = $carousel.siblings('.owl-mobile-custom-nav');
+			if ($nav.length) {
+				try {
+					var $active = $carousel.find('.owl-item.active').first();
+					if (!$active.length) return;
+					
+					var current = $active.index() + 1;
+					var total = $carousel.find('.owl-item:not(.cloned)').length;
+					
+					// Если loop включен, нужно правильно считать текущий слайд
+					var owlData = $carousel.data('owl.carousel');
+					if (owlData && owlData.settings && owlData.settings.loop && typeof owlData.relative === 'function') {
+						var realIndex = owlData.relative($active.index());
+						if (realIndex !== undefined && realIndex !== null) {
+							current = realIndex + 1;
+						}
+					}
+					
+					if (total > 0 && current > 0) {
+						$nav.find('.slide-counter').text(current + ' / ' + total);
+					}
+				} catch (e) {
+					console.warn('Error updating mobile nav counter:', e);
+				}
+			}
+		}
 		// Исключаем клонированные элементы из выборки
 $('[data-fancybox="gallery"]:not(.owl-item.cloned [data-fancybox="gallery"])').fancybox({
     buttons: ["zoom","share","slideShow","fullScreen","download","thumbs","close"],
@@ -6745,40 +6895,39 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 				}
 			});
 		}
-		// Aria + нумерованные точки (1,2,3…) для слайдеров в контенте
+		// Aria labels для доступности (без видимых цифр)
 		function addAriaLabelsToDots() {
-			$(".owl-dots .owl-dot").each(function(index) {
+			$(".owl-carousel .owl-dots .owl-dot, .owl-mobile .owl-dots .owl-dot").each(function(index) {
 				var $dot = $(this);
 				var n = index + 1;
 				if (!$dot.attr("aria-label")) $dot.attr("aria-label", "Go to slide " + n);
-				// В контенте — показывать номер в точке (1, 2, 3, 4, 5…)
-				if ($dot.closest("#single .post-content").length) {
-					$dot.addClass("owl-dot-number").html("<span>" + n + "</span>");
-				}
-			});
-		}
-		// Исправить пустые ссылки в custom-toc (accessibility fix)
-		function fixEmptyTocLinks() {
-			$(".custom-toc a[href='#']").each(function() {
-				var $link = $(this);
-				if (!$link.text().trim() && !$link.attr("aria-label")) {
-					$link.attr("aria-hidden", "true");
-					$link.attr("tabindex", "-1");
-				}
+				// Убираем цифры, оставляем только кружки
+				$dot.empty();
 			});
 		}
 		$(".slider-888-slider, .owl-carousel, .owl-mobile").on("initialized.owl.carousel", function() {
 			markCasinoWelcomeHidden();
 			addAriaLabelsToDots();
+			if ($(this).hasClass('owl-carousel')) {
+				initCarouselCustomNav(this);
+			} else if ($(this).hasClass('owl-mobile')) {
+				initMobileCustomNav(this);
+			}
 		});
 		$(".owl-carousel, .owl-mobile").on("initialized.owl.carousel", addAriaLabelsToDots);
+		$(".owl-carousel").on("changed.owl.carousel", function(event) {
+			updateCarouselCustomNav(event.target);
+		});
+		$(".owl-mobile").on("changed.owl.carousel", function(event) {
+			updateMobileCustomNav(event.target);
+		});
 		markCasinoWelcomeHidden();
-		// Обработчики в фазе CAPTURE, чтобы срабатывали первыми и не блокировались другими скриптами (субтитры, Cursor и т.д.)
+		// Обработчики в фазе CAPTURE для ВСЕХ слайдеров .owl-carousel и .owl-mobile, чтобы срабатывали первыми и не блокировались другими скриптами
 		var contentSliderCapture = function(e) {
 			var t = e.target;
-			var prev = t.closest && t.closest("#single .post-content .owl-prev");
-			var next = t.closest && t.closest("#single .post-content .owl-next");
-			var dot = t.closest && t.closest("#single .post-content .owl-dots .owl-dot");
+			var prev = t.closest && t.closest(".owl-carousel .owl-prev, .owl-mobile .owl-prev");
+			var next = t.closest && t.closest(".owl-carousel .owl-next, .owl-mobile .owl-next");
+			var dot = t.closest && t.closest(".owl-carousel .owl-dots .owl-dot, .owl-mobile .owl-dots .owl-dot");
 			if (prev || next || dot) {
 				e.preventDefault();
 				e.stopPropagation();
@@ -6789,12 +6938,24 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 					if (prev) $c.trigger("prev.owl.carousel");
 					else if (next) $c.trigger("next.owl.carousel");
 					else if (dot) {
-						var idx = window.jQuery(dot).index();
-						$c.trigger("to.owl.carousel", [idx]);
+						var $dot = window.jQuery(dot);
+						var idx = $dot.index();
+						$c.trigger("to.owl.carousel", [idx, 300]);
 					}
 				}
 			}
 		};
+		// Дополнительный обработчик кликов на dots для надежности
+		$(document).on("click", ".owl-carousel .owl-dots .owl-dot, .owl-mobile .owl-dots .owl-dot", function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			var $dot = $(this);
+			var $carousel = $dot.closest(".owl-carousel, .owl-mobile");
+			if ($carousel.length && window.jQuery && window.jQuery.fn.owlCarousel) {
+				var idx = $dot.index();
+				$carousel.trigger("to.owl.carousel", [idx, 300]);
+			}
+		});
 		document.removeEventListener("click", contentSliderCapture, true);
 		document.addEventListener("click", contentSliderCapture, true);
 	}

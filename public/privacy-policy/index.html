@@ -3600,77 +3600,83 @@ table:not([class]) tbody,table:not([class]) tr,
 #single .post-content .owl-carousel .owl-nav,
 #single .post-content .owl-mobile .owl-nav
 {
-	display:flex !important;
-	visibility:visible !important;
-	position:absolute;
-	left:0;
-	right:0;
-	top:50%;
-	transform:translateY(-50%);
-	justify-content:space-between;
-	pointer-events:none;
-	margin:0;
-	padding:0 8px;
-	z-index:10
+	display:none !important;
+	visibility:hidden !important;
 }
-#single .post-content .owl-carousel .owl-nav.disabled,
-#single .post-content .owl-mobile .owl-nav.disabled
-{
-	display:flex !important;
-	visibility:visible !important
-}
-#single .post-content .owl-carousel .owl-nav button,
-#single .post-content .owl-mobile .owl-nav button
-{
-	pointer-events:auto;
-	width:44px;
-	height:44px;
-	min-width:44px;
-	min-height:44px;
-	border-radius:50%;
-	background:rgba(0,0,0,0.6);
-	color:#fff;
-	border:none;
-	cursor:pointer;
-	font-size:24px;
-	line-height:1;
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	transition:background .2s
-}
-#single .post-content .owl-carousel .owl-nav button:hover,
-#single .post-content .owl-mobile .owl-nav button:hover
-{
-	background:rgba(0,0,0,0.85)
-}
-#single .post-content .owl-carousel .owl-prev,
-#single .post-content .owl-mobile .owl-prev
-{
-	position:absolute;
-	left:8px
-}
-#single .post-content .owl-carousel .owl-next,
-#single .post-content .owl-mobile .owl-next
-{
-	position:absolute;
-	right:8px
-}
+
 #single .post-content .owl-carousel,
 #single .post-content .owl-mobile
 {
 	position:relative
 }
-#single .post-content .owl-dots
+/* Кастомная навигация для .owl-carousel и .owl-mobile */
+.owl-carousel-custom-nav,
+.owl-mobile-custom-nav
 {
-	display:flex !important;
-	visibility:visible !important;
-	flex-wrap:wrap;
-	gap:6px;
-	justify-content:center;
-	margin-top:14px;
-	padding:10px 0
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	margin-top:15px;
+	padding:0 20px;
 }
+.owl-carousel-custom-nav button,
+.owl-mobile-custom-nav button
+{
+	background:#3d3d3d;
+	color:#fff;
+	border:2px solid transparent;
+	border-radius:50%;
+	width:40px;
+	height:40px;
+	font-size:18px;
+	cursor:pointer;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	transition:all .3s ease;
+	font-weight:700;
+}
+.owl-carousel-custom-nav button:hover,
+.owl-mobile-custom-nav button:hover
+{
+	background:#666;
+	border-color:#900;
+	transform:scale(1.1);
+}
+.owl-carousel-custom-nav .slide-counter,
+.owl-mobile-custom-nav .slide-counter
+{
+	font-size:16px;
+	font-weight:700;
+	color:#333;
+	padding:8px 16px;
+	background:#f0f0f0;
+	border-radius:20px;
+	min-width:80px;
+	text-align:center;
+}
+/* Скрываем dots для .owl-carousel и .owl-mobile на всех устройствах */
+.owl-carousel .owl-dots,
+.owl-mobile .owl-dots
+{
+	display:none !important;
+	visibility:hidden !important;
+}
+.owl-carousel,
+.owl-mobile
+{
+	position:relative
+}
+.owl-carousel .owl-stage-outer,
+.owl-mobile .owl-stage-outer
+{
+	position:relative;
+	z-index:1
+}
+/* На мобильных устройствах скрываем dots для .owl-mobile */
+@media screen and (max-width:767px)
+{
+	
 #single .post-content .owl-dots .owl-dot
 {
 	display:inline-flex !important;
@@ -4270,1802 +4276,46 @@ html
     
 		</style>
 		<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var showMoreButton = document.getElementById('show-more');
-    var tocItems = document.querySelectorAll('.custom-toc .toc-item.toc-hidden');
+	// Исправить пустые ссылки в custom-toc (accessibility fix)
+	// Исправить пустые ссылки в custom-toc (accessibility fix)
+	function fixEmptyTocLinks() {
+		var $ = window.jQuery;
+		if (!$) return;
+		$(".custom-toc a[href='#']").each(function() {
+			var $link = $(this);
+			if (!$link.text().trim() && !$link.attr("aria-label")) {
+				$link.attr("aria-hidden", "true");
+				$link.attr("tabindex", "-1");
+			}
+		});
+	}
 
-    if (showMoreButton) {
-        showMoreButton.addEventListener('click', function() {
-            // Показать скрытые элементы
-            tocItems.forEach(function(item) {
-                item.classList.remove('toc-hidden');
-            });
-
-            // Скрыть кнопку
-            showMoreButton.style.display = 'none';
-        });
-    }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Найти все таблицы без класса
-  const tables = document.querySelectorAll("table:not([class])");
-  
-  tables.forEach((table) => {
-    // Создать обертку
-    const wrapper = document.createElement("div");
-    wrapper.className = "table-wrapper";
-    
-    // Вставить обертку перед таблицей
-    table.parentNode.insertBefore(wrapper, table);
-    // Поместить таблицу внутрь обертки
-    wrapper.appendChild(table);
-  });
-});
-	
-function copyPromoCode(event) {
-  var notification = document.getElementById("copyNotification");
-  
-  // Check if the notification is not visible
-  if (notification.style.display !== "block") {
-    var promoCode = document.getElementById("promoCode").innerText;
-    var tempInput = document.createElement("input");
-    document.body.appendChild(tempInput);
-    tempInput.setAttribute("value", promoCode);
-    tempInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempInput);
-
-    notification.style.display = "block";
-
-    setTimeout(function() {
-      notification.style.display = "none";
-    }, 2000);
-  }
-}
-  </script>
-	
-<script>
-var initialHours = 0;
-var initialMinutes = 3;
-var initialSeconds = 0;
-
-function formatTime(time) {
-  return time < 10 ? "0" + time : time;
-}
-
-function getRemainingTime(endTime) {
-  var currentTime = Date.now();
-  var timeRemaining = Math.floor((endTime - currentTime) / 1000);
-  return timeRemaining;
-}
-
-function initializeTimer(hours, minutes, seconds) {
-  // Проверяем, есть ли сохраненное время окончания в localStorage
-  var savedEndTime = localStorage.getItem('endTime');
-  var timeRemaining;
-  if (savedEndTime) {
-    timeRemaining = getRemainingTime(savedEndTime);
-    if (timeRemaining <= 0) {
-      // Если сохраненное время уже истекло, очищаем localStorage и перезапускаем таймер с начальными параметрами
-      localStorage.removeItem('endTime');
-      var newEndTime = Date.now() + (hours * 3600 + minutes * 60 + seconds) * 1000;
-      localStorage.setItem('endTime', newEndTime);
-      timeRemaining = getRemainingTime(newEndTime);
-    }
-  } else {
-    // Если в localStorage нет сохраненного времени, инициализируем новое время окончания
-    var endTime = Date.now() + (hours * 3600 + minutes * 60 + seconds) * 1000;
-    localStorage.setItem('endTime', endTime);
-    timeRemaining = getRemainingTime(endTime);
-  }
-
-  startTimer(timeRemaining);
-}
-function startTimer(timeRemaining) {
-    var timerInterval = setInterval(function() {
-        // Проверяем наличие необходимых элементов
-        var hoursElement = document.querySelector(".timer__hours");
-        var minutesElement = document.querySelector(".timer__minutes");
-        var secondsElement = document.querySelector(".timer__seconds");
-        
-        if (!hoursElement || !minutesElement || !secondsElement) {
-            clearInterval(timerInterval);
-            return;
-        }
-        
-        if (timeRemaining <= 0) {
-            clearInterval(timerInterval);
-            hoursElement.innerText = "00";
-            minutesElement.innerText = "00";
-            secondsElement.innerText = "00";
-            localStorage.removeItem('endTime');
-            
-            // Очищаем, чтобы можно было перезапустить
-            if (typeof initializeTimer === 'function') {
-                initializeTimer(initialHours, initialMinutes, initialSeconds);
-            } else {
-                console.error('Функция initializeTimer не определена.');
-            }
-            // Автоматический перезапуск с начальными параметрами
-            return;
-        }
-
-        var hours = Math.floor(timeRemaining / 3600);
-        var minutes = Math.floor((timeRemaining % 3600) / 60);
-        var seconds = Math.floor(timeRemaining % 60);
-
-        hoursElement.innerText = formatTime(hours);
-        minutesElement.innerText = formatTime(minutes);
-        secondsElement.innerText = formatTime(seconds);
-
-        timeRemaining--;
-    }, 1000);
-}
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  initializeTimer(initialHours, initialMinutes, initialSeconds);
-});
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function toggleAccordion(questionClass, answerClass) {
-            document.querySelectorAll(questionClass).forEach(function(el) {
-                el.addEventListener('click', function() {
-                    var answer = this.nextElementSibling;
-                    var checkmark = this.querySelector('.checkmark');
-                    if (!answer || !answer.classList.contains(answerClass.slice(1))) return;
-                    var isOpen = this.classList.contains('open');
-                    this.classList.toggle('open');
-                    if (checkmark) checkmark.classList.toggle('rotate');
-                    answer.style.display = answer.style.display === 'none' ? 'flex' : 'none';
-                    if (!isOpen) {
-                        document.querySelectorAll(questionClass + '.open').forEach(function(o) {
-                            if (o !== el) {
-                                o.classList.remove('open');
-                                var next = o.nextElementSibling;
-                                if (next) next.style.display = 'none';
-                                var ck = o.querySelector('.checkmark');
-                                if (ck) ck.classList.remove('rotate');
-                            }
-                        });
-                    }
-                });
-            });
-        }
-        toggleAccordion('.faq-question', '.faq-answer');
-        toggleAccordion('.ez-question', '.ez-answer');
-
-        var links = document.querySelectorAll('.link-game-888');
-        var toggleBtn = document.getElementById('toggle-btn');
-        var visibleLinks = 8;
-        if (links.length) {
-            links.forEach(function(link, index) {
-                if (index >= visibleLinks) link.style.display = 'none';
-            });
-        }
-        if (toggleBtn) {
-            var isExpanded = false;
-            toggleBtn.addEventListener('click', function() {
-                isExpanded = !isExpanded;
-                if (isExpanded) {
-                    links.forEach(function(link) { link.style.display = 'flex'; link.style.direction = 'column'; });
-                    toggleBtn.innerText = 'Hide';
-                } else {
-                    links.forEach(function(link, index) {
-                        link.style.display = index >= visibleLinks ? 'none' : '';
-                    });
-                    toggleBtn.innerText = '\u0627\u0643\u062a\u0634\u0641 \u0627\u0644\u0645\u0632\u064a\u062f';
-                }
-            });
-        }
-    });
-  </script>	
-</head>
-<body class="rtl wp-singular page-template page-template-page-templates page-template-page-fullwidth page-template-page-templatespage-fullwidth-php page page-id-13 wp-embed-responsive wp-theme-zento  enable-optimization">  
-    <img loading="eager" fetchpriority="high" src="/wp-content/themes/zento/assets/images/svg-icons.svg" alt="Social Icons" style="display:none;">
-    <!-- start: .mobile.main-nav -->
-<nav class="mobile side-nav">
-
-    <div class="close"><svg class="icon"><use xlink:href="/wp-content/themes/zento/assets/images/svg-icons.svg#close-icon"></use></svg></div>
-
-        <div class="logo">
-        <a href="https://888starz-africa.com/">
-            <!-- Desktop Logo -->
-            <img loading="lazy" class="hide-on-mobile" src="https://888starz-africa.com/wp-content/uploads/2025/01/c2d1291cb995ce2eb60df24214bfcfdd.svg" alt="888Starz الموقع الرسمي للمراهنات الرياضية في مصر" width="" style="width: 160px;">
-            <!-- Mobile Logo -->
-            <img loading="lazy" class="hide-on-desktop hide-on-tablet" src="https://888starz-africa.com/wp-content/uploads/2025/01/c2d1291cb995ce2eb60df24214bfcfdd.svg" alt="888Starz الموقع الرسمي للمراهنات الرياضية في مصر" width="" height="">
-        </a>
-            </div>
-        <div class="lang-dropdown"><div class="lang-current"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAANlBMVEUAYjMTYDs3R0AvV0NObzE3dSoTWzhAZjgyfEY0gl1EcDFqpIhKj28TVzaLs41ol1JSaF1JW1NzUHm9AAAAPUlEQVR4AY2MtQEAMAgE447tv2xKvuQqeEtRcikZ/9p6b9X/Mdfeaw4PnPvehQhNvpcnJYiInIqraqYpyAd1AAFxIEreLQAAAABJRU5ErkJggg==" alt="" width="16" height="11" style="width: 16px; height: 11px;"><span class="lang-name">العربية</span><span class="lang-arrow">▾</span></div><ul class="lang-list"><li class="lang-item active"><a href="/privacy-policy/"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAANlBMVEUAYjMTYDs3R0AvV0NObzE3dSoTWzhAZjgyfEY0gl1EcDFqpIhKj28TVzaLs41ol1JSaF1JW1NzUHm9AAAAPUlEQVR4AY2MtQEAMAgE447tv2xKvuQqeEtRcikZ/9p6b9X/Mdfeaw4PnPvehQhNvpcnJYiInIqraqYpyAd1AAFxIEreLQAAAABJRU5ErkJggg==" alt="" width="16" height="11" style="width: 16px; height: 11px;"><span class="lang-name">العربية</span></a></li></ul></div>
-    <style>
-        /* Стили для переключателя языков */
-        .lang-dropdown {
-            position: relative;
-            display: inline-block;
-            min-width: 120px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            z-index: 100;
-			direction:ltr;
-        }
-        
-        .lang-dropdown .lang-current {
-            display: flex;
-            align-items: center;
-            padding: 3px 12px;
-			background-color: #3d3d3d;
-			color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        .lang-dropdown .lang-arrow {
-            margin-left: auto;
-            font-size: 12px;
-            transition: transform 0.2s;
-        }
-        
-        .lang-dropdown:hover .lang-arrow {
-            transform: rotate(180deg);
-        }
-        
-        .lang-dropdown img {
-            margin-right: 8px;
-            width: 16px;
-            height: 11px;
-            display: inline-block;
-            vertical-align: middle;
-            border: none;
-        }
-        
-        .lang-dropdown .lang-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-top: none;
-            border-radius: 0 0 4px 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: none;
-            overflow: hidden;
-        }
-        
-        .lang-dropdown:hover .lang-list {
-            display: block;
-        }
-        
-        .lang-dropdown .lang-item {
-            display: block;
-            margin: 0;
-            border-bottom: 1px solid #f1f1f1;
-        }
-        
-        .lang-dropdown .lang-item:last-child {
-            border-bottom: none;
-        }
-        
-        .lang-dropdown .lang-item a {
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            text-decoration: none;
-            color: #333;
-            transition: background-color 0.2s;
-        }
-        
-        .lang-dropdown .lang-item a:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .lang-dropdown .lang-item.active a {
-            font-weight: bold;
-            background-color: #f0f0f0;
-        }
-        
-        /* Анимация появления списка */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .lang-dropdown:hover .lang-list {
-            animation: fadeIn 0.2s ease-out;
-        }
-    </style>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Чтобы переключатель работал и на мобильных устройствах
-            var langSwitchers = document.querySelectorAll(".lang-dropdown");
-            
-            langSwitchers.forEach(function(switcher) {
-                var current = switcher.querySelector(".lang-current");
-                var list = switcher.querySelector(".lang-list");
-                var isOpen = false;
-                
-                // Открытие/закрытие по клику для мобильных устройств
-                current.addEventListener("click", function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        if (isOpen) {
-                            list.style.display = "none";
-                            isOpen = false;
-                        } else {
-                            list.style.display = "block";
-                            isOpen = true;
-                        }
-                    }
-                });
-                
-                // Закрытие при клике вне переключателя
-                document.addEventListener("click", function(e) {
-                    if (!switcher.contains(e.target) && isOpen) {
-                        list.style.display = "none";
-                        isOpen = false;
-                    }
-                });
-            });
-        });
-    </script>	<div class="link-reg-mobile">
-			<a href="/game/" class="link-game-button ink-game-button-reg-mobiles" rel="nofollow">
-				التسجيل			</a>
-			<a href="/game/" class="link-game-button" rel="nofollow">
-				تسجيل الدخول			</a>
-	</div>
-
-    <ul id="menu-header-english" class="menu underline-effect"><li id="menu-item-695" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-695"><a href="/game/">الخطوط</a>
-<ul class="sub-menu">
-	<li id="menu-item-696" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-696"><a href="/game/">راهن على نفسك</a></li>
-	<li id="menu-item-697" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-697"><a href="/game/">نتائج البطولة</a></li>
-</ul>
-</li>
-<li id="menu-item-698" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-698"><a href="/game/">بث مباشر</a>
-<ul class="sub-menu">
-	<li id="menu-item-699" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-699"><a href="/game/">متعدد البث المباشر</a></li>
-	<li id="menu-item-700" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-700"><a href="/game/">راهن على نفسك</a></li>
-	<li id="menu-item-701" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-701"><a href="/game/">رخام مباشر</a></li>
-</ul>
-</li>
-<li id="menu-item-1342" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1342"><a href="/registration/">التسجيل</a></li>
-<li id="menu-item-1343" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1343"><a href="/promo-code/">الرمز الترويجي</a></li>
-<li id="menu-item-1344" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1344"><a href="/apk/">APK و IOS</a></li>
-</ul>  
-       
-	
-</nav>
-<!-- end: .mobile.main-nav -->
-<div class="menu-overlay"></div>
-    <!-- start: #wrapper -->
-    <div id="wrapper">
-		
-
-<!-- start: #header -->
-<header id="header" class="classic disable-sticky-mobile">
-		<div class="container-header-desc">
-		<a href="#" class="logo-img" aria-label="888Starz Home">    </a><div class="logo"><a href="#" class="logo-img" aria-label="888Starz Home">    </a><a href="https://888starz-africa.com/">
-            <!-- Desktop Logo -->
-            <img loading="lazy" class="hide-on-mobile" src="https://888starz-africa.com/wp-content/uploads/2025/01/c2d1291cb995ce2eb60df24214bfcfdd.svg" alt="888Starz الموقع الرسمي للمراهنات الرياضية في مصر" width="" style="width: 160px;">
-            <!-- Mobile Logo -->
-            <img loading="lazy" class="hide-on-desktop hide-on-tablet" src="https://888starz-africa.com/wp-content/uploads/2025/01/c2d1291cb995ce2eb60df24214bfcfdd.svg" alt="888Starz الموقع الرسمي للمراهنات الرياضية في مصر" width="" height="">
-        </a>
-            </div>
-    
-		<div class="container-header-desc__container-right-side-header">
-			<div class="container-right-side-header__top">
-				<div class="top__left-header">
-					<a href="/game/" class="left-header__link-game-top-games crystal-games-header" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/game-249-animation.svg" alt="Crystal">
-						<span>Crystal</span>
-					</a>
-					<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/740a96629ce88bbf075e4e3003a3ff1e.svg" alt="Aviator">
-					</a>
-					<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/3ca73a69e5275a2051000fb92ce2e288.webp" alt="League Champions">
-					</a>
-					<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/dd6d3a947117b4b8e79c5159c091ada3.webp" alt="League Champions">
-					</a>
-					<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/e9c65966664d9c2e4e0ba094a0760d40.svg" alt="Premier-league">
-					</a>
-					<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/ef82153ad04426601aca85827938d210.svg" alt="La Liga">
-					</a>
-					<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-						<img loading="lazy" src="/wp-content/uploads/2025/01/a88c2145994b996d246eade556be38b0.svg" alt="Seria A">
-					</a>
-				</div>
-				<div class="top__right-header">
-					<a href="/game/" class="link-game-square" rel="nofollow" aria-label="Registration">`n						<svg data-v-1655dfd0="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img" data-v-ico="common|handshake-circle-dollar"><path d="M7.99 0a3.99 3.99 0 1 1 0 7.98 3.99 3.99 0 0 1 0-7.98ZM6.85 5.76c.16.15.3.28.49.37.1.04.2.08.3.1l.02.26a.35.35 0 0 0 .69-.02v-.24A1.31 1.31 0 0 0 9.4 4.97c0-.77-.69-1.31-1.42-1.31-.6 0-.99-.62-.53-1.03.31-.28.99-.21 1.2.1a.35.35 0 0 0 .57-.39 1.31 1.31 0 0 0-.54-.42 2.2 2.2 0 0 0-.36-.13v-.3a.35.35 0 1 0-.7.02v.27c-.59.14-1.06.64-1.06 1.27 0 .76.69 1.3 1.42 1.3.35 0 .72.24.72.62 0 .37-.37.6-.72.6a.73.73 0 0 1-.34-.07c-.1-.05-.2-.13-.32-.24a.35.35 0 0 0-.48.5Z"></path><path d="m13.28 8.01-.84.19a.52.52 0 0 0-.42.62l1.06 4.35c.06.28.36.45.65.39l.85-.19a.5.5 0 0 0 .4-.62L13.95 8.4a.55.55 0 0 0-.66-.39Zm-10.56 0 .84.19c.3.06.48.34.42.62l-1.06 4.35a.55.55 0 0 1-.65.39l-.85-.19a.52.52 0 0 1-.4-.62L2.05 8.4a.55.55 0 0 1 .66-.39Zm9.93 5.13-.63.26-2.63-2.5a1.44 1.44 0 0 0-1.77-.15c-.43.28-.86.53-1.26.59a1.1 1.1 0 0 1-.97-.32c.43-.37.83-.82 1.2-1.23.5-.57.95-1.07 1.32-1.2.56-.2.97.02 1.81.5l.7.37c.38.2.81.23 1.22.06l.12-.05.89 3.67Z"></path><path d="m6.28 9.54.44-.5H4.34l-.94 3.88 3.14 2.94c.2.19.53.19.72 0 .2-.19.2-.49.01-.68l-.82-.78a.19.19 0 0 1 0-.27c.08-.08.2-.08.29 0L8.5 15.8c.2.19.53.19.72 0 .2-.18.2-.49.01-.68L7.62 13.6a.19.19 0 0 1 0-.28c.08-.07.2-.07.29 0l2.17 2.06c.2.19.52.19.72 0 .2-.18.2-.5 0-.68l-2.1-2a.19.19 0 0 1 0-.27c.08-.08.2-.08.29 0L11 14.35c.2.18.51.18.7 0 .2-.2.24-.48.02-.69L9.1 11.18a1.02 1.02 0 0 0-1.25-.11c-.47.3-.94.58-1.42.65-.51.08-1-.06-1.47-.59a.19.19 0 0 1 .01-.28c.47-.37.9-.86 1.3-1.31Z"></path></svg>
-					</a>
-					<a href="/game/" class="link-game-square" rel="nofollow" aria-label="Cashback">`n						<svg data-v-1655dfd0="" viewBox="0 0 288 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|dollar-sign"><path d="M209 233l-108-31c-12-4-21-15-21-28 0-17 13-30 30-30h66c12 0 24 4 34 11 6 4 14 3 20-2l34-34c7-7 6-19-1-25-25-19-56-30-87-30V16c0-9-7-16-16-16h-32c-9 0-16 7-16 16v48h-2C46 64-5 119 1 184c4 46 39 83 83 96l103 30c12 4 21 15 21 28 0 17-13 30-29 30h-67c-12 0-24-4-34-10-6-5-14-4-19 2l-35 34c-7 6-6 18 2 24 24 19 55 30 86 30v48c0 9 7 16 16 16h32c9 0 16-7 16-16v-48c47-1 90-29 106-73 21-61-15-125-73-142z"></path></svg>
-					</a>
-					<a href="/game/" class="link-game-square" rel="nofollow" aria-label="Bonus">`n						<svg data-v-1655dfd0="" viewBox="0 0 512 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|bonus"><path d="M479 100h-38a66 66 0 00-30-93c-24-12-51-7-71 11l-47 42a50 50 0 00-74 0l-47-42a65 65 0 00-71-12 66 66 0 00-40 68c1 9 5 18 10 26H33c-18 0-33 15-33 33v50c0 9 7 17 17 17h478c10 0 17-8 17-17v-50c0-18-15-33-33-33zm-273-6v6h-79a33 33 0 1122-58l57 52zm211-24c-1 17-17 30-34 30h-77v-6l56-51c8-8 20-11 31-8 16 5 25 18 24 35zM33 233v245c0 19 15 34 34 34h156V233H33zm256 0v279h156c19 0 34-15 34-34V233H289z"></path></svg>
-					</a>
-					<a href="/game/" class="link-game-button" rel="nofollow">
-						التسجيل					</a>
-					<a href="/game/" class="link-game-button" rel="nofollow">
-						تسجيل الدخول					</a>
-					<div class="open-menu">
-						<div class="lang-dropdown"><div class="lang-current"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAANlBMVEUAYjMTYDs3R0AvV0NObzE3dSoTWzhAZjgyfEY0gl1EcDFqpIhKj28TVzaLs41ol1JSaF1JW1NzUHm9AAAAPUlEQVR4AY2MtQEAMAgE447tv2xKvuQqeEtRcikZ/9p6b9X/Mdfeaw4PnPvehQhNvpcnJYiInIqraqYpyAd1AAFxIEreLQAAAABJRU5ErkJggg==" alt="" width="16" height="11" style="width: 16px; height: 11px;"><span class="lang-name">العربية</span><span class="lang-arrow">▾</span></div><ul class="lang-list"><li class="lang-item active"><a href="/privacy-policy/"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAANlBMVEUAYjMTYDs3R0AvV0NObzE3dSoTWzhAZjgyfEY0gl1EcDFqpIhKj28TVzaLs41ol1JSaF1JW1NzUHm9AAAAPUlEQVR4AY2MtQEAMAgE447tv2xKvuQqeEtRcikZ/9p6b9X/Mdfeaw4PnPvehQhNvpcnJYiInIqraqYpyAd1AAFxIEreLQAAAABJRU5ErkJggg==" alt="" width="16" height="11" style="width: 16px; height: 11px;"><span class="lang-name">العربية</span></a></li></ul></div>
-    <style>
-        /* Стили для переключателя языков */
-        .lang-dropdown {
-            position: relative;
-            display: inline-block;
-            min-width: 120px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            z-index: 100;
-			direction:ltr;
-        }
-        
-        .lang-dropdown .lang-current {
-            display: flex;
-            align-items: center;
-            padding: 3px 12px;
-			background-color: #3d3d3d;
-			color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        .lang-dropdown .lang-arrow {
-            margin-left: auto;
-            font-size: 12px;
-            transition: transform 0.2s;
-        }
-        
-        .lang-dropdown:hover .lang-arrow {
-            transform: rotate(180deg);
-        }
-        
-        .lang-dropdown img {
-            margin-right: 8px;
-            width: 16px;
-            height: 11px;
-            display: inline-block;
-            vertical-align: middle;
-            border: none;
-        }
-        
-        .lang-dropdown .lang-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-top: none;
-            border-radius: 0 0 4px 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: none;
-            overflow: hidden;
-        }
-        
-        .lang-dropdown:hover .lang-list {
-            display: block;
-        }
-        
-        .lang-dropdown .lang-item {
-            display: block;
-            margin: 0;
-            border-bottom: 1px solid #f1f1f1;
-        }
-        
-        .lang-dropdown .lang-item:last-child {
-            border-bottom: none;
-        }
-        
-        .lang-dropdown .lang-item a {
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            text-decoration: none;
-            color: #333;
-            transition: background-color 0.2s;
-        }
-        
-        .lang-dropdown .lang-item a:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .lang-dropdown .lang-item.active a {
-            font-weight: bold;
-            background-color: #f0f0f0;
-        }
-        
-        /* Анимация появления списка */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .lang-dropdown:hover .lang-list {
-            animation: fadeIn 0.2s ease-out;
-        }
-    </style>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Чтобы переключатель работал и на мобильных устройствах
-            var langSwitchers = document.querySelectorAll(".lang-dropdown");
-            
-            langSwitchers.forEach(function(switcher) {
-                var current = switcher.querySelector(".lang-current");
-                var list = switcher.querySelector(".lang-list");
-                var isOpen = false;
-                
-                // Открытие/закрытие по клику для мобильных устройств
-                current.addEventListener("click", function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        if (isOpen) {
-                            list.style.display = "none";
-                            isOpen = false;
-                        } else {
-                            list.style.display = "block";
-                            isOpen = true;
-                        }
-                    }
-                });
-                
-                // Закрытие при клике вне переключателя
-                document.addEventListener("click", function(e) {
-                    if (!switcher.contains(e.target) && isOpen) {
-                        list.style.display = "none";
-                        isOpen = false;
-                    }
-                });
-            });
-        });
-    </script>					</div>
-					
-
-					
-				</div>
-				<div class="mobile-button-top-right-header-888">
-						<a href="/game/" class="link-game-square" rel="nofollow" aria-label="Bonus">`n						<svg data-v-1655dfd0="" viewBox="0 0 512 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|bonus"><path d="M479 100h-38a66 66 0 00-30-93c-24-12-51-7-71 11l-47 42a50 50 0 00-74 0l-47-42a65 65 0 00-71-12 66 66 0 00-40 68c1 9 5 18 10 26H33c-18 0-33 15-33 33v50c0 9 7 17 17 17h478c10 0 17-8 17-17v-50c0-18-15-33-33-33zm-273-6v6h-79a33 33 0 1122-58l57 52zm211-24c-1 17-17 30-34 30h-77v-6l56-51c8-8 20-11 31-8 16 5 25 18 24 35zM33 233v245c0 19 15 34 34 34h156V233H33zm256 0v279h156c19 0 34-15 34-34V233H289z"></path></svg>
-						</a>
-						<a href="/game/" class="link-game-button" rel="nofollow">
-							 تسجيل الدخول						</a>
-						<a href="/game/" class="link-game-button reg-button-header-mobile" rel="nofollow">
-							التسجيل						</a>
-					</div>
-			</div>
-			<div class="container-right-side-header__bottom">
-
-				
-                
-					<!-- start: .main-nav -->
-					<nav class="main-nav bottom__main-navigate">
-						<ul id="menu-header-english-1" class="menu underline-effect"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-695"><a href="/game/">الخطوط</a>
-<ul class="sub-menu">
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-696"><a href="/game/">راهن على نفسك</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-697"><a href="/game/">نتائج البطولة</a></li>
-</ul>
-</li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-698"><a href="/game/">بث مباشر</a>
-<ul class="sub-menu">
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-699"><a href="/game/">متعدد البث المباشر</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-700"><a href="/game/">راهن على نفسك</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-701"><a href="/game/">رخام مباشر</a></li>
-</ul>
-</li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1342"><a href="/registration/">التسجيل</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1343"><a href="/promo-code/">الرمز الترويجي</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1344"><a href="/apk/">APK و IOS</a></li>
-</ul>																									<ul id="menu-header-english-2" class="menu underline-effect">
-						  <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-666696">
-							<a href="/game/" rel="nofollow">
-								<svg width="20px" height="16px" viewBox="0 0 576 512" class="ico__svg" focusable="false" role="img" style="fill: white;"><path d="M259.3 17.8L194 150.2 47.9 171.5a32 32 0 00-17.7 54.6l105.7 103-25 145.5a32 32 0 0046.4 33.7L288 439.6l130.7 68.7a32 32 0 0046.4-33.7l-25-145.5 105.7-103a32 32 0 00-17.7-54.6L382 150.2 316.7 17.8a32 32 0 00-57.4 0z"></path></svg>
-								المكافآت							</a>
-							<ul class="sub-menu header-navigation-promo">
-							  <li class="header-navigation-promo__item">
-								<a href="/game/" rel="nofollow" class="header-navigation-promo__link header-navigation-promo-link">
-								  <span class="ico--flame ico header-navigation-promo-link__ico" aria-hidden="true">
-									<svg viewBox="0 0 32 32" class="ico__svg" focusable="false" role="img">
-									  <path d="M28 18.7c-.5-3.8-2-7.5-4.6-10.4C21.6 6 20 3.8 20 .7a.7.7 0 00-1-.6 17 17 0 00-6.3 9c-.5 2.3-.7 4.6-.7 6.8-2.7-.6-3.3-4.6-3.3-4.7a.7.7 0 00-1-.5c-.1.1-3.5 1.8-3.7 8.6v.7a12 12 0 0012 12 12 12 0 0012-13.3zm-12 12a4.1 4.1 0 01-4-4.3V26c0-.7.1-1.4.4-2a2.4 2.4 0 002.2 1.5.7.7 0 00.7-.6c0-1 0-2 .2-3 .3-1 .8-1.9 1.4-2.6.3.9.8 1.7 1.4 2.5 1 1.2 1.5 2.6 1.7 4.1v.4a4.1 4.1 0 01-4 4.3z"></path>
-									</svg>
-								  </span>
-								  <span class="header-navigation-promo-link__info">
-									<span class="ui-tag ui-tag--size-xs ui-tag--theme-accent ui-tag--rounded-top">جديد</span>
-								  </span>
-								  <span class="header-navigation-promo-link__title">100% للإيداع الأول</span>
-								</a>
-							  </li>
-							  <li class="header-navigation-promo__item">
-								<a href="/game/" rel="nofollow" class="header-navigation-promo__link header-navigation-promo-link">
-								  <span class="ico--dollar-round ico header-navigation-promo-link__ico" aria-hidden="true">
-									<svg viewBox="0 0 32 32" class="ico__svg" focusable="false" role="img">
-									  <path d="M16 0a16 16 0 100 32 16 16 0 000-32zm4.1 21.7c-.6.7-1.4 1.3-2.4 1.5a.7.7 0 00-.5.8v1.2a.5.5 0 01-.6.6h-1.4a.5.5 0 01-.6-.6v-1c0-.6 0-.6-.7-.8a9 9 0 01-2.7-.8.7.7 0 01-.2-1l.4-1.3c.2-.6.3-.6.8-.4a8 8 0 002.7.8c.6.1 1.2 0 1.8-.2A1.4 1.4 0 0017 18c-.3-.3-.6-.5-1-.6l-2.8-1.3a3.9 3.9 0 01-2.2-3.7 4.1 4.1 0 013-3.8c.8-.3.8-.3.8-1v-.8c0-.6.1-.7.7-.7h.5c1.2 0 1.2 0 1.3 1.2 0 .9 0 .9.8 1a7 7 0 012.1.7.6.6 0 01.2.6l-.5 1.6c-.1.5-.3.6-.8.4a6 6 0 00-3-.6l-.8.1a1.2 1.2 0 00-.3 2c.4.4.9.6 1.3.8l2.4 1.1a4.3 4.3 0 011.4 6.6z"></path>
-									</svg>
-								  </span>
-								  <span class="header-navigation-promo-link__info">
-									<span class="ui-tag ui-tag--size-xs ui-tag--theme-accent ui-tag--rounded-top">جديد</span>
-								  </span>
-								  <span class="header-navigation-promo-link__title">كازينو كاش باك VIP</span>
-								</a>
-							  </li>
-							  <li class="header-navigation-promo__item">
-								<a href="/game/" rel="nofollow" class="header-navigation-promo__link header-navigation-promo-link">
-								  <span class="ico--cherry ico header-navigation-promo-link__ico" aria-hidden="true">
-									<svg viewBox="0 0 32 32" class="ico__svg" focusable="false" role="img">
-									  <path d="M8.5 9.4c1.4 0 2.7-.4 3.7-1-1 2-1.7 4.4-1.8 6.8-4.2.4-7.5 4-7.5 8.3 0 4.7 3.8 8.5 8.4 8.5 1.4 0 2.8-.4 4-1a10.4 10.4 0 010-14.9c-.9-.5-2-.8-3-1 .4-6.6 5.4-12 11.9-13-1.7 2.2-2.6 5-2.6 7.9v5.2c-4.2.4-7.5 4-7.5 8.3 0 4.7 3.8 8.5 8.5 8.5 4.6 0 8.4-3.8 8.4-8.5 0-4.3-3.3-7.9-7.5-8.3V10c0-3.2 1.2-6.2 3.5-8.4L28.6 0h-2.3C22 0 18 1.8 15 4.7a9.8 9.8 0 00-6.5-2.8c-4 0-6.7 3-6.8 3l-.7.7.7.7c.1.1 2.8 3 6.8 3zm14 11.3a2.8 2.8 0 00-2.8 2.8H18c0-2.6 2-4.7 4.7-4.7v1.9zm-11.2 0a2.8 2.8 0 00-2.8 2.8H6.6c0-2.6 2.1-4.7 4.7-4.7v1.9z"></path>
-									</svg>
-								  </span>
-								  <span class="header-navigation-promo-link__info">
-									<span class="ui-tag ui-tag--size-xs ui-tag--theme-accent ui-tag--rounded-top">جديد</span>
-								  </span>
-								  <span class="header-navigation-promo-link__title">باقة ترحيبية</span>
-								</a>
-							  </li>
-							  <li class="header-navigation-promo__item">
-								<a href="/game/" rel="nofollow" class="header-navigation-promo__link header-navigation-promo-link">
-								  <span class="ico--flame ico header-navigation-promo-link__ico" aria-hidden="true">
-									<svg viewBox="0 0 32 32" class="ico__svg" focusable="false" role="img">
-									  <path d="M28 18.7c-.5-3.8-2-7.5-4.6-10.4C21.6 6 20 3.8 20 .7a.7.7 0 00-1-.6 17 17 0 00-6.3 9c-.5 2.3-.7 4.6-.7 6.8-2.7-.6-3.3-4.6-3.3-4.7a.7.7 0 00-1-.5c-.1.1-3.5 1.8-3.7 8.6v.7a12 12 0 0012 12 12 12 0 0012-13.3zm-12 12a4.1 4.1 0 01-4-4.3V26c0-.7.1-1.4.4-2a2.4 2.4 0 002.2 1.5.7.7 0 00.7-.6c0-1 0-2 .2-3 .3-1 .8-1.9 1.4-2.6.3.9.8 1.7 1.4 2.5 1 1.2 1.5 2.6 1.7 4.1v.4a4.1 4.1 0 01-4 4.3z"></path>
-									</svg>
-								  </span>
-								  <span class="header-navigation-promo-link__info">
-									<span class="ui-tag ui-tag--size-xs ui-tag--theme-accent ui-tag--rounded-top">جديد</span>
-								  </span>
-								  <span class="header-navigation-promo-link__title">مكافأة 50% يوم الثلاثاء</span>
-								</a>
-							  </li>
-							  <li class="header-navigation-promo__item">
-								<a href="/game/" rel="nofollow" class="header-navigation-promo__link header-navigation-promo-link">
-								  <span class="ico--flame ico header-navigation-promo-link__ico" aria-hidden="true">
-									<svg viewBox="0 0 32 32" class="ico__svg" focusable="false" role="img">
-									  <path d="M28 18.7c-.5-3.8-2-7.5-4.6-10.4C21.6 6 20 3.8 20 .7a.7.7 0 00-1-.6 17 17 0 00-6.3 9c-.5 2.3-.7 4.6-.7 6.8-2.7-.6-3.3-4.6-3.3-4.7a.7.7 0 00-1-.5c-.1.1-3.5 1.8-3.7 8.6v.7a12 12 0 0012 12 12 12 0 0012-13.3zm-12 12a4.1 4.1 0 01-4-4.3V26c0-.7.1-1.4.4-2a2.4 2.4 0 002.2 1.5.7.7 0 00.7-.6c0-1 0-2 .2-3 .3-1 .8-1.9 1.4-2.6.3.9.8 1.7 1.4 2.5 1 1.2 1.5 2.6 1.7 4.1v.4a4.1 4.1 0 01-4 4.3z"></path>
-									</svg>
-								  </span>
-								<span class="header-navigation-promo-link__info">
-									<span class="ui-tag ui-tag--size-xs ui-tag--theme-accent ui-tag--rounded-top">جديد</span>
-								  </span>
-								  <span class="header-navigation-promo-link__title">100٪ مكافأة على الألعاب الرياضية</span>
-								</a>
-							  </li>
-							  <ul id="menu-header-english-3" class="menu underline-effect">
-									<li><a href="/game/" rel="nofollow">العروض الترويجية والمكافآت</a></li>  
-									<li><a href="/game/" rel="nofollow">عرض الرمز الترويجي</a></li>  
-									<li><a href="/game/" rel="nofollow">ألعاب المكافآت</a></li>  
-									<li><a href="/game/" rel="nofollow">البطولات</a></li>  
-							  </ul>
-							  <a href="/game/" rel="nofollow" id="game-show-more-1-header">عرض المزيد</a>
-							</ul>
-							  
-						  </li>
-						<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-666696">
-							<a href="/game/" rel="nofollow">
-								<svg width="20px" height="16px" viewBox="0 0 480 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|cherry" fill="white"><path d="M120 150c23 0 43-6 60-14-17 32-27 68-29 106-68 8-121 64-121 134 0 74 61 136 135 136 23 0 45-6 65-17a167 167 0 010-237c-16-8-32-14-49-16 6-106 86-193 189-209-26 37-40 81-40 127v83c-67 7-120 64-120 133 0 74 61 136 135 136s135-62 135-136c0-69-53-126-120-133v-83c0-51 20-99 56-134l25-26h-36c-70 0-134 29-181 75-12-12-51-45-104-45C57 30 13 77 11 79L0 90l11 11c2 2 46 49 109 49zm225 181c-25 0-45 20-45 45h-30c0-41 34-75 75-75v30zm-180 0c-25 0-45 20-45 45H90c0-41 34-75 75-75v30z"></path></svg>
-								الآلات الميكانيكية							</a>
-							<ul class="sub-menu header-navigation-promo">
-						      <li class="header-navigation-promo__item promo-slots-item-header-li">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-9.png" alt="888Starz" width="75">
-							  	  <img loading="lazy" src="/wp-content/uploads/2025/03/140-8.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-7.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-6.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-5.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-4.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-3.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-2.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140-1.png" alt="888Starz" width="75">
-								  <img loading="lazy" src="/wp-content/uploads/2025/03/140.png" alt="888Starz" width="75">
-						      </li>
-							  <ul id="menu-header-english-3" class="menu underline-effect">
-									<li><a href="/game/" rel="nofollow">Rival</a></li>  
-									<li><a href="/game/" rel="nofollow">Spade Gaming</a></li>  
-									<li><a href="/game/" rel="nofollow">Evolution</a></li>  
-									<li><a href="/game/" rel="nofollow">Spinmatic</a></li>  
-								  <li><a href="/game/" rel="nofollow">Simple play</a></li> 
-								   <li><a href="/game/" rel="nofollow">Spinthon</a></li>
-								  <li><a href="/game/" rel="nofollow">Evoplay</a></li> 
-								   <li><a href="/game/" rel="nofollow">Aviator</a></li> 
-								  <li><a href="/game/" rel="nofollow">Smartsoft</a></li> 
-								  <li><a href="/game/" rel="nofollow">Superlotto games</a></li> 
-							  </ul>
-							  <a href="/game/" rel="nofollow" id="game-show-more-1-header">عرض المزيد</a>
-							</ul> 
-							  
-						  </li>
-							<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666696">
-								<a href="/game/" rel="nofollow">
-									<svg data-v-4ba7e595="" width="16px" fill="white" viewBox="0 0 512 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|bonus"><path d="M479 100h-38a66 66 0 00-30-93c-24-12-51-7-71 11l-47 42a50 50 0 00-74 0l-47-42a65 65 0 00-71-12 66 66 0 00-40 68c1 9 5 18 10 26H33c-18 0-33 15-33 33v50c0 9 7 17 17 17h478c10 0 17-8 17-17v-50c0-18-15-33-33-33zm-273-6v6h-79a33 33 0 1122-58l57 52zm211-24c-1 17-17 30-34 30h-77v-6l56-51c8-8 20-11 31-8 16 5 25 18 24 35zM33 233v245c0 19 15 34 34 34h156V233H33zm256 0v279h156c19 0 34-15 34-34V233H289z"></path></svg>
-									كازينو مباشر								</a>
-							</li>
-							<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666696">
-								<a href="/game/" rel="nofollow">
-									888Games
-								</a>
-							</li>
-							<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666696">
-								<a href="/game/" rel="nofollow">
-									الرياضات الإلكترونية								</a>
-							</li>
-							<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-666696">
-								<a href="/game/" rel="nofollow">
-									المزيد								</a>
-							</li>
-							
-						</ul>
-					</nav>
-					<!-- end: .main-nav -->
-
-							</div>
-		</div>
-	</div>
-	
-	<div class="mobile-bottom-navigator-header">
-		<a href="/game/" rel="nofollow" class="item-navigator-mobile">
-			<svg data-v-72c25320="" width="19px" height="19px" viewBox="0 0 16 16" class="ico__svg" fill="#707070" focusable="false" role="img" data-v-ico="common|cup"><path clip-rule="evenodd" d="M13 0H3v1H1.75C.78 1 0 1.65 0 2.44v1.04c0 .82.4 1.6 1.1 2.18L3 7.23a5 5 0 0 0 3.72 4.6L6 14H4a1 1 0 0 0-1 1v1h10v-1a1 1 0 0 0-1-1h-2l-.72-2.16A5 5 0 0 0 13 7.1l2-1.7c.64-.56 1-1.3 1-2.07v-.98C16 1.61 15.29 1 14.4 1h-1.38v1.17h1.39c.12 0 .23.08.23.2v.97c0 .46-.22.9-.6 1.24L13 5.46V0ZM1.75 2.24H3v3.24l-.84-.7a1.7 1.7 0 0 1-.66-1.3V2.44c0-.11.11-.2.25-.2Zm6.44 1.35a.2.2 0 0 0-.38 0l-.44 1.34a.2.2 0 0 1-.19.14H5.76a.2.2 0 0 0-.12.36l1.15.84c.07.05.1.14.08.22l-.44 1.35a.2.2 0 0 0 .3.23l1.15-.84a.2.2 0 0 1 .24 0l1.15.84a.2.2 0 0 0 .3-.23L9.13 6.5a.2.2 0 0 1 .08-.22l1.15-.84a.2.2 0 0 0-.12-.36H8.82a.2.2 0 0 1-.2-.14L8.2 3.6Z" fill-rule="evenodd"></path></svg>
-		    رياضات		</a>
-		<a href="/game/" rel="nofollow" class="item-navigator-mobile">
-			<svg data-v-72c25320="" width="19px" height="19px" fill="#707070" viewBox="0 0 16 17" class="ico__svg" focusable="false" role="img" data-v-ico="common|casino-chip"><path d="M15.2 11a7.6 7.6 0 0 1-8.5 5A7.6 7.6 0 0 1 1 11C.6 10.2.4 9.3.4 8.5c0-1 .2-1.9.6-2.7A7.6 7.6 0 0 1 9.3.9 7.6 7.6 0 0 1 15 5.7c.4.8.6 1.7.6 2.7 0 .8-.2 1.7-.4 2.5Zm-8.5 4h2.6v-1.6a5 5 0 0 1-1.3.2c-.4 0-.9 0-1.3-.2V15ZM3 12.8l1.3-.8a5 5 0 0 1-1.2-2.2l-1.4.7c.3.8.8 1.6 1.3 2.2v.1Zm.1-8.6c-.5.6-1 1.3-1.3 2.1l1.3.7a5 5 0 0 1 1.3-2.2l-1.3-.6ZM9.3 2H6.7v1.6A5 5 0 0 1 8 3.4c.4 0 .9 0 1.3.2V2ZM8 4.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM13 4l-1.3 1a5 5 0 0 1 1.3 2l1.3-.8c-.3-.8-.7-1.5-1.3-2.2Zm0 5.8a5 5 0 0 1-1.2 2.2l1.3.7c.6-.6 1-1.4 1.3-2.2l-1.4-1v.3Z"></path><path d="M11.1 8.5c0 1.7-1.4 3.2-3 3.2a3.1 3.1 0 0 1-3.2-3.2C5 6.7 6.3 5.3 8 5.3c1.7 0 3.1 1.4 3.1 3.2Z"></path></svg>
-			كازينو		</a>
-		<a href="/game/" rel="nofollow" class="item-navigator-mobile">
-			<div data-v-50587210="" class="bottom-navigation-link-coupon-content__wrapper"><svg data-v-72c25320="" viewBox="0 0 19 20" class="ico__svg" focusable="false" role="img" data-v-ico="common|coupon"><path clip-rule="evenodd" d="M3.12 5.75 2.8 5.5.12 8.2l3.1 3.1L4.5 10l.66.66-1.28 1.29 7.55 7.56 2.68-2.68-.23-.33a1.52 1.52 0 0 1 2.1-2.09l.32.23 2.68-2.68-7.56-7.55-1.28 1.28-.67-.66 1.29-1.29L7.66.65 5 3.33l.23.32a1.52 1.52 0 0 1-2.1 2.1Zm5.64-.02.67.67L8 7.8l-.66-.66 1.41-1.42ZM6.62 7.88l.66.66-1.41 1.42-.67-.67 1.42-1.41Z" fill-rule="evenodd"></path></svg></div>
-			قسيمة		</a>
-		<a href="/game/" rel="nofollow" class="item-navigator-mobile">
-			<svg data-v-72c25320="" width="19px" height="19px" fill="#707070" viewBox="0 0 448 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|user"><path d="M224 256a128 128 0 100-256 128 128 0 000 256zm90 32h-17a174 174 0 01-146 0h-17C60 288 0 348 0 422v42c0 27 22 48 48 48h352c27 0 48-21 48-48v-42c0-74-60-134-134-134z"></path></svg>
-			تسجيل الدخول		</a>
-		
-		 <div class="open-menu">
-			<svg width="19px" height="14px" viewBox="0 0 12 12" enable-background="new 0 0 12 12" id="Слой_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#707070"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <rect fill="#1D1D1B" height="1" width="11" x="0.5" y="5.5"></rect> <rect fill="#1D1D1B" height="1" width="11" x="0.5" y="2.5"></rect> <rect fill="#1D1D1B" height="1" width="11" x="0.5" y="8.5"></rect> </g> </g></svg>
-			 القائمة		</div>
-		
-	</div>
-</header>
-
-	<div class="mobile-header-widget">
-		<div class="overflow-game-header-top">
-			<div class="top__games-header">
-						<a href="/game/" class="left-header__link-game-top-games crystal-games-header" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/game-249-animation.svg" alt="Crystal">
-							<span>Crystal</span>
-						</a>
-						<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/740a96629ce88bbf075e4e3003a3ff1e.svg" alt="Aviator" width="70" height="32">
-						</a>
-						<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/3ca73a69e5275a2051000fb92ce2e288.webp" alt="League Champions" width="32" height="32">
-						</a>
-						<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/dd6d3a947117b4b8e79c5159c091ada3.webp" alt="League Champions" width="32" height="32">
-						</a>
-						<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/e9c65966664d9c2e4e0ba094a0760d40.svg" alt="Premier-league" width="32" height="32">
-						</a>
-						<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/ef82153ad04426601aca85827938d210.svg" alt="La Liga" width="32" height="32">
-						</a>
-						<a href="/game/" class="left-header__link-game-top-games" rel="nofollow">
-							<img loading="lazy" src="/wp-content/uploads/2025/01/a88c2145994b996d246eade556be38b0.svg" alt="Seria A" width="32" height="32">
-						</a>
-			</div>
-		</div>
-		<div class="overflow-888-game-header">
-			<div class="container-game-888-header">
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/1st.webp" alt="+100% مكافأة على أول إيداع لك">
-					<span class="desc-game-header">+100% مكافأة على أول إيداع لك</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/slot-first-deposit.webp" alt="1500 EUR + 150 FS">
-					<span class="desc-game-header">1500 EUR + 150 FS</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/50-_second_deposit_-1-.webp" alt="50% SECOND DEPOSIT BONUS">
-					<span class="desc-game-header">50% مكافأة الإيداع الثاني</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/320-250.webp" alt="WINNERS LOTTERY">
-					<span class="desc-game-header">يانصيب الفائزين</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/Bonus_NHL_2024_315x250.webp" alt="Ice Win">
-					<span class="desc-game-header">فوز الجليد</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/vip-cashback.webp" alt="Casino VIP Cashback">
-					<span class="desc-game-header">استرداد نقدي VIP كازينو</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/3-_Tuesday.webp" alt="3% cashback every Tuesday">
-					<span class="desc-game-header">استرداد نقدي بنسبة 3% كل يوم ثلاثاء</span>
-				</a>
-
-
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/accumulator_insurance.webp" alt="ACCUMULATOR INSURANCE">
-					<span class="desc-game-header">تأمين المجمع</span>
-				</a>
-				<a href="/game/" class="link-game-888-header item" rel="nofollow">
-					<img loading="lazy" decoding="async" src="/wp-content/uploads/2025/01/accumulator_of_the_day.webp" alt="ACCUMULATOR OF THE DAY">
-					<span class="desc-game-header">مجمع اليوم</span>
-				</a>
-
-			</div>
-		</div>
-		<nav class="home-navigation betting-main__navigation">
-			<ul class="home-navigation__menu">
-				<li class="home-navigation__item">
-					<a href="/game/" rel="nofollow" title="مباشر" class="home-navigation__link home-navigation__link--live">
-						مباشر
-					</a>
-				</li>
-				<li class="home-navigation__item">
-					<a href="/game/" rel="nofollow" title="الخط" class="home-navigation__link">
-						الخط
-					</a>
-				</li>
-				<li class="home-navigation__item">
-					<a href="/game/" rel="nofollow title=" المفضلة"="" class="home-navigation__link home-navigation__link--favorite" style="display: flex;">
-						<svg width="22px" height="19px" fill="#ff0000" viewBox="0 0 576 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|star"><path d="M259.3 17.8L194 150.2 47.9 171.5a32 32 0 00-17.7 54.6l105.7 103-25 145.5a32 32 0 0046.4 33.7L288 439.6l130.7 68.7a32 32 0 0046.4-33.7l-25-145.5 105.7-103a32 32 0 00-17.7-54.6L382 150.2 316.7 17.8a32 32 0 00-57.4 0z"></path></svg>
-					</a>
-				</li>
-				<li class="home-navigation__item">
-					<a href="/game/" rel="nofollow title=" بحث"="" class="home-navigation__link home-navigation__link--search" style="display: flex;">
-						<svg width="16px" height="16px" fill="#424242" viewBox="0 0 512 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|search"><path d="M505 443L405 343c-4-4-10-7-17-7h-16a208 208 0 10-36 36v16c0 7 3 13 7 17l100 100c9 9 24 9 34 0l28-28c9-10 9-25 0-34zM208 336a128 128 0 110-256 128 128 0 010 256z"></path></svg>
-					</a>
-				</li>
-			</ul>
-		</nav>
-	</div>
-    
-
-
-
-
-<!-- end: #header -->
-
-<div class="clear"></div>   
-
-
-
-
-<div class="slider-888-container" dir="ltr">
-        <div class="slider-888-slider owl-loaded owl-drag">
-            <!-- Slide 1 -->
-            
-            
-            <!-- Slide 2 -->
-            
-            
-            <!-- Slide 3 -->
-            
-        <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-2520px, 0px, 0px); transition: all; width: 8820px;"><div class="owl-item cloned" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">استرداد نقدي أسبوعي 3%</div>
-                    <p class="slider-888-slide-description">ضع رهاناتك خلال الأسبوع واحصل على استرداد نقدي بنسبة 3% من مبلغ الرهانات كل يوم ثلاثاء</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">المزيد من التفاصيل</a>
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/3-_Tuesday_945x370_1.png" alt="888Starz" class="img-slide-after">
-            </div></div><div class="owl-item cloned" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">باقة الكازينو الترحيبية</div>
-                    <p class="slider-888-slide-description">باقة ترحيبية لـ4 إيداعات + 150 دورة مجانية</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">سجل الآن</a>
-					
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/slot-first-deposit-slider.webp" alt="888Starz" class="img-slide-after">
-            </div></div><div class="owl-item active" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">مكافأة 100% على الإيداع الأول</div>
-                    <p class="slider-888-slide-description">سجل في 888STARZ واحصل على مكافأة مضمونة لإيداعك الأول</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">سجل الآن</a>
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/1st-slider_-1-.webp" alt="888Starz" class="img-slide-after">
-            </div></div><div class="owl-item" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">استرداد نقدي أسبوعي 3%</div>
-                    <p class="slider-888-slide-description">ضع رهاناتك خلال الأسبوع واحصل على استرداد نقدي بنسبة 3% من مبلغ الرهانات كل يوم ثلاثاء</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">المزيد من التفاصيل</a>
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/3-_Tuesday_945x370_1.png" alt="888Starz" class="img-slide-after">
-            </div></div><div class="owl-item" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">باقة الكازينو الترحيبية</div>
-                    <p class="slider-888-slide-description">باقة ترحيبية لـ4 إيداعات + 150 دورة مجانية</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">سجل الآن</a>
-					
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/slot-first-deposit-slider.webp" alt="888Starz" class="img-slide-after">
-            </div></div><div class="owl-item cloned" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">مكافأة 100% على الإيداع الأول</div>
-                    <p class="slider-888-slide-description">سجل في 888STARZ واحصل على مكافأة مضمونة لإيداعك الأول</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">سجل الآن</a>
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/1st-slider_-1-.webp" alt="888Starz" class="img-slide-after">
-            </div></div><div class="owl-item cloned" style="width: 1230px; margin-right: 30px;"><div class="slider-888-slide">
-                <div class="slider-888-slide-content">
-                    <div class="slider-888-slide-title">استرداد نقدي أسبوعي 3%</div>
-                    <p class="slider-888-slide-description">ضع رهاناتك خلال الأسبوع واحصل على استرداد نقدي بنسبة 3% من مبلغ الرهانات كل يوم ثلاثاء</p>
-                    <a href="/game/" rel="nofollow" class="slider-888-register-btn">المزيد من التفاصيل</a>
-                </div>
-				<img loading="lazy" src="/wp-content/uploads/2025/02/3-_Tuesday_945x370_1.png" alt="888Starz" class="img-slide-after">
-            </div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div></div>
-	</div>
-			<!-- start: #page -->
-<main id="page" class="main grid-container">
-			<!-- start: .center -->
-	    <div id="single" class="content">
-			
-			<div class="epcl-breadcrumbs">
-                			<!-- Flexy Breadcrumb -->
-			<div class="fbc fbc-page">
-
-				<!-- Breadcrumb wrapper -->
-				<div class="fbc-wrap">
-
-					<!-- Ordered list-->
-					<ol class="fbc-items" itemscope="" itemtype="https://schema.org/BreadcrumbList">
-						<li class="active" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem"><span itemprop="name" title="السرية وإدارة البيانات الشخصية"></span><meta itemprop="position" content="2"></li>					</ol>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-			 
-            </div>
-                  
-
-	        <!-- start: .left-content -->
-	        <div class="left-content np-mobile">
-	            <article class="post-13 page type-page status-publish hentry">
-
-	                <section class="post-content">
-                           
-                            <h1 class="title ularge textcenter">السرية وإدارة البيانات الشخصية</h1>
-                        
-	                    <div class="text">
-	                        <div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">إن إدارة <a href="https://888starz-africa.com">888starz</a> وموظفيها متعاطفين و جادين للغاية بشأن سلامة بياناتك الشخصية وسريتك بشكل عام.<br>
-نسعى جاهدين لنكون أكثر شفافية حول كيفية استخدامنا لبياناتك وضمان حمايتها. لقد قمنا بإدخال تغييرات على سياسة الخصوصية هذه للتوافق مع معايير اللائحة العامة للإتحاد الأوربي بشأن حماية البيانات الشخصية (GDPR).<br>
-تحدد سياسة الخصوصية هذه طرق معالجة البيانات وخياراتك لكيفية استخدام معلوماتك الشخصية.<br>
-888starz تتفهم وتتحمل مسؤولية تزويدك و تزويد عملائنا ، بمعلومات واضحة حول كيفية استخدامنا لملفات تعريف الارتباط (cookie) &nbsp;ونضمن أن الأشخاص الذين يستخدمون موقعنا يمكنهم اتخاذ القرار الصحيح.<br>
-إذا كان لديك أي طلبات أو أسئلة واقتراحات بخصوص معلوماتك الشخصية أو أي أسئلة عامة تتعلق بأساليب معالجة واستخدام الخدمات والخدمات التي يتم توفيرها لك ، يرجى الاتصال بنا على <a href="mailto:support@888starz.com">support@888starz.com</a>.<br>
-كما نرجو منك تزويدنا بمعلومات تفصيلية لـ <a href="mailto:support@888starz.com">support@888starz.com</a> عن أي صفحات على موقعنا الإلكتروني حيث تم إعداد ملفات تعريف الارتباط (cookie) في حسابك سببت لك القلق.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">1. الخصوصية</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">تلتزم 888starz بحماية معلوماتك الشخصية.<br>
-تسمح لك سياسة الخصوصية هذه بمعرفة المعلومات التي نجمعها عند استخدام خدماتنا ، وسبب جمعنا لهذه المعلومات وكيفية استخدامنا للمعلومات التي تم جمعها.<br>
-يرجى ملاحظة أن سياسة الخصوصية هذه سيتم الاتفاق عليها بينك وبين 888starz (“نحن” أو “نحن” أو “لدينا” إذا لزم الأمر).<br>
-يمكننا إجراء تغييرات دورية على سياسة الخصوصية هذه وإعلامك بهذه التغييرات عن طريق نشر شروط معدلة على مواردنا.<br>
-نوصي بمراجعة سياسة الخصوصية هذه بانتظام.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">2. الموافقة على معالجة البيانات الشخصية</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl"><strong>حقوق محتوى البيانات الشخصية</strong></p>
-<p>لا تتم معالجة بياناتك الشخصية في 888starz إلا بعد الحصول على شهادة الموافقة الواضحة التي تثبت وتؤكد بحرية التعبير المعطى والمحدود والمستنير الذي لا لبس فيه عن موافقتك على معالجة بياناتك الشخصية (المشار إليها فيما بعد بـ “الموافقة”).<br>
-إن الموافقة التي تمنحنا إياها بحرية ، و بكامل إرادتك و أخذا بمصلحتك أكثر من كونها ملموسة ومطلعة وواعدة.<br>
-يمكنك تقديم موافقتك على معالجة البيانات الشخصية لنا من قبلك أو من ممثل &nbsp;بأي شكل يؤكد حقيقة استلامها، و بالتحديد:<br>
-<strong>&nbsp;صيغة كتابية</strong></p>
-<ul dir="rtl">
-<li>عندها يجب أن تحتوي الموافقة على المعلومات التالية:</li>
-<li>اسم العائلة ، الاسم الأول ، اسم &nbsp;الجد (إن وجد) ، عنوان موضوع البيانات الشخصية ، رقم الوثيقة الرئيسية التي تثبت هويته ، معلومات عن تاريخ إصدار الوثيقة المحددة و بيانات الموظف المصدر &nbsp;اسم العائلة ، الاسم ، اسم الجد ، عنوان ممثل موضوع البيانات الشخصية ، المعلومات المتعلقة بتاريخ إصدار الوثيقة المذكورة والهيئة التي أصدرتها ، ومتطلبات التوكيل التوثيق أو أي وثيقة أخرى تؤكد سلطة ذلك الممثل (عند استلام موافقة من الممثل &nbsp;موضوع البيانات الشخصية)؛</li>
-<li>العنوان البريدي 888starz الذي يتلقى موافقة موضوع البيانات الشخصية ؛</li>
-<li>أغراض معالجة البيانات الشخصية ؛</li>
-<li>قائمة من البيانات الشخصية ، لمعالجة والتي يتم إعطاء موافقة لموضوع البيانات الشخصية ؛</li>
-<li>اسم وعنوان الشخص الذي يقوم بمعالجة البيانات الشخصية نيابة عن 888starz ، إذا تم التوكيل إلى هذا الشخص ؛</li>
-<li>قائمة الإجراءات التي تتضمن بيانات شخصية عن الوفاء بالموافقة التي يتم تقديمها ، وصف عام لطرق معالجة البيانات الشخصية ؛</li>
-<li>فترة صلاحية موافقة موضوع البيانات الشخصية ، وكذلك طريقة استدعائها ؛</li>
-<li>توقيع موضوع البيانات الشخصية.</li>
-</ul>
-<p dir="rtl">–<strong>&nbsp;في مقطع ضمني من الإجراءات المتخذة من قبل موضوع البيانات الشخصية معربا عن</strong>&nbsp;إرادته لإقامة علاقة قانونية مع 888starz ، ولكن ليس في شكل شفوي أو كتابي التعبير، والسلوك الذي يمكن للمرء أن يجعل خاتمة مثل هذه النية (على سبيل المثال التسجيل على موقع 888starz، التسجيل على خدمات &nbsp;موقع 888starz، تنفيذ المعاملات النقدية إلى حساب الخاص بك، التي تم الحصول عليه عن طريق التسجيل على الموقع الإلكتروني 888starz الموظف للمشاركة في لعبة مع نسبة من المقمارة وفقا للقواعد 888starz، &nbsp;تسجيل الرهانات من خلال الحساب الشخصي واستلام الأرباح من خلال الحساب الشخصي، وفقا للقواعد التي وضعتها المنظمة للعب القمار، وما إلى ذلك).<br>
-لا تتطلب معالجة بياناتك الشخصية في 888starz موافقتك في الحالات التي:<br>
-– تعتبر معالجة البيانات الشخصية ضرورية لتحقيق الأهداف المنصوص عليها في المعاهدات الدولية أو قوانين الولايات القضائية المحلية ، لتنفيذ وأداء الوظائف والصلاحيات والواجبات الموكلة إلى القانون ؛<br>
-– معالجة البيانات الشخصية ضرورية لإقامة العدل ، أو إنفاذ قانون قضائي ، أو عمل من جانب هيئة أخرى أو مسؤول خاضع امره للتنفيذ وفقا للقوانين المحلية ؛<br>
-– معالجة البيانات الشخصية ضرورية لحماية حياتك أو صحتك أو اهتماماتك الحيوية الأخرى إذا كان الحصول على موافقة موضوع البيانات الشخصية أمرًا مستحيلاً ؛<br>
-تعتبر معالجة البيانات الشخصية ضرورية لممارسة الحقوق والمصالح المشروعة لـ 888starz أو أطراف ثالثة ، أو لتحقيق أغراض ذات أهمية اجتماعية ، شريطة عدم انتهاك حقوق وحريات بياناتك الشخصية ؛<br>
-– تتم معالجة البيانات الشخصية لأغراض إحصائية أو لأغراض بحثية أخرى ، مع مراعاة إلغاء الهوية الإلزامية لبياناتك الشخصية ، ما عدا عندما تتم معالجة البيانات الشخصية لأغراض تسويقية ؛<br>
-– معالجة بياناتك الشخصية ، التي توفرها لعدد غير محدود من الأشخاص ؛<br>
-– معالجة البيانات الشخصية الخاضعة للنشر أو الكشف الإلزامي وفقا لقوانين الولايات القضائية المحلية.<br>
-الإجراء الخاص بسحب موافقتك على معالجة بياناتك الشخصية ، وإجراءات الحصول على معلومات حول توفر بياناتك الشخصية في 888starz ، يخضع الإجراء الخاص بتوضيح وحظر وتدمير بياناتك الشخصية في 888starz بناء على طلب “القواعد العامة لحماية البيانات الشخصية” &nbsp;(General Data Protection Regulation, GDPR) و تنفذ من قبلنا بالكامل.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">3. أهداف جمع المعلومات</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">نقوم بتجميع ومعالجة المعلومات التي يمكن استخدامها لأغراض التعريف الشخصي ، بما في ذلك ، على سبيل المثال و ليس الحصر ، الاسم الأول واسم العائلة ، وتاريخ الميلاد ، ومعلومات بطاقة الائتمان ، أو عنوان المنزل أو أي عنوان آخر ، أو عنوان البريد الإلكتروني ، أو رقم الهاتف أو أي معلومات شخصية أخرى (شخصية) المعلومات (“المعلومات”).<br>
-قد يُطلب منك تقديم معلومات شخصية عند استخدام موقعنا الإلكتروني أو التسجيل للحصول على حساب أو استخدام خدماتنا.<br>
-قد تتضمن المعلومات الشخصية التي نجمعها معلومات مثل:</p>
-<ul dir="rtl">
-<li>معلومات الاتصال (بما في ذلك رقم الهاتف وعنوان البريد الإلكتروني) ،</li>
-<li>معلومات حول الإقامة (عنوان المراسلات الجغرافي الخاص بك) ،</li>
-<li>معلومات حول المدفوعات ،</li>
-<li>سجل المعاملات ،</li>
-<li>التفضيلات عند استخدام موقع الويب ،</li>
-<li>نقد الخدمات.</li>
-</ul>
-<p dir="rtl">يتم جمع هذه المعلومات ومعالجتها وتخزينها من قبلنا على الخوادم ، وفقًا لمتطلبات تشريعات ولايتك.<br>
-عندما تتفاعل مع الخدمات ، تخزّن خوادمنا سجل النشاط الفريد الخاص بك ، والذي يجمع معلومات إدارية معينة ومعلومات عن حركة المرور ، بما في ذلك:</p>
-<ul dir="rtl">
-<li>عنوان IP المصدر،</li>
-<li>وقت الوصول ،</li>
-<li>تاريخ الوصول ،</li>
-<li>زيارة صفحات الويب ،</li>
-<li>استخدام اللغة ،</li>
-<li>تقارير الأعطال البرمجية</li>
-<li>نوع المتصفح المستخدم.</li>
-</ul>
-<p dir="rtl">هذه المعلومات ضرورية لضمان أفضل جودة لخدماتنا.<br>
-نحن لا نجمع معلومات شخصية عنك دون علمك.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">4. وسائل جمع البيانات والمعالجة</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">يمكننا جمع بيانات معينة تلقائيًا ، كما هو موضح أعلاه ، وتلقي معلومات شخصية عنك حيث تقدم لنا هذه المعلومات تحديدًا من خلال الخدمات أو الاتصالات والتفاعلات الأخرى على موقع &nbsp;888starz.<br>
-يمكننا أيضًا تلقي معلومات شخصية من البائعين عبر الإنترنت وموفري الخدمات ، بالإضافة إلى قوائم العملاء المشتراة بشكل قانوني من موردين خارجيين.<br>
-بالإضافة إلى ذلك ، يمكننا استخدام خدمات موفري الخدمات التابعين لجهات خارجية لتوفير الدعم الفني لمعاملاتك عبر الإنترنت والحفاظ على حسابك.<br>
-سيكون لدينا إمكانية الوصول إلى أي معلومات تقدمها إلى هؤلاء الموردين ومقدمي الخدمات وخدمات التجارة الإلكترونية الخاصة بطرف ثالث ، وسوف نستخدم المعلومات الشخصية وفقًا لأحكام سياسة الخصوصية هذه.<br>
-سيتم الكشف عن هذه المعلومات لأطراف ثالثة خارج الشركة فقط وفقا لسياسة الخصوصية وقوانين دولتك.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">5. استخدام المعلومات</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">نستخدم معلومات التعريف الشخصية التي تزودنا بها لتقديم خدماتنا ، لدعمك كعملاء ، لتوفير الأمن اللازم ، والتعرف والتحقق ، للتعامل مع أي من معاملاتك على الإنترنت ، وأيضاً لمساعدتك على المشاركة في العروض الترويجية للجهات الخارجية التي ترد متطلبات أعمال معينة ولأية أغراض أخرى تتعلق بتشغيل خدمات الألعاب لدينا.<br>
-وبالتالي ، عند تزويدك بخدماتنا ، يمكننا مشاركة معلوماتك الشخصية مع شركائنا المختارين بعناية (بما في ذلك أي أطراف أخرى لديها اتفاقيات معك بشأن مشاركة بياناتك).<br>
-يمكن أيضًا أن نستخدم معلوماتك الشخصية لنوفر لك:</p>
-<ul dir="rtl">
-<li>العروض الإعلانية والمعلومات حول منتجاتنا وخدماتنا.</li>
-<li>عروض إعلانية ومعلومات عن المنتجات والخدمات لشركائنا ، لتوسيع نطاق الخدمات المقدمة لك وتحسين الخدمة لك ولعملائنا.</li>
-</ul>
-<p dir="rtl">من وقت لآخر ، يمكننا طلب معلومات منك من خلال استطلاعات الرأي أو المسابقات. تعتبر المشاركة في هذه الاستطلاعات أو المسابقات طوعية تمامًا ، ويكون لديك دائمًا خيار: الكشف عن معلوماتك الشخصية أو عدم الإفصاح عنها.<br>
-قد تتضمن المعلومات المطلوبة معلومات الاتصال (على سبيل المثال ، الاسم والعنوان البريدي ورقم الهاتف) والمعلومات الجغرافية (على سبيل المثال ، الرمز البريدي أو العنوان البريدي) والعمر.<br>
-من خلال المشاركة في أي مسابقة أو تلقي جائزة منا ، فإنك توافق على أننا سنستخدم اسمك لأغراض ترويجية دون تعويض إضافي ، إلا عندما يحظرها القانون.<br>
-إذا لم تقرر بنفسك ما إذا كنت ستتلقى معلومات إعلانية منا ، فقد نستخدم معلوماتك الشخصية (بما في ذلك عنوان البريد الإلكتروني ورقم الهاتف) لتزويدك بمعلومات حول منتجاتنا وخدماتنا وعروضنا الترويجية ، بما في ذلك منتجات الألعاب الأخرى (بما في ذلك البوكر عبر الإنترنت ، والكازينو ، والمراهنة ، ولعبة الطاولة ، وما إلى ذلك) ، بالإضافة إلى المنتجات والخدمات الخاصة بالأطراف الثالثة التي تم اختيارها بعناية من قبلنا.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">6. الكشف عن المعلومات</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">نحن لا نكشف عن معلوماتك الشخصية للشركات أو المنظمات أو الأفراد غير المرتبطين بـ 888starz.<br>
-قد نكشف عن معلوماتك الشخصية أو معلوماتك الشخصية للشركات أو المنظمات أو الأفراد غير المرتبطين بـ 888starz إذا كنت قد منحتنا الموافقة على هذه الإجراءات.</p>
-<p dir="rtl">قد نكشف عن معلوماتك الشخصية إذا كان ذلك مطلوبًا بموجب قانون دولتك أو إذا كنا مقتنعين ونعتقد أن مثل هذه الإجراءات ضرورية لـ:</p>
-<ul dir="rtl">
-<li>الامتثال لأية قضية قانونية أو عملية تهمنا ، على أي من مواقعنا أو في أي من خدماتنا ، أو في الحالات التي نكون فيها ملتزمين أساسًا بالتزامات قانونية ؛</li>
-<li>حماية حقوقنا أو ممتلكاتنا ؛</li>
-<li>حماية السلامة الشخصية لمستخدمي خدماتنا أو الجمهور.</li>
-</ul>
-<p dir="rtl">إذا كنا ، في رأينا ، التعريف الوحيد ، أنت ، كما تبين ، خدعنا أو حاولنا خداعنا ، أي مستخدم خدمة آخر بأي طريقة ، بما في ذلك على سبيل المثال لا الحصر الإجراءات التالية:</p>
-<ul dir="rtl">
-<li>التلاعب في اللعبة</li>
-<li>الاحتيال عند الدفع.</li>
-</ul>
-<p dir="rtl">إذا كان لدينا سبب للاشتباه في احتيالك في الدفع ، بما في ذلك استخدام بطاقات الائتمان المسروقة ، أو أي نشاط احتيالي آخر ، بما في ذلك أي رد أموال أو غير ذلك ، أو إلغاء المدفوعات ، أو المعاملات المحظورة ، بما في ذلك غسل الأموال ، فإننا نحتفظ بالحق في نقل هذه المعلومات معًا مع معلوماتك الشخصية ومواقع الألعاب الأخرى على الإنترنت والبنوك وشركات بطاقات الائتمان ووكالات المراقبة ذات الصلة ووكالات إنفاذ القانون ذات الصلة.<br>
-من أجل تنفيذ برامج الوقاية من المخدرات الحكومية ، يمكن أيضًا نقل بياناتك إلى المؤسسات ذات الصلة.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">7. إمكانية الوصول</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">يمكنك “إلغاء الاشتراك” في تلقي أي رسائل إعلانية:</p>
-<ul dir="rtl">
-<li>تغيير الإعدادات في حسابك ، المتوفرة على مواقعنا أو في الخدمات ؛</li>
-<li>بكتب لنا بريدًا إلكترونيًا لنا ، ردًا على الرسالة الإعلانية التي تتلقاها منا ؛</li>
-<li>في أي وقت ، عن طريق إرسال بريد إلكتروني أو الكتابة إلينا في دعم العملاء.</li>
-</ul>
-<p dir="rtl">بالإضافة إلى ذلك ، يمكنك الاتصال بنا في أي وقت إذا كنت:</p>
-<ul dir="rtl">
-<li>ترغب في معرفة معلوماتك الشخصية التي نجمعها ومعالجتها وتخزينها ، وأيضًا من المصادر التي تلقيناها ؛</li>
-<li>تريد تأكيد دقة معلوماتك الشخصية التي جمعناها عنك ؛</li>
-<li>ترغب في تحديث معلوماتك الشخصية ؛</li>
-<li>لديك أي شكوى بخصوص استخدامنا لمعلوماتك الشخصية.</li>
-</ul>
-<p dir="rtl">إذا لزم الأمر ، سنقوم بتحديث أي معلومات تزودنا بها ، إذا أثبتت الحاجة إلى مثل هذه التغييرات وسيتم تحديدها.<br>
-لتجنب الشك ، نبلغ بالإضافة إلى ذلك أنه لا يوجد في سياسة الخصوصية هذه ما يسمح لنا بالاحتفاظ بمعلوماتك الشخصية إذا طلب منا تقديمها بموجب قانون ولايتك.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">8. الكوكيز</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl"><strong>المعلومات الموجودة على جهازك</strong><br>
-عند الوصول إلى خدماتنا ، يجوز لنا تخزين المعلومات بإذن منك على جهازك. تُسمى هذه المعلومات ملفات COOKIES، وهي عبارة عن ملفات نصية صغيرة تحتوي على أحرف وأرقام يتم تخزينها على جهازك ، بينما تستخدم خدماتنا عند زيارة مواقعنا وصفحاتنا على الإنترنت ، مع تذكر تفضيلاتك.<br>
-نستخدم أيضًا الكائنات المشتركة المحلية أو “ملف تعريف الارتباط الفلاش”. يشبه “ملف تعريف ارتباط الفلاش” ملفات تعريف الارتباط للمتصفح. دعنا نتذكر زياراتك لمواقعنا.<br>
-لا يمكن استخدام ملفات تعريف الارتباط أو ملفات تعريف الارتباط للدخول إلى جهازك أو استخدام المعلومات على جهاز الكمبيوتر الخاص بك.<br>
-نحن نستخدم ملفات تعريف الارتباط و “ملف تعريف الارتباط الفلاش” حصريًا للمراقبة.<br>
-نحن نستخدم طرق التحكم هذه فقط لتتبع استخدامك لخدماتنا وخدماتنا ، مع تذكر تفضيلاتك.<br>
-تساعدنا ملفات تعريف الارتباط على تتبع حركة المرور الخاصة بك إلى موقعنا ، وتحسين خدماتنا وخدماتنا لك ، وتبسيط وصولك وزيادة اهتمامك بخدمتنا وخدماتنا.<br>
-نستخدم ملفات تعريف الارتباط وملفات تعريف الارتباط الأخرى لعرض إعلانات أكثر ملاءمة ومرغوبة لك.</p>
-<p dir="rtl"><strong>الكوكيز الاكثر أهمية و ضرورة</strong><br>
-يتم استخدام ملفات تعريف الارتباط الكوكيز الهامة والضرورية من قبلنا حتى يتمكن أي مستخدم على معلومات أو مورد اللعبة من التنقل في موقع الويب واستخدام وظائفه ، مثل الوصول إلى مناطق آمنة من موقع الويب أو إنجاز المعاملات المالية. بدون ملفات تعريف الارتباط هذه ، لن تتمكن من العمل بفعالية على مواقعنا.</p>
-<p dir="rtl"><strong>عملية التسجيل</strong><br>
-تحتوي ملفات تعريف الارتباط الكوكيز هذه على معلومات تم جمعها أثناء تسجيلك وستسمح لنا بالتعرف عليك كزبون ونزودك بالخدمات الضرورية. يمكننا أيضًا استخدام هذه البيانات لفهم اهتماماتك وتفضيلاتك على الإنترنت بشكل أفضل وتحسين زياراتك باستمرار إلى منصاتنا وخدماتنا.</p>
-<p dir="rtl"><strong>موقعنا</strong><br>
-لزوار موقعنا ، نستخدم ملفات تعريف الارتباط الكوكيز لجمع المعلومات.<br>
-تستخدم خوادمنا ثلاثة أنواع مختلفة من ملفات تعريف الارتباط الكوكيز:</p>
-<ul dir="rtl">
-<li>“Cookie” المؤقتة لزيارة الموقع – هذا النوع من ملفات تعريف الارتباط هو فقط لجهاز الكمبيوتر الخاص بك أثناء زيارتك لموقعنا. تساعدك ملفات تعريف الارتباط التي تستند إلى الجلسات على التنقل بشكل أسرع على موقعنا ، وإذا كنت عميلاً مسجلاً ، فإن هذا يسمح لنا بتزويدك بمعلومات أكثر ملاءمة لك. يتم حذف ملف تعريف الارتباط هذا تلقائيًا عند إغلاق المتصفح.</li>
-<li>ملفات تعريف الارتباط الكوكيز &nbsp;“المستمرة” – سيبقى هذا النوع من ملفات تعريف الارتباط على جهاز الكمبيوتر الخاص بك لفترة محددة لكل ملف تعريف ارتباط. يتم أيضًا حفظ ملفات تعريف الارتباط الفلاش.</li>
-<li>ملف تعريف الارتباط الكوكيز “التحليلي” – يتيح لنا هذا النوع من ملفات تعريف الارتباط التعرف على عدد الزوار لموقعنا وحسابه ومعرفة كيفية استخدام الزوار لخدماتنا وخدماتنا. وهذا يساعدنا على تحسين أداء مواقعنا ، على سبيل المثال ، نظرًا لحقيقة أنه يمكنك الدخول بسهولة والعثور على ما تبحث عنه.</li>
-</ul>
-<p dir="rtl">لديك دائمًا خيار الموافقة والموافقة أو الرفض لاستلام ملفات تعريف الارتباط الكوكيز.<br>
-معظم متصفحات الويب تقبل ملفات تعريف الارتباط تلقائيًا ، ولكن إذا أردت ، يمكنك تغيير إعدادات متصفحك للتحكم في ملفات تعريف الارتباط الكوكيز.<br>
-يمكنك استخدام متصفح الويب الخاص بك للقيام بما يلي:</p>
-<ul dir="rtl">
-<li>حذف جميع ملفات تعريف الارتباط الكوكيز;</li>
-<li>حظر جميع ملفات تعريف الارتباط الكوكيز;</li>
-<li>السماح لجميع ملفات تعريف الارتباط. الكوكيز;</li>
-<li>حظر ملفات تعريف الارتباط الكوكيز للجهات الخارجية؛</li>
-<li>مسح جميع ملفات تعريف الارتباط عند إغلاق المتصفح ؛</li>
-<li>افتح جلسة “التصفح الخاص” / “التصفح المتخفي” التي تسمح لك بتصفح الإنترنت دون حفظ البيانات المحلية ؛</li>
-<li>قم بتثبيت الوظائف الإضافية والمكونات الإضافية لتوسيع وظائف المستعرض.</li>
-</ul>
-<p dir="rtl">أين يمكنني العثور على معلومات حول إدارة ملفات تعريف الارتباط الكوكيز؟</p>
-<ul dir="rtl">
-<li><a href="https://support.microsoft.com/kb/278835">معلومات حول ملف تعريف الارتباط الكوكيز Internet Explorer</a></li>
-<li><a href="https://support.google.com/chrome/answer/95647?hl=en-GB">معلومات حول ملف تعريف الارتباط الكوكيز Chrome</a></li>
-<li><a href="https://support.mozilla.org/en-US/kb/Clear%20Recent%20History">معلومات حول ملف تعريف الارتباط الكوكيز Firefox</a></li>
-<li><a href="https://support.apple.com/kb/PH5042">معلومات حول ملف تعريف الارتباط الكوكيز Safari</a></li>
-<li><a href="https://www.opera.com/help/tutorials/security/privac">معلومات حول ملف تعريف الارتباط الكوكيز Opera</a></li>
-</ul>
-<p dir="rtl">لمزيد من المعلومات حول كيفية إدارة ملفات تعريف الارتباط من خلال متصفح الويب الخاص بك ، يرجى زيارة www.aboutcookies.org.<br>
-على هذا المورد ، يمكنك قراءة الإرشادات الخاصة بحذف ملفات تعريف الارتباط وإدارتها.<br>
-نحذرك من أننا غير مسؤولين عن محتوى مواقع الويب الخارجية ، وإذا قمت بتعطيل ملفات تعريف الارتباط ، فلن تتمكن من استخدام جميع ميزات موقع الويب 888starz الخاص بنا.<br>
-<strong>FLASH COOKIE</strong><br>
-يمكنك تغيير إعدادات Flash Player يدويًا لمنع استخدام ملفات Flash. يسمح لك مدير الإعدادات في Flash Player بالاختيار وتخصيص تفضيلاتك.<br>
-إذا قررت حظر استقبال جميع ملفات تعريف الارتباط في المتصفح تمامًا ، فعندئذ للأسف ، لن تتمكن من استخدام بعض الموارد والخدمات على مواقعنا ، ولن تعمل بعض الخدمات بشكل صحيح ، على سبيل المثال ، في هذه الحالة لن نتمكن من حفظ لغة الواجهة التي اخترتها.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">9. الموافقة على استخدام موردين من الخدمات الإلكترونية</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">للعب مقابل المال على خدماتنا ، سوف تحتاج إلى إرسال الأموال إلينا والحصول على المال منا. لتوفير هذه الخدمات ، يمكننا استخدام أنظمة الدفع الإلكترونية من الجهات الخارجية لمعالجة المعاملات المالية الضرورية.<br>
-بالموافقة على سياسة الخصوصية هذه وقبولها ، فإنك توافق وتوافق بشكل لا لبس فيه على نقل معلوماتك الشخصية إلى أطراف ثالثة لازمة لتجهيز وإجراء المعاملات المالية ، بما في ذلك الموافقة على نقل معلوماتك الشخصية خارج بلدك (عند الاقتضاء).<br>
-نحن نتخذ إجراءات لحماية خصوصيتك عند العمل مع أنظمة الدفع التابعة لطرف ثالث.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">10. الموافقة على شيكات الأمان</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">نحتفظ بالحق في إجراء عمليات تدقيق الأمان في أي وقت لتأكيد معلومات التسجيل التي قدمتها أنت والتحقق من صحة استخدامك لخدماتنا ومعاملاتك المالية لمنع أي انتهاكات محتملة لبنود الخدمة والقانون الساري.<br>
-من خلال استخدام خدماتنا وخدماتنا ، فإنك توافق بموجب هذا على الشروط والأحكام الخاصة بنا ، وتفوضنا باستخدام معلوماتك الشخصية وإرسال معلوماتك الشخصية إلى أطراف ثالثة للتحقق من المعلومات التي تقدمها عند التسجيل واستخدام خدماتنا وخدماتنا ، بما في ذلك ، إذا لزم الأمر ، نقل معلوماتك الشخصية خارج بلدك.<br>
-قد تشمل عمليات الفحص الأمني ، على سبيل المثال لا الحصر ، إعداد البيانات المالية وأي تأكيد آخر لمعلوماتك الشخصية التي تقدمها إلى أي قواعد بيانات تابعة لجهات أخرى غير تلك الخاصة بنا.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">11. الأمان</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">نحن ندرك أهمية توفير الأمن والطرق اللازمة للحفاظ على سرية وسلامة وإمكانية الوصول إلى المعلومات. نحتفظ بجميع المعلومات الشخصية التي نتلقاها منك مباشرة ، في قاعدة بيانات مشفرة ومحمية بكلمة مرور موجودة في شبكتنا الآمنة خلف برنامج جدار الحماية النشط والحديث.<br>
-تدعم خدماتنا الإصدار ٣ من SSL بتشفير ١٢٨ بت.<br>
-كما نتخذ إجراءات لضمان قيام شركاتنا الفرعية ووكلائنا وشركائنا وشركائنا التابعين والموردين بتطبيق نفس التدابير الأمنية المناسبة.<br>
-ومع ذلك ، لا يكون إرسال المعلومات عبر الإنترنت آمنًا تمامًا ، ولا يمكننا ضمان أمان بياناتك أثناء وجودهم على الطريق.<br>
-<strong>أي بيانات ترسلها ، ترسلها على مسؤوليتك الخاصة.</strong><br>
-888starz لديه كل الإجراءات الأمنية والوظائف لحماية بياناتك بعد استلامها.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">12. حماية الأطفال</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">خدماتنا غير مخصصة للأشخاص دون سن الثامنة عشرة (18) أو أي عمر قانوني آخر في بلدك.<br>
-أي شخص يزودنا بالمعلومات من خلال أي من خدماتنا أو خدماتنا ، يؤكد أنه يبلغ من العمر ثمانية عشر (18) عامًا (أو آخر قانوني في ولايتك) أو أكبر.<br>
-تتمثل سياستنا في تحديد محاولات القاصرين للوصول إلى خدماتنا وخدماتنا ، الأمر الذي قد يتطلب مزيدًا من تحليل السلامة.<br>
-وإذا علمنا أن قاصرًا قد حاول أو زودنا بمعلومات شخصية من خلال خدماتنا ، فلن نقبل هذه المعلومات ، وسنتخذ جميع الإجراءات لإزالة هذه المعلومات من قواعد بياناتنا.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">13. نقل عبر الحدود</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">قد يتم تخزين المعلومات الشخصية التي نجمعها ومعالجتها في أي دولة نوفر فيها نحن أو الشركات التابعة لنا أو الموردين أو الشركاء أو الوكلاء خدمات وخدمات الألعاب لمنصة ألعابنا.<br>
-باستخدام خدماتنا وخدماتنا ، فإنك توافق صراحةً على أي نقل لمعلوماتك خارج بلدك (بما في ذلك البلدان التي لا يمكن تقييمها على أنها تمتلك قوانين مناسبة للخصوصية والبيانات الشخصية).<br>
-ومع ذلك ، فإننا نتخذ جميع الإجراءات لضمان التزام وكلائنا وشركائنا وشركائنا التابعين والموردين بمعايير الخصوصية الخاصة بنا وسياسة الخصوصية هذه بغض النظر عن موقعهم.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">14. علاقات الطرف الثالث</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">لا يمكننا حماية أي معلومات تقدمها إلى موقع خارجي على الإنترنت يشير إلى خدماتنا أو خدماتنا ، أو إلى أي معلومات أخرى يتم جمعها بواسطة طرف ثالث تدير برنامجنا التابع (إن وجد) أو بأي طريقة أخرى لأن هذه الخدمات والمواقع الإلكترونية عبر الإنترنت لا تخصنا وتدار بشكل مستقل عنا.<br>
-كن حذرا.<br>
-تخضع أي معلومات تجمعها هذه الجهات الخارجية لسياسة الخصوصية الخاصة بها ، إن وجدت ، من قبل ذلك الطرف الثالث.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">15. إخلاء المسؤولية القانونية من المسائلة</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">نحن لسنا مسؤولين عن أحداث خارجة عن سيطرتنا المباشرة.<br>
-نظرًا للطبيعة المعقدة والمتغيرة باستمرار لتقنياتنا وأعمالنا ، فإننا نقدم خدمات شاملة ، ولكننا لا نضمن إجراء عملية خالية من الأخطاء فيما يتعلق بسرية معلوماتك الشخصية عند زيارة مواقع أخرى باستخدام روابط موجودة على موقعنا على الويب. يجب أن توفر لك المواقع الخارجة عن سيطرتنا ، وخصوصًا التي لا تغطيها سياسة الخصوصية هذه ، فرصة لمراجعة سياسات الأمان الخاصة بها. إذا زرت مواقع أخرى ، يجب أن تدرك أن مشغلي هذه المواقع يمكنهم جمع معلوماتك الشخصية ، والتي سيستخدمونها وفقًا لسياسة الخصوصية الخاصة بهم ، والتي تختلف عن تلك الخاصة بنا.<br>
-كن حذرا.<br>
-نحن لا نضمن أمان البيانات الخاصة بك ، بينما هم على الطريق أثناء الإرسال من خلال قنوات الاتصال.<br>
-<strong>أي بيانات ترسلها ، ترسلها على مسؤوليتك الخاصة.</strong><br>
-كما أننا غير مسؤولين عن أي أضرار مباشرة أو غير مباشرة تنشأ عن الاستخدام غير القانوني أو سرقة معلوماتك الشخصية.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">16. الموافقة على سياسة الخصوصية</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">إن استخدامك لخدماتنا وخدماتنا هو موافقتك الطوعية على سياسة الخصوصية الخاصة بنا والحق في جمع بياناتك الشخصية ومعالجتها وتخزينها.<br>
-يجب قراءة سياسة الخصوصية هذه بالاقتران مع شروط الاستخدام الخاصة بنا وأية بنود وشروط قابلة للتطبيق إضافية تظهر على منصاتنا ومواقعنا.<br>
-سنقوم بتحديث سياسة الخصوصية هذه بشكل دوري وإبلاغك بهذه التغييرات عن طريق نشر شروط معدلة على منصاتنا ومواقعنا الإلكترونية.<br>
-استمرار استخدامك لخدماتنا بعد أي تغييرات على سياسة الخصوصية هذه يعني موافقتك على التغييرات.<br>
-هذه هي سياسة الخصوصية الكاملة والحصرية من &nbsp;16 مايو 2018 ، وهي تحل محل أي إصدار سابق وتطبق فقط على <a href="https://888starz-africa.com">888starz-africa.com</a>.<br>
-نوصي بمراجعة سياسة الخصوصية هذه بانتظام.</p>
-</div>
-</div>
-<h2 class="information-rules__title" data-v-8e32e479="">17. سياسة الشركة في مجال مكافحة غسل الأموال والإرهاب الدولي</h2>
-<div class="ui-text-content--theme-gray-100 ui-text-content--size-m ui-text-content information-rules__text" data-v-3e866eef="" data-v-8e32e479="">
-<div data-v-8e32e479="">
-<p dir="rtl">شركة 888starz لتنفيذ جميع التدابير المناسبة لمكافحة غسل الأموال المتأتية من الجريمة والإرهاب الدولي (سياسة AML). في الوقت نفسه، تحافظ الشركة على وضع قوي والمبدئي لمنع جميع أنواع الأنشطة غير المشروعة، وكذلك جميع اللوائح ذات الصلة. للوفاء بهذه الالتزامات، يجب على الشركة إبلاغ الهيئة الرسمية، إذا كان هناك سبب للشك في أن الأموال المودعة من قبل المستخدم إلى الحساب ترتبط إلى إضفاء الصفة القانونية على الدخل من النشاط التي تم الحصول عليها بطرق غير مشروعة أو تمويل من الإرهاب. وأيضا الشركة أن تلتزم بمنع الأموال من المستخدم، وكذلك اتخاذ التدابير الأخرى المنصوص عليها في قواعد مكافحة غسل الأموال والسياسات.</p>
-<p dir="rtl">ماذا يعني غسل الأموال:</p>
-<ul dir="rtl">
-<li>إخفاء أو السرية فيما يتعلق بالمعلومات عن الأصل الحقيقي، ومصدر، والموقع، وكيفية التخلص من والتهجير وحقوق الملكية أو حقوق أخرى للممتلكات الناتجة عن الأنشطة غير المشروعة (أو على الممتلكات في تبادل هذه الممتلكات)</li>
-<li>تحويل أو نقل أو اكتساب أو حيازة أو استخدام الممتلكات المتأتية من النشاط الإجرامي (أو الممتلكات في تبادل هذه الممتلكات) من أجل إخفاء المصدر غير المشروع لتلك الممتلكات أو مساعدة الأشخاص المشاركين في أنشطة إجرامية، من أجل تجنب العواقب القانونية لأفعالهم،</li>
-<li>ارتكاب الحالة التي كانت مستمدة للعقار من النشاط الإجرامي على أراضي دولة أخرى.</li>
-</ul>
-<p dir="rtl">من أجل مواجهة تغلغل رأس المال الجنائي في اقتصاد الدولة ومكافحة انتشار الجريمة في العديد من البلدان الحفاظ على النضال المستمر لمكافحة غسل الأموال وتمويل الإرهاب.تتبع الشركة اللوائح الداخلية وبرنامج خاص من الإجراءات لمساعدة المنظمات الوطنية والدولية في مجال مكافحة غسل الأموال وتمويل الإرهاب في جميع أنحاء العالم.من خلال تسجيل حساب في الشركة، فإنك</p>
-<p dir="rtl">توافق على الالتزامات التالية:</p>
-<ul dir="rtl">
-<li>فإنك تتعهد بأنك جاهز الامتثال لجميع القوانين المعمول بها والإجراءات القانونية التنظيمية على المضاد لغسل الأموال وتمويل الإرهاب، بما في ذلك سياسة مكافحة غسل الأموال.</li>
-<li>أن تقر بأنك لا تملك معلومات أو شكوك حول ما استخدمت وسائل لإضافة رصيد في الماضي والحاضر والمستقبل، وتستمد من مصادر غير مشروعة أو لديهم أي علاقة لإضفاء الشرعية على الدخل التي تم الحصول عليها بطرق غير مشروعة، أو غير ذلك غير قانوني من أنشطة محظورة بموجب القانون أو اللوائح في أي من المنظمات الدولية المعنية؛</li>
-<li>أن توافق أيضا على أن تقدم لنا على الفور أي من المعلومات التي نعتبرها ضرورية لتلبية التشريعات الحالية والمتطلبات التنظيمية فيما يتعلق لإضفاء الشرعية على أموال التي تم الحصول عليها بطرق غير مشروعة.</li>
-</ul>
-<p dir="rtl">تجمع الشركة الوثائق التي &nbsp;تثبت هوية المستخدم، كذلك بسجلات لجميع المعاملات التي تتم على الحساب؛</p>
-<p dir="rtl">شركة المسارات و المعاملات المشبوهة على حساب المستخدم، فضلا عن المعاملات التي تتم في ظل ظروف خاصة؛</p>
-<p dir="rtl">تحتفظ الشركة بالحق في أي وقت وفي أي مرحلة أن ترفض العضو في تنفيذ العملية، إذا كان لدى الشركة سبب للاعتقاد بأن هذه العملية لها أي علاقة بغسل الأموال والأنشطة الإجرامية. بموجب القانون الدولي، ليست ملزمة للشركة لإعلام المستخدم أن نشاطه هو المشبوهة، وقد تم نقل المعلومات عنها إلى السلطات المختصة.</p>
-<p dir="rtl">وفقا للسياسة الداخلية للشركة AML-إجراء التحقيق الأولي والمستمر للأفراد الشركة وفقا لمستوى المخاطر المحتملة المرتبطة بكل مستخدم.</p>
-<ul dir="rtl">
-<li>تقوم الشركة بطلب منك تقديم الحد الأدنى من المعلومات للتحقق من هويتك</li>
-<li>وسوف تقوم الشركة بتسجيل وتخزين البيانات والوثائق التي تثبت هويتك، وكذلك معلومات حول ما تم استخدام وسائل للتحقق من الهوية ونتائج المراجعات.</li>
-<li>وستقوم الشركة من التحقق من &nbsp;بياناتك الشخصية على قائمة المشتبه بهم في الإرهاب، التي شكلتها أجهزة الدولة إذن والحد الأدنى مستقلة مجموعة من أوراق اعتماد ما يلي: – الاسم الكامل للمستخدم. – تاريخ الميلاد (للأفراد). عنوان السكن أو عنوان تسجيل المستخدم.</li>
-<li>مصدر الأموال، التي خططت لتودع في حساب الشركة</li>
-</ul>
-<p dir="rtl">للتحقق والتأكد من صحة البيانات المذكورة أعلاه، يجوز للشركة أن تطلب من المستخدم الوثائق التالية:</p>
-<ul dir="rtl">
-<li>جواز سفر أو بطاقة هوية أو وثيقة أخرى تحل محلها، والتي تلبي المتطلبات التالية: – الاسم، وتاريخ الميلاد وصورة حاملها. – صدر من قبل السلطات الوطنية،</li>
-<li>تم الحصول عليها مؤخرا من خلال دفع المرافق (لا يزيد عمرها عن 3 أشهر) أو أي دليل آخر من عنوان مقر إقامة المستخدم.</li>
-</ul>
-</div>
-</div>
-	                    </div>
-	                    <div class="clear"></div>
-	                </section>
-
-	            </article>
-				<!--comment:start -->
-				
-				<!--comment:end -->
-	        </div>
-	        <!-- end: .content -->
-
-	        <div class="clear"></div>
-
-	    </div>
-	    <!-- end: .center -->
-    </main>
-<!-- end: #page -->
-        
-<div class="clear"></div>
-<!-- start: .epcl-cta -->
-<div class="epcl-cta bg-box no-border-radius">
-    <div class="grid-container epcl-flex">
-        <div class="left grid-50 tablet-grid-50 np-mobile text">
-                    </div>
-            </div>
-    <div class="clear"></div>
-
-    </div>
-<!-- end: .epcl-cta -->        
-        <div class="container-games-all-888">
-	<div class="continaer-item-all-888-games">
-		<div class="continaer-item-all-888-games__caption">
-			ألعاب			<a href="/game/" rel="nofollow">المزيد من الألعاب<svg data-v-72c25320="" viewBox="0 0 448 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|chevron-double-right"><path d="M58 38l209 210c5 4 5 12 0 17L58 474c-5 5-13 5-17 0l-20-20c-5-5-5-12 0-17l181-181L21 75c-5-5-5-12 0-17l20-20c4-5 12-5 17 0zm143 0l-20 20c-5 5-5 12 0 17l181 181-181 181c-5 5-5 12 0 17l20 20c4 5 12 5 17 0l209-209c5-5 5-13 0-17L218 38c-5-5-13-5-17 0z"></path></svg></a>
-		</div>
-		<div class="container-item-all-888-games__line">
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-360.webp" alt="Treasure Tomb" class="item-game__image" width="174" height="104">
-				<span>Treasure Tomb</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-371.webp" alt="Crash" class="item-game__image" width="174" height="104">
-				<span>Crash</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-249.webp" alt="Crystal" class="item-game__image" width="174" height="104">
-				<span>Crystal</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-169.webp" alt="Western slot" class="item-game__image" width="174" height="104">
-				<span>Western slot</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-58.webp" alt="21" class="item-game__image" width="174" height="104">
-				<span>21</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-69.webp" alt="Under and over 7" class="item-game__image" width="174" height="104">
-				<span>Under and over 7</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-158.webp" alt="Solitaire" class="item-game__image" width="174" height="104">
-				<span>Solitaire</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-373.webp" alt="Burning Hot" class="item-game__image" width="174" height="104">
-				<span>Burning Hot</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-456.webp" alt="Vampier Curse" class="item-game__image" width="174" height="104">
-				<span>Vampier Curse</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-572.webp" alt="Midgard Zombies" class="item-game__image" width="174" height="104">
-				<span>Midgard Zombies</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/game-189.webp" alt="Scratch Card" class="item-game__image" width="174" height="104">
-				<span>Scratch Card</span>
-			</a>
-		</div>
-		<div class="continaer-item-all-888-games__caption">
-			 كازينو			<a href="/game/" rel="nofollow">المزيد من الكازينو <svg data-v-72c25320="" viewBox="0 0 448 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|chevron-double-right"><path d="M58 38l209 210c5 4 5 12 0 17L58 474c-5 5-13 5-17 0l-20-20c-5-5-5-12 0-17l181-181L21 75c-5-5-5-12 0-17l20-20c4-5 12-5 17 0zm143 0l-20 20c-5 5-5 12 0 17l181 181-181 181c-5 5-5 12 0 17l20 20c4 5 12 5 17 0l209-209c5-5 5-13 0-17L218 38c-5-5-13-5-17 0z"></path></svg></a>
-		</div>
-		<div class="container-item-all-888-games__line">
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img78166.jpg" alt="Little Farm" class="item-game__image" width="174" height="104">
-				<span>Little Farm</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img65045.jpg" alt="777" class="item-game__image" width="174" height="104">
-				<span>777</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/101185.jpg" alt="Fortune" class="item-game__image" width="174" height="104">
-				<span>Fortune</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/Magic-Pipes_301180.jpg" alt="Magic Pipes" class="item-game__image" width="174" height="104">
-				<span>Magic Pipes</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img85493.jpg" alt="Big Wild Cats" class="item-game__image" width="174" height="104">
-				<span>Big Wild Cats</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img50962.jpg" alt="Treasure" class="item-game__image" width="174" height="104">
-				<span>Treasure</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img50962.jpg" alt="Treasure" class="item-game__image" width="174" height="104">
-				<span>Treasure</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img75413.jpg" alt="AirPlane" class="item-game__image" width="174" height="104">
-				<span>AirPlane</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img79359.jpg" alt="Sun Goddess" class="item-game__image" width="174" height="104">
-				<span>Sun Goddess</span>
-			</a>
-		</div>
-		<div class="continaer-item-all-888-games__caption">
-			مباشر 
-			<a href="/game/" rel="nofollow">المزيد من البث المباشر <svg data-v-72c25320="" viewBox="0 0 448 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|chevron-double-right"><path d="M58 38l209 210c5 4 5 12 0 17L58 474c-5 5-13 5-17 0l-20-20c-5-5-5-12 0-17l181-181L21 75c-5-5-5-12 0-17l20-20c4-5 12-5 17 0zm143 0l-20 20c-5 5-5 12 0 17l181 181-181 181c-5 5-5 12 0 17l20 20c4 5 12 5 17 0l209-209c5-5 5-13 0-17L218 38c-5-5-13-5-17 0z"></path></svg></a>
-		</div>
-		<div class="container-item-all-888-games__line">
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img94769.jpg" alt="Top Card" class="item-game__image" width="174" height="104">
-				<span>Top Card</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img55372.jpg" alt="Mega Wheel" class="item-game__image" width="174" height="104">
-				<span>Mega Wheel</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img97191.jpg" alt="Football Auto Roulette" class="item-game__image" width="174" height="104">
-				<span>Football Auto Roulette</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img80299.jpg" alt="Cabaret Roulette" class="item-game__image" width="174" height="104">
-				<span>Cabaret Roulette</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img32973.jpg" alt="Dragon Tiger D60" class="item-game__image" width="174" height="104">
-				<span>Dragon Tiger D60</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img67366.jpg" alt="Speed Baccarat C08" class="item-game__image" width="174" height="104">
-				<span>Speed Baccarat C08</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img106494.jpg" alt="Oasis Blackjack" class="item-game__image" width="174" height="104">
-				<span>Oasis Blackjack</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/129845.jpg" alt="Horse racing Auto Roulette" class="item-game__image" width="174" height="104">
-				<span>Horse racing Auto Roulette</span>
-			</a>
-		</div>
-		<div class="continaer-item-all-888-games__caption">
-			ألعاب التلفزيون			<a href="/game/" rel="nofollow">المزيد من ألعاب التلفزيون <svg data-v-72c25320="" viewBox="0 0 448 512" class="ico__svg" focusable="false" role="img" data-v-ico="common|chevron-double-right"><path d="M58 38l209 210c5 4 5 12 0 17L58 474c-5 5-13 5-17 0l-20-20c-5-5-5-12 0-17l181-181L21 75c-5-5-5-12 0-17l20-20c4-5 12-5 17 0zm143 0l-20 20c-5 5-5 12 0 17l181 181-181 181c-5 5-5 12 0 17l20 20c4 5 12 5 17 0l209-209c5-5 5-13 0-17L218 38c-5-5-13-5-17 0z"></path></svg></a>
-		</div>
-		<div class="container-item-all-888-games__line">
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img71534.jpg" alt="Fast Keno" class="item-game__image" width="174" height="104">
-				<span>Fast Keno</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img61608.jpg" alt="Wheel" class="item-game__image" width="174" height="104">
-				<span>Wheel</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img61609.jpg" alt="Poker" class="item-game__image" width="174" height="104">
-				<span>Poker</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/47521.jpg" alt="TVBET" class="item-game__image" width="174" height="104">
-				<span>TVBET</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img61611.jpg" alt="War" class="item-game__image" width="174" height="104">
-				<span>War</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img61612.jpg" alt="5Bet" class="item-game__image" width="174" height="104">
-				<span>5Bet</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img61613.jpg" alt="7Bet" class="item-game__image" width="174" height="104">
-				<span>7Bet</span>
-			</a>
-			<a href="/game/" rel="nofollow" class="line__item-game">
-				<img loading="lazy" src="/wp-content/uploads/2025/03/img61615.jpg" alt="Keno" class="item-game__image" width="174" height="104">
-				<span>Keno</span>
-			</a>
-		</div>
-		
-	</div>
-</div>
-<!-- start: #footer -->
-<footer id="footer" class="no-sidebar">
-			<div class="desktop-version" dir="rtl">
-				<nav class="navigation-footer">
-					<div class="block-ul-footer">
-						<strong>حول الموقع</strong>
-						<a href="/about/">من نحن</a>
-						<a href="/game/" target="_blank">برنامج الشراكة</a>
-						<a href="/contacts/">معلومات الاتصال</a>
-						<a href="/terms/">شروط الاستخدام</a>
-						<a href="/responsible/">اللعب المسؤول</a>
-						<a href="/privacy-policy/">الخصوصية وإدارة البيانات</a>
-						<a href="/game/">سياسة ملفات تعريف الارتباط</a>
-						<a href="/game/">سياسة مكافحة غسل الأموال</a>
-						<a href="/game/">سياسة اعرف عميلك</a>
-						<a href="/self-exclusion/">الاستبعاد الذاتي</a>
-						<a href="/dispute-resolution/">حل النزاعات</a>
-						<a href="/fairness-rng-testing-methods/">طرق اختبار النزاهة والعشوائية</a>
-						<a href="/accounts-withdrawals-and-bonuses/">الحسابات والمدفوعات والمكافآت</a>
-					</div>
-			<div class="block-ul-footer">
-   <strong>الرهان</strong>
-   <a href="/game/">الرياضة</a>
-   <a href="/game/">مباشر</a>
-   <a href="/game/">كرة القدم</a>
-   <a href="/game/">الكريكيت</a>
-   <a href="/game/">الرياضات الإلكترونية</a>
-   <a href="/game/">هوكي الجليد</a>
-   <a href="/game/">التنس</a>
-</div>
-<div class="block-ul-footer">
-   <strong>الألعاب</strong>
-   <a href="/game/">ألعاب السلوت</a>
-   <a href="/game/">ألعاب 888</a>
-   <a href="/game/">كازينو مباشر</a>
-   <a href="/game/">الرياضات الافتراضية</a>
-   <a href="/game/">بينغو</a>
-   <a href="/game/">ألعاب التلفزيون</a>
-</div>
-<div class="block-ul-footer">
-   <strong>الإحصائيات</strong>
-   <a href="/game/">إحصائيات</a>
-   <a href="/game/">النتائج</a>
-</div>
-<div class="block-ul-footer">
-   <strong>روابط مفيدة</strong>
-   <a href="/game/">طرق الدفع</a>
-   <a href="/game/">النسخة المحمولة</a>
-   <a href="/game/">التسجيل</a>
-   <a href="/game/">اكسب مع 888starz</a>
-</div>
-			<div class="block-ul-footer">
-				<strong>التطبيقات</strong>
-				<a href="/888starz.apk" class="link-footer-aps"><svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-						<path d="M11.68 10.26a.63.63 0 0 1-.37-.12.7.7 0 0 1-.24-.32.77.77 0 0 1 .14-.79c.1-.1.21-.16.34-.2a.62.62 0 0 1 .39.05c.12.05.22.15.3.26a.76.76 0 0 1-.09.9.64.64 0 0 1-.47.22Zm-7.36 0a.63.63 0 0 1-.37-.12.7.7 0 0 1-.25-.32.77.77 0 0 1 .15-.79c.09-.1.2-.16.34-.2a.62.62 0 0 1 .38.05c.13.05.23.15.3.26a.76.76 0 0 1-.08.9.64.64 0 0 1-.47.22Zm7.6-4.32 1.33-2.48a.31.31 0 0 0 .04-.23.31.31 0 0 0-.04-.1.29.29 0 0 0-.09-.09.26.26 0 0 0-.32.03.3.3 0 0 0-.07.1l-1.35 2.5a7.88 7.88 0 0 0-6.84 0l-1.35-2.5a.3.3 0 0 0-.07-.1.26.26 0 0 0-.32-.03.29.29 0 0 0-.09.08.3.3 0 0 0-.05.23l.05.11 1.33 2.48A8.51 8.51 0 0 0 0 12.71h16a8.51 8.51 0 0 0-4.08-6.77Z">
-						</path>
-					</svg>أندرويد</a>
-			</div>
-		</nav>
-		<nav class="navigation-footer">
-			<div class="container-copyrithing">
-			Copyright © 2020 - 2025 «888starz».</div>
-			<div class="container-social">
-				<div class="container-social-media">
-					<a href="https://twitter.com/888Tron" class="link-social-footer" target="_blank">
-						<svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path d="M12.6 0h2.45L9.7 6.78 16 16h-4.94L7.2 10.4 2.77 16H.32l5.73-7.25L0 0h5.06l3.5 5.11L12.6 0Zm-.86 14.38h1.36L4.32 1.54H2.87l8.87 12.84Z">
-							</path>
-						</svg>
-					</a>
-					<a href="https://www.instagram.com/888starz_en/" class="link-social-footer" target="_blank">
-						<svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path d="M10.65 8a2.65 2.65 0 1 1-5.3 0 2.65 2.65 0 0 1 5.3 0Z"></path>
-							<path d="M12.47 0H3.53A3.53 3.53 0 0 0 0 3.53v8.94A3.53 3.53 0 0 0 3.53 16h8.94A3.53 3.53 0 0 0 16 12.47V3.53A3.53 3.53 0 0 0 12.47 0ZM8 12.41a4.42 4.42 0 1 1 0-8.83 4.42 4.42 0 0 1 0 8.83Zm5.06-8.59a.88.88 0 1 1 0-1.76.88.88 0 0 1 0 1.76Z">
-							</path>
-						</svg>
-					</a>
-					<a href="https://www.facebook.com/888starzEN/" class="link-social-footer" target="_blank">
-						<svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path clip-rule="evenodd" d="M11.14 8H8.9v8H5.58V8H4V5.19h1.58V3.35C5.58 2.05 6.2 0 8.93 0h2.47v2.75H9.6a.68.68 0 0 0-.7.77v1.66h2.53l-.29 2.83Z">
-							</path>
-						</svg>
-					</a>
-					<a href="https://t.me/starz_official" class="link-social-footer" target="_blank">
-						<svg data-v-06e51396="" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path clip-rule="evenodd" d="m3.85 9.25 1.99 5.04 2.6-2.62 4.44 3.57L16 1 0 7.75l3.85 1.5Zm7.58-4.16-4.9 4.52-.61 2.33-1.13-2.85 6.64-4Z">
-							</path>
-						</svg>
-					</a>
-				</div>
-				<div class="contaienr-18plus">
-					18+
-				</div>
-			</div>
-		</nav>
-	</div>
-	
-	<div class="mobile-version">
-		<div class="caption-seo-module faq-question">
-						<svg viewBox="0 0 32 19" focusable="false" role="img" class="ico_rotater_footer"><path d="M15.2 18.6.4 4c-.5-.5-.5-1.1 0-1.6l1.9-2c.5-.5 1.3-.5 1.7 0l12 11.8L28 .4c.4-.5 1.2-.5 1.7 0l2 2c.4.5.4 1 0 1.6L17 18.6c-.5.5-1.3.5-1.7 0Z"></path></svg>
-		</div>
-		<div class="seo-module faq-answer" id="seo-module" style="display: none;">
-			<div class="seo-module-column-1">
-							</div>
-			<div class="seo-module-column-2">
-			  			</div>
-		</div>
-		<div class="container-mobile-setion-app">
-			<a href="/888starz.apk" rel="nofollow" class="link-game-button-footer">
-				<div class="download-app-widget__stores download-app-widget-stores">
-					<img loading="lazy" alt="888starz" src="/wp-content/uploads/2025/03/image_2025-03-05_22-08-13-1.svg" class="download-app-android">
-				</div>
-				<div data-v-b7a9987b="" class="download-app-widget__description download-app-widget-description">
-					<img loading="lazy" alt="888starz" src="/wp-content/uploads/2025/03/12e2ff49a51305fa9bc4edc93e44442f.svg" class="download-app-widget-description__logo">
-					<span class="download-app-widget-description__title">Mobile application</span>
-				</div>
-			</a>
-		</div>
-		<div class="container-mobile-footer-social">
-			<a href="https://t.me/starz_official" class="container-mobile-item-social" aria-label="Telegram">
-				<svg width="19px" height="19px" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path d="M12.6 0h2.45L9.7 6.78 16 16h-4.94L7.2 10.4 2.77 16H.32l5.73-7.25L0 0h5.06l3.5 5.11L12.6 0Zm-.86 14.38h1.36L4.32 1.54H2.87l8.87 12.84Z">
-							</path>
-				</svg>
-			</a>
-			<a href="https://www.facebook.com/888starzEN/" class="container-mobile-item-social" aria-label="Facebook">
-				<svg width="19px" height="19px" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path d="M10.65 8a2.65 2.65 0 1 1-5.3 0 2.65 2.65 0 0 1 5.3 0Z"></path>
-							<path d="M12.47 0H3.53A3.53 3.53 0 0 0 0 3.53v8.94A3.53 3.53 0 0 0 3.53 16h8.94A3.53 3.53 0 0 0 16 12.47V3.53A3.53 3.53 0 0 0 12.47 0ZM8 12.41a4.42 4.42 0 1 1 0-8.83 4.42 4.42 0 0 1 0 8.83Zm5.06-8.59a.88.88 0 1 1 0-1.76.88.88 0 0 1 0 1.76Z">
-							</path>
-				</svg>
-			</a>
-			<a href="https://www.instagram.com/888starz_en/" class="container-mobile-item-social" aria-label="Instagram">
-				<svg width="19px" height="19px" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path clip-rule="evenodd" d="M11.14 8H8.9v8H5.58V8H4V5.19h1.58V3.35C5.58 2.05 6.2 0 8.93 0h2.47v2.75H9.6a.68.68 0 0 0-.7.77v1.66h2.53l-.29 2.83Z">
-							</path>
-				</svg>
-			</a>
-			<a href="https://twitter.com/888Tron" class="container-mobile-item-social" aria-label="Twitter">
-				<svg width="19px" height="19px" viewBox="0 0 16 16" class="ico__svg" focusable="false" role="img">
-							<path clip-rule="evenodd" d="m3.85 9.25 1.99 5.04 2.6-2.62 4.44 3.57L16 1 0 7.75l3.85 1.5Zm7.58-4.16-4.9 4.52-.61 2.33-1.13-2.85 6.64-4Z">
-							</path>
-				</svg>
-			</a>
-		</div>
-		<div class="container-copyrithing-mobile-footer">
-			<p class="read-copy">
-				Copyright © 2020 - 2025 «888starz».
-			</p>
-			<p class="read-desc-copy">
-			يستخدم 888starz ملفات تعريف الارتباط لضمان حصولك على أفضل تجربة استخدام. من خلال بقائك على الموقع الإلكتروني، فإنك توافق على استخدام ملفات تعريف الارتباط الخاصة بك على 888starz.<a href="/cookies/">سياسة ملفات تعريف الارتباط</a>
-			
-			</p>
-			<div class="container-horizontal-info">
-				<p class="p18plus">
-					+18
-				</p>
-				<div class="lang-dropdown"><div class="lang-current"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAANlBMVEUAYjMTYDs3R0AvV0NObzE3dSoTWzhAZjgyfEY0gl1EcDFqpIhKj28TVzaLs41ol1JSaF1JW1NzUHm9AAAAPUlEQVR4AY2MtQEAMAgE447tv2xKvuQqeEtRcikZ/9p6b9X/Mdfeaw4PnPvehQhNvpcnJYiInIqraqYpyAd1AAFxIEreLQAAAABJRU5ErkJggg==" alt="" width="16" height="11" style="width: 16px; height: 11px;"><span class="lang-name">العربية</span><span class="lang-arrow">▾</span></div><ul class="lang-list"><li class="lang-item active"><a href="/privacy-policy/"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAANlBMVEUAYjMTYDs3R0AvV0NObzE3dSoTWzhAZjgyfEY0gl1EcDFqpIhKj28TVzaLs41ol1JSaF1JW1NzUHm9AAAAPUlEQVR4AY2MtQEAMAgE447tv2xKvuQqeEtRcikZ/9p6b9X/Mdfeaw4PnPvehQhNvpcnJYiInIqraqYpyAd1AAFxIEreLQAAAABJRU5ErkJggg==" alt="" width="16" height="11" style="width: 16px; height: 11px;"><span class="lang-name">العربية</span></a></li></ul></div>
-    <style>
-        /* Стили для переключателя языков */
-        .lang-dropdown {
-            position: relative;
-            display: inline-block;
-            min-width: 120px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            z-index: 100;
-			direction:ltr;
-        }
-        
-        .lang-dropdown .lang-current {
-            display: flex;
-            align-items: center;
-            padding: 3px 12px;
-			background-color: #3d3d3d;
-			color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        .lang-dropdown .lang-arrow {
-            margin-left: auto;
-            font-size: 12px;
-            transition: transform 0.2s;
-        }
-        
-        .lang-dropdown:hover .lang-arrow {
-            transform: rotate(180deg);
-        }
-        
-        .lang-dropdown img {
-            margin-right: 8px;
-            width: 16px;
-            height: 11px;
-            display: inline-block;
-            vertical-align: middle;
-            border: none;
-        }
-        
-        .lang-dropdown .lang-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-top: none;
-            border-radius: 0 0 4px 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: none;
-            overflow: hidden;
-        }
-        
-        .lang-dropdown:hover .lang-list {
-            display: block;
-        }
-        
-        .lang-dropdown .lang-item {
-            display: block;
-            margin: 0;
-            border-bottom: 1px solid #f1f1f1;
-        }
-        
-        .lang-dropdown .lang-item:last-child {
-            border-bottom: none;
-        }
-        
-        .lang-dropdown .lang-item a {
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            text-decoration: none;
-            color: #333;
-            transition: background-color 0.2s;
-        }
-        
-        .lang-dropdown .lang-item a:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .lang-dropdown .lang-item.active a {
-            font-weight: bold;
-            background-color: #f0f0f0;
-        }
-        
-        /* Анимация появления списка */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .lang-dropdown:hover .lang-list {
-            animation: fadeIn 0.2s ease-out;
-        }
-    </style>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Чтобы переключатель работал и на мобильных устройствах
-            var langSwitchers = document.querySelectorAll(".lang-dropdown");
-            
-            langSwitchers.forEach(function(switcher) {
-                var current = switcher.querySelector(".lang-current");
-                var list = switcher.querySelector(".lang-list");
-                var isOpen = false;
-                
-                // Открытие/закрытие по клику для мобильных устройств
-                current.addEventListener("click", function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        if (isOpen) {
-                            list.style.display = "none";
-                            isOpen = false;
-                        } else {
-                            list.style.display = "block";
-                            isOpen = true;
-                        }
-                    }
-                });
-                
-                // Закрытие при клике вне переключателя
-                document.addEventListener("click", function(e) {
-                    if (!switcher.contains(e.target) && isOpen) {
-                        list.style.display = "none";
-                        isOpen = false;
-                    }
-                });
-            });
-        });
-    </script>			</div>
-		</div>
-	</div>
-	
-                  
-    
-    
-        
-    
-    <div class="clear"></div>
-
-</footer>
-
-<!-- end: #footer -->
-        <div class="clear"></div>
-    </div>
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-
-<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-<script>
-	// Отключение пассивных обработчиков событий для всего документа
-	var originalAddEventListener = EventTarget.prototype.addEventListener;
-	EventTarget.prototype.addEventListener = function(type, listener, options) {
-		if (typeof options === "object" && options.passive === true) {
-			options.passive = false; // Отключаем passive
-		}
-		originalAddEventListener.call(this, type, listener, options);
-	};
-
-	function initOwlAndFancybox() {
+		function initOwlAndFancybox() {
 		var $ = window.jQuery;
 		if (!$ || !$.fn.owlCarousel) return;
+		
+		// Патч для устранения предупреждений о non-passive event listeners
+		// Автоматически добавляем passive: true для touchstart событий
+		if (typeof EventTarget !== 'undefined' && EventTarget.prototype.addEventListener) {
+			var originalAddEventListener = EventTarget.prototype.addEventListener;
+			EventTarget.prototype.addEventListener = function(type, listener, options) {
+				// Для touchstart событий автоматически добавляем passive: true, если не указано явно
+				if (type === 'touchstart' || type === 'touchmove' || type === 'touchend') {
+					if (typeof options === 'object' && options !== null) {
+						if (options.passive === undefined) {
+							options.passive = true;
+						}
+					} else if (typeof options === 'boolean') {
+						// Если options - это useCapture (boolean), создаем объект с passive
+						options = { capture: options, passive: true };
+					} else {
+						// Если options не указан, используем passive: true
+						options = { passive: true };
+					}
+				}
+				return originalAddEventListener.call(this, type, listener, options);
+			};
+		}
 		$(".owl-carousel").each(function() {
 			var $el = $(this);
 			if ($el.find(".owl-stage-outer").length) {
@@ -6094,24 +4344,29 @@ document.addEventListener("DOMContentLoaded", function() {
 			items: 1,
 			margin: 30,
 			loop: true,
-			nav: true,
-			navText: ["‹","›"],
-			dots: true,
+			nav: false,
+			dots: false,
+			dotsEach: false,
 			autoplay: true,
 			autoplayTimeout: 5000,
 			touchDrag: true,
 			mouseDrag: true,
 			rtl:false,
 			ltr:true,
-			onInitialized: addAriaLabelsToDots
-		});
+			onInitialized: function() {
+				addAriaLabelsToDots();
+				initCarouselCustomNav(this);
+			},
+			onChanged: function(event) {
+				updateCarouselCustomNav(event.target);
+			}
+		})
 		$(".owl-mobile").owlCarousel({
 			items: 3,
 			margin: 30,
 			loop: true,
-			nav: true,
-			navText: ["‹","›"],
-			dots: true,
+			nav: false,
+			dots: false,
 			rtl:false,
 			ltr:true,
 			autoplay: true,
@@ -6123,8 +4378,14 @@ document.addEventListener("DOMContentLoaded", function() {
 				600: { items: 2, margin: 20 },
 				1000: { items: 3, margin: 30 }
 			},
-			onInitialized: addAriaLabelsToDots
-		});
+			onInitialized: function() {
+				addAriaLabelsToDots();
+				initMobileCustomNav(this);
+			},
+			onChanged: function(event) {
+				updateMobileCustomNav(event.target);
+			}
+		})
 		// Исключаем клонированные элементы из выборки
 $('[data-fancybox="gallery"]:not(.owl-item.cloned [data-fancybox="gallery"])').fancybox({
     buttons: ["zoom","share","slideShow","fullScreen","download","thumbs","close"],
@@ -6132,7 +4393,7 @@ $('[data-fancybox="gallery"]:not(.owl-item.cloned [data-fancybox="gallery"])').f
     protect: true,
     animationEffect: "zoom",
     transitionEffect: "fade"
-});
+})
 $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"])').fancybox({
     buttons: ["zoom","share","slideShow","fullScreen","download","thumbs","close"],
     loop: true,
@@ -6148,7 +4409,7 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 			nav: false,
 			rtl:false,
 			ltr:true,
-			dots: true,
+			dots: false,
 			autoplay: true,
 			autoplayTimeout: 5000,
 			touchDrag: true,
@@ -6176,7 +4437,7 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 				var n = index + 1;
 				if (!$dot.attr("aria-label")) $dot.attr("aria-label", "Go to slide " + n);
 				if ($dot.closest("#single .post-content").length) {
-					$dot.addClass("owl-dot-number").html("<span>" + n + "</span>");
+					$dot.empty();
 				}
 			});
 		}
@@ -6189,12 +4450,146 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 					$link.attr("tabindex", "-1");
 				}
 			});
+		
+		// Инициализация кастомной мобильной навигации
+		
+		// Инициализация кастомной навигации для .owl-carousel
+		function initCarouselCustomNav(carousel) {
+			if (!carousel || !window.jQuery) return;
+			var $ = window.jQuery;
+			var $carousel = $(carousel);
+			if (!$carousel.length) return;
+			
+			var $nav = $carousel.siblings('.owl-carousel-custom-nav');
+			if ($nav.length === 0) {
+				var navHtml = '<div class="owl-carousel-custom-nav">' +
+					'<button class="owl-carousel-prev" aria-label="Previous slide">‹</button>' +
+					'<span class="slide-counter">1 / 1</span>' +
+					'<button class="owl-carousel-next" aria-label="Next slide">›</button>' +
+					'</div>';
+				$nav = $(navHtml);
+				try {
+					if ($carousel[0] && $carousel[0].parentNode) {
+						$carousel[0].parentNode.insertBefore($nav[0], $carousel[0].nextSibling);
+					} else {
+						$carousel.after($nav);
+					}
+				} catch (e) {
+					console.warn('Error inserting carousel nav:', e);
+					return;
+				}
+			}
+			
+			updateCarouselCustomNav(carousel);
+			
+			// Обработчики кликов
+			$nav.find('.owl-carousel-prev').off('click.carouselNav').on('click.carouselNav', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$carousel.trigger('prev.owl.carousel');
+			});
+			$nav.find('.owl-carousel-next').off('click.carouselNav').on('click.carouselNav', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$carousel.trigger('next.owl.carousel');
+			});
 		}
+		// Обновление счетчика слайдов для .owl-carousel
+		function updateCarouselCustomNav(carousel) {
+			if (!carousel || !window.jQuery) return;
+			var $ = window.jQuery;
+			var $carousel = $(carousel);
+			if (!$carousel.length) return;
+			
+			var $nav = $carousel.siblings('.owl-carousel-custom-nav');
+			if ($nav.length) {
+				try {
+					var $active = $carousel.find('.owl-item.active').first();
+					if (!$active.length) return;
+					
+					var current = $active.index() + 1;
+					var total = $carousel.find('.owl-item:not(.cloned)').length;
+					
+					// Если loop включен, нужно правильно считать текущий слайд
+					var owlData = $carousel.data('owl.carousel');
+					if (owlData && owlData.settings && owlData.settings.loop && typeof owlData.relative === 'function') {
+						var realIndex = owlData.relative($active.index());
+						if (realIndex !== undefined && realIndex !== null) {
+							current = realIndex + 1;
+						}
+					}
+					
+					if (total > 0 && current > 0) {
+						$nav.find('.slide-counter').text(current + ' / ' + total);
+					}
+				} catch (e) {
+					console.warn('Error updating carousel nav counter:', e);
+				}
+			}
+		}
+		function initMobileCustomNav(carousel) {
+			if (!carousel || !window.jQuery) return;
+			var $ = window.jQuery;
+			var $carousel = $(carousel);
+			if (!$carousel.length) return;
+			
+			var $nav = $carousel.siblings('.owl-mobile-custom-nav');
+			if ($nav.length === 0) {
+				var navHtml = '<div class="owl-mobile-custom-nav">' +
+					'<button class="owl-mobile-prev" aria-label="Previous slide">‹</button>' +
+					'<span class="slide-counter">1 / 1</span>' +
+					'<button class="owl-mobile-next" aria-label="Next slide">›</button>' +
+					'</div>';
+				$nav = $(navHtml);
+				$carousel.after($nav);
+			}
+			
+			updateMobileCustomNav(carousel);
+			
+			// Обработчики кликов
+			$nav.find('.owl-mobile-prev').off('click.mobileNav').on('click.mobileNav', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$carousel.trigger('prev.owl.carousel');
+			});
+			$nav.find('.owl-mobile-next').off('click.mobileNav').on('click.mobileNav', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$carousel.trigger('next.owl.carousel');
+			});
+		}
+		// Обновление счетчика слайдов
+		function updateMobileCustomNav(carousel) {
+			var $carousel = $(carousel);
+			var $nav = $carousel.siblings('.owl-mobile-custom-nav');
+			if ($nav.length) {
+				var $active = $carousel.find('.owl-item.active').first();
+				var current = $active.index() + 1;
+				var total = $carousel.find('.owl-item:not(.cloned)').length;
+				// Если loop включен, нужно правильно считать текущий слайд
+				if ($carousel.data('owl.carousel') && $carousel.data('owl.carousel').settings.loop) {
+					var realIndex = $carousel.data('owl.carousel').relative($active.index());
+					current = realIndex + 1;
+				}
+				$nav.find('.slide-counter').text(current + ' / ' + total);
+			}
+		}}
 		$(".slider-888-slider, .owl-carousel, .owl-mobile").on("initialized.owl.carousel", function() {
 			markCasinoWelcomeHidden();
 			addAriaLabelsToDots();
+			if ($(this).hasClass('owl-carousel')) {
+				initCarouselCustomNav(this);
+			} else if ($(this).hasClass('owl-mobile')) {
+				initMobileCustomNav(this);
+			}
 		});
 		$(".owl-carousel, .owl-mobile").on("initialized.owl.carousel", addAriaLabelsToDots);
+		$(".owl-carousel").on("changed.owl.carousel", function(event) {
+			updateCarouselCustomNav(event.target);
+		});
+		$(".owl-mobile").on("changed.owl.carousel", function(event) {
+			updateMobileCustomNav(event.target);
+		});
 		markCasinoWelcomeHidden();
 		$(document).off("click.contentSliders", "#single .post-content .owl-prev, #single .post-content .owl-next");
 		$(document).on("click.contentSliders", "#single .post-content .owl-prev", function(e) {
