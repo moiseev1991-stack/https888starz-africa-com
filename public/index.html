@@ -637,7 +637,8 @@ html::-webkit-scrollbar-thumb,body::-webkit-scrollbar-thumb
 		box-shadow:0 -1px 10px gray
 	}
 
-	#header .open-menu
+	#header .open-menu,
+	.mobile-bottom-navigator-header .open-menu
 	{
 		position:relative;
 		gap:5px;
@@ -649,7 +650,63 @@ html::-webkit-scrollbar-thumb,body::-webkit-scrollbar-thumb
 		display:grid;
 		justify-items:center;
 		align-items:end;
-		align-content:center
+		align-content:center;
+		cursor:pointer;
+		user-select:none;
+		-webkit-tap-highlight-color:transparent;
+		pointer-events:auto;
+		z-index:10;
+	}
+	
+	/* Мобильное меню - скрыто по умолчанию */
+	nav.mobile.side-nav {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		background: #2b2b2b;
+		z-index: 99999;
+		overflow-y: auto;
+		transform: translateX(-100%);
+		transition: transform 0.3s ease-in-out;
+		display: block !important;
+		visibility: hidden;
+		opacity: 0;
+	}
+	
+	/* Мобильное меню - открыто */
+	nav.mobile.side-nav.active {
+		transform: translateX(0);
+		visibility: visible;
+		opacity: 1;
+	}
+	
+	/* Кнопка закрытия меню */
+	nav.mobile.side-nav .close {
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		background: #900;
+		border-radius: 50%;
+		z-index: 10000;
+	}
+	
+	nav.mobile.side-nav .close svg {
+		width: 24px;
+		height: 24px;
+		fill: #fff;
+	}
+	
+	/* Overlay при открытом меню */
+	body.menu-open {
+		overflow: hidden;
 	}
 
 	.item-navigator-mobile
@@ -6580,12 +6637,74 @@ document.addEventListener("DOMContentLoaded", function() {
 <script>
 	// Патч для устранения предупреждений о non-passive event listeners
 	// Применяем ДО загрузки jQuery и Owl Carousel
+	// Исключаем элементы слайдеров, чтобы они могли использовать preventDefault()
 	(function() {
 		if (typeof EventTarget !== 'undefined' && EventTarget.prototype.addEventListener) {
 			var originalAddEventListener = EventTarget.prototype.addEventListener;
 			EventTarget.prototype.addEventListener = function(type, listener, options) {
+				// Не применяем passive для document и window, так как там могут быть делегированные события для слайдеров
+				var isDocumentOrWindow = (this === document || this === window || (this && (this.nodeType === 9 || this === globalThis)));
+				
+				// Проверяем, является ли элемент частью слайдера
+				var isSliderElement = false;
+				if (this && this.nodeType === 1) { // Element node
+					var element = this;
+					// Проверяем классы элемента
+					if (element.classList) {
+						var className = element.className || '';
+						if (typeof className === 'string') {
+							isSliderElement = className.indexOf('owl-carousel') !== -1 ||
+								className.indexOf('owl-mobile') !== -1 ||
+								className.indexOf('owl-stage') !== -1 ||
+								className.indexOf('owl-stage-outer') !== -1 ||
+								className.indexOf('owl-item') !== -1;
+						}
+						// Также проверяем через classList
+						if (!isSliderElement && element.classList.length) {
+							isSliderElement = element.classList.contains('owl-carousel') ||
+								element.classList.contains('owl-mobile') ||
+								element.classList.contains('owl-stage') ||
+								element.classList.contains('owl-stage-outer') ||
+								element.classList.contains('owl-item');
+						}
+					}
+					// Проверяем родительские элементы через closest (если доступен)
+					if (!isSliderElement && element.closest && typeof element.closest === 'function') {
+						try {
+							isSliderElement = !!(element.closest('.owl-carousel') ||
+								element.closest('.owl-mobile') ||
+								element.closest('.owl-stage-outer'));
+						} catch (e) {
+							// closest может не работать в некоторых контекстах
+						}
+					}
+					// Проверяем родительские элементы через parentElement (fallback)
+					if (!isSliderElement) {
+						var parent = element.parentElement;
+						var depth = 0;
+						while (parent && depth < 10) {
+							if (parent.classList) {
+								var parentClass = parent.className || '';
+								if (typeof parentClass === 'string' && (
+									parentClass.indexOf('owl-carousel') !== -1 ||
+									parentClass.indexOf('owl-mobile') !== -1 ||
+									parentClass.indexOf('owl-stage-outer') !== -1
+								)) {
+									isSliderElement = true;
+									break;
+								}
+							}
+							parent = parent.parentElement;
+							depth++;
+						}
+					}
+				}
+				
 				// Для touchstart событий автоматически добавляем passive: true, если не указано явно
-				if (type === 'touchstart' || type === 'touchmove' || type === 'touchend') {
+				// НО НЕ для элементов слайдеров, чтобы они могли использовать preventDefault()
+				// Также НЕ применяем passive для touchmove, так как оно часто используется для drag и требует preventDefault
+				// И НЕ применяем для document/window, так как там могут быть делегированные события
+				if ((type === 'touchstart' || type === 'touchend') && !isSliderElement && !isDocumentOrWindow) {
 					if (typeof options === 'object' && options !== null) {
 						// Если passive не указан явно (ни true, ни false), устанавливаем true
 						if (!('passive' in options)) {
@@ -6972,6 +7091,57 @@ $('[data-fancybox="gallerymob"]:not(.owl-item.cloned [data-fancybox="gallerymob"
 		jQuery(document).ready(function(){
 			fixEmptyTocLinks();
 			initOwlAndFancybox();
+			
+			// Обработчик открытия мобильного меню
+			var $openMenuBtn = jQuery('.mobile-bottom-navigator-header .open-menu');
+			var $mobileMenu = jQuery('nav.mobile.side-nav');
+			var $closeBtn = jQuery('nav.mobile.side-nav .close');
+			
+			// Также пробуем найти кнопку через другие селекторы
+			if (!$openMenuBtn.length) {
+				$openMenuBtn = jQuery('.open-menu');
+			}
+			
+			if ($openMenuBtn.length && $mobileMenu.length) {
+				// Открытие меню
+				$openMenuBtn.off('click.mobileMenu').on('click.mobileMenu', function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+					e.stopImmediatePropagation();
+					$mobileMenu.addClass('active');
+					jQuery('body').addClass('menu-open').css('overflow', 'hidden');
+				});
+				
+				// Закрытие меню
+				if ($closeBtn.length) {
+					$closeBtn.off('click.mobileMenu').on('click.mobileMenu', function(e) {
+						e.preventDefault();
+						e.stopPropagation();
+						e.stopImmediatePropagation();
+						$mobileMenu.removeClass('active');
+						jQuery('body').removeClass('menu-open').css('overflow', '');
+					});
+				}
+				
+				// Закрытие меню при клике вне его
+				jQuery(document).off('click.mobileMenu').on('click.mobileMenu', function(e) {
+					if ($mobileMenu.hasClass('active') && 
+						!jQuery(e.target).closest('nav.mobile.side-nav').length &&
+						!jQuery(e.target).closest('.open-menu').length &&
+						!jQuery(e.target).closest('.mobile-bottom-navigator-header').length) {
+						$mobileMenu.removeClass('active');
+						jQuery('body').removeClass('menu-open').css('overflow', '');
+					}
+				});
+				
+				// Закрытие меню при нажатии ESC
+				jQuery(document).on('keydown', function(e) {
+					if (e.key === 'Escape' && $mobileMenu.hasClass('active')) {
+						$mobileMenu.removeClass('active');
+						jQuery('body').removeClass('menu-open');
+					}
+				});
+			}
 		});
 	})();
 </script>
